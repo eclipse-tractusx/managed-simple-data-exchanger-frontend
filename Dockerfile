@@ -1,10 +1,10 @@
 # => Build container
 FROM node:alpine as builder
 WORKDIR /app
-COPY ui/package.json .
-COPY ui/yarn.lock .
+COPY ./package.json .
+COPY ./yarn.lock .
 RUN yarn
-COPY ui/ .
+COPY ./ .
 RUN yarn build
 
 
@@ -12,7 +12,7 @@ FROM nginx:1.21.6-alpine
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
-COPY ui/conf /etc/nginx
+COPY ./conf /etc/nginx
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
@@ -23,8 +23,8 @@ EXPOSE 443
 
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html
-COPY ui/env.sh .
-COPY ui/.env .
+COPY ./env.sh .
+COPY ./.env .
 
 # Add bash
 RUN apk add --no-cache bash
