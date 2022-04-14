@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
-import { COLORS } from '../constants';
+import HelpIcon from '@mui/icons-material/Help';
+import styles from '../styles.module.scss';
 
 const Sidebar = (props: any) => {
   const [menuIndex, setMenuIndex] = useState(0);
@@ -38,7 +39,7 @@ const Sidebar = (props: any) => {
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               onClick={() => getMenuIndex(0)}
             >
-              <BackupOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 0 ? COLORS.blue : COLORS.black}` }} />
+              <BackupOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 0 ? styles.blue : styles.black}` }} />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'
@@ -51,13 +52,26 @@ const Sidebar = (props: any) => {
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               onClick={() => getMenuIndex(1)}
             >
-              <HistoryOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 1 ? COLORS.blue : COLORS.black}` }} />
+              <HistoryOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 1 ? styles.blue : styles.black}` }} />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'
                 } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
               >
                 Upload history
+              </p>
+            </li>
+            <li
+              className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
+              onClick={() => getMenuIndex(2)}
+            >
+              <HelpIcon fontSize="small" sx={{ color: `${menuIndex === 2 ? styles.blue : styles.black}` }} />
+              <p
+                className={`${
+                  !isExpanded ? 'hidden' : 'flex'
+                } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
+              >
+                Help
               </p>
             </li>
           </ul>

@@ -17,7 +17,7 @@ import { FileSize } from '../models/FileSize';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { COLORS } from '../constants';
+import styles from '../styles.module.scss';
 
 const UploadForm = (props: any) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -59,7 +59,7 @@ const UploadForm = (props: any) => {
               onChange={filesSelected}
               className="hidden"
             />
-            <CloudUploadIcon sx={{ fontSize: 40, color: COLORS.grey }} />
+            <CloudUploadIcon sx={{ fontSize: 40, color: styles.grey }} />
             <h2 className=" my-1">Drag and drop your file on this page</h2>
             <h2 className=" my-1">or</h2>
 
@@ -71,6 +71,14 @@ const UploadForm = (props: any) => {
             </label>
           </div>
         </div>
+      </div>
+      &nbsp;
+      <div>
+        <ul>
+          <li>The upload must be performed in the following order:</li>
+          <li> 1 - serialPartTypization.csv </li>
+          <li> 2 - assemblyPartRelationship.csv</li>
+        </ul>
       </div>
       {selectedFiles.length && !uploadStatus ? (
         <div className="flex flex-col mt-5 ">

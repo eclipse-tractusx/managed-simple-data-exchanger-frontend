@@ -15,7 +15,7 @@
 import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { COLORS } from '../constants';
+import styles from '../styles.module.scss';
 
 interface Props {
   uploadProgress: number;
@@ -32,7 +32,7 @@ const UploadProgressBar: React.FC<Props> = ({ uploadProgress }) => {
             styles={buildStyles({
               textSize: '10px',
               pathColor: 'teal',
-              textColor: COLORS.blue,
+              textColor: styles.blue,
             })}
           />
         </div>

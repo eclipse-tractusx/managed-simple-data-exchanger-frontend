@@ -19,6 +19,7 @@
     "async": "^3.2.3",
     "axios": "^0.26.0",
     "crypto-js": "^4.1.1",
+    "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-circular-progressbar": "^2.0.4",
     "react-dom": "^17.0.2",
@@ -31,7 +32,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && npm run format && npm run lint && react-scripts start ",
+    "start": "npm run format && npm run lint && react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
