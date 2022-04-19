@@ -31,7 +31,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { ProcessReport, CsvTypes, Status } from '../models/ProcessReport';
 import { formatDate } from '../utils/utils';
-import { COLORS } from '../constants';
+import styles from '../styles.module.scss';
 
 interface Column {
   id: 'processId' | 'csvType' | 'numberOfItems' | 'numberOfFailedItems' | 'status' | 'startDate' | 'duration';
@@ -98,8 +98,8 @@ export default function StickyHeadTable({
 
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: COLORS.blue,
-      color: COLORS.white,
+      backgroundColor: styles.blue,
+      color: styles.white,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -165,22 +165,22 @@ export default function StickyHeadTable({
                           value}
                         {column.id === 'status' && value === Status.completed && row.numberOfFailedItems === 0 && (
                           <span title="Completed">
-                            <CheckCircleOutlineOutlinedIcon fontSize="small" sx={{ color: COLORS.success }} />
+                            <CheckCircleOutlineOutlinedIcon fontSize="small" sx={{ color: styles.success }} />
                           </span>
                         )}
                         {column.id === 'status' && value === Status.completed && row.numberOfFailedItems > 0 && (
                           <span title="Completed with warnings">
-                            <ReportGmailerrorredOutlined fontSize="small" sx={{ color: COLORS.warning }} />
+                            <ReportGmailerrorredOutlined fontSize="small" sx={{ color: styles.warning }} />
                           </span>
                         )}
                         {column.id === 'status' && value === Status.failed && (
                           <span title="Failed">
-                            <HighlightOffOutlined fontSize="small" sx={{ color: COLORS.danger }} />
+                            <HighlightOffOutlined fontSize="small" sx={{ color: styles.danger }} />
                           </span>
                         )}
                         {column.id === 'status' && value === Status.inProgress && (
                           <span title="In progress">
-                            <HourglassEmptyOutlined fontSize="small" sx={{ color: COLORS.primary }} />
+                            <HourglassEmptyOutlined fontSize="small" sx={{ color: styles.primary }} />
                           </span>
                         )}
                         {column.id === 'duration' && (
