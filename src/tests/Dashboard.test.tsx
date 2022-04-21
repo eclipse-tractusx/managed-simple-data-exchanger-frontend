@@ -22,7 +22,7 @@ test('dashboard - upload file menu', () => {
       <Dashboard />
     </MemoryRouter>,
   );
-  
+
   const uploadFileMenu = screen.getByTestId('uploadFileMenu');
   uploadFileMenu.click();
   expect(screen.getByText('Drag and drop your file on this page')).toBeInTheDocument();
