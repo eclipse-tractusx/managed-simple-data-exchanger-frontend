@@ -37,6 +37,7 @@ const Sidebar = (props: any) => {
           <ul className="flex flex-col p-0 list-none overflow-hidden">
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
+              data-testid="uploadFileMenu"
               onClick={() => getMenuIndex(0)}
             >
               <BackupOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 0 ? styles.blue : styles.black}` }} />
@@ -50,6 +51,7 @@ const Sidebar = (props: any) => {
             </li>
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
+              data-testid="uploadHistoryMenu"
               onClick={() => getMenuIndex(1)}
             >
               <HistoryOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 1 ? styles.blue : styles.black}` }} />
@@ -63,6 +65,7 @@ const Sidebar = (props: any) => {
             </li>
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
+              data-testid="helpMenu"
               onClick={() => getMenuIndex(2)}
             >
               <HelpIcon fontSize="small" sx={{ color: `${menuIndex === 2 ? styles.blue : styles.black}` }} />

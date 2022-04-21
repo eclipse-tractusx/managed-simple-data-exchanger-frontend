@@ -14,7 +14,7 @@
 
 import Login from './pages/Login';
 import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, AuthRoute } from './modules/ProtectedRoutes';
 import Dashboard from './pages/Dashboard';
 
@@ -30,18 +30,16 @@ function App() {
   const [isAuth, setIsAuth] = useLocalStorage('auth', false);
   const [isAuthError, setIsAuthError] = useState(false);
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/login"
-          element={<Login setIsAuth={setIsAuth} setIsAuthError={setIsAuthError} isAuthError={isAuthError} />}
-        />
-        <Route path="/" element={<AuthRoute isAuth={isAuth} />}></Route>
-        <Route element={<ProtectedRoute isAuth={isAuth} />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-      </Routes>
-    </Router>
+    <Routes>
+      <Route
+        path="/login"
+        element={<Login setIsAuth={setIsAuth} setIsAuthError={setIsAuthError} isAuthError={isAuthError} />}
+      />
+      <Route path="/" element={<AuthRoute isAuth={isAuth} />}></Route>
+      <Route element={<ProtectedRoute isAuth={isAuth} />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Route>
+    </Routes>
   );
 }
 
