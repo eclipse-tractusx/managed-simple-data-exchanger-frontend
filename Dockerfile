@@ -2,8 +2,10 @@
 FROM node:alpine as builder
 WORKDIR /app
 COPY ./package.json .
-RUN npm install --python3
+COPY ./package-lock.json .
+RUN npm install
 COPY ./ .
+RUN npm build
 
 FROM nginx:1.21.6-alpine
 
