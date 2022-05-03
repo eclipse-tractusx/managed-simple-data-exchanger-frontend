@@ -40,6 +40,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import '../styles/Table.scss';
+import { Link } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -210,20 +211,6 @@ const Dashboard: React.FC = () => {
       color: styles.blue,
     },
   }));
-
-  const onDownloadSerialPartTypization = () => {
-    const link = document.createElement('a');
-    link.download = `serialPartTypization.csv`;
-    link.href = './public/resourcers/serialPartTypization.csv';
-    link.click();
-  };
-
-  const onDownloadAssemblyPartRelationship = () => {
-    const link = document.createElement('a');
-    link.download = `assemblyPartRelationship.csv`;
-    link.href = './public/resourcers/assemblyPartRelationship.csv';
-    link.click();
-  };
 
   const serialPartTypizationRows = [
     { name: 'UUID', mandatory: false, position: 1 },
@@ -420,13 +407,15 @@ const Dashboard: React.FC = () => {
                     </table>
                   </CardContent>
                   <CardActions>
-                    <Button onClick={onDownloadSerialPartTypization} size="large" startIcon={<GetAppIcon />}>
-                      Download sample
+                    <Button size="large" startIcon={<GetAppIcon />}>
+                      <Link to="/resources/serialPartTypization.csv" target="_blank" download>
+                        Download sample
+                      </Link>
                     </Button>
                     <Button
                       onClick={() => {
                         navigator.clipboard.writeText(
-                          'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
+                          'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
                         );
                       }}
                       size="large"
@@ -464,13 +453,15 @@ const Dashboard: React.FC = () => {
                     </table>
                   </CardContent>
                   <CardActions>
-                    <Button onClick={onDownloadAssemblyPartRelationship} size="large" startIcon={<GetAppIcon />}>
-                      Download sample
+                    <Button size="large" startIcon={<GetAppIcon />}>
+                      <Link to="/resources/assemblyPartRelationship.csv" target="_blank" download>
+                        Download sample
+                      </Link>
                     </Button>
                     <Button
                       onClick={() => {
                         navigator.clipboard.writeText(
-                          'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
+                          'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
                         );
                       }}
                       size="large"
