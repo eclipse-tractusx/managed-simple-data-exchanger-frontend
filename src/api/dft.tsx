@@ -14,7 +14,7 @@
 
 import axios from 'axios';
 
-axios.defaults.headers.common.API_KEY = 'aec093c2c98144f99a4a365ad1d2f05e';
+axios.defaults.headers.common.API_KEY = window._env_.REACT_API_KEY;
 
 export default axios.create({
   baseURL: window._env_.REACT_APP_API_URL,
