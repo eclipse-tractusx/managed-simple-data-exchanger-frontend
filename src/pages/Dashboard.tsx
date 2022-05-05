@@ -200,7 +200,10 @@ const Dashboard: React.FC = () => {
           }
         });
       })
-      .catch(err => console.error(err));
+      .catch(() => {
+        setUploadData({ ...currentUploadData, status: Status.failed });
+        clearUpload();
+      });
   };
 
   const ColorButton = styled(Button)<ButtonProps>(() => ({
