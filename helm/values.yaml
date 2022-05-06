@@ -47,14 +47,14 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: https://dft.tracefoss.com
+    - host: dft.tracefoss.com
       paths:
         - path: /
           pathType: Prefix
   tls: []
   #  - secretName: dft-tracefoss-tls
   #    hosts:
-  #      - https://dft.tracefoss.com
+  #      - dft.tracefoss.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
