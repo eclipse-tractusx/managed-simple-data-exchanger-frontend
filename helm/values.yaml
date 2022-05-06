@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: https://github.com/catenax-ng/product-dft-frontend/pkgs/container/product-dft-frontend
+  repository: nginx
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
