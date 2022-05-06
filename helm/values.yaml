@@ -6,13 +6,13 @@ replicaCount: 1
 
 image:
   repository: https://github.com/catenax-ng/product-dft-frontend/pkgs/container/product-dft-frontend
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.0.0"
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: "product-dft-frontend"
+fullnameOverride: "dft-frontend"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -37,7 +37,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: LoadBalancer
+  type: NodePort
   port: 3000
 
 ingress:
