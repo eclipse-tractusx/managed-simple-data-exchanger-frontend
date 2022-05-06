@@ -61,7 +61,7 @@ jobs:
           file: ./Dockerfile
           push: true
           # build tag :main
-          tags: user/app:latest
+          tags: ${{ steps.meta.outputs.tags }}
           # build tag :latest
           # tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
