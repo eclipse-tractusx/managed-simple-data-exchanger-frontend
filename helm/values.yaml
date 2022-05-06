@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: https://ghcr.io/catenax-ng/product-dft-frontend
+  repository: https://ghcr.io/catenax-ng/product-dft-frontend:main
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "main"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: "product-dft-frontend"
