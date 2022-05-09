@@ -41,13 +41,7 @@ service:
   port: 80
 
 ingress:
-  className: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
-  host: dft.demo.catena-x.net
+  enabled: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
