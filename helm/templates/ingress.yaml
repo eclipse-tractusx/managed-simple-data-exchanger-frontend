@@ -32,7 +32,7 @@ spec:
   # Config for creating proper TLS certificates host has to match the one from the ingress rule
   tls:
     - hosts:
-        - dt.int.demo.catena-x.net
+        - dft.int.demo.catena-x.net
       # Default secret for certificate creation already provided to your namespace
       secretName: tls-secret
 {{- end }}
