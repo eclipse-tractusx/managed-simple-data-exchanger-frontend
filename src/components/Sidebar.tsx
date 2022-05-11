@@ -18,6 +18,7 @@ import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import HelpIcon from '@mui/icons-material/Help';
 import styles from '../styles.module.scss';
 
+// eslint-disable-next-line
 const Sidebar = (props: any) => {
   const [menuIndex, setMenuIndex] = useState(0);
   const { isExpanded } = props;

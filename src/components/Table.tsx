@@ -84,7 +84,9 @@ export default function StickyHeadTable({
   page = 0,
   rowsPerPage = 10,
   totalElements = 0,
+  // eslint-disable-next-line
   setPage = (p: number) => {},
+  // eslint-disable-next-line
   setRowsPerPage = (r: number) => {},
 }) {
   const handleChangePage = (event: unknown, newPage: number) => {

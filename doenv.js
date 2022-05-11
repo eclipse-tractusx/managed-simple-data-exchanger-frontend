@@ -1,21 +1,33 @@
 // Copyright 2022 Catena-X
-//
+// 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//
+// 
 //     http://www.apache.org/licenses/LICENSE-2.0
-//
+// 
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import axios from 'axios';
+const webpack = require('webpack');
+const dotenv = require('dotenv');
 
-axios.defaults.headers.common.API_KEY = process.env.REACT_APP_API_KEY;
+module.exports = () => {
+  // call dotenv and it will return an Object with a parsed key 
+  const env = dotenv.config().parsed;
+  
+  // reduce it to a nice object, the same as before
+  const envKeys = Object.keys(env).reduce((prev, next) => {
+    prev[`process.env.${next}`] = JSON.stringify(env[next]);
+    return prev;
+  }, {});
 
-export default axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-});
+  return {
+    plugins: [
+      new webpack.DefinePlugin(envKeys)
+    ]
+  };
+};

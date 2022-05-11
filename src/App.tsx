@@ -20,12 +20,6 @@ import Dashboard from './pages/Dashboard';
 
 import { useLocalStorage } from './modules/LocalStorage';
 
-declare global {
-  interface Window {
-    _env_?: any;
-  }
-}
-
 function App() {
   const [isAuth, setIsAuth] = useLocalStorage('auth', false);
   const [isAuthError, setIsAuthError] = useState(false);

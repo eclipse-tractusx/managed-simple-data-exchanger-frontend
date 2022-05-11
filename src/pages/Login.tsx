@@ -26,6 +26,7 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
 interface Props {
+  // eslint-disable-next-line
   setIsAuth: any;
   setIsAuthError: React.Dispatch<React.SetStateAction<boolean>>;
   isAuthError: boolean;
@@ -48,7 +49,7 @@ export const Login: React.FC<Props> = ({ setIsAuth, setIsAuthError, isAuthError 
   const { register, handleSubmit } = useForm<FormValues>();
   const navigate = useNavigate();
   const onSubmit = handleSubmit(({ username, password }) => {
-    if (getHash(password) === window._env_.PASS && username === window._env_.USERNAME) {
+    if (getHash(password) === process.env.REACT_APP_PASS && username === process.env.REACT_APP_USERNAME) {
       setIsAuth(true);
       navigate('/dashboard');
     } else {

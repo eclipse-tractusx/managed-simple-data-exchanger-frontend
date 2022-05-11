@@ -23,6 +23,7 @@ import Menu from '@mui/material/Menu';
 import { Logout } from '@mui/icons-material';
 import styles from '../styles.module.scss';
 
+// eslint-disable-next-line
 const Nav = (props: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
