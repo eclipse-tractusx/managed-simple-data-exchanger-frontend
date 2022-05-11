@@ -19,6 +19,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import styles from '../styles.module.scss';
 
+// eslint-disable-next-line
 const UploadForm = (props: any) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { selectedFiles, uploadStatus } = props;
@@ -41,6 +42,7 @@ const UploadForm = (props: any) => {
     return `${parseFloat((size / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
   };
 
+  // eslint-disable-next-line
   const emitFileUpload = (e: any) => {
     props.emitFileUpload(e);
   };

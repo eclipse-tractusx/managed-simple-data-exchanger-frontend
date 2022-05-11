@@ -16,6 +16,7 @@ import DangerousOutlinedIcon from '@mui/icons-material/DangerousOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import styles from '../styles.module.scss';
 
+// eslint-disable-next-line
 const Notification = (props: any) => {
   const { errorMessage } = props;
   return (

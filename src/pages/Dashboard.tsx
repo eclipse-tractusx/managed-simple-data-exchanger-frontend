@@ -74,9 +74,14 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      refreshTable();
-    })();
+    const refresh = () => {
+      dft.get(`/processing-report?page=${page}&pageSize=${rowsPerPage}`).then(response => {
+        setTableData(response.data.items);
+        setTotalElements(response.data.totalItems);
+      });
+    };
+
+    refresh();
   }, [page, rowsPerPage]);
 
   const handleExpanded = (expanded: boolean) => {
@@ -91,7 +96,7 @@ const Dashboard: React.FC = () => {
   const handleFiles = (file: File) => {
     setUploadStatus(false);
     setUploading(false);
-    const maxFileSize = window._env_.FILESIZE;
+    const maxFileSize = parseInt(process.env.REACT_APP_FILESIZE);
     if (validateFile(file) && file.size < maxFileSize) {
       setSelectedFiles([file]);
     } else {
@@ -100,6 +105,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  // eslint-disable-next-line
   const dragEnter = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
@@ -109,6 +115,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  // eslint-disable-next-line
   const dragLeave = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
@@ -123,6 +130,7 @@ const Dashboard: React.FC = () => {
     setUploading(false);
   };
 
+  // eslint-disable-next-line
   const fileDrop = (e: any) => {
     e.preventDefault();
     const files = e.dataTransfer.files;
@@ -154,6 +162,7 @@ const Dashboard: React.FC = () => {
     }, 1000);
   };
 
+  // eslint-disable-next-line
   const uploadFile = (e: any) => {
     e.preventDefault();
     setUploading(true);
@@ -167,7 +176,9 @@ const Dashboard: React.FC = () => {
       startDate: '',
       endDate: undefined,
     });
+
     const formData = new FormData();
+    // eslint-disable-next-line
     formData.append('file', selectedFiles[0] as any);
 
     dft
@@ -284,10 +295,12 @@ const Dashboard: React.FC = () => {
                 ) : null}
                 {!uploading && (
                   <UploadForm
+                    // eslint-disable-next-line
                     getSelectedFiles={(files: any) => handleFiles(files)}
                     selectedFiles={selectedFiles}
                     removeSelectedFiles={removeSelectedFiles}
                     uploadStatus={uploadStatus}
+                    // eslint-disable-next-line
                     emitFileUpload={(e: any) => uploadFile(e)}
                   />
                 )}
