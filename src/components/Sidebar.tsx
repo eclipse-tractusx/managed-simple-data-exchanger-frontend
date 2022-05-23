@@ -47,15 +47,29 @@ const Sidebar = (props: any) => {
                   !isExpanded ? 'hidden' : 'flex'
                 } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
               >
-                Upload file
+                Upload csv file
+              </p>
+            </li>
+            <li
+              className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
+              data-testid="uploadFileMenu"
+              onClick={() => getMenuIndex(1)}
+            >
+              <BackupOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 1 ? styles.blue : styles.black}` }} />
+              <p
+                className={`${
+                  !isExpanded ? 'hidden' : 'flex'
+                } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
+              >
+                Upload json file
               </p>
             </li>
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               data-testid="uploadHistoryMenu"
-              onClick={() => getMenuIndex(1)}
+              onClick={() => getMenuIndex(2)}
             >
-              <HistoryOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 1 ? styles.blue : styles.black}` }} />
+              <HistoryOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 2 ? styles.blue : styles.black}` }} />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'
@@ -67,9 +81,9 @@ const Sidebar = (props: any) => {
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               data-testid="helpMenu"
-              onClick={() => getMenuIndex(2)}
+              onClick={() => getMenuIndex(3)}
             >
-              <HelpIcon fontSize="small" sx={{ color: `${menuIndex === 2 ? styles.blue : styles.black}` }} />
+              <HelpIcon fontSize="small" sx={{ color: `${menuIndex === 3 ? styles.blue : styles.black}` }} />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'

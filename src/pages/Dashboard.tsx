@@ -41,6 +41,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import '../styles/Table.scss';
 import { Link } from 'react-router-dom';
+import DynamicTable from '../components/DynamicTable';
 
 const Dashboard: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -187,29 +188,41 @@ const Dashboard: React.FC = () => {
         const processId = resp.data;
 
         // first call
-        dft.get(`/processing-report/${processId}`).then(r => {
-          setUploadData(r.data);
-          if (r && r.data && r.data.status !== Status.completed && r.data.status !== Status.failed) {
-            // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 10 seconds to refresh data
-            const interval = setInterval(
-              () =>
-                dft.get(`/processing-report/${processId}`).then(result => {
-                  setUploadData(result.data);
-                  if (
-                    result &&
-                    result.data &&
-                    (result.data.status === Status.completed || result.data.status === Status.failed)
-                  ) {
-                    clearInterval(interval);
-                    clearUpload();
-                  }
-                }),
-              2000,
-            );
-          } else {
+        dft
+          .get(`/processing-report/${processId}`)
+          .then(r => {
+            setUploadData(r.data);
+            if (r && r.data && r.data.status !== Status.completed && r.data.status !== Status.failed) {
+              // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
+              const interval = setInterval(
+                () =>
+                  dft
+                    .get(`/processing-report/${processId}`)
+                    .then(result => {
+                      setUploadData(result.data);
+                      if (
+                        result &&
+                        result.data &&
+                        (result.data.status === Status.completed || result.data.status === Status.failed)
+                      ) {
+                        clearInterval(interval);
+                        clearUpload();
+                      }
+                    })
+                    .catch(() => {
+                      setUploadData({ ...currentUploadData, status: Status.failed });
+                      clearUpload();
+                    }),
+                2000,
+              );
+            } else {
+              clearUpload();
+            }
+          })
+          .catch(() => {
+            setUploadData({ ...currentUploadData, status: Status.failed });
             clearUpload();
-          }
-        });
+          });
       })
       .catch(() => {
         setUploadData({ ...currentUploadData, status: Status.failed });
@@ -353,6 +366,19 @@ const Dashboard: React.FC = () => {
         );
       case 1:
         return (
+          <div className="flex-1 py-6 px-10">
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
+              </Grid>
+              <Grid item xs={12}>
+                <DynamicTable></DynamicTable>
+              </Grid>
+            </Grid>
+          </div>
+        );
+      case 2:
+        return (
           <div className="flex-1 py-6 px-20">
             <Grid container spacing={2}>
               <Grid item xs={6}>
@@ -379,7 +405,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         );
-      case 2:
+      case 3:
         return (
           <div className="flex-1 py-6 px-20">
             <Grid container spacing={2}>

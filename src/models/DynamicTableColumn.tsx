@@ -12,5 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-declare module '*.module.scss';
-declare module 'uuid';
+export interface DynamicTableColumn {
+  field: string;
+  headerName: string;
+  editable: boolean;
+  sortable: boolean;
+  renderHeader?: () => {};
+  renderCell?: (params: any) => {};
+  flex: number;
+  headerAlign: 'center' | 'right' | 'left';
+}
