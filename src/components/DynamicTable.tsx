@@ -13,38 +13,53 @@
 // limitations under the License.
 
 import React from 'react';
-import { SerialPartTypization } from '../models/SerialPartTypization';
+import { v4 as uuidv4 } from 'uuid';
+import { IconButton, Button } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
-import { DynamicTableColumn } from '../models/DynamicTableColumn';
-import { v4 as uuidv4 } from 'uuid';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import { IconButton, Button } from '@mui/material';
+import { DynamicTableColumn } from '../models/DynamicTableColumn';
+import { SerialPartTypization } from '../models/SerialPartTypization';
+import Swal from 'sweetalert2';
 
 export default function DynamicTable() {
   const [rows, setRows] = React.useState([]);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
 
-  const addRow = () => {
-    setId(id + 1);
-    setRows(prevRows => [
-      ...prevRows,
-      {
-        id: id,
-        uuid: '',
-        part_instance_id: '',
-        manufacturing_date: '',
-        manufacturing_country: '',
-        manufacturer_part_id: '',
-        customer_part_id: '',
-        classification: '',
-        name_at_manufacturer: '',
-        name_at_customer: '',
-        optional_identifier_key: '',
-        optional_identifier_value: '',
+  const addRows = () => {
+    const newRows: SerialPartTypization[] = [];
+
+    Swal.fire({
+      title: 'Insert number of rows',
+      input: 'number',
+      confirmButtonColor: '#01579b',
+      preConfirm: numberOfNewRows => {
+        if (!numberOfNewRows || numberOfNewRows < 1) {
+          Swal.showValidationMessage(`Please enter number of rows above 0.`);
+        }
       },
-    ]);
+    }).then(result => {
+      for (let i = 0; i < Number(result.value); i++) {
+        newRows.push({
+          id: id + (i + 1),
+          uuid: '',
+          part_instance_id: '',
+          manufacturing_date: '',
+          manufacturing_country: '',
+          manufacturer_part_id: '',
+          customer_part_id: '',
+          classification: '',
+          name_at_manufacturer: '',
+          name_at_customer: '',
+          optional_identifier_key: '',
+          optional_identifier_value: '',
+        });
+      }
+
+      setRows(prevRows => prevRows.concat(newRows));
+      setId(id + Number(result.value));
+    });
   };
 
   const generateUUID = (rowId: number) => {
@@ -59,7 +74,7 @@ export default function DynamicTable() {
     setRows(auxRows);
   };
 
-  const onSelectionChange = (newSelectionModel: any) => {
+  const onSelectionChange = (newSelectionModel: GridSelectionModel) => {
     setSelectionModel(newSelectionModel);
   };
 
@@ -105,7 +120,6 @@ export default function DynamicTable() {
       },
     },
   }));
-
   // end styles
 
   const columns: DynamicTableColumn[] = [
@@ -203,6 +217,7 @@ export default function DynamicTable() {
     },
   ];
 
+  // eslint-disable-next-line
   const onCellEditCommit = (event: any) => {
     const auxRows = JSON.parse(JSON.stringify(rows));
     const index = rows.findIndex(r => r.id === event.id);
@@ -216,6 +231,15 @@ export default function DynamicTable() {
     setRows(auxRows);
   };
 
+  const getInvalidDataMessage = () => {
+    return Swal.fire({
+      title: 'Invalid data!',
+      text: 'Part Instance ID, Manufacturing Date, Manufacturer Part ID, Classification and Name of Manufacturer fields are required.',
+      icon: 'error',
+      confirmButtonColor: '#01579b',
+    });
+  };
+
   const generateJson = () => {
     if (rows && rows.length > 0) {
       for (const r of rows) {
@@ -226,22 +250,20 @@ export default function DynamicTable() {
           r.classification === '' ||
           r.name_at_manufacturer === ''
         ) {
-          return alert(
-            'Invalid data! Part Instance ID, Manufacturing Date, Manufacturer Part ID, Classification and Name of Manufacturer fields are required.',
-          );
+          getInvalidDataMessage();
         }
       }
+
+      // call json endpoint
     } else {
-      return alert(
-        'Invalid data! Part Instance ID, Manufacturing Date, Manufacturer Part ID, Classification and Name of Manufacturer fields are required.',
-      );
+      getInvalidDataMessage();
     }
   };
 
   return (
     <div style={{ width: '100%', height: 108 + 6 * 52 + 'px' }}>
-      <Button variant="outlined" onClick={addRow} sx={{ mb: 2 }}>
-        Add a row
+      <Button variant="outlined" onClick={addRows} sx={{ mb: 2 }}>
+        Add rows(s)
       </Button>
       &nbsp;
       <Button variant="outlined" onClick={deleteSelectedRows} sx={{ mb: 2 }}>

@@ -17,7 +17,9 @@ export interface DynamicTableColumn {
   headerName: string;
   editable: boolean;
   sortable: boolean;
+  // eslint-disable-next-line
   renderHeader?: () => {};
+  // eslint-disable-next-line
   renderCell?: (params: any) => {};
   flex: number;
   headerAlign: 'center' | 'right' | 'left';
