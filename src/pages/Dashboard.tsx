@@ -21,7 +21,6 @@ import UploadForm from '../components/UploadForm';
 import { FileType } from '../models/FileType';
 import { File } from '../models/File';
 import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
-
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import Notification from '../components/Notification';
 import dft from '../api/dft';
@@ -41,6 +40,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import '../styles/Table.scss';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Dashboard: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -276,6 +276,35 @@ const Dashboard: React.FC = () => {
     height: '116px',
   };
 
+  const copyHeadersToasty = () => {
+    return toast.success('Copied to clipboard!', {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
+  };
+
+  const copyHeadersSerialPartTypization = () => {
+    navigator.clipboard.writeText(
+      'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
+    );
+
+    copyHeadersToasty();
+  };
+
+  const copyHeadersAssemblyPartRelationship = () => {
+    navigator.clipboard.writeText(
+      'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
+    );
+
+    copyHeadersToasty();
+  };
+
   // TODO: Replace this logic with routes
   const layout = () => {
     switch (menuIndex) {
@@ -428,15 +457,7 @@ const Dashboard: React.FC = () => {
                         Download sample
                       </Link>
                     </Button>
-                    <Button
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
-                        );
-                      }}
-                      size="large"
-                      startIcon={<ContentCopyIcon />}
-                    >
+                    <Button onClick={copyHeadersSerialPartTypization} size="large" startIcon={<ContentCopyIcon />}>
                       Copy headers to clipboard
                     </Button>
                   </CardActions>
@@ -474,15 +495,7 @@ const Dashboard: React.FC = () => {
                         Download sample
                       </Link>
                     </Button>
-                    <Button
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
-                        );
-                      }}
-                      size="large"
-                      startIcon={<ContentCopyIcon />}
-                    >
+                    <Button onClick={copyHeadersAssemblyPartRelationship} size="large" startIcon={<ContentCopyIcon />}>
                       Copy headers to clipboard
                     </Button>
                   </CardActions>
