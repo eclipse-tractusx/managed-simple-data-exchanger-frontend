@@ -61,7 +61,7 @@ const Sidebar = (props: any) => {
                   !isExpanded ? 'hidden' : 'flex'
                 } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
               >
-                Upload json file
+                Upload dynamic data
               </p>
             </li>
             <li

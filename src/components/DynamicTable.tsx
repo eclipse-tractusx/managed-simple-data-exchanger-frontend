@@ -18,6 +18,7 @@ import { IconButton, Button } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import * as Countries from '../helpers/Countries';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
 import Swal from 'sweetalert2';
@@ -67,7 +68,7 @@ export default function DynamicTable() {
 
     for (const r of auxRows) {
       if (r.id === rowId) {
-        r.uuid = uuidv4();
+        r.uuid = `urn:uuid:${uuidv4()}`;
       }
     }
 
@@ -157,6 +158,7 @@ export default function DynamicTable() {
       editable: true,
       sortable: false,
       flex: 1,
+      type: 'date',
       headerAlign: 'center',
     },
     {
@@ -166,6 +168,8 @@ export default function DynamicTable() {
       sortable: false,
       flex: 1,
       headerAlign: 'center',
+      type: 'singleSelect',
+      valueOptions: Countries.list,
     },
     {
       field: 'manufacturer_part_id',
@@ -206,6 +210,12 @@ export default function DynamicTable() {
       sortable: false,
       flex: 1,
       headerAlign: 'center',
+      type: 'singleSelect',
+      valueOptions: [
+        { value: '', label: 'Empty' },
+        { value: 'VAN', label: 'VAN' },
+        { value: 'BatchID', label: 'BatchID' },
+      ],
     },
     {
       field: 'optional_identifier_value',
@@ -224,7 +234,10 @@ export default function DynamicTable() {
     if (index !== -1) {
       if (auxRows[index].hasOwnProperty(event.field)) {
         const f = event.field as keyof SerialPartTypization;
-        auxRows[index][f] = event.value;
+        auxRows[index][f] =
+          f === 'uuid' && event.value !== '' && !event.value.startsWith('urn:uuid:')
+            ? `urn:uuid:${event.value}`
+            : event.value;
       }
     }
 
@@ -234,7 +247,7 @@ export default function DynamicTable() {
   const getInvalidDataMessage = () => {
     return Swal.fire({
       title: 'Invalid data!',
-      text: 'Part Instance ID, Manufacturing Date, Manufacturer Part ID, Classification and Name of Manufacturer fields are required.',
+      html: '<p> Part Instance ID, Manufacturing Date, Manufacturer Part ID, Classification and Name of Manufacturer fields are required. </p> <p> Optional Identifier Value and Optional Identifier Key must either be empty or both filled.',
       icon: 'error',
       confirmButtonColor: '#01579b',
     });
@@ -248,13 +261,13 @@ export default function DynamicTable() {
           r.manufacturing_date === '' ||
           r.manufacturer_part_id === '' ||
           r.classification === '' ||
-          r.name_at_manufacturer === ''
+          r.name_at_manufacturer === '' ||
+          (r.optional_identifier_value === '' && r.optional_identifier_key !== '') ||
+          (r.optional_identifier_value !== '' && r.optional_identifier_key === '')
         ) {
           getInvalidDataMessage();
         }
       }
-
-      // call json endpoint
     } else {
       getInvalidDataMessage();
     }
@@ -293,7 +306,7 @@ export default function DynamicTable() {
       />
       <div> * Mandatory </div>
       <Button variant="outlined" onClick={generateJson} sx={{ mt: 2 }}>
-        Generate JSON
+        UPLOAD DATA
       </Button>
     </div>
   );
