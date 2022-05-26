@@ -19,7 +19,6 @@ import { ProtectedRoute, AuthRoute } from './modules/ProtectedRoutes';
 import Dashboard from './pages/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 import { useLocalStorage } from './modules/LocalStorage';
 
 function App() {
