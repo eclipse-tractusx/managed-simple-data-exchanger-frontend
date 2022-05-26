@@ -162,6 +162,48 @@ const Dashboard: React.FC = () => {
     }, 1000);
   };
 
+  const processingReport = (r: { data: ProcessReport }, processId: string) => {
+    setUploadData(r.data);
+    if (r && r.data && r.data.status !== Status.completed && r.data.status !== Status.failed) {
+      // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
+      const interval = setInterval(
+        () =>
+          dft.get(`/processing-report/${processId}`).then(result => {
+            setUploadData(result.data);
+            if (
+              result &&
+              result.data &&
+              (result.data.status === Status.completed || result.data.status === Status.failed)
+            ) {
+              clearInterval(interval);
+              clearUpload();
+            }
+          }),
+        2000,
+      );
+    } else {
+      clearUpload();
+    }
+  };
+
+  const processingReportFirstCall = (processId: string) => {
+    setTimeout(() => {
+      dft
+        .get(`/processing-report/${processId}`)
+        .then(r => {
+          processingReport(r, processId);
+        })
+        .catch(error => {
+          // if process id not ready - repeat request
+          if (error.response.status === 404) {
+            processingReportFirstCall(processId);
+          } else {
+            clearUpload();
+          }
+        });
+    }, 2000);
+  };
+
   // eslint-disable-next-line
   const uploadFile = (e: any) => {
     e.preventDefault();
@@ -187,29 +229,7 @@ const Dashboard: React.FC = () => {
         const processId = resp.data;
 
         // first call
-        dft.get(`/processing-report/${processId}`).then(r => {
-          setUploadData(r.data);
-          if (r && r.data && r.data.status !== Status.completed && r.data.status !== Status.failed) {
-            // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 10 seconds to refresh data
-            const interval = setInterval(
-              () =>
-                dft.get(`/processing-report/${processId}`).then(result => {
-                  setUploadData(result.data);
-                  if (
-                    result &&
-                    result.data &&
-                    (result.data.status === Status.completed || result.data.status === Status.failed)
-                  ) {
-                    clearInterval(interval);
-                    clearUpload();
-                  }
-                }),
-              2000,
-            );
-          } else {
-            clearUpload();
-          }
-        });
+        processingReportFirstCall(processId);
       })
       .catch(() => {
         setUploadData({ ...currentUploadData, status: Status.failed });
