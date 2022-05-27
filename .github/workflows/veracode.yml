@@ -22,7 +22,7 @@ jobs:
       - name: Veracode Upload And Scan
         uses: veracode/veracode-uploadandscan-action@0.2.1
         with:
-          appname: 'Product DFT Frontend'
+          appname: 'DFT Frontend'
           createprofile: false
           filepath: 'product-dft-frontend.zip'
           vid: '${{ secrets.ORG_VERACODE_API_ID }}'
