@@ -65,8 +65,30 @@ On the left side menu, it is possible to navigate the DFT application by choosin
 
 ## Upload file
 
+<img src="images/upload-file.png" height="60%" width="60%" />
+
+In this menu you can upload your CSV files.
+You can click on the button "Choose a file" and select you file or you can just drop your file on this page.
+After file selection you need to click on the button "Upload file" and wait for upload to finish.
+
 ## Upload history
 
+<img src="images/upload-history.png" height="60%" width="60%" />
+
+In this menu you can see a table with upload history.
+The table has the following columns columns:
+- Process Id (id of process);
+- CSV Type (ASPECT or ASPECT_RELATIONSHIP);
+- Number of Items (total number of CSV lines);
+- Number of Failed Items (number of failed items);
+- Start Date (start date of upload history);
+- Duration (duration of uplaod);
+
 ## Help
+
+<img src="images/help.png" height="60%" width="60%" />
+
+In this menu you can see the rules of content (.csv files), the field's name and type (mandatory or not) and you can download the sample or copy the headers for clipboard.
+
 
 [-- End of 'Features' section --]: # 
