@@ -33,6 +33,7 @@
   "scripts": {
     "start": "npm run format && npm run lint && react-scripts start ",
     "build": "react-scripts build",
+    "build:sources": "zip -r product-dft-frontend.zip src package.json **/package.json package-lock.json -x",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src",
