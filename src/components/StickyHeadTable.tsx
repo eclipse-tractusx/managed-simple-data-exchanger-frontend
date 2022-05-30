@@ -84,10 +84,15 @@ export default function StickyHeadTable({
   page = 0,
   rowsPerPage = 10,
   totalElements = 0,
-  setPage = (_p: number) => { /* This is itentional */ },
-  setRowsPerPage = (_r: number) => { /* This is itentional */ },
+  // eslint-disable-next-line
+  setPage = (_p: number) => {
+    /* This is itentional */
+  },
+  // eslint-disable-next-line
+  setRowsPerPage = (_r: number) => {
+    /* This is itentional */
+  },
 }) {
-
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };

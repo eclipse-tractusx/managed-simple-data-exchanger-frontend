@@ -338,7 +338,7 @@ const Dashboard: React.FC = () => {
                     <CircularProgress size={100} />
                     <Timer />
                     <span>
-                      Upload started at:
+                      Upload started at: &nbsp;
                       {currentUploadData.startDate && formatDate(currentUploadData.startDate)}
                       {!currentUploadData.startDate && '-'}
                     </span>
