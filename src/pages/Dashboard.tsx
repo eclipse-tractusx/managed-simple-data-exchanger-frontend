@@ -14,7 +14,7 @@
 
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import Nav from '../components/NavBar';
+import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
 import Timer from '../components/Timer';
 import UploadForm from '../components/UploadForm';
@@ -28,7 +28,7 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import CloseIcon from '@mui/icons-material/Close';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import StickyHeadTable from '../components/Table';
+import StickyHeadTable from '../components/StickyHeadTable';
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Button, { ButtonProps } from '@mui/material/Button';
@@ -338,7 +338,9 @@ const Dashboard: React.FC = () => {
                     <CircularProgress size={100} />
                     <Timer />
                     <span>
-                      Upload started at: {currentUploadData.startDate ? formatDate(currentUploadData.startDate) : '-'}
+                      Upload started at:
+                      {currentUploadData.startDate && formatDate(currentUploadData.startDate)}
+                      {!currentUploadData.startDate && '-'}
                     </span>
                   </div>
                 ) : null}
