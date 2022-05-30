@@ -13,8 +13,8 @@
 // limitations under the License.~
 
 import SHA256 from 'crypto-js/sha256';
-const getHash = (input: string): string => {
+const hash = (input: string): string => {
   return SHA256(input).toString();
 };
 
-export default getHash;
+export default hash;
