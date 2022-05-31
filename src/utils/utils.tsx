@@ -21,6 +21,5 @@ export function formatDate(isoDate: string) {
   const hours = date.getHours() > 9 ? date.getHours() : '0' + date.getHours();
   const minutes = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes();
   const seconds = date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds();
-  const formattedTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-  return formattedTime;
+  return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
