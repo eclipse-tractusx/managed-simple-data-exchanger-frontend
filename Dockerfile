@@ -28,4 +28,4 @@ RUN apk add --no-cache bash
 
 # Start Nginx server
 CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
-USER 606
+USER 700
