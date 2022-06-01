@@ -24,5 +24,5 @@ export interface DynamicTableColumn {
   flex: number;
   headerAlign: 'center' | 'right' | 'left';
   type?: 'singleSelect' | 'date';
-  valueOptions?: { value: string, label: string }[];
+  valueOptions?: { value: string; label: string }[];
 }

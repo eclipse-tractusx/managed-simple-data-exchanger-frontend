@@ -17,6 +17,7 @@ import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import HelpIcon from '@mui/icons-material/Help';
 import styles from '../styles.module.scss';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 // eslint-disable-next-line
 const Sidebar = (props: any) => {
@@ -55,13 +56,16 @@ const Sidebar = (props: any) => {
               data-testid="uploadFileMenu"
               onClick={() => getMenuIndex(1)}
             >
-              <BackupOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 1 ? styles.blue : styles.black}` }} />
+              <AddCircleOutlineIcon
+                fontSize="small"
+                sx={{ color: `${menuIndex === 1 ? styles.blue : styles.black}` }}
+              />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'
                 } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
               >
-                Upload dynamic data
+                Create data
               </p>
             </li>
             <li

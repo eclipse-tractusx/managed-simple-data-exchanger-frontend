@@ -14,16 +14,17 @@
 
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { IconButton, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import * as Countries from '../helpers/Countries';
+import Swal from 'sweetalert2';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
-import Swal from 'sweetalert2';
+import dft from '../api/dft';
 
-export default function DynamicTable() {
+const columnsData: DynamicTableColumn[] = [];
+
+export default function DynamicTable({ columns = columnsData, headerHeight = 60, submitUrl = '/aspect' }) {
   const [rows, setRows] = React.useState([]);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
@@ -123,110 +124,6 @@ export default function DynamicTable() {
   }));
   // end styles
 
-  const columns: DynamicTableColumn[] = [
-    {
-      field: 'uuid',
-      headerName: 'UUID',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-      renderCell: (params: { id: number; value: string }) => {
-        return (
-          <div>
-            {params.value === '' && (
-              <IconButton onClick={() => generateUUID(params.id)} title="Generate UUID">
-                <AutoFixHighIcon sx={{ fontSize: 20 }} />
-              </IconButton>
-            )}
-            {params.value !== '' && params.value}
-          </div>
-        );
-      },
-    },
-    {
-      field: 'part_instance_id',
-      headerName: 'Part Instance ID*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'manufacturing_date',
-      headerName: 'Manufacturing Date*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      type: 'date',
-      headerAlign: 'center',
-    },
-    {
-      field: 'manufacturing_country',
-      headerName: 'Manufacturing Country',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-      type: 'singleSelect',
-      valueOptions: Countries.list,
-    },
-    {
-      field: 'manufacturer_part_id',
-      headerName: 'Manufacturer Part ID*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'customer_part_id',
-      headerName: 'Customer Part ID',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'classification',
-      headerName: 'Classification*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'name_at_manufacturer',
-      headerName: 'Name at Manufacturer*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'optional_identifier_key',
-      headerName: 'Optional Identifier Key',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-      type: 'singleSelect',
-      valueOptions: [
-        { value: '', label: 'Empty' },
-        { value: 'VAN', label: 'VAN' },
-        { value: 'BatchID', label: 'BatchID' },
-      ],
-    },
-    {
-      field: 'optional_identifier_value',
-      headerName: 'Optional Identifier Value',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-  ];
-
   // eslint-disable-next-line
   const onCellEditCommit = (event: any) => {
     const auxRows = JSON.parse(JSON.stringify(rows));
@@ -253,7 +150,7 @@ export default function DynamicTable() {
     });
   };
 
-  const generateJson = () => {
+  const submitData = () => {
     if (rows && rows.length > 0) {
       for (const r of rows) {
         if (
@@ -266,6 +163,11 @@ export default function DynamicTable() {
           (r.optional_identifier_value !== '' && r.optional_identifier_key === '')
         ) {
           getInvalidDataMessage();
+        } else {
+          console.log('rows', rows);
+          dft.post(submitUrl, rows).then(response => {
+            // TODO
+          });
         }
       }
     } else {
@@ -287,6 +189,7 @@ export default function DynamicTable() {
         autoHeight={false}
         columns={columns}
         rows={rows}
+        headerHeight={headerHeight}
         disableColumnMenu={true}
         hideFooter={true}
         checkboxSelection={true}
@@ -305,8 +208,8 @@ export default function DynamicTable() {
         }}
       />
       <div> * Mandatory </div>
-      <Button variant="outlined" onClick={generateJson} sx={{ mt: 2 }}>
-        UPLOAD DATA
+      <Button variant="outlined" onClick={submitData} sx={{ mt: 2 }}>
+        SUBMIT DATA
       </Button>
     </div>
   );
