@@ -17,23 +17,27 @@ import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, AuthRoute } from './modules/ProtectedRoutes';
 import Dashboard from './pages/Dashboard';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useLocalStorage } from './modules/LocalStorage';
 
 function App() {
   const [isAuth, setIsAuth] = useLocalStorage('auth', false);
   const [isAuthError, setIsAuthError] = useState(false);
   return (
-    <Routes>
-      <Route
-        path="/login"
-        element={<Login setIsAuth={setIsAuth} setIsAuthError={setIsAuthError} isAuthError={isAuthError} />}
-      />
-      <Route path="/" element={<AuthRoute isAuth={isAuth} />}></Route>
-      <Route element={<ProtectedRoute isAuth={isAuth} />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
-    </Routes>
+    <div>
+      <Routes>
+        <Route
+          path="/login"
+          element={<Login setIsAuth={setIsAuth} setIsAuthError={setIsAuthError} isAuthError={isAuthError} />}
+        />
+        <Route path="/" element={<AuthRoute isAuth={isAuth} />}></Route>
+        <Route element={<ProtectedRoute isAuth={isAuth} />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+      </Routes>
+      <ToastContainer />
+    </div>
   );
 }
 

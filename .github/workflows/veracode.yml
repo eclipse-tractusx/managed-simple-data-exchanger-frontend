@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Veracode 
+
+# run on manual trigger or once a week
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
+    
+jobs:
+  static_analysis:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out main branch
+        uses: actions/checkout@v2
+
+      - name: Zip Sources for Static Analysis
+        run: yarn build:sources
+        
+      - name: Veracode Upload And Scan
+        uses: veracode/veracode-uploadandscan-action@0.2.1
+        with:
+          appname: 'DFT Frontend'
+          createprofile: false
+          filepath: 'product-dft-frontend.zip'
+          vid: '${{ secrets.ORG_VERACODE_API_ID }}'
+          vkey: '${{ secrets.ORG_VERACODE_API_KEY }}' 

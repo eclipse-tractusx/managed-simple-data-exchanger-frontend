@@ -17,8 +17,8 @@ import { Refresh } from '@mui/icons-material';
 import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
-import StickyHeadTable from '../components/Table';
 import { ProcessReport } from '../models/ProcessReport';
+import StickyHeadTable from '../components/StickyHeadTable';
 import dft from '../api/dft';
 import styles from '../styles.module.scss';
 

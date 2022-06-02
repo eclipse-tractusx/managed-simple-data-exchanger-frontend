@@ -28,12 +28,12 @@
 
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import NavBar from '../components/NavBar';
+import Nav from '../components/Nav';
 
 test('render navbar', () => {
   render(
     <MemoryRouter>
-      <NavBar getIsExpanded={true} />
+      <Nav getIsExpanded={true} />
     </MemoryRouter>,
   );
   const text = screen.getByText('Data Format Transformation');
