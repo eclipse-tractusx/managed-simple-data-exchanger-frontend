@@ -14,7 +14,7 @@
 
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, IconButton } from '@mui/material';
+import { Box, Button, Card, CardContent, IconButton, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
@@ -30,6 +30,41 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
   const [rows, setRows] = React.useState([]);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
+
+  // styles
+  const ODD_OPACITY = 0.2;
+
+  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+    [`& .${gridClasses.row}.even`]: {
+      backgroundColor: theme.palette.grey[200],
+      '&:hover, &.Mui-hovered': {
+        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+        '@media (hover: none)': {
+          backgroundColor: 'transparent',
+        },
+      },
+      '&.Mui-selected': {
+        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
+        '&:hover, &.Mui-hovered': {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity,
+          ),
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
+          },
+        },
+      },
+    },
+  }));
+
+  const rulesCardStyle = {
+    display: 'block',
+    transitionDuration: '0.3s',
+    height: '116px',
+  };
+  // end styles
 
   const generateUUID = (rowId: number, field: string) => {
     console.log('generate', rows, rowId);
@@ -57,14 +92,14 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
       headerAlign: 'center',
       renderCell: (params: { id: number; value: string }) => {
         return (
-          <div>
+          <Typography variant="inherit" noWrap>
             {params.value === '' && (
               <IconButton onClick={() => generateUUID(params.id, 'uuid')} title="Generate UUID">
                 <AutoFixHighIcon sx={{ fontSize: 20 }} />
               </IconButton>
             )}
             {params.value !== '' && params.value}
-          </div>
+          </Typography>
         );
       },
     };
@@ -82,14 +117,14 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
       headerAlign: 'center',
       renderCell: (params: { id: number; value: string }) => {
         return (
-          <div>
+          <Typography variant="inherit" noWrap>
             {params.value === '' && (
               <IconButton onClick={() => generateUUID(params.id, 'parent_uuid')} title="Generate UUID">
                 <AutoFixHighIcon sx={{ fontSize: 20 }} />
               </IconButton>
             )}
             {params.value !== '' && params.value}
-          </div>
+          </Typography>
         );
       },
     };
@@ -129,11 +164,12 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
   };
 
   const deleteSelectedRows = () => {
-    const auxRows = Object.assign([], rows);
+    const auxRows = JSON.parse(JSON.stringify(rows));
 
     if (selectionModel.length > 0) {
       for (const s of selectionModel) {
-        const index = auxRows.findIndex(a => a.id === s);
+        // eslint-disable-next-line
+        const index = auxRows.findIndex((a: any) => a.id === s);
         if (index !== -1) {
           auxRows.splice(index, 1);
         }
@@ -143,44 +179,15 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
     setRows(auxRows);
   };
 
-  // styles
-  const ODD_OPACITY = 0.2;
-
-  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-    [`& .${gridClasses.row}.even`]: {
-      backgroundColor: theme.palette.grey[200],
-      '&:hover, &.Mui-hovered': {
-        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-        '@media (hover: none)': {
-          backgroundColor: 'transparent',
-        },
-      },
-      '&.Mui-selected': {
-        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
-        '&:hover, &.Mui-hovered': {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity,
-          ),
-          // Reset on touch devices, it doesn't add specificity
-          '@media (hover: none)': {
-            backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
-          },
-        },
-      },
-    },
-  }));
-  // end styles
-
   // eslint-disable-next-line
   const onCellEditCommit = (event: any) => {
     const auxRows = JSON.parse(JSON.stringify(rows));
     const index = rows.findIndex(r => r.id === event.id);
     if (index !== -1) {
       if (auxRows[index].hasOwnProperty(event.field)) {
-        const f = event.field as keyof SerialPartTypization;
+        const f = event.field as keyof SerialPartTypization | keyof AssemblyPartRelationship;
         auxRows[index][f] =
-          f === 'uuid' && event.value !== '' && !event.value.startsWith('urn:uuid:')
+          (f === 'uuid' || f === 'parent_uuid') && event.value !== '' && !event.value.startsWith('urn:uuid:')
             ? `urn:uuid:${event.value}`
             : event.value;
       }
@@ -192,7 +199,7 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
   const getInvalidDataMessage = () => {
     return Swal.fire({
       title: 'Invalid data!',
-      html: '<p> Part Instance ID, Manufacturing Date, Manufacturer Part ID, Classification and Name of Manufacturer fields are required. </p> <p> Optional Identifier Value and Optional Identifier Key must either be empty or both filled.',
+      html: '<p> Fields with * are required. </p> <p> Optional value(s) and Optional key(s) must either be empty or both filled. </p>',
       icon: 'error',
       confirmButtonColor: '#01579b',
     });
@@ -209,8 +216,17 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
           r.manufacturer_part_id === '' ||
           r.classification === '' ||
           r.name_at_manufacturer === '' ||
+          r.parent_part_instance_id === '' ||
+          r.parent_manufacturer_part_id === '' ||
+          r.lifecycle_context === '' ||
+          r.quantity_number === '' ||
+          r.measurement_unit_lexical_value === '' ||
+          r.datatype_uri === '' ||
+          r.assembled_on === '' ||
           (r.optional_identifier_value === '' && r.optional_identifier_key !== '') ||
-          (r.optional_identifier_value !== '' && r.optional_identifier_key === '')
+          (r.optional_identifier_value !== '' && r.optional_identifier_key === '') ||
+          (r.optional_parent_optional_identifier_key === '' && r.parent_optional_identifier_value !== '') ||
+          (r.parent_optional_identifier_key !== '' && r.parent_optional_identifier_value === '')
         ) {
           getInvalidDataMessage();
         } else {
@@ -223,10 +239,9 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
             });
           });
 
-          console.log('auxRows', auxRows);
-          /* dft.post(submitUrl, auxRows).then(response => {
+          dft.post(submitUrl, auxRows).then(response => {
             console.log('response', response);
-          }); */
+          });
         }
       }
     } else {
@@ -235,14 +250,23 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
   };
 
   return (
-    <div style={{ width: '100%', height: 108 + 6 * 52 + 'px' }}>
-      <Button variant="outlined" onClick={addRows} sx={{ mb: 2 }}>
-        Add rows(s)
-      </Button>
-      &nbsp;
-      <Button variant="outlined" onClick={deleteSelectedRows} sx={{ mb: 2 }}>
-        Delete row(s)
-      </Button>
+    <div style={{ width: '100%', height: 80 + 6 * 52 + 'px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box textAlign="start">
+          <Button variant="outlined" onClick={addRows} sx={{ mb: 2 }}>
+            Add rows(s)
+          </Button>
+          &nbsp;
+          <Button variant="outlined" onClick={deleteSelectedRows} sx={{ mb: 2 }}>
+            Delete row(s)
+          </Button>
+        </Box>
+        <Box textAlign="end">
+          <Button variant="contained" onClick={submitData} sx={{ mb: 2 }}>
+            Submit Data
+          </Button>
+        </Box>
+      </div>
       <StripedDataGrid
         getRowId={row => row.id}
         autoHeight={false}
@@ -266,10 +290,18 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
           },
         }}
       />
-      <div> * Mandatory </div>
-      <Button variant="outlined" onClick={submitData} sx={{ mt: 2 }}>
-        SUBMIT DATA
-      </Button>
+      &nbsp;
+      <Card style={rulesCardStyle}>
+        <CardContent>
+          <h3>
+            <b> Rules </b>
+          </h3>
+          <ul>
+            <li> &bull; Fields with * are required. </li>
+            <li> &bull; Optional value(s) and Optional key(s) must either be empty or both filled.</li>
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 }
