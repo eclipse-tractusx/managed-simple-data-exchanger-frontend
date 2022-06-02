@@ -32,13 +32,7 @@ export function getSerialPartTypizationColumns() {
 
   auxArray.push(
     getObject('manufacturing_date', 'Manufacturing Date*', 'center', 'date'),
-    getObject(
-      'manufacturing_country',
-      'Manufacturing Country',
-      'center',
-      'singleSelect',
-      Countries.list,
-    ),
+    getObject('manufacturing_country', 'Manufacturing Country', 'center', 'singleSelect', Countries.list),
     getObject('manufacturer_part_id', 'Manufacturer Part ID*', 'center'),
     getObject('customer_part_id', 'Customer Part ID', 'center'),
     getObject('classification', 'Classification', 'center'),

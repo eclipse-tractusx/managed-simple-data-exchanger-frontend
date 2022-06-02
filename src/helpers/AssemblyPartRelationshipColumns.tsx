@@ -33,17 +33,11 @@ export function getAssemblyPartRelationshipColumns() {
     getObject('parent_uuid', 'Parent UUID', 'center'),
     getObject('parent_part_instance_id', 'Parent Part Instance ID*', 'center'),
     getObject('parent_manufacturer_part_id', 'Parent Manufacturer Part ID*', 'center'),
-    getObject(
-      'parent_optional_identifier_key',
-      'Parent Optional Identifier Key',
-      'center',
-      'singleSelect',
-      [
-        { value: '', label: 'Empty' },
-        { value: 'VAN', label: 'VAN' },
-        { value: 'BatchID', label: 'BatchID' },
-      ],
-    ),
+    getObject('parent_optional_identifier_key', 'Parent Optional Identifier Key', 'center', 'singleSelect', [
+      { value: '', label: 'Empty' },
+      { value: 'VAN', label: 'VAN' },
+      { value: 'BatchID', label: 'BatchID' },
+    ]),
     getObject('parent_optional_identifier_value', 'Parent Optional Identifier Value', 'center'),
     getObject('lifecycle_context', 'Lifecycle Context*', 'center'),
     getObject('quantity_number', 'Quantity Number*', 'center'),
