@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
-import * as Countries from '../helpers/Countries';
 
 export const assemblyPartRelationshipColumns: DynamicTableColumn[] = [
   {
@@ -23,18 +22,6 @@ export const assemblyPartRelationshipColumns: DynamicTableColumn[] = [
     sortable: false,
     flex: 1,
     headerAlign: 'center',
-    /* renderCell: (params: { id: number; value: string }) => {
-        return (
-          <div>
-            {params.value === '' && (
-              <IconButton onClick={() => generateUUID(params.id)} title="Generate UUID">
-                <AutoFixHighIcon sx={{ fontSize: 20 }} />
-              </IconButton>
-            )}
-            {params.value !== '' && params.value}
-          </div>
-        );
-      }, */
   },
   {
     field: 'parent_part_instance_id',
@@ -59,6 +46,12 @@ export const assemblyPartRelationshipColumns: DynamicTableColumn[] = [
     sortable: false,
     flex: 1,
     headerAlign: 'center',
+    type: 'singleSelect',
+    valueOptions: [
+      { value: '', label: 'Empty' },
+      { value: 'VAN', label: 'VAN' },
+      { value: 'BatchID', label: 'BatchID' },
+    ],
   },
   {
     field: 'parent_optional_identifier_value',
@@ -75,18 +68,6 @@ export const assemblyPartRelationshipColumns: DynamicTableColumn[] = [
     sortable: false,
     flex: 1,
     headerAlign: 'center',
-    /* renderCell: (params: { id: number; value: string }) => {
-        return (
-          <div>
-            {params.value === '' && (
-              <IconButton onClick={() => generateUUID(params.id)} title="Generate UUID">
-                <AutoFixHighIcon sx={{ fontSize: 20 }} />
-              </IconButton>
-            )}
-            {params.value !== '' && params.value}
-          </div>
-        );
-      }, */
   },
   {
     field: 'part_instance_id',

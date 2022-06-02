@@ -27,7 +27,6 @@ import Notification from '../components/Notification';
 
 // icons
 import { HighlightOffOutlined, ReportGmailerrorredOutlined } from '@mui/icons-material';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import CloseIcon from '@mui/icons-material/Close';
 import CircularProgress from '@mui/material/CircularProgress';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';

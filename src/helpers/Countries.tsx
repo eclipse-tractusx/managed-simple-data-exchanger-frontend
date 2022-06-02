@@ -13,6 +13,7 @@
 // limitations under the License.
 
 export const list = [
+  { value: '', label: 'Empty' },
   { value: 'AUS', label: 'Australia' },
   { value: 'ALB', label: 'Albania' },
   { value: 'DZA', label: 'Algeria' },

@@ -23,18 +23,6 @@ export const serialPartTypizationColumns: DynamicTableColumn[] = [
     sortable: false,
     flex: 1,
     headerAlign: 'center',
-    /* renderCell: (params: { id: number; value: string }) => {
-        return (
-          <div>
-            {params.value === '' && (
-              <IconButton onClick={() => generateUUID(params.id)} title="Generate UUID">
-                <AutoFixHighIcon sx={{ fontSize: 20 }} />
-              </IconButton>
-            )}
-            {params.value !== '' && params.value}
-          </div>
-        );
-      }, */
   },
   {
     field: 'part_instance_id',
@@ -90,6 +78,14 @@ export const serialPartTypizationColumns: DynamicTableColumn[] = [
   {
     field: 'name_at_manufacturer',
     headerName: 'Name at Manufacturer*',
+    editable: true,
+    sortable: false,
+    flex: 1,
+    headerAlign: 'center',
+  },
+  {
+    field: 'name_at_customer',
+    headerName: 'Name at customer',
     editable: true,
     sortable: false,
     flex: 1,

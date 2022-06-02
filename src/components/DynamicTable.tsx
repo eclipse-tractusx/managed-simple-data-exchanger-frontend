@@ -14,12 +14,14 @@
 
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
+import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import dft from '../api/dft';
 
 const columnsData: DynamicTableColumn[] = [];
@@ -29,8 +31,72 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
 
+  const generateUUID = (rowId: number, field: string) => {
+    console.log('generate', rows, rowId);
+    const auxRows = JSON.parse(JSON.stringify(rows));
+
+    for (const r of auxRows) {
+      if (r.id === rowId) {
+        r[field] = `urn:uuid:${uuidv4()}`;
+      }
+    }
+
+    console.log('auxRows', auxRows);
+    setRows(auxRows);
+  };
+
+  // add button to generate uuid
+  const findIndex = columns.findIndex(c => c.field === 'uuid');
+  if (findIndex !== -1) {
+    columns[findIndex] = {
+      field: 'uuid',
+      headerName: 'UUID',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+      renderCell: (params: { id: number; value: string }) => {
+        return (
+          <div>
+            {params.value === '' && (
+              <IconButton onClick={() => generateUUID(params.id, 'uuid')} title="Generate UUID">
+                <AutoFixHighIcon sx={{ fontSize: 20 }} />
+              </IconButton>
+            )}
+            {params.value !== '' && params.value}
+          </div>
+        );
+      },
+    };
+  }
+
+  // add button to generate parent_uuid
+  const findIndx = columns.findIndex(c => c.field === 'parent_uuid');
+  if (findIndx !== -1) {
+    columns[findIndx] = {
+      field: 'parent_uuid',
+      headerName: 'Parent UUID',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+      renderCell: (params: { id: number; value: string }) => {
+        return (
+          <div>
+            {params.value === '' && (
+              <IconButton onClick={() => generateUUID(params.id, 'parent_uuid')} title="Generate UUID">
+                <AutoFixHighIcon sx={{ fontSize: 20 }} />
+              </IconButton>
+            )}
+            {params.value !== '' && params.value}
+          </div>
+        );
+      },
+    };
+  }
+
   const addRows = () => {
-    const newRows: SerialPartTypization[] = [];
+    const newRows: SerialPartTypization[] | AssemblyPartRelationship[] = [];
 
     Swal.fire({
       title: 'Insert number of rows',
@@ -43,37 +109,19 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
       },
     }).then(result => {
       for (let i = 0; i < Number(result.value); i++) {
-        newRows.push({
-          id: id + (i + 1),
-          uuid: '',
-          part_instance_id: '',
-          manufacturing_date: '',
-          manufacturing_country: '',
-          manufacturer_part_id: '',
-          customer_part_id: '',
-          classification: '',
-          name_at_manufacturer: '',
-          name_at_customer: '',
-          optional_identifier_key: '',
-          optional_identifier_value: '',
-        });
+        // eslint-disable-next-line
+        const newRow: any = { id: id + (i + 1) };
+
+        for (const c of columns) {
+          newRow[c.field] = '';
+        }
+
+        newRows.push(newRow);
       }
 
       setRows(prevRows => prevRows.concat(newRows));
       setId(id + Number(result.value));
     });
-  };
-
-  const generateUUID = (rowId: number) => {
-    const auxRows = Object.assign([], rows);
-
-    for (const r of auxRows) {
-      if (r.id === rowId) {
-        r.uuid = `urn:uuid:${uuidv4()}`;
-      }
-    }
-
-    setRows(auxRows);
   };
 
   const onSelectionChange = (newSelectionModel: GridSelectionModel) => {
@@ -151,6 +199,8 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
   };
 
   const submitData = () => {
+    const auxRows = JSON.parse(JSON.stringify(rows));
+
     if (rows && rows.length > 0) {
       for (const r of rows) {
         if (
@@ -164,10 +214,19 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
         ) {
           getInvalidDataMessage();
         } else {
-          console.log('rows', rows);
-          dft.post(submitUrl, rows).then(response => {
-            // TODO
+          // eslint-disable-next-line
+          auxRows.forEach((r: any) => {
+            Object.keys(r).forEach(k => {
+              if (r[k] === '') {
+                r[k] = null;
+              }
+            });
           });
+
+          console.log('auxRows', auxRows);
+          /* dft.post(submitUrl, auxRows).then(response => {
+            console.log('response', response);
+          }); */
         }
       }
     } else {

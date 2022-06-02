@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import React from 'react';
-import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs } from '@mui/material';
 import DynamicTable from '../components/DynamicTable';
 import { serialPartTypizationColumns } from '../helpers/SerialPartTypizationColumns';
 import { assemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
@@ -44,7 +44,7 @@ export const CreateData: React.FC = () => {
       >
         {value === index && (
           <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
+            <span>{children}</span>
           </Box>
         )}
       </div>
