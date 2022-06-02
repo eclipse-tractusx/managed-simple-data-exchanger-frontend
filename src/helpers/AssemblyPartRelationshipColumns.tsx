@@ -15,97 +15,47 @@
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { commonColumns } from './CommonColumns';
 
+function getObject(
+  field: string,
+  headerName: string,
+  editable: boolean,
+  sortable: boolean,
+  flex: number,
+  headerAlign: string,
+  type?: string,
+  valueOptions?: { value: string; label: string }[],
+) {
+  return { field, headerName, editable, sortable, flex, type, headerAlign, valueOptions };
+}
+
 export function getAssemblyPartRelationshipColumns() {
   const assemblyPartRelationshipColumns: DynamicTableColumn[] = commonColumns;
   const auxArray = JSON.parse(JSON.stringify(assemblyPartRelationshipColumns));
 
   auxArray.push(
-    {
-      field: 'parent_uuid',
-      headerName: 'Parent UUID',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'parent_part_instance_id',
-      headerName: 'Parent Part Instance ID*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'parent_manufacturer_part_id',
-      headerName: 'Parent Manufacturer Part ID*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'parent_optional_identifier_key',
-      headerName: 'Parent Optional Identifier Key',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-      type: 'singleSelect',
-      valueOptions: [
+    getObject('parent_uuid', 'Parent UUID', true, false, 1, 'center'),
+    getObject('parent_part_instance_id', 'Parent Part Instance ID*', true, false, 1, 'center'),
+    getObject('parent_manufacturer_part_id', 'Parent Manufacturer Part ID*', true, false, 1, 'center'),
+    getObject(
+      'parent_optional_identifier_key',
+      'Parent Optional Identifier Key',
+      true,
+      false,
+      1,
+      'center',
+      'singleSelect',
+      [
         { value: '', label: 'Empty' },
         { value: 'VAN', label: 'VAN' },
         { value: 'BatchID', label: 'BatchID' },
       ],
-    },
-    {
-      field: 'parent_optional_identifier_value',
-      headerName: 'Parent Optional Identifier Value',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'lifecycle_context',
-      headerName: 'Lifecycle Context*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'quantity_number',
-      headerName: 'Quantity Number*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'measurement_unit_lexical_value',
-      headerName: 'Measurement Unit Lexical Value*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'datatype_uri',
-      headerName: 'Datatype URI*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'assembled_on',
-      headerName: 'Assembled On*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
+    ),
+    getObject('parent_optional_identifier_value', 'Parent Optional Identifier Value', true, false, 1, 'center'),
+    getObject('lifecycle_context', 'Lifecycle Context*', true, false, 1, 'center'),
+    getObject('quantity_number', 'Quantity Number*', true, false, 1, 'center'),
+    getObject('measurement_unit_lexical_value', 'Measurement Unit Lexical Value*', true, false, 1, 'center'),
+    getObject('datatype_uri', 'Datatype URI*', true, false, 1, 'center'),
+    getObject('assembled_on', 'Assembled On*', true, false, 1, 'center'),
   );
 
   return auxArray;

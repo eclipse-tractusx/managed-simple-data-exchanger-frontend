@@ -16,70 +16,40 @@ import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import * as Countries from '../helpers/Countries';
 import { commonColumns } from './CommonColumns';
 
+function getObject(
+  field: string,
+  headerName: string,
+  editable: boolean,
+  sortable: boolean,
+  flex: number,
+  headerAlign: string,
+  type?: string,
+  valueOptions?: { value: string; label: string }[],
+) {
+  return { field, headerName, editable, sortable, flex, type, headerAlign, valueOptions };
+}
+
 export function getSerialPartTypizationColumns() {
   const serialPartTypizationColumns: DynamicTableColumn[] = commonColumns;
   const auxArray = JSON.parse(JSON.stringify(serialPartTypizationColumns));
 
   auxArray.push(
-    {
-      field: 'manufacturing_date',
-      headerName: 'Manufacturing Date*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      type: 'date',
-      headerAlign: 'center',
-    },
-    {
-      field: 'manufacturing_country',
-      headerName: 'Manufacturing Country',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-      type: 'singleSelect',
-      valueOptions: Countries.list,
-    },
-    {
-      field: 'manufacturer_part_id',
-      headerName: 'Manufacturer Part ID*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'customer_part_id',
-      headerName: 'Customer Part ID',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'classification',
-      headerName: 'Classification*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'name_at_manufacturer',
-      headerName: 'Name at Manufacturer*',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
-    {
-      field: 'name_at_customer',
-      headerName: 'Name at customer',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-    },
+    getObject('manufacturing_date', 'Manufacturing Date*', true, false, 1, 'center', 'date'),
+    getObject(
+      'manufacturing_country',
+      'Manufacturing Country',
+      true,
+      false,
+      1,
+      'center',
+      'singleSelect',
+      Countries.list,
+    ),
+    getObject('manufacturer_part_id', 'Manufacturer Part ID*', true, false, 1, 'center'),
+    getObject('customer_part_id', 'Customer Part ID', true, false, 1, 'center'),
+    getObject('classification', 'Classification', true, false, 1, 'center'),
+    getObject('name_at_manufacturer', 'Name at Manufacturer*', true, false, 1, 'center'),
+    getObject('name_at_customer', 'Name at customer', true, false, 1, 'center'),
   );
 
   return auxArray;
