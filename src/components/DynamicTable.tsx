@@ -78,21 +78,19 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
     setRows(auxRows);
   };
 
-  // add button to generate uuid
-  const findIndex = columns.findIndex(c => c.field === 'uuid');
-  if (findIndex !== -1) {
-    columns[findIndex] = {
-      field: 'uuid',
-      headerName: 'UUID',
+  const getRenderCell = (field: string, headerName: string, headerAlign: 'left' | 'right' | 'center') => {
+    return {
+      field,
+      headerName,
       editable: true,
       sortable: false,
       flex: 1,
-      headerAlign: 'center',
+      headerAlign,
       renderCell: (params: { id: number; value: string }) => {
         return (
           <Typography variant="inherit" noWrap>
             {params.value === '' && (
-              <IconButton onClick={() => generateUUID(params.id, 'uuid')} title="Generate UUID">
+              <IconButton onClick={() => generateUUID(params.id, field)} title="Generate UUID">
                 <AutoFixHighIcon sx={{ fontSize: 20 }} />
               </IconButton>
             )}
@@ -101,31 +99,18 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
         );
       },
     };
+  };
+
+  // add button to generate uuid
+  const findIndex = columns.findIndex(c => c.field === 'uuid');
+  if (findIndex !== -1) {
+    columns[findIndex] = getRenderCell('uuid', 'UUID', 'center');
   }
 
   // add button to generate parent_uuid
   const findIndx = columns.findIndex(c => c.field === 'parent_uuid');
   if (findIndx !== -1) {
-    columns[findIndx] = {
-      field: 'parent_uuid',
-      headerName: 'Parent UUID',
-      editable: true,
-      sortable: false,
-      flex: 1,
-      headerAlign: 'center',
-      renderCell: (params: { id: number; value: string }) => {
-        return (
-          <Typography variant="inherit" noWrap>
-            {params.value === '' && (
-              <IconButton onClick={() => generateUUID(params.id, 'parent_uuid')} title="Generate UUID">
-                <AutoFixHighIcon sx={{ fontSize: 20 }} />
-              </IconButton>
-            )}
-            {params.value !== '' && params.value}
-          </Typography>
-        );
-      },
-    };
+    columns[findIndx] = getRenderCell('parent_uuid', 'Parent UUID', 'center');
   }
 
   const addRows = () => {
