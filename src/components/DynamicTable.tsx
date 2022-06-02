@@ -223,7 +223,7 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
           r.assembled_on === '' ||
           (r.optional_identifier_value === '' && r.optional_identifier_key !== '') ||
           (r.optional_identifier_value !== '' && r.optional_identifier_key === '') ||
-          (r.optional_parent_optional_identifier_key === '' && r.parent_optional_identifier_value !== '') ||
+          (r.parent_optional_identifier_key === '' && r.parent_optional_identifier_value !== '') ||
           (r.parent_optional_identifier_key !== '' && r.parent_optional_identifier_value === '')
         ) {
           getInvalidDataMessage();

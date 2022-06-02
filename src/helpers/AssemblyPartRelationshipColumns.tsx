@@ -18,14 +18,11 @@ import { commonColumns } from './CommonColumns';
 function getObject(
   field: string,
   headerName: string,
-  editable: boolean,
-  sortable: boolean,
-  flex: number,
   headerAlign: string,
   type?: string,
   valueOptions?: { value: string; label: string }[],
 ) {
-  return { field, headerName, editable, sortable, flex, type, headerAlign, valueOptions };
+  return { field, headerName, editable: true, sortable: false, flex: 1, type, headerAlign, valueOptions };
 }
 
 export function getAssemblyPartRelationshipColumns() {
@@ -33,15 +30,12 @@ export function getAssemblyPartRelationshipColumns() {
   const auxArray = JSON.parse(JSON.stringify(assemblyPartRelationshipColumns));
 
   auxArray.push(
-    getObject('parent_uuid', 'Parent UUID', true, false, 1, 'center'),
-    getObject('parent_part_instance_id', 'Parent Part Instance ID*', true, false, 1, 'center'),
-    getObject('parent_manufacturer_part_id', 'Parent Manufacturer Part ID*', true, false, 1, 'center'),
+    getObject('parent_uuid', 'Parent UUID', 'center'),
+    getObject('parent_part_instance_id', 'Parent Part Instance ID*', 'center'),
+    getObject('parent_manufacturer_part_id', 'Parent Manufacturer Part ID*', 'center'),
     getObject(
       'parent_optional_identifier_key',
       'Parent Optional Identifier Key',
-      true,
-      false,
-      1,
       'center',
       'singleSelect',
       [
@@ -50,12 +44,12 @@ export function getAssemblyPartRelationshipColumns() {
         { value: 'BatchID', label: 'BatchID' },
       ],
     ),
-    getObject('parent_optional_identifier_value', 'Parent Optional Identifier Value', true, false, 1, 'center'),
-    getObject('lifecycle_context', 'Lifecycle Context*', true, false, 1, 'center'),
-    getObject('quantity_number', 'Quantity Number*', true, false, 1, 'center'),
-    getObject('measurement_unit_lexical_value', 'Measurement Unit Lexical Value*', true, false, 1, 'center'),
-    getObject('datatype_uri', 'Datatype URI*', true, false, 1, 'center'),
-    getObject('assembled_on', 'Assembled On*', true, false, 1, 'center'),
+    getObject('parent_optional_identifier_value', 'Parent Optional Identifier Value', 'center'),
+    getObject('lifecycle_context', 'Lifecycle Context*', 'center'),
+    getObject('quantity_number', 'Quantity Number*', 'center'),
+    getObject('measurement_unit_lexical_value', 'Measurement Unit Lexical Value*', 'center'),
+    getObject('datatype_uri', 'Datatype URI*', 'center'),
+    getObject('assembled_on', 'Assembled On*', 'center'),
   );
 
   return auxArray;

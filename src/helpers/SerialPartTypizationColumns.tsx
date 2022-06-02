@@ -19,14 +19,11 @@ import { commonColumns } from './CommonColumns';
 function getObject(
   field: string,
   headerName: string,
-  editable: boolean,
-  sortable: boolean,
-  flex: number,
   headerAlign: string,
   type?: string,
   valueOptions?: { value: string; label: string }[],
 ) {
-  return { field, headerName, editable, sortable, flex, type, headerAlign, valueOptions };
+  return { field, headerName, editable: true, sortable: false, flex: 1, type, headerAlign, valueOptions };
 }
 
 export function getSerialPartTypizationColumns() {
@@ -34,22 +31,19 @@ export function getSerialPartTypizationColumns() {
   const auxArray = JSON.parse(JSON.stringify(serialPartTypizationColumns));
 
   auxArray.push(
-    getObject('manufacturing_date', 'Manufacturing Date*', true, false, 1, 'center', 'date'),
+    getObject('manufacturing_date', 'Manufacturing Date*', 'center', 'date'),
     getObject(
       'manufacturing_country',
       'Manufacturing Country',
-      true,
-      false,
-      1,
       'center',
       'singleSelect',
       Countries.list,
     ),
-    getObject('manufacturer_part_id', 'Manufacturer Part ID*', true, false, 1, 'center'),
-    getObject('customer_part_id', 'Customer Part ID', true, false, 1, 'center'),
-    getObject('classification', 'Classification', true, false, 1, 'center'),
-    getObject('name_at_manufacturer', 'Name at Manufacturer*', true, false, 1, 'center'),
-    getObject('name_at_customer', 'Name at customer', true, false, 1, 'center'),
+    getObject('manufacturer_part_id', 'Manufacturer Part ID*', 'center'),
+    getObject('customer_part_id', 'Customer Part ID', 'center'),
+    getObject('classification', 'Classification', 'center'),
+    getObject('name_at_manufacturer', 'Name at Manufacturer*', 'center'),
+    getObject('name_at_customer', 'Name at customer', 'center'),
   );
 
   return auxArray;
