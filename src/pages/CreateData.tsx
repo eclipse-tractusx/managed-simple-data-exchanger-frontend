@@ -15,8 +15,8 @@
 import React from 'react';
 import { Box, Grid, Tab, Tabs } from '@mui/material';
 import DynamicTable from '../components/DynamicTable';
-import { serialPartTypizationColumns } from '../helpers/SerialPartTypizationColumns';
-import { assemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
+import { getSerialPartTypizationColumns } from '../helpers/SerialPartTypizationColumns';
+import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
 
 export const CreateData: React.FC = () => {
   const [v, setValue] = React.useState(0);
@@ -68,11 +68,11 @@ export const CreateData: React.FC = () => {
             </Tabs>
           </Box>
           <TabPanel value={v} index={0}>
-            <DynamicTable columns={serialPartTypizationColumns}></DynamicTable>
+            <DynamicTable columns={getSerialPartTypizationColumns()}></DynamicTable>
           </TabPanel>
           <TabPanel value={v} index={1}>
             <DynamicTable
-              columns={assemblyPartRelationshipColumns}
+              columns={getAssemblyPartRelationshipColumns()}
               headerHeight={90}
               submitUrl={'/aspect/aspect-relationship'}
             ></DynamicTable>

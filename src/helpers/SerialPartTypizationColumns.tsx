@@ -14,103 +14,73 @@
 
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import * as Countries from '../helpers/Countries';
+import { commonColumns } from './CommonColumns';
 
-export const serialPartTypizationColumns: DynamicTableColumn[] = [
-  {
-    field: 'uuid',
-    headerName: 'UUID',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-  {
-    field: 'part_instance_id',
-    headerName: 'Part Instance ID*',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-  {
-    field: 'manufacturing_date',
-    headerName: 'Manufacturing Date*',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    type: 'date',
-    headerAlign: 'center',
-  },
-  {
-    field: 'manufacturing_country',
-    headerName: 'Manufacturing Country',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-    type: 'singleSelect',
-    valueOptions: Countries.list,
-  },
-  {
-    field: 'manufacturer_part_id',
-    headerName: 'Manufacturer Part ID*',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-  {
-    field: 'customer_part_id',
-    headerName: 'Customer Part ID',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-  {
-    field: 'classification',
-    headerName: 'Classification*',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-  {
-    field: 'name_at_manufacturer',
-    headerName: 'Name at Manufacturer*',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-  {
-    field: 'name_at_customer',
-    headerName: 'Name at customer',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-  {
-    field: 'optional_identifier_key',
-    headerName: 'Optional Identifier Key',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-    type: 'singleSelect',
-    valueOptions: [
-      { value: '', label: 'Empty' },
-      { value: 'VAN', label: 'VAN' },
-      { value: 'BatchID', label: 'BatchID' },
-    ],
-  },
-  {
-    field: 'optional_identifier_value',
-    headerName: 'Optional Identifier Value',
-    editable: true,
-    sortable: false,
-    flex: 1,
-    headerAlign: 'center',
-  },
-];
+export function getSerialPartTypizationColumns() {
+  const serialPartTypizationColumns: DynamicTableColumn[] = commonColumns;
+  const auxArray = JSON.parse(JSON.stringify(serialPartTypizationColumns));
+
+  auxArray.push(
+    {
+      field: 'manufacturing_date',
+      headerName: 'Manufacturing Date*',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      type: 'date',
+      headerAlign: 'center',
+    },
+    {
+      field: 'manufacturing_country',
+      headerName: 'Manufacturing Country',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+      type: 'singleSelect',
+      valueOptions: Countries.list,
+    },
+    {
+      field: 'manufacturer_part_id',
+      headerName: 'Manufacturer Part ID*',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+    },
+    {
+      field: 'customer_part_id',
+      headerName: 'Customer Part ID',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+    },
+    {
+      field: 'classification',
+      headerName: 'Classification*',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+    },
+    {
+      field: 'name_at_manufacturer',
+      headerName: 'Name at Manufacturer*',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+    },
+    {
+      field: 'name_at_customer',
+      headerName: 'Name at customer',
+      editable: true,
+      sortable: false,
+      flex: 1,
+      headerAlign: 'center',
+    },
+  );
+
+  return auxArray;
+}

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Refresh } from '@mui/icons-material';
 import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -28,23 +28,16 @@ export const UploadHistory: React.FC = () => {
   const [page, setPage] = useState<number>(0);
   const [totalElements, setTotalElements] = useState<number>(0);
 
-  const refreshTable = () => {
+  const refreshTable = useCallback(() => {
     dft.get(`/processing-report?page=${page}&pageSize=${rowsPerPage}`).then(response => {
       setTableData(response.data.items);
       setTotalElements(response.data.totalItems);
     });
-  };
+  }, [page, rowsPerPage]);
 
   useEffect(() => {
-    const refresh = () => {
-      dft.get(`/processing-report?page=${page}&pageSize=${rowsPerPage}`).then(response => {
-        setTableData(response.data.items);
-        setTotalElements(response.data.totalItems);
-      });
-    };
-
-    refresh();
-  }, [page, rowsPerPage]);
+    refreshTable();
+  }, [page, rowsPerPage, refreshTable]);
 
   const ColorButton = styled(Button)<ButtonProps>(() => ({
     color: styles.white,

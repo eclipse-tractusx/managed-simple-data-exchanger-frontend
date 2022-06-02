@@ -67,7 +67,6 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
   // end styles
 
   const generateUUID = (rowId: number, field: string) => {
-    console.log('generate', rows, rowId);
     const auxRows = JSON.parse(JSON.stringify(rows));
 
     for (const r of auxRows) {
@@ -76,7 +75,6 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
       }
     }
 
-    console.log('auxRows', auxRows);
     setRows(auxRows);
   };
 
@@ -231,10 +229,10 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
           getInvalidDataMessage();
         } else {
           // eslint-disable-next-line
-          auxRows.forEach((r: any) => {
-            Object.keys(r).forEach(k => {
-              if (r[k] === '') {
-                r[k] = null;
+          auxRows.forEach((auxRow: any) => {
+            Object.keys(auxRow).forEach(k => {
+              if (auxRow[k] === '') {
+                auxRow[k] = null;
               }
             });
           });
