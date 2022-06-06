@@ -24,7 +24,8 @@ import { SerialPartTypization } from '../models/SerialPartTypization';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
 import dft from '../api/dft';
 import Swal from 'sweetalert2';
-import { toast, ToastOptions } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { toastProps } from '../helpers/ToastOptions';
 
 const serialPartInitialData = [
   {
@@ -104,20 +105,6 @@ export const CreateData: React.FC = () => {
     setTimeout(() => {
       setUploading(false);
     }, 1000);
-  };
-
-  const toastProps = () => {
-    const options: ToastOptions = {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-    };
-    return options;
   };
 
   const processingReport = (r: { data: ProcessReport }, processId: string) => {
@@ -320,6 +307,7 @@ export const CreateData: React.FC = () => {
                   currentUploadData={currentUploadData}
                   setUploadData={setUploadData}
                   setUploading={setUploading}
+                  processingReportFirstCall={processingReportFirstCall}
                 ></DynamicTable>
               </TabPanel>
               <TabPanel value={v} index={1}>
@@ -330,6 +318,7 @@ export const CreateData: React.FC = () => {
                   currentUploadData={currentUploadData}
                   setUploadData={setUploadData}
                   setUploading={setUploading}
+                  processingReportFirstCall={processingReportFirstCall}
                 ></DynamicTable>
               </TabPanel>
               <TabPanel value={v} index={2}>

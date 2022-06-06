@@ -24,7 +24,6 @@ import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
 import dft from '../api/dft';
-import { toast, ToastOptions } from 'react-toastify';
 
 const columnsData: DynamicTableColumn[] = [];
 
@@ -47,6 +46,10 @@ export default function DynamicTable({
   },
   // eslint-disable-next-line
   setUploading = (_u: boolean) => {
+    /* This is itentional */
+  },
+  // eslint-disable-next-line
+  processingReportFirstCall = (_processId: string) => {
     /* This is itentional */
   },
 }) {
@@ -209,77 +212,6 @@ export default function DynamicTable({
       icon: 'error',
       confirmButtonColor: '#01579b',
     });
-  };
-
-  const clearUpload = () => {
-    setTimeout(() => {
-      setUploading(false);
-      setRows([]);
-    }, 1000);
-  };
-
-  const toastProps = () => {
-    const options: ToastOptions = {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-    };
-    return options;
-  };
-
-  const processingReport = (r: { data: ProcessReport }, processId: string) => {
-    setUploadData(r.data);
-    if (r && r.data && r.data.status !== Status.completed && r.data.status !== Status.failed) {
-      // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
-      const interval = setInterval(
-        () =>
-          dft.get(`/processing-report/${processId}`).then(result => {
-            setUploadData(result.data);
-            if (
-              result &&
-              result.data &&
-              (result.data.status === Status.completed || result.data.status === Status.failed)
-            ) {
-              clearInterval(interval);
-              clearUpload();
-            }
-          }),
-        2000,
-      );
-    } else {
-      clearUpload();
-
-      if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems === 0) {
-        toast.success('Upload completed!', toastProps());
-      } else if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems > 0) {
-        toast.warning('Upload completed with warnings!', toastProps());
-      } else {
-        toast.error('Upload failed!', toastProps());
-      }
-    }
-  };
-
-  const processingReportFirstCall = (processId: string) => {
-    setTimeout(() => {
-      dft
-        .get(`/processing-report/${processId}`)
-        .then(r => {
-          processingReport(r, processId);
-        })
-        .catch(error => {
-          // if process id not ready - repeat request
-          if (error.response.status === 404) {
-            processingReportFirstCall(processId);
-          } else {
-            clearUpload();
-          }
-        });
-    }, 2000);
   };
 
   const submitData = () => {
