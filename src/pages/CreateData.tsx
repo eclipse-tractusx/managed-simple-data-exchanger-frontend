@@ -83,7 +83,7 @@ export const CreateData: React.FC = () => {
   const getInvalidDataMessage = () => {
     return Swal.fire({
       title: 'Invalid data!',
-      html: '<p> Required fields without data. </p> <p> Optional value(s) and Optional key(s) must either be empty or both filled. </p>',
+      html: '<p> Fields with * are required. </p> <p> Optional value(s) and Optional key(s) must either be empty or both filled. </p>',
       icon: 'error',
       confirmButtonColor: '#01579b',
     });
@@ -304,21 +304,15 @@ export const CreateData: React.FC = () => {
                 <DynamicTable
                   columns={getSerialPartTypizationColumns()}
                   submitUrl={'/aspect'}
-                  currentUploadData={currentUploadData}
-                  setUploadData={setUploadData}
-                  setUploading={setUploading}
-                  processingReportFirstCall={processingReportFirstCall}
+                  submitData={submitData}
                 ></DynamicTable>
               </TabPanel>
               <TabPanel value={v} index={1}>
                 <DynamicTable
                   columns={getAssemblyPartRelationshipColumns()}
-                  headerHeight={90}
                   submitUrl={'/aspect/aspect-relationship'}
-                  currentUploadData={currentUploadData}
-                  setUploadData={setUploadData}
-                  setUploading={setUploading}
-                  processingReportFirstCall={processingReportFirstCall}
+                  headerHeight={90}
+                  submitData={submitData}
                 ></DynamicTable>
               </TabPanel>
               <TabPanel value={v} index={2}>

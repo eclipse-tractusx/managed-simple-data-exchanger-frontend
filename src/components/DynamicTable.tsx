@@ -20,10 +20,8 @@ import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import Swal from 'sweetalert2';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
-import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
-import dft from '../api/dft';
 
 const columnsData: DynamicTableColumn[] = [];
 
@@ -31,25 +29,8 @@ export default function DynamicTable({
   columns = columnsData,
   headerHeight = 60,
   submitUrl = '/aspect',
-  currentUploadData = {
-    processId: '',
-    csvType: CsvTypes.unknown,
-    numberOfItems: 0,
-    numberOfFailedItems: 0,
-    numberOfSucceededItems: 0,
-    status: Status.inProgress,
-    startDate: '',
-  },
   // eslint-disable-next-line
-  setUploadData = (_up: ProcessReport) => {
-    /* This is itentional */
-  },
-  // eslint-disable-next-line
-  setUploading = (_u: boolean) => {
-    /* This is itentional */
-  },
-  // eslint-disable-next-line
-  processingReportFirstCall = (_processId: string) => {
+  submitData = (_value: SerialPartTypization[] | AssemblyPartRelationship[], _submitUrl: string) => {
     /* This is itentional */
   },
 }) {
@@ -205,69 +186,6 @@ export default function DynamicTable({
     setRows(auxRows);
   };
 
-  const getInvalidDataMessage = () => {
-    return Swal.fire({
-      title: 'Invalid data!',
-      html: '<p> Fields with * are required. </p> <p> Optional value(s) and Optional key(s) must either be empty or both filled. </p>',
-      icon: 'error',
-      confirmButtonColor: '#01579b',
-    });
-  };
-
-  const submitData = () => {
-    const auxRows = JSON.parse(JSON.stringify(rows));
-
-    if (rows && rows.length > 0) {
-      for (const r of rows) {
-        if (
-          r.part_instance_id === '' ||
-          r.manufacturing_date === '' ||
-          r.manufacturer_part_id === '' ||
-          r.classification === '' ||
-          r.name_at_manufacturer === '' ||
-          r.parent_part_instance_id === '' ||
-          r.parent_manufacturer_part_id === '' ||
-          r.lifecycle_context === '' ||
-          r.quantity_number === '' ||
-          r.measurement_unit_lexical_value === '' ||
-          r.datatype_uri === '' ||
-          r.assembled_on === '' ||
-          (r.optional_identifier_value === '' && r.optional_identifier_key !== '') ||
-          (r.optional_identifier_value !== '' && r.optional_identifier_key === '') ||
-          (r.parent_optional_identifier_key === '' && r.parent_optional_identifier_value !== '') ||
-          (r.parent_optional_identifier_key !== '' && r.parent_optional_identifier_value === '')
-        ) {
-          getInvalidDataMessage();
-        } else {
-          // eslint-disable-next-line
-          auxRows.forEach((auxRow: any) => {
-            Object.keys(auxRow).forEach(k => {
-              if (auxRow[k] === '') {
-                auxRow[k] = null;
-              }
-            });
-          });
-
-          setUploading(true);
-
-          dft
-            .post(submitUrl, auxRows)
-            .then(resp => {
-              const processId = resp.data;
-
-              // first call
-              processingReportFirstCall(processId);
-            })
-            .catch(() => {
-              setUploadData({ ...currentUploadData, status: Status.failed });
-            });
-        }
-      }
-    } else {
-      getInvalidDataMessage();
-    }
-  };
-
   return (
     <div style={{ width: '100%', height: 80 + 6 * 52 + 'px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -281,7 +199,7 @@ export default function DynamicTable({
           </Button>
         </Box>
         <Box textAlign="end">
-          <Button variant="contained" onClick={submitData} sx={{ mb: 2 }}>
+          <Button variant="contained" onClick={() => submitData(rows, submitUrl)} sx={{ mb: 2 }}>
             Submit Data
           </Button>
         </Box>
