@@ -12,5 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-declare module '*.module.scss';
-declare module 'uuid';
+export interface AssemblyPartRelationship {
+  id?: number;
+  parent_uuid: string;
+  parent_part_instance_id: string;
+  parent_manufacturer_part_id: string;
+  parent_optional_identifier_key: string;
+  parent_optional_identifier_value: string;
+  uuid: string;
+  part_instance_id: string;
+  manufacturer_part_id: string;
+  optional_identifier_key: string;
+  optional_identifier_value: string;
+  lifecycle_context: string;
+  quantity_number: string;
+  measurement_unit_lexical_value: string;
+  datatype_uri: string;
+  assembled_on: string;
+}

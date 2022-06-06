@@ -12,5 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-declare module '*.module.scss';
-declare module 'uuid';
+export interface SerialPartTypization {
+  id?: number;
+  uuid: string;
+  part_instance_id: string;
+  manufacturing_date: string;
+  manufacturing_country: string;
+  manufacturer_part_id: string;
+  customer_part_id: string;
+  classification: string;
+  name_at_manufacturer: string;
+  name_at_customer: string;
+  optional_identifier_key: string;
+  optional_identifier_value: string;
+}

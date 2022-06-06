@@ -12,5 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-declare module '*.module.scss';
-declare module 'uuid';
+import { ToastOptions } from 'react-toastify';
+
+export const toastProps = () => {
+  const options: ToastOptions = {
+    position: 'bottom-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  };
+  return options;
+};

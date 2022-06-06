@@ -12,35 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { SyntheticEvent, useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
+import React, { SyntheticEvent, useState } from 'react';
+import dft from '../api/dft';
+import styles from '../styles.module.scss';
+import '../styles/Table.scss';
+
+// components
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
 import Timer from '../components/Timer';
 import UploadForm from '../components/UploadForm';
-import { FileType } from '../models/FileType';
-import { File } from '../models/File';
-import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import Notification from '../components/Notification';
-import dft from '../api/dft';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+
+// icons
+import { HighlightOffOutlined, ReportGmailerrorredOutlined } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
-import GetAppIcon from '@mui/icons-material/GetApp';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import StickyHeadTable from '../components/StickyHeadTable';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
-import Button, { ButtonProps } from '@mui/material/Button';
-import { HighlightOffOutlined, Refresh, ReportGmailerrorredOutlined } from '@mui/icons-material';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+
+// models
+import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
+import { File } from '../models/File';
+import { FileType } from '../models/FileType';
+
+// utils
 import { formatDate } from '../utils/utils';
-import styles from '../styles.module.scss';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import '../styles/Table.scss';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Help } from './Help';
+import UploadHistory from './UploadHistory';
+import CreateData from './CreateData';
 
 const Dashboard: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -50,10 +50,6 @@ const Dashboard: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [uploadStatus, setUploadStatus] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [tableData, setTableData] = useState<ProcessReport[]>([]);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const [page, setPage] = useState<number>(0);
-  const [totalElements, setTotalElements] = useState<number>(0);
   const [currentUploadData, setUploadData] = useState<ProcessReport>({
     processId: '',
     csvType: CsvTypes.unknown,
@@ -65,24 +61,6 @@ const Dashboard: React.FC = () => {
     endDate: undefined,
   });
   let dragCounter = 0;
-
-  const refreshTable = () => {
-    dft.get(`/processing-report?page=${page}&pageSize=${rowsPerPage}`).then(response => {
-      setTableData(response.data.items);
-      setTotalElements(response.data.totalItems);
-    });
-  };
-
-  useEffect(() => {
-    const refresh = () => {
-      dft.get(`/processing-report?page=${page}&pageSize=${rowsPerPage}`).then(response => {
-        setTableData(response.data.items);
-        setTotalElements(response.data.totalItems);
-      });
-    };
-
-    refresh();
-  }, [page, rowsPerPage]);
 
   const handleExpanded = (expanded: boolean) => {
     setIsExpanded(expanded);
@@ -150,9 +128,6 @@ const Dashboard: React.FC = () => {
 
   const getMenuIndex = (index = 0) => {
     setMenuIndex(index);
-    if (index === 1) {
-      refreshTable();
-    }
   };
 
   const clearUpload = () => {
@@ -237,94 +212,6 @@ const Dashboard: React.FC = () => {
       });
   };
 
-  const ColorButton = styled(Button)<ButtonProps>(() => ({
-    color: styles.white,
-    backgroundColor: styles.blue,
-    '&:hover': {
-      backgroundColor: styles.white,
-      color: styles.blue,
-    },
-  }));
-
-  const serialPartTypizationRows = [
-    { name: 'UUID', mandatory: false, position: 1 },
-    { name: 'part_instance_id', mandatory: true, position: 2 },
-    { name: 'manufacturing_date', mandatory: true, position: 3 },
-    { name: 'manufacturing_country', mandatory: false, position: 4 },
-    { name: 'manufacturer_part_id', mandatory: true, position: 5 },
-    { name: 'customer_part_id', mandatory: false, position: 6 },
-    { name: 'classification', mandatory: true, position: 7 },
-    { name: 'name_at_manufacturer', mandatory: true, position: 8 },
-    { name: 'name_at_customer', mandatory: false, position: 9 },
-    { name: 'optional_identifier_key', mandatory: false, position: 10 },
-    { name: 'optional_identifier_value', mandatory: false, position: 11 },
-  ];
-
-  const assemblyPartRelationshipRows = [
-    { name: 'parent_UUID', mandatory: false, position: 1 },
-    { name: 'parent_part_instance_id', mandatory: true, position: 2 },
-    { name: 'parent_manufacturer_part_id', mandatory: true, position: 3 },
-    { name: 'parent_optional_identifier_key', mandatory: false, position: 4 },
-    { name: 'parent_optional_identifier_value', mandatory: true, position: 5 },
-    { name: 'UUID', mandatory: false, position: 6 },
-    { name: 'part_instance_id', mandatory: true, position: 7 },
-    { name: 'manufacturer_part_id', mandatory: true, position: 8 },
-    { name: 'optional_identifier_key', mandatory: false, position: 9 },
-    { name: 'optional_identifier_value', mandatory: false, position: 10 },
-    { name: 'lifecycle_context', mandatory: true, position: 11 },
-    { name: 'quantity_number', mandatory: true, position: 12 },
-    { name: 'measurement_unit_lexical_value', mandatory: true, position: 13 },
-    { name: 'datatype_URI', mandatory: true, position: 14 },
-    { name: 'assembled_on', mandatory: true, position: 15 },
-  ];
-
-  const serialCardStyle = {
-    display: 'block',
-    transitionDuration: '0.3s',
-    height: '645px',
-  };
-
-  const assemblyCardStyle = {
-    display: 'block',
-    transitionDuration: '0.3s',
-    height: '784px',
-  };
-
-  const rulesCardStyle = {
-    display: 'block',
-    transitionDuration: '0.3s',
-    height: '116px',
-  };
-
-  const copyHeadersToasty = () => {
-    return toast.success('Copied to clipboard!', {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'colored',
-    });
-  };
-
-  const copyHeadersSerialPartTypization = () => {
-    navigator.clipboard.writeText(
-      'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
-    );
-
-    copyHeadersToasty();
-  };
-
-  const copyHeadersAssemblyPartRelationship = () => {
-    navigator.clipboard.writeText(
-      'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
-    );
-
-    copyHeadersToasty();
-  };
-
   // TODO: Replace this logic with routes
   const layout = () => {
     switch (menuIndex) {
@@ -403,129 +290,11 @@ const Dashboard: React.FC = () => {
           </div>
         );
       case 1:
-        return (
-          <div className="flex-1 py-6 px-20">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <h1 className="flex flex-row text-bold text-3xl">Upload History</h1>
-              </Grid>
-              <Grid item xs={6} className="text-right">
-                <ColorButton variant="contained" onClick={() => refreshTable()}>
-                  <span>
-                    <Refresh />
-                    &nbsp; Refresh
-                  </span>
-                </ColorButton>
-              </Grid>
-            </Grid>
-            <div className="mt-8">
-              <StickyHeadTable
-                rows={tableData}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                totalElements={totalElements}
-                setPage={setPage}
-                setRowsPerPage={setRowsPerPage}
-              />
-            </div>
-          </div>
-        );
+        return <CreateData />;
       case 2:
-        return (
-          <div className="flex-1 py-6 px-20">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <Card style={rulesCardStyle}>
-                  <CardContent>
-                    <h3>
-                      <b> Rules </b>
-                    </h3>
-                    <ul>
-                      <li> &bull; The file must be a file of type CSV (.csv extension).</li>
-                      <li> &bull; Data fields must be separated by a semicolon (;).</li>
-                      <li> &bull; All data fields must be present even if empty.</li>
-                    </ul>
-                  </CardContent>
-                </Card>
-                &nbsp;
-                <Card style={serialCardStyle}>
-                  <CardContent>
-                    <h2>
-                      <b> SerialPartTypization </b>
-                    </h2>
-                    &nbsp;
-                    <table>
-                      <thead>
-                        <tr>
-                          <th> Name </th>
-                          <th> Mandatory </th>
-                          <th> Position </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {serialPartTypizationRows.map(row => (
-                          <tr key={row.name}>
-                            <td>{row.name}</td>
-                            <td>{row.mandatory ? <b> Yes </b> : 'No'}</td>
-                            <td>{row.position}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="large" startIcon={<GetAppIcon />}>
-                      <Link to="/resources/serialPartTypization.csv" target="_blank" download>
-                        Download sample
-                      </Link>
-                    </Button>
-                    <Button onClick={copyHeadersSerialPartTypization} size="large" startIcon={<ContentCopyIcon />}>
-                      Copy headers to clipboard
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-              <Grid item xs={6}>
-                <Card style={assemblyCardStyle}>
-                  <CardContent>
-                    <h2>
-                      <b>AssemblyPartRelationship </b>
-                    </h2>
-                    &nbsp;
-                    <table>
-                      <thead>
-                        <tr>
-                          <th> Name </th>
-                          <th> Mandatory </th>
-                          <th> Position </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {assemblyPartRelationshipRows.map(row => (
-                          <tr key={row.name}>
-                            <td>{row.name}</td>
-                            <td align="center">{row.mandatory ? <b> Yes </b> : 'No'}</td>
-                            <td align="right">{row.position}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="large" startIcon={<GetAppIcon />}>
-                      <Link to="/resources/assemblyPartRelationship.csv" target="_blank" download>
-                        Download sample
-                      </Link>
-                    </Button>
-                    <Button onClick={copyHeadersAssemblyPartRelationship} size="large" startIcon={<ContentCopyIcon />}>
-                      Copy headers to clipboard
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            </Grid>
-          </div>
-        );
+        return <UploadHistory />;
+      case 3:
+        return <Help />;
       default:
         break;
     }
