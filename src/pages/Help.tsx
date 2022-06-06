@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import GetAppIcon from '@mui/icons-material/GetApp';
+import { toast } from 'react-toastify';
 
 export const Help: React.FC = () => {
   const serialCardStyle = {
@@ -35,6 +36,35 @@ export const Help: React.FC = () => {
     display: 'block',
     transitionDuration: '0.3s',
     height: '116px',
+  };
+
+  const copyHeadersToasty = () => {
+    return toast.success('Copied to clipboard!', {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
+  };
+
+  const copyHeadersSerialPartTypization = () => {
+    navigator.clipboard.writeText(
+      'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
+    );
+
+    copyHeadersToasty();
+  };
+
+  const copyHeadersAssemblyPartRelationship = () => {
+    navigator.clipboard.writeText(
+      'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
+    );
+
+    copyHeadersToasty();
   };
 
   const serialPartTypizationRows = [
@@ -104,15 +134,7 @@ export const Help: React.FC = () => {
                   Download sample
                 </Link>
               </Button>
-              <Button
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
-                  );
-                }}
-                size="large"
-                startIcon={<ContentCopyIcon />}
-              >
+              <Button onClick={copyHeadersSerialPartTypization} size="large" startIcon={<ContentCopyIcon />}>
                 Copy headers to clipboard
               </Button>
             </CardActions>
@@ -163,15 +185,7 @@ export const Help: React.FC = () => {
                   Download sample
                 </Link>
               </Button>
-              <Button
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
-                  );
-                }}
-                size="large"
-                startIcon={<ContentCopyIcon />}
-              >
+              <Button onClick={copyHeadersAssemblyPartRelationship} size="large" startIcon={<ContentCopyIcon />}>
                 Copy headers to clipboard
               </Button>
             </CardActions>

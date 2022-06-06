@@ -17,16 +17,39 @@ import { v4 as uuidv4 } from 'uuid';
 import { Box, Button, Card, CardContent, IconButton, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import Swal from 'sweetalert2';
+import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
+import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
-import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import dft from '../api/dft';
+import { toast, ToastOptions } from 'react-toastify';
 
 const columnsData: DynamicTableColumn[] = [];
 
-export default function DynamicTable({ columns = columnsData, headerHeight = 60, submitUrl = '/aspect' }) {
+export default function DynamicTable({
+  columns = columnsData,
+  headerHeight = 60,
+  submitUrl = '/aspect',
+  currentUploadData = {
+    processId: '',
+    csvType: CsvTypes.unknown,
+    numberOfItems: 0,
+    numberOfFailedItems: 0,
+    numberOfSucceededItems: 0,
+    status: Status.inProgress,
+    startDate: '',
+  },
+  // eslint-disable-next-line
+  setUploadData = (_up: ProcessReport) => {
+    /* This is itentional */
+  },
+  // eslint-disable-next-line
+  setUploading = (_u: boolean) => {
+    /* This is itentional */
+  },
+}) {
   const [rows, setRows] = React.useState([]);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
@@ -188,6 +211,77 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
     });
   };
 
+  const clearUpload = () => {
+    setTimeout(() => {
+      setUploading(false);
+      setRows([]);
+    }, 1000);
+  };
+
+  const toastProps = () => {
+    const options: ToastOptions = {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    };
+    return options;
+  };
+
+  const processingReport = (r: { data: ProcessReport }, processId: string) => {
+    setUploadData(r.data);
+    if (r && r.data && r.data.status !== Status.completed && r.data.status !== Status.failed) {
+      // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
+      const interval = setInterval(
+        () =>
+          dft.get(`/processing-report/${processId}`).then(result => {
+            setUploadData(result.data);
+            if (
+              result &&
+              result.data &&
+              (result.data.status === Status.completed || result.data.status === Status.failed)
+            ) {
+              clearInterval(interval);
+              clearUpload();
+            }
+          }),
+        2000,
+      );
+    } else {
+      clearUpload();
+
+      if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems === 0) {
+        toast.success('Upload completed!', toastProps());
+      } else if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems > 0) {
+        toast.warning('Upload completed with warnings!', toastProps());
+      } else {
+        toast.error('Upload failed!', toastProps());
+      }
+    }
+  };
+
+  const processingReportFirstCall = (processId: string) => {
+    setTimeout(() => {
+      dft
+        .get(`/processing-report/${processId}`)
+        .then(r => {
+          processingReport(r, processId);
+        })
+        .catch(error => {
+          // if process id not ready - repeat request
+          if (error.response.status === 404) {
+            processingReportFirstCall(processId);
+          } else {
+            clearUpload();
+          }
+        });
+    }, 2000);
+  };
+
   const submitData = () => {
     const auxRows = JSON.parse(JSON.stringify(rows));
 
@@ -222,9 +316,19 @@ export default function DynamicTable({ columns = columnsData, headerHeight = 60,
             });
           });
 
-          dft.post(submitUrl, auxRows).then(response => {
-            console.log('response', response);
-          });
+          setUploading(true);
+
+          dft
+            .post(submitUrl, auxRows)
+            .then(resp => {
+              const processId = resp.data;
+
+              // first call
+              processingReportFirstCall(processId);
+            })
+            .catch(() => {
+              setUploadData({ ...currentUploadData, status: Status.failed });
+            });
         }
       }
     } else {

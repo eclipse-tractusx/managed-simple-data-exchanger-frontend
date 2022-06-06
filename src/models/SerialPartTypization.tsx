@@ -13,7 +13,7 @@
 // limitations under the License.
 
 export interface SerialPartTypization {
-  id: number;
+  id?: number;
   uuid: string;
   part_instance_id: string;
   manufacturing_date: string;

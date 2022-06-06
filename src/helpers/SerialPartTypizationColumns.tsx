@@ -35,7 +35,7 @@ export function getSerialPartTypizationColumns() {
     getObject('manufacturing_country', 'Manufacturing Country', 'center', 'singleSelect', Countries.list),
     getObject('manufacturer_part_id', 'Manufacturer Part ID*', 'center'),
     getObject('customer_part_id', 'Customer Part ID', 'center'),
-    getObject('classification', 'Classification', 'center'),
+    getObject('classification', 'Classification*', 'center'),
     getObject('name_at_manufacturer', 'Name at Manufacturer*', 'center'),
     getObject('name_at_customer', 'Name at customer', 'center'),
   );

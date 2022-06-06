@@ -13,7 +13,7 @@
 // limitations under the License.
 
 export interface AssemblyPartRelationship {
-  id: number;
+  id?: number;
   parent_uuid: string;
   parent_part_instance_id: string;
   parent_manufacturer_part_id: string;
