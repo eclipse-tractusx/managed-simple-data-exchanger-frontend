@@ -15,6 +15,7 @@
 import React, { SyntheticEvent, useState } from 'react';
 import dft from '../api/dft';
 import styles from '../styles.module.scss';
+import { useLocation } from 'react-router-dom';
 import '../styles/Table.scss';
 
 // components
@@ -45,8 +46,8 @@ import { toast } from 'react-toastify';
 import { toastProps } from '../helpers/ToastOptions';
 
 const Dashboard: React.FC = () => {
+  const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [menuIndex, setMenuIndex] = useState(0);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -126,10 +127,6 @@ const Dashboard: React.FC = () => {
       setErrorMessage('Only one file is permitted');
     }
     setIsDragging(false);
-  };
-
-  const getMenuIndex = (index = 0) => {
-    setMenuIndex(index);
   };
 
   const clearUpload = () => {
@@ -233,10 +230,9 @@ const Dashboard: React.FC = () => {
       });
   };
 
-  // TODO: Replace this logic with routes
   const layout = () => {
-    switch (menuIndex) {
-      case 0:
+    switch (location.pathname) {
+      case '/dashboard/upload-file':
         return (
           <div className="flex flex-1 flex-col items-center justify-center min-w-0 relative">
             <div className="flex-[1_0_0%] flex order-1">
@@ -310,7 +306,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         );
-      case 1:
+      case '/dashboard/create-data':
         return (
           <CreateData
             processingReportFirstCall={processingReportFirstCall}
@@ -320,9 +316,9 @@ const Dashboard: React.FC = () => {
             setUploadData={setUploadData}
           />
         );
-      case 2:
+      case '/dashboard/history':
         return <UploadHistory />;
-      case 3:
+      case '/dashboard/help':
         return <Help />;
       default:
         break;
@@ -341,7 +337,7 @@ const Dashboard: React.FC = () => {
         <main className="flex-1 flex flex-row justify-start min-h-screen pt-16 relative">
           <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
           <div className="flex">
-            <Sidebar isExpanded={isExpanded} emitMenuIndex={(index: number) => getMenuIndex(index)} />
+            <Sidebar isExpanded={isExpanded} />
           </div>
           {errorMessage !== '' && (
             <div className={`${isExpanded ? 'left-64' : 'left-14'} absolute top-16 z-50 w-screen`}>

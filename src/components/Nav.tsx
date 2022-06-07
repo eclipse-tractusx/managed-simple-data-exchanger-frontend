@@ -60,7 +60,11 @@ const Nav = (props: any) => {
             <MenuOutlinedIcon fontSize="medium" sx={{ color: styles.white }} />
           </span>
 
-          <img src="images/logo-dft.svg" alt="DFT logo" className="w-14 h-14 fill-white  hover:fill-teal-600" />
+          <img
+            src={window.location.origin + '/images/logo-dft.svg'}
+            alt="DFT logo"
+            className="w-14 h-14 fill-white  hover:fill-teal-600"
+          />
         </div>
 
         <div className="font-bold text-2xl cursor-pointer flex items-center text-[#fbfcfa] ">
