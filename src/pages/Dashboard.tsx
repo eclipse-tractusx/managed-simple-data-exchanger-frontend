@@ -41,6 +41,8 @@ import { formatDate } from '../utils/utils';
 import { Help } from './Help';
 import UploadHistory from './UploadHistory';
 import CreateData from './CreateData';
+import { toast } from 'react-toastify';
+import { toastProps } from '../helpers/ToastOptions';
 
 const Dashboard: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -158,10 +160,29 @@ const Dashboard: React.FC = () => {
       );
     } else {
       clearUpload();
+
+      if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems === 0) {
+        toast.success('Upload completed!', toastProps());
+      } else if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems > 0) {
+        toast.warning('Upload completed with warnings!', toastProps());
+      } else {
+        toast.error('Upload failed!', toastProps());
+      }
     }
   };
 
   const processingReportFirstCall = (processId: string) => {
+    setUploadData({
+      processId: '',
+      csvType: CsvTypes.unknown,
+      numberOfItems: 0,
+      numberOfFailedItems: 0,
+      numberOfSucceededItems: 0,
+      status: Status.inProgress,
+      startDate: '',
+      endDate: undefined,
+    });
+
     setTimeout(() => {
       dft
         .get(`/processing-report/${processId}`)
@@ -290,7 +311,15 @@ const Dashboard: React.FC = () => {
           </div>
         );
       case 1:
-        return <CreateData />;
+        return (
+          <CreateData
+            processingReportFirstCall={processingReportFirstCall}
+            setUploading={setUploading}
+            uploading={uploading}
+            currentUploadData={currentUploadData}
+            setUploadData={setUploadData}
+          />
+        );
       case 2:
         return <UploadHistory />;
       case 3:
