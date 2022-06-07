@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Box, Button, CircularProgress, Grid, Tab, Tabs, TextareaAutosize } from '@mui/material';
 import DynamicTable from '../components/DynamicTable';
 import Timer from '../components/Timer';
