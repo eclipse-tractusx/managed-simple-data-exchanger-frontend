@@ -14,7 +14,7 @@
 
 import Login from './pages/Login';
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute, AuthRoute } from './modules/ProtectedRoutes';
 import Dashboard from './pages/Dashboard';
 import { ToastContainer } from 'react-toastify';
@@ -33,7 +33,11 @@ function App() {
         />
         <Route path="/" element={<AuthRoute isAuth={isAuth} />}></Route>
         <Route element={<ProtectedRoute isAuth={isAuth} />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route key="upload-file" path="/dashboard/upload-file" element={<Dashboard />} />
+          <Route key="create-data" path="/dashboard/create-data" element={<Dashboard />} />
+          <Route key="history" path="/dashboard/history" element={<Dashboard />} />
+          <Route key="help" path="/dashboard/help" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Navigate to="/dashboard/upload-file" />}></Route>
         </Route>
       </Routes>
       <ToastContainer />

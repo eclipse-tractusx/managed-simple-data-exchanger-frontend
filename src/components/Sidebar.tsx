@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import HelpIcon from '@mui/icons-material/Help';
@@ -21,12 +21,9 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 // eslint-disable-next-line
 const Sidebar = (props: any) => {
-  const [menuIndex, setMenuIndex] = useState(0);
   const { isExpanded } = props;
-  const getMenuIndex = (index = 0) => {
-    setMenuIndex(index);
-    props.emitMenuIndex(index);
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <aside
@@ -40,9 +37,12 @@ const Sidebar = (props: any) => {
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               data-testid="uploadFileMenu"
-              onClick={() => getMenuIndex(0)}
+              onClick={() => navigate('/dashboard/upload-file')}
             >
-              <BackupOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 0 ? styles.blue : styles.black}` }} />
+              <BackupOutlinedIcon
+                fontSize="small"
+                sx={{ color: `${location.pathname === '/dashboard/upload-file' ? styles.blue : styles.black}` }}
+              />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'
@@ -54,11 +54,11 @@ const Sidebar = (props: any) => {
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               data-testid="uploadFileMenu"
-              onClick={() => getMenuIndex(1)}
+              onClick={() => navigate('/dashboard/create-data')}
             >
               <AddCircleOutlineIcon
                 fontSize="small"
-                sx={{ color: `${menuIndex === 1 ? styles.blue : styles.black}` }}
+                sx={{ color: `${location.pathname === '/dashboard/create-data' ? styles.blue : styles.black}` }}
               />
               <p
                 className={`${
@@ -71,9 +71,12 @@ const Sidebar = (props: any) => {
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               data-testid="uploadHistoryMenu"
-              onClick={() => getMenuIndex(2)}
+              onClick={() => navigate('/dashboard/history')}
             >
-              <HistoryOutlinedIcon fontSize="small" sx={{ color: `${menuIndex === 2 ? styles.blue : styles.black}` }} />
+              <HistoryOutlinedIcon
+                fontSize="small"
+                sx={{ color: `${location.pathname === '/dashboard/history' ? styles.blue : styles.black}` }}
+              />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'
@@ -85,9 +88,12 @@ const Sidebar = (props: any) => {
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               data-testid="helpMenu"
-              onClick={() => getMenuIndex(3)}
+              onClick={() => navigate('/dashboard/help')}
             >
-              <HelpIcon fontSize="small" sx={{ color: `${menuIndex === 3 ? styles.blue : styles.black}` }} />
+              <HelpIcon
+                fontSize="small"
+                sx={{ color: `${location.pathname === '/dashboard/help' ? styles.blue : styles.black}` }}
+              />
               <p
                 className={`${
                   !isExpanded ? 'hidden' : 'flex'
