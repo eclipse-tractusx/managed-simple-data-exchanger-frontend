@@ -24,8 +24,6 @@ import { SerialPartTypization } from '../models/SerialPartTypization';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
 import dft from '../api/dft';
 import Swal from 'sweetalert2';
-import { toast } from 'react-toastify';
-import { toastProps } from '../helpers/ToastOptions';
 
 const serialPartInitialData = [
   {
@@ -63,13 +61,17 @@ const assemblyRelationshipInitialData = [
   },
 ];
 
-export const CreateData: React.FC = () => {
-  const ref = useRef(null);
-  const [v, setValue] = React.useState(0);
-  const [serialTemplate] = React.useState<SerialPartTypization[]>(serialPartInitialData);
-  const [assemblyTemplate] = React.useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
-  const [uploading, setUploading] = useState(false);
-  const [currentUploadData, setUploadData] = useState<ProcessReport>({
+export default function CreateData({
+  // eslint-disable-next-line
+  processingReportFirstCall = (_processId: string) => {
+    /* This is itentional */
+  },
+  // eslint-disable-next-line
+  setUploading = (_status: boolean) => {
+    /* This is itentional */
+  },
+  uploading = false,
+  currentUploadData = {
     processId: '',
     csvType: CsvTypes.unknown,
     numberOfItems: 0,
@@ -77,8 +79,16 @@ export const CreateData: React.FC = () => {
     numberOfSucceededItems: 0,
     status: Status.inProgress,
     startDate: '',
-    endDate: undefined,
-  });
+  },
+  // eslint-disable-next-line
+  setUploadData = (_data: ProcessReport) => {
+    /* This is itentional */
+  },
+}) {
+  const ref = useRef(null);
+  const [v, setValue] = React.useState(0);
+  const [serialTemplate] = React.useState<SerialPartTypization[]>(serialPartInitialData);
+  const [assemblyTemplate] = React.useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
 
   const getInvalidDataMessage = () => {
     return Swal.fire({
@@ -101,65 +111,8 @@ export const CreateData: React.FC = () => {
     return JSON.stringify(assemblyTemplate, undefined, 4);
   };
 
-  const clearUpload = () => {
-    setTimeout(() => {
-      setUploading(false);
-    }, 1000);
-  };
-
-  const processingReport = (r: { data: ProcessReport }, processId: string) => {
-    setUploadData(r.data);
-    if (r && r.data && r.data.status !== Status.completed && r.data.status !== Status.failed) {
-      // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
-      const interval = setInterval(
-        () =>
-          dft.get(`/processing-report/${processId}`).then(result => {
-            setUploadData(result.data);
-            if (
-              result &&
-              result.data &&
-              (result.data.status === Status.completed || result.data.status === Status.failed)
-            ) {
-              clearInterval(interval);
-              clearUpload();
-            }
-          }),
-        2000,
-      );
-    } else {
-      clearUpload();
-
-      if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems === 0) {
-        toast.success('Upload completed!', toastProps());
-      } else if (r && r.data && r.data.status === Status.completed && r.data.numberOfFailedItems > 0) {
-        toast.warning('Upload completed with warnings!', toastProps());
-      } else {
-        toast.error('Upload failed!', toastProps());
-      }
-    }
-  };
-
-  const processingReportFirstCall = (processId: string) => {
-    setTimeout(() => {
-      dft
-        .get(`/processing-report/${processId}`)
-        .then(r => {
-          processingReport(r, processId);
-        })
-        .catch(error => {
-          // if process id not ready - repeat request
-          if (error.response.status === 404) {
-            processingReportFirstCall(processId);
-          } else {
-            clearUpload();
-          }
-        });
-    }, 2000);
-  };
-
-  const submitData = (value: SerialPartTypization[] | AssemblyPartRelationship[], submitUrl: string) => {
+  const validateSerialPartFiedls = (value: SerialPartTypization[]) => {
     const auxRows = JSON.parse(JSON.stringify(value));
-
     if (auxRows && auxRows.length > 0) {
       for (const r of auxRows) {
         if (
@@ -168,9 +121,28 @@ export const CreateData: React.FC = () => {
           r.manufacturer_part_id === '' ||
           r.classification === '' ||
           r.name_at_manufacturer === '' ||
+          (r.optional_identifier_value === '' && r.optional_identifier_key !== '') ||
+          (r.optional_identifier_value !== '' && r.optional_identifier_key === '')
+        ) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    return false;
+  };
+
+  const validateAssemblyRelationshipFiedls = (value: AssemblyPartRelationship[]) => {
+    const auxRows = JSON.parse(JSON.stringify(value));
+    if (auxRows && auxRows.length > 0) {
+      for (const r of auxRows) {
+        if (
           r.parent_part_instance_id === '' ||
           r.parent_manufacturer_part_id === '' ||
-          r.lifecycle_context === '' ||
+          r.part_instance_id === '' ||
+          r.manufacturer_part_id === '' ||
+          r.lifecyle_context === '' ||
           r.quantity_number === '' ||
           r.measurement_unit_lexical_value === '' ||
           r.datatype_uri === '' ||
@@ -180,32 +152,50 @@ export const CreateData: React.FC = () => {
           (r.parent_optional_identifier_key === '' && r.parent_optional_identifier_value !== '') ||
           (r.parent_optional_identifier_key !== '' && r.parent_optional_identifier_value === '')
         ) {
-          getInvalidDataMessage();
-        } else {
-          // eslint-disable-next-line
-          auxRows.forEach((auxRow: any) => {
-            Object.keys(auxRow).forEach(k => {
-              if (auxRow[k] === '') {
-                auxRow[k] = null;
-              }
-            });
-          });
-
-          setUploading(true);
-
-          dft
-            .post(submitUrl, auxRows)
-            .then(resp => {
-              const processId = resp.data;
-
-              // first call
-              processingReportFirstCall(processId);
-            })
-            .catch(() => {
-              setUploadData({ ...currentUploadData, status: Status.failed });
-            });
+          return false;
         }
       }
+      return true;
+    }
+
+    return false;
+  };
+
+  const submitData = (value: SerialPartTypization[] | AssemblyPartRelationship[], submitUrl: string) => {
+    let valid = false;
+
+    if (value.hasOwnProperty('parent_uuid')) {
+      // assembly part relationship
+      valid = validateAssemblyRelationshipFiedls(value as AssemblyPartRelationship[]);
+    } else {
+      // serial part
+      valid = validateSerialPartFiedls(value as SerialPartTypization[]);
+    }
+    const auxRows = JSON.parse(JSON.stringify(value));
+
+    if (valid) {
+      // eslint-disable-next-line
+      auxRows.forEach((auxRow: any) => {
+        Object.keys(auxRow).forEach(k => {
+          if (auxRow[k] === '') {
+            auxRow[k] = null;
+          }
+        });
+      });
+
+      setUploading(true);
+
+      dft
+        .post(submitUrl, auxRows)
+        .then(resp => {
+          const processId = resp.data;
+
+          // first call
+          processingReportFirstCall(processId);
+        })
+        .catch(() => {
+          setUploadData({ ...currentUploadData, status: Status.failed });
+        });
     } else {
       getInvalidDataMessage();
     }
@@ -233,7 +223,7 @@ export const CreateData: React.FC = () => {
     }
 
     if (json) {
-      submitData(json, '/aspect/aspect-relationship');
+      submitData(json, '/aspect/relationship');
     }
   };
 
@@ -310,7 +300,7 @@ export const CreateData: React.FC = () => {
               <TabPanel value={v} index={1}>
                 <DynamicTable
                   columns={getAssemblyPartRelationshipColumns()}
-                  submitUrl={'/aspect/aspect-relationship'}
+                  submitUrl={'/aspect/relationship'}
                   headerHeight={90}
                   submitData={submitData}
                 ></DynamicTable>
@@ -354,6 +344,4 @@ export const CreateData: React.FC = () => {
       ) : null}
     </div>
   );
-};
-
-export default CreateData;
+}
