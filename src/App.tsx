@@ -37,7 +37,7 @@ function App() {
           <Route key="create-data" path="/dashboard/create-data" element={<Dashboard />} />
           <Route key="history" path="/dashboard/history" element={<Dashboard />} />
           <Route key="help" path="/dashboard/help" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Navigate to="/dashboard/upload-file" />}></Route>
+          <Route path="/dashboard" element={<Navigate to="/dashboard/create-data" />}></Route>
         </Route>
       </Routes>
       <ToastContainer />

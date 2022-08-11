@@ -42,6 +42,7 @@ export function getAssemblyPartRelationshipColumns() {
     getObject('lifecycle_context', 'Lifecycle Context*', 'center'),
     getObject('quantity_number', 'Quantity Number*', 'center'),
     getObject('measurement_unit_lexical_value', 'Measurement Unit Lexical Value*', 'center'),
+    getObject('manufacturer_part_id', 'Manufacturer Part ID*', 'center'),
     getObject('datatype_uri', 'Datatype URI*', 'center'),
     getObject('assembled_on', 'Assembled On*', 'center'),
   );

@@ -25,7 +25,7 @@ const Notification = (props: any) => {
         <DangerousOutlinedIcon sx={{ color: styles.danger }} />
         <p className="text-md text-red-600">{errorMessage}</p>
       </div>
-      <span className="mr-12 cursor-pointer" onClick={() => props.clear()}>
+      <span style={{ marginRight: '4rem' }} className="cursor-pointer" onClick={() => props.clear()}>
         <CloseOutlinedIcon fontSize="medium" />
       </span>
     </section>

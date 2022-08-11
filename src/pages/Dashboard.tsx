@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copyright 2022 Catena-X
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,16 +22,8 @@ import '../styles/Table.scss';
 // components
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
-import Timer from '../components/Timer';
-import UploadForm from '../components/UploadForm';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 import Notification from '../components/Notification';
-
-// icons
-import { HighlightOffOutlined, ReportGmailerrorredOutlined } from '@mui/icons-material';
-import CloseIcon from '@mui/icons-material/Close';
-import CircularProgress from '@mui/material/CircularProgress';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
 // models
 import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
@@ -38,12 +31,16 @@ import { File } from '../models/File';
 import { FileType } from '../models/FileType';
 
 // utils
-import { formatDate } from '../utils/utils';
 import { Help } from './Help';
 import UploadHistory from './UploadHistory';
 import CreateData from './CreateData';
 import { toast } from 'react-toastify';
 import { toastProps } from '../helpers/ToastOptions';
+
+interface IMetaData {
+  accessType: string;
+  bpnList: string[];
+}
 
 const Dashboard: React.FC = () => {
   const location = useLocation();
@@ -63,6 +60,10 @@ const Dashboard: React.FC = () => {
     startDate: '',
     endDate: undefined,
   });
+  const [metaData, setMetaData] = useState<IMetaData>({
+    accessType: 'restricted',
+    bpnList: [],
+  });
   let dragCounter = 0;
 
   const handleExpanded = (expanded: boolean) => {
@@ -80,6 +81,8 @@ const Dashboard: React.FC = () => {
     const maxFileSize = parseInt(process.env.REACT_APP_FILESIZE);
     if (validateFile(file) && file.size < maxFileSize) {
       setSelectedFiles([file]);
+      file.invalid = false;
+      setErrorMessage('');
     } else {
       file.invalid = true;
       setErrorMessage('File not permitted');
@@ -197,6 +200,7 @@ const Dashboard: React.FC = () => {
     }, 2000);
   };
 
+  const onAccessPolicyUpdate = (data: any) => setMetaData(data);
   // eslint-disable-next-line
   const uploadFile = (e: any) => {
     e.preventDefault();
@@ -212,10 +216,14 @@ const Dashboard: React.FC = () => {
       endDate: undefined,
     });
 
+    const uploadMetaData = {
+      bpn_numbers: metaData.accessType === 'restricted' ? metaData.bpnList : [],
+      type_of_access: metaData.accessType,
+    };
     const formData = new FormData();
     // eslint-disable-next-line
     formData.append('file', selectedFiles[0] as any);
-
+    formData.append('meta_data', JSON.stringify(uploadMetaData));
     dft
       .post('/upload', formData)
       .then(resp => {
@@ -232,80 +240,6 @@ const Dashboard: React.FC = () => {
 
   const layout = () => {
     switch (location.pathname) {
-      case '/dashboard/upload-file':
-        return (
-          <div className="flex flex-1 flex-col items-center justify-center min-w-0 relative">
-            <div className="flex-[1_0_0%] flex order-1">
-              <div className="flex flex-col items-center justify-center">
-                {uploading ? (
-                  <div className="text-center">
-                    <CircularProgress size={100} />
-                    <Timer />
-                    <span>
-                      Upload started at: &nbsp;
-                      {currentUploadData.startDate && formatDate(currentUploadData.startDate)}
-                      {!currentUploadData.startDate && '-'}
-                    </span>
-                  </div>
-                ) : null}
-                {!uploading && (
-                  <UploadForm
-                    // eslint-disable-next-line
-                    getSelectedFiles={(files: any) => handleFiles(files)}
-                    selectedFiles={selectedFiles}
-                    removeSelectedFiles={removeSelectedFiles}
-                    uploadStatus={uploadStatus}
-                    // eslint-disable-next-line
-                    emitFileUpload={(e: any) => uploadFile(e)}
-                  />
-                )}
-                {uploadStatus && currentUploadData.status === Status.failed && (
-                  <div className={'flex justify-between bg-red-100 p-4 w-full mt-4'}>
-                    <div className="flex items-center gap-x-2">
-                      <span title="Failed">
-                        <HighlightOffOutlined sx={{ color: styles.danger }} />
-                      </span>
-                      <p className="text-md">{selectedFiles[0].name}</p>
-                    </div>
-                    <span className="cursor-pointer" onClick={() => setUploadStatus(false)}>
-                      <CloseIcon />
-                    </span>
-                  </div>
-                )}
-                {uploadStatus &&
-                  currentUploadData.status === Status.completed &&
-                  currentUploadData.numberOfFailedItems === 0 && (
-                    <div className={'flex justify-between bg-lime-200 p-4 w-full mt-4'}>
-                      <div className="flex items-center gap-x-2">
-                        <span title="Completed">
-                          <CheckCircleOutlineOutlinedIcon sx={{ color: styles.success }} />
-                        </span>
-                        <p className="text-md">{selectedFiles[0].name}</p>
-                      </div>
-                      <span className="cursor-pointer" onClick={() => setUploadStatus(false)}>
-                        <CloseIcon />
-                      </span>
-                    </div>
-                  )}
-                {uploadStatus &&
-                  currentUploadData.status === Status.completed &&
-                  currentUploadData.numberOfFailedItems > 0 && (
-                    <div className={'flex justify-between bg-orange-100 p-4 w-full mt-4'}>
-                      <div className="flex items-center gap-x-2">
-                        <span title="Completed with warnings">
-                          <ReportGmailerrorredOutlined sx={{ color: styles.warning }} />
-                        </span>
-                        <p className="text-md">{selectedFiles[0].name}</p>
-                      </div>
-                      <span className="cursor-pointer" onClick={() => setUploadStatus(false)}>
-                        <CloseIcon />
-                      </span>
-                    </div>
-                  )}
-              </div>
-            </div>
-          </div>
-        );
       case '/dashboard/create-data':
         return (
           <CreateData
@@ -314,6 +248,13 @@ const Dashboard: React.FC = () => {
             uploading={uploading}
             currentUploadData={currentUploadData}
             setUploadData={setUploadData}
+            uploadStatus={uploadStatus}
+            selectedFiles={selectedFiles}
+            setUploadStatus={setUploadStatus}
+            handleFiles={(files: any) => handleFiles(files)}
+            uploadFile={(e: any) => uploadFile(e)}
+            removeSelectedFiles={removeSelectedFiles}
+            onAccessPolicyUpdate={onAccessPolicyUpdate}
           />
         );
       case '/dashboard/history':

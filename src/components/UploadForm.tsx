@@ -42,13 +42,8 @@ const UploadForm = (props: any) => {
     return `${parseFloat((size / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
   };
 
-  // eslint-disable-next-line
-  const emitFileUpload = (e: any) => {
-    props.emitFileUpload(e);
-  };
-
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col py-9">
       <h2 className=" text-5xl font-sans text-[#444444] text-center mb-3">Upload a file </h2>
       <div className="border border-dashed  border-3  flex flex-row justify-center w-auto h-full items-center">
         <div className="flex flex-col gap-y-4 mx-20 ">
@@ -107,13 +102,6 @@ const UploadForm = (props: any) => {
               </button>
             </span>
           </div>
-
-          <button
-            className="w-full py-2 px-4 bg-[#03a9f4] hover:bg-[#01579b] rounded-md text-white text-sm mt-5"
-            onClick={emitFileUpload}
-          >
-            UPLOAD FILE
-          </button>
         </div>
       ) : (
         <div />

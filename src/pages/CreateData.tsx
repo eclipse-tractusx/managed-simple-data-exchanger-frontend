@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copyright 2022 Catena-X
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,8 +24,14 @@ import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelat
 import { formatDate } from '../utils/utils';
 import { SerialPartTypization } from '../models/SerialPartTypization';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
 import dft from '../api/dft';
 import Swal from 'sweetalert2';
+import UploadFile from '../components/UploadFile';
+import { ManageBpn } from '../components/ManageBpn';
 
 const serialPartInitialData = [
   {
@@ -70,6 +78,20 @@ export default function CreateData({
   setUploading = (_status: boolean) => {
     /* This is itentional */
   },
+  handleFiles = (_file: File) => {
+    /* This is itentional */
+  },
+  setUploadStatus = (_status: boolean) => {
+    /* This is itentional */
+  },
+  removeSelectedFiles = (_clearState: boolean) => {
+    /* This is itentional */
+  },
+  uploadFile = (_e: any) => {
+    /* This is itentional */
+  },
+  uploadStatus = false,
+  selectedFiles = [] as any,
   uploading = false,
   currentUploadData = {
     processId: '',
@@ -84,12 +106,16 @@ export default function CreateData({
   setUploadData = (_data: ProcessReport) => {
     /* This is itentional */
   },
+  onAccessPolicyUpdate = (data: any) => {
+    /* This is itentional */
+  },
 }) {
   const ref = useRef(null);
   const [v, setValue] = React.useState(0);
   const [serialTemplate] = React.useState<SerialPartTypization[]>(serialPartInitialData);
   const [assemblyTemplate] = React.useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
-
+  const [accessType, setAccessType] = React.useState('restricted');
+  const [bpnList, setBpnList] = React.useState<string[]>([]);
   const getInvalidDataMessage = () => {
     return Swal.fire({
       title: 'Invalid data!',
@@ -98,7 +124,19 @@ export default function CreateData({
       confirmButtonColor: '#01579b',
     });
   };
-
+  const showAccessTypeChangeAlert = () => {
+    return Swal.fire({
+      title: 'Unrestricted Access!',
+      html: '<p> Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you sure? </p>',
+      icon: 'warning',
+      confirmButtonColor: '#01579b',
+      showCancelButton: true,
+    }).then(result => {
+      if (result.dismiss === Swal.DismissReason.cancel) {
+        setAccessType('restricted');
+      }
+    });
+  };
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -182,11 +220,14 @@ export default function CreateData({
           }
         });
       });
-
+      const payload = {
+        bpn_numbers: accessType === 'restricted' ? bpnList : [],
+        type_of_access: accessType,
+        row_data: auxRows,
+      };
       setUploading(true);
-
       dft
-        .post(submitUrl, auxRows)
+        .post(submitUrl, payload)
         .then(resp => {
           const processId = resp.data;
 
@@ -227,6 +268,14 @@ export default function CreateData({
     }
   };
 
+  const handleAccessTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newAccessType = (event.target as HTMLInputElement).value;
+    setAccessType(newAccessType);
+    if (newAccessType === 'unrestricted') showAccessTypeChangeAlert();
+  };
+
+  const onBpnListUpdate = (data: string[]) => setBpnList(data);
+
   interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -260,6 +309,11 @@ export default function CreateData({
     };
   }
 
+  React.useEffect(() => {
+    onAccessPolicyUpdate({ accessType, bpnList });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessType, bpnList]);
+
   return (
     <div className="flex-1 py-6 px-10">
       {uploading ? (
@@ -285,59 +339,95 @@ export default function CreateData({
             <Grid item xs={12}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={v} onChange={handleChange} aria-label="basic tabs example">
-                  <Tab label="Serial Part Typization" {...a11yProps(0)} />
-                  <Tab label="Assembly Part Relationship" {...a11yProps(1)} />
-                  <Tab label="JSON" {...a11yProps(2)} />
+                  <Tab label="Upload File" {...a11yProps(0)} />
+                  <Tab label="Serial Part Typization" {...a11yProps(1)} />
+                  <Tab label="Assembly Part Relationship" {...a11yProps(2)} />
+                  <Tab label="JSON" {...a11yProps(3)} />
                 </Tabs>
               </Box>
-              <TabPanel value={v} index={0}>
-                <DynamicTable
-                  columns={getSerialPartTypizationColumns()}
-                  submitUrl={'/aspect'}
-                  submitData={submitData}
-                ></DynamicTable>
-              </TabPanel>
-              <TabPanel value={v} index={1}>
-                <DynamicTable
-                  columns={getAssemblyPartRelationshipColumns()}
-                  submitUrl={'/aspect/relationship'}
-                  headerHeight={90}
-                  submitData={submitData}
-                ></DynamicTable>
-              </TabPanel>
-              <TabPanel value={v} index={2}>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
-                    <TextareaAutosize
-                      ref={ref}
-                      minRows={20}
-                      placeholder={getSerialPlaceholder()}
-                      style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+              <Box>
+                <TabPanel value={v} index={0}>
+                  <UploadFile
+                    uploading={uploading}
+                    currentUploadData={currentUploadData}
+                    uploadStatus={uploadStatus}
+                    selectedFiles={selectedFiles}
+                    setUploadStatus={setUploadStatus}
+                    handleFiles={(file: File) => handleFiles(file)}
+                    uploadFile={(e: any) => uploadFile(e)}
+                    removeSelectedFiles={removeSelectedFiles}
+                    selectedTabIndex={v}
+                  />
+                </TabPanel>
+                <TabPanel value={v} index={1}>
+                  <DynamicTable
+                    columns={getSerialPartTypizationColumns()}
+                    submitUrl={'/aspect'}
+                    submitData={submitData}
+                  ></DynamicTable>
+                </TabPanel>
+                <TabPanel value={v} index={2}>
+                  <DynamicTable
+                    columns={getAssemblyPartRelationshipColumns()}
+                    submitUrl={'/aspect/relationship'}
+                    headerHeight={90}
+                    submitData={submitData}
+                  ></DynamicTable>
+                </TabPanel>
+                <TabPanel value={v} index={3}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
+                      <TextareaAutosize
+                        ref={ref}
+                        minRows={20}
+                        placeholder={getSerialPlaceholder()}
+                        style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <h1 className="flex flex-row text-bold text-3xl">Assembly Part Relationship</h1>
+                      <TextareaAutosize
+                        minRows={20}
+                        placeholder={getAssemblyPlaceholder()}
+                        style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <Button variant="outlined" onClick={submitSerialData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                        Submit data
+                      </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Button variant="outlined" onClick={submitAssemblyData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                        Submit data
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </TabPanel>
+              </Box>
+              <Box style={{ marginTop: v === 1 || v === 2 ? '200px' : '0' }}>
+                <FormControl>
+                  <b className=" text-2xl text-[#444444] ml-4 mb-3">ACCESS POLICY</b>
+                  <RadioGroup className="pl-12" value={accessType} onChange={handleAccessTypeChange}>
+                    <FormControlLabel
+                      className="py-2"
+                      value="restricted"
+                      control={<Radio />}
+                      label="Restricted access"
                     />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <h1 className="flex flex-row text-bold text-3xl">Assembly Part Relationship</h1>
-                    <TextareaAutosize
-                      minRows={20}
-                      placeholder={getAssemblyPlaceholder()}
-                      style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                    {accessType === 'restricted' && <ManageBpn onBpnListUpdate={onBpnListUpdate} />}
+                    <FormControlLabel
+                      className="py-2"
+                      value="unrestricted"
+                      control={<Radio />}
+                      label="Unrestricted access"
                     />
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <Button variant="outlined" onClick={submitSerialData} sx={{ mt: 2 }} style={{ float: 'right' }}>
-                      Submit data
-                    </Button>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Button variant="outlined" onClick={submitAssemblyData} sx={{ mt: 2 }} style={{ float: 'right' }}>
-                      Submit data
-                    </Button>
-                  </Grid>
-                </Grid>
-              </TabPanel>
+                  </RadioGroup>
+                </FormControl>
+              </Box>
             </Grid>
           </Grid>
         </div>

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import { useNavigate, useLocation } from 'react-router-dom';
-import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import HelpIcon from '@mui/icons-material/Help';
 import styles from '../styles.module.scss';
@@ -34,23 +33,6 @@ const Sidebar = (props: any) => {
       <div className={`${isExpanded ? 'w-64' : 'w-14 '} h-[calc(100%-4.75rem)] flex flex-col fixed`}>
         <div className="will-change-width py-6 px-0 overflow-hidden relative">
           <ul className="flex flex-col p-0 list-none overflow-hidden">
-            <li
-              className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
-              data-testid="uploadFileMenu"
-              onClick={() => navigate('/dashboard/upload-file')}
-            >
-              <BackupOutlinedIcon
-                fontSize="small"
-                sx={{ color: `${location.pathname === '/dashboard/upload-file' ? styles.blue : styles.black}` }}
-              />
-              <p
-                className={`${
-                  !isExpanded ? 'hidden' : 'flex'
-                } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
-              >
-                Upload csv file
-              </p>
-            </li>
             <li
               className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
               data-testid="uploadFileMenu"
