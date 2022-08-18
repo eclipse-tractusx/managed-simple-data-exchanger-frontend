@@ -29,3 +29,17 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
           - containerPort: {{ .Values.portContainer }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "dftfrontend.fullname" . }}-configmap
+          volumeMounts:
+            - name: configuration
+              mountPath: /app/configuration.properties
+              subPath: configuration.properties
+      volumes:
+        - name: configuration
+          configMap:
+            name: {{ include "dftfrontend.fullname" . }}-configmap
+            items:
+              - key: configuration.properties
+                path: configuration.properties
