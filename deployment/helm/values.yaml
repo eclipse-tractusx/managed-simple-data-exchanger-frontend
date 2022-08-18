@@ -35,3 +35,12 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+
+configuration:
+  properties: |-
+     REACT_APP_PASS=
+     REACT_APP_USERNAME=
+     REACT_APP_FILESIZE=
+     REACT_APP_API_URL=
+     REACT_APP_API_KEY=
+     REACT_APP_DEFAULT_COMPANY_BPN=
