@@ -19,9 +19,14 @@ COPY --from=builder /app/build /usr/share/nginx/html/
 # Default port exposure
 EXPOSE 80
 EXPOSE 443
-
-ARG UID=7000
-ARG GID=7000
+ARG UNAME=nginx
+ARG UID=1000
+ARG GID=1000
+RUN groupadd -g $GID -o $UNAME
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
+USER $UNAME
+#ARG UID=7000
+#ARG GID=7000
 
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html
