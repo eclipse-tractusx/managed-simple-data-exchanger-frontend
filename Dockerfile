@@ -29,7 +29,7 @@ WORKDIR /usr/share/nginx/html
 COPY ./.env .
 
 # Add bash
-RUN apk add --no-cache bash
+#RUN apk add --no-cache bash
 
 RUN chown ${UID}:${GID} /usr/share/nginx/html
 
