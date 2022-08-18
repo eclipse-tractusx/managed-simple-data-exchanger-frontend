@@ -19,8 +19,7 @@ COPY --from=builder /app/build /usr/share/nginx/html/
 # Default port exposure
 EXPOSE 80
 EXPOSE 443
-ARG UID=1000
-ARG GID=1000
+
 #ARG UID=7000
 #ARG GID=7000
 
@@ -32,9 +31,9 @@ COPY ./.env .
 #RUN apk add --no-cache bash
 RUN apt-get update -y && apt-get install -y nocache
 
-RUN chown ${UID}:${GID} /usr/share/nginx/html
+#RUN chown ${UID}:${GID} /usr/share/nginx/html
 
-USER ${UID}:${GID}
+#USER ${UID}:${GID}
 
 # Start Nginx server
 CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
