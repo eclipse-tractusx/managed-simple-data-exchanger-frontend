@@ -9,6 +9,6 @@ entries:
     name: dftfrontend
     type: application
     urls:
-    - https://catenax-ng.github.io/product-dft-frontend/deployment/helm/dftfrontend-0.1.0.tgz
+    - https://catenax-ng.github.io/product-dft-frontend/deployment/helm/dftfrontend-1.0.0.tgz
     version: 1.0.0
 generated: "2022-08-18T18:20:16.818071+05:30"
