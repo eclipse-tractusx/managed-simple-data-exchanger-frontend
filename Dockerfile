@@ -6,7 +6,8 @@ RUN yarn
 COPY ./ .
 RUN yarn build
 
-FROM nginx:1.22.0-alpine
+#FROM nginx:1.22.0-alpine
+FROM nginx:stable-alpine
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
