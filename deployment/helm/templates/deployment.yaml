@@ -27,8 +27,6 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-          - containerPort: {{ .Values.portContainer }}
           envFrom:
             - configMapRef:
                 name: {{ include "dftfrontend.fullname" . }}-configmap
