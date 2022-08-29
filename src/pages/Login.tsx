@@ -24,6 +24,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { Config } from '../utils/config';
 
 interface Props {
   // eslint-disable-next-line
@@ -49,7 +50,7 @@ export const Login: React.FC<Props> = ({ setIsAuth, setIsAuthError, isAuthError 
   const { register, handleSubmit } = useForm<FormValues>();
   const navigate = useNavigate();
   const onSubmit = handleSubmit(({ username, password }) => {
-    if (getHash(password) === process.env.REACT_APP_PASS && username === process.env.REACT_APP_USERNAME) {
+    if (getHash(password) === Config.REACT_APP_PASS && username === Config.REACT_APP_USERNAME) {
       setIsAuth(true);
       navigate('/dashboard');
     } else {

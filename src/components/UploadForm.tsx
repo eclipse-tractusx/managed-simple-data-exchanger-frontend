@@ -74,7 +74,8 @@ const UploadForm = (props: any) => {
         <ul>
           <li>The upload must be performed in the following order:</li>
           <li> 1 - serialPartTypization.csv </li>
-          <li> 2 - assemblyPartRelationship.csv</li>
+          <li> 2 - batch.csv </li>
+          <li> 3 - assemblyPartRelationship.csv</li>
         </ul>
       </div>
       {selectedFiles.length && !uploadStatus ? (

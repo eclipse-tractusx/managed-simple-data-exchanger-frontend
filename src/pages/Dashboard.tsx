@@ -14,7 +14,6 @@
 // limitations under the License.
 
 import React, { SyntheticEvent, useState } from 'react';
-import dft from '../api/dft';
 import styles from '../styles.module.scss';
 import { useLocation } from 'react-router-dom';
 import '../styles/Table.scss';
@@ -36,6 +35,10 @@ import UploadHistory from './UploadHistory';
 import CreateData from './CreateData';
 import { toast } from 'react-toastify';
 import { toastProps } from '../helpers/ToastOptions';
+import { Config } from '../utils/config';
+import DftService from '../services/DftService';
+import dft from '../api/dft';
+import UserService from '../services/UserService';
 
 interface IMetaData {
   accessType: string;
@@ -78,7 +81,7 @@ const Dashboard: React.FC = () => {
   const handleFiles = (file: File) => {
     setUploadStatus(false);
     setUploading(false);
-    const maxFileSize = parseInt(process.env.REACT_APP_FILESIZE);
+    const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
     if (validateFile(file) && file.size < maxFileSize) {
       setSelectedFiles([file]);
       file.invalid = false;
@@ -145,17 +148,15 @@ const Dashboard: React.FC = () => {
       // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
       const interval = setInterval(
         () =>
-          dft.get(`/processing-report/${processId}`).then(result => {
-            setUploadData(result.data);
-            if (
-              result &&
-              result.data &&
-              (result.data.status === Status.completed || result.data.status === Status.failed)
-            ) {
-              clearInterval(interval);
-              clearUpload();
-            }
-          }),
+          DftService.getInstance()
+            .getReportById(processId)
+            .then(result => {
+              setUploadData(result.data);
+              if (result?.data?.status === Status.completed || result.data.status === Status.failed) {
+                clearInterval(interval);
+                clearUpload();
+              }
+            }),
         2000,
       );
     } else {
@@ -183,9 +184,9 @@ const Dashboard: React.FC = () => {
       endDate: undefined,
     });
 
-    setTimeout(() => {
-      dft
-        .get(`/processing-report/${processId}`)
+    setTimeout(async () => {
+      DftService.getInstance()
+        .getReportById(processId)
         .then(r => {
           processingReport(r, processId);
         })
@@ -202,7 +203,7 @@ const Dashboard: React.FC = () => {
 
   const onAccessPolicyUpdate = (data: any) => setMetaData(data);
   // eslint-disable-next-line
-  const uploadFile = (e: any) => {
+  const uploadFile = async (e: any) => {
     e.preventDefault();
     setUploading(true);
     setUploadData({
@@ -224,11 +225,15 @@ const Dashboard: React.FC = () => {
     // eslint-disable-next-line
     formData.append('file', selectedFiles[0] as any);
     formData.append('meta_data', JSON.stringify(uploadMetaData));
+
     dft
-      .post('/upload', formData)
+      .post('/upload', formData, {
+        headers: {
+          Authorization: `Bearer ${UserService.getToken()}`,
+        },
+      })
       .then(resp => {
         const processId = resp.data;
-
         // first call
         processingReportFirstCall(processId);
       })

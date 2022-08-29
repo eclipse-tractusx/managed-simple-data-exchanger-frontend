@@ -13,9 +13,10 @@
 // limitations under the License.
 
 import axios from 'axios';
+import { Config } from '../utils/config';
 
-axios.defaults.headers.common.API_KEY = process.env.REACT_APP_API_KEY;
+axios.defaults.headers.common.API_KEY = Config.REACT_APP_API_KEY;
 
 export default axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: Config.REACT_APP_API_URL,
 });

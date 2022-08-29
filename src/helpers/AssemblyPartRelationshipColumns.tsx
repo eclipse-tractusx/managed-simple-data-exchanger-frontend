@@ -26,7 +26,9 @@ function getObject(
 }
 
 export function getAssemblyPartRelationshipColumns() {
-  const assemblyPartRelationshipColumns: DynamicTableColumn[] = commonColumns;
+  const assemblyPartRelationshipColumns: DynamicTableColumn[] = commonColumns.filter(
+    (column: DynamicTableColumn) => column.field !== 'batch_id',
+  );
   const auxArray = JSON.parse(JSON.stringify(assemblyPartRelationshipColumns));
 
   auxArray.push(

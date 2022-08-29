@@ -32,6 +32,14 @@ export const commonColumns: DynamicTableColumn[] = [
     headerAlign: 'center',
   },
   {
+    field: 'batch_id',
+    headerName: 'Batch ID*',
+    editable: true,
+    sortable: false,
+    flex: 1,
+    headerAlign: 'center',
+  },
+  {
     field: 'optional_identifier_key',
     headerName: 'Optional Identifier Key',
     editable: true,

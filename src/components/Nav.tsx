@@ -14,7 +14,7 @@
 
 import React, { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
@@ -22,12 +22,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Logout } from '@mui/icons-material';
 import styles from '../styles.module.scss';
+import UserService from '../services/UserService';
 
 // eslint-disable-next-line
 const Nav = (props: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleExpanded = () => {
     if (isExpanded) {
@@ -49,7 +50,8 @@ const Nav = (props: any) => {
 
   const logout = () => {
     localStorage.clear();
-    navigate('/login');
+    // navigate('/login');
+    UserService.doLogout();
   };
 
   return (

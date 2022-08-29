@@ -19,20 +19,24 @@ import { styled } from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { ProcessReport } from '../models/ProcessReport';
 import StickyHeadTable from '../components/StickyHeadTable';
-import dft from '../api/dft';
 import styles from '../styles.module.scss';
+import DftService from '../services/DftService';
 
 export const UploadHistory: React.FC = () => {
   const [tableData, setTableData] = useState<ProcessReport[]>([]);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
   const [totalElements, setTotalElements] = useState<number>(0);
+  // const dftService = new DftService();
 
-  const refreshTable = useCallback(() => {
-    dft.get(`/processing-report?page=${page}&pageSize=${rowsPerPage}`).then(response => {
+  const refreshTable = useCallback(async () => {
+    try {
+      const response = await DftService.getInstance().getUploadHistory({ page: page, pageSize: rowsPerPage });
       setTableData(response.data.items);
       setTotalElements(response.data.totalItems);
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }, [page, rowsPerPage]);
 
   useEffect(() => {

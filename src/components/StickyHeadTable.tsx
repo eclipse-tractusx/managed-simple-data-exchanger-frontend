@@ -156,6 +156,7 @@ export default function StickyHeadTable({
                     return (
                       <StyledTableCell key={column.id} align={column.align}>
                         {column.id === 'csvType' && value === CsvTypes.aspect && <b> ASPECT </b>}
+                        {column.id === 'csvType' && value === CsvTypes.batch && <b> BATCH </b>}
                         {column.id === 'csvType' && value === CsvTypes.aspectRelationship && (
                           <b> ASPECT RELATIONSHIP </b>
                         )}

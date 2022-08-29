@@ -12,27 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export interface ProcessReport {
-  processId: string;
-  csvType: CsvTypes;
-  numberOfItems: number;
-  numberOfFailedItems: number;
-  numberOfSucceededItems: number;
-  status: Status;
-  startDate: string;
-  endDate?: string;
-  duration?: string;
-}
-
-export enum Status {
-  completed = 'COMPLETED',
-  failed = 'FAILED',
-  inProgress = 'IN_PROGRESS',
-}
-
-export enum CsvTypes {
-  aspect = 'ASPECT',
-  batch = 'BATCH',
-  aspectRelationship = 'ASPECT_RELATIONSHIP',
-  unknown = 'UNKNOWN',
+export interface Batch {
+  id?: number;
+  uuid: string;
+  batch_id: string;
+  manufacturing_date: string;
+  manufacturing_country: string;
+  manufacturer_part_id: string;
+  customer_part_id: string;
+  classification: string;
+  name_at_manufacturer: string;
+  name_at_customer: string;
+  optional_identifier_key: string;
+  optional_identifier_value: string;
 }

@@ -19,19 +19,20 @@ import { Box, Button, CircularProgress, Grid, Tab, Tabs, TextareaAutosize } from
 import DynamicTable from '../components/DynamicTable';
 import Timer from '../components/Timer';
 import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
-import { getSerialPartTypizationColumns } from '../helpers/SerialPartTypizationColumns';
+import { getColumnsBySubmodelType } from '../helpers/commonSubmodelColumns';
 import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
 import { formatDate } from '../utils/utils';
 import { SerialPartTypization } from '../models/SerialPartTypization';
+import { Batch } from '../models/Batch';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import dft from '../api/dft';
 import Swal from 'sweetalert2';
 import UploadFile from '../components/UploadFile';
 import { ManageBpn } from '../components/ManageBpn';
+import DftService from '../services/DftService';
 
 const serialPartInitialData = [
   {
@@ -48,7 +49,21 @@ const serialPartInitialData = [
     optional_identifier_value: '',
   },
 ];
-
+const batchInitialData = [
+  {
+    uuid: '',
+    batch_id: '',
+    manufacturing_date: '',
+    manufacturing_country: '',
+    manufacturer_part_id: '',
+    customer_part_id: '',
+    classification: '',
+    name_at_manufacturer: '',
+    name_at_customer: '',
+    optional_identifier_key: '',
+    optional_identifier_value: '',
+  },
+];
 const assemblyRelationshipInitialData = [
   {
     parent_uuid: '',
@@ -113,6 +128,7 @@ export default function CreateData({
   const ref = useRef(null);
   const [v, setValue] = React.useState(0);
   const [serialTemplate] = React.useState<SerialPartTypization[]>(serialPartInitialData);
+  const [batchTemplate] = React.useState<Batch[]>(batchInitialData);
   const [assemblyTemplate] = React.useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
   const [accessType, setAccessType] = React.useState('restricted');
   const [bpnList, setBpnList] = React.useState<string[]>([]);
@@ -145,6 +161,10 @@ export default function CreateData({
     return JSON.stringify(serialTemplate, undefined, 4);
   };
 
+  const getBatchPlaceHolder = () => {
+    return JSON.stringify(batchTemplate, undefined, 4);
+  };
+
   const getAssemblyPlaceholder = () => {
     return JSON.stringify(assemblyTemplate, undefined, 4);
   };
@@ -155,6 +175,28 @@ export default function CreateData({
       for (const r of auxRows) {
         if (
           r.part_instance_id === '' ||
+          r.manufacturing_date === '' ||
+          r.manufacturer_part_id === '' ||
+          r.classification === '' ||
+          r.name_at_manufacturer === '' ||
+          (r.optional_identifier_value === '' && r.optional_identifier_key !== '') ||
+          (r.optional_identifier_value !== '' && r.optional_identifier_key === '')
+        ) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    return false;
+  };
+
+  const validateBatchFields = (value: Batch[]) => {
+    const auxRows = JSON.parse(JSON.stringify(value));
+    if (auxRows && auxRows.length > 0) {
+      for (const r of auxRows) {
+        if (
+          r.batch_id === '' ||
           r.manufacturing_date === '' ||
           r.manufacturer_part_id === '' ||
           r.classification === '' ||
@@ -199,12 +241,17 @@ export default function CreateData({
     return false;
   };
 
-  const submitData = (value: SerialPartTypization[] | AssemblyPartRelationship[], submitUrl: string) => {
+  const submitData = async (
+    value: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[],
+    submitUrl: string,
+  ) => {
     let valid = false;
 
     if (value.hasOwnProperty('parent_uuid')) {
       // assembly part relationship
       valid = validateAssemblyRelationshipFiedls(value as AssemblyPartRelationship[]);
+    } else if (value.hasOwnProperty('batch_id')) {
+      valid = validateBatchFields(value as Batch[]);
     } else {
       // serial part
       valid = validateSerialPartFiedls(value as SerialPartTypization[]);
@@ -226,17 +273,13 @@ export default function CreateData({
         row_data: auxRows,
       };
       setUploading(true);
-      dft
-        .post(submitUrl, payload)
-        .then(resp => {
-          const processId = resp.data;
-
-          // first call
-          processingReportFirstCall(processId);
-        })
-        .catch(() => {
-          setUploadData({ ...currentUploadData, status: Status.failed });
-        });
+      try {
+        const response = await DftService.getInstance().submitSubmodalData(submitUrl, payload);
+        // first call
+        processingReportFirstCall(response.data);
+      } catch (error) {
+        setUploadData({ ...currentUploadData, status: Status.failed });
+      }
     } else {
       getInvalidDataMessage();
     }
@@ -252,6 +295,19 @@ export default function CreateData({
 
     if (json) {
       submitData(json, '/aspect');
+    }
+  };
+
+  const submitBatchData = () => {
+    let json;
+    try {
+      json = JSON.parse(ref.current.value.trim());
+    } catch (e) {
+      getInvalidDataMessage();
+    }
+
+    if (json) {
+      submitData(json, '/batch');
     }
   };
 
@@ -341,8 +397,9 @@ export default function CreateData({
                 <Tabs value={v} onChange={handleChange} aria-label="basic tabs example">
                   <Tab label="Upload File" {...a11yProps(0)} />
                   <Tab label="Serial Part Typization" {...a11yProps(1)} />
-                  <Tab label="Assembly Part Relationship" {...a11yProps(2)} />
-                  <Tab label="JSON" {...a11yProps(3)} />
+                  <Tab label="Batch" {...a11yProps(2)} />
+                  <Tab label="Assembly Part Relationship" {...a11yProps(3)} />
+                  <Tab label="JSON" {...a11yProps(4)} />
                 </Tabs>
               </Box>
               <Box>
@@ -361,12 +418,19 @@ export default function CreateData({
                 </TabPanel>
                 <TabPanel value={v} index={1}>
                   <DynamicTable
-                    columns={getSerialPartTypizationColumns()}
+                    columns={getColumnsBySubmodelType('serialPartTypization')}
                     submitUrl={'/aspect'}
                     submitData={submitData}
                   ></DynamicTable>
                 </TabPanel>
                 <TabPanel value={v} index={2}>
+                  <DynamicTable
+                    columns={getColumnsBySubmodelType('batch')}
+                    submitUrl={'/batch'}
+                    submitData={submitData}
+                  ></DynamicTable>
+                </TabPanel>
+                <TabPanel value={v} index={3}>
                   <DynamicTable
                     columns={getAssemblyPartRelationshipColumns()}
                     submitUrl={'/aspect/relationship'}
@@ -374,9 +438,9 @@ export default function CreateData({
                     submitData={submitData}
                   ></DynamicTable>
                 </TabPanel>
-                <TabPanel value={v} index={3}>
+                <TabPanel value={v} index={4}>
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
                       <TextareaAutosize
                         ref={ref}
@@ -385,7 +449,16 @@ export default function CreateData({
                         style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
+                      <h1 className="flex flex-row text-bold text-3xl">Batch</h1>
+                      <TextareaAutosize
+                        ref={ref}
+                        minRows={20}
+                        placeholder={getBatchPlaceHolder()}
+                        style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
                       <h1 className="flex flex-row text-bold text-3xl">Assembly Part Relationship</h1>
                       <TextareaAutosize
                         minRows={20}
@@ -395,12 +468,17 @@ export default function CreateData({
                     </Grid>
                   </Grid>
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                       <Button variant="outlined" onClick={submitSerialData} sx={{ mt: 2 }} style={{ float: 'right' }}>
                         Submit data
                       </Button>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
+                      <Button variant="outlined" onClick={submitBatchData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                        Submit data
+                      </Button>
+                    </Grid>
+                    <Grid item xs={4}>
                       <Button variant="outlined" onClick={submitAssemblyData} sx={{ mt: 2 }} style={{ float: 'right' }}>
                         Submit data
                       </Button>
@@ -408,7 +486,7 @@ export default function CreateData({
                   </Grid>
                 </TabPanel>
               </Box>
-              <Box style={{ marginTop: v === 1 || v === 2 ? '200px' : '0' }}>
+              <Box style={{ marginTop: v === 1 || v === 2 || v === 3 ? '200px' : '0' }}>
                 <FormControl>
                   <b className=" text-2xl text-[#444444] ml-4 mb-3">ACCESS POLICY</b>
                   <RadioGroup className="pl-12" value={accessType} onChange={handleAccessTypeChange}>

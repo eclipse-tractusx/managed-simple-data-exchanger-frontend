@@ -12,13 +12,14 @@ import {
   TextField,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Config } from '../utils/config';
 
 interface ManageBpnProps {
   onBpnListUpdate: (data: string[]) => void;
 }
 export const ManageBpn: React.FC<ManageBpnProps> = ({ onBpnListUpdate }) => {
   const [inputBpn, setInputBpn] = React.useState<string>('');
-  const defaultCompanyBPN = process.env.REACT_APP_DEFAULT_COMPANY_BPN;
+  const defaultCompanyBPN = Config.REACT_APP_DEFAULT_COMPANY_BPN;
   const [bpnList, setBpnList] = React.useState<string[]>(() => {
     const savedItem = localStorage.getItem('persistedBpnList');
     const parsedItem = JSON.parse(savedItem);

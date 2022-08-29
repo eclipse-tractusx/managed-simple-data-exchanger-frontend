@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
+import { Batch } from '../models/Batch';
 
 const columnsData: DynamicTableColumn[] = [];
 
@@ -30,7 +31,7 @@ export default function DynamicTable({
   headerHeight = 60,
   submitUrl = '/aspect',
   // eslint-disable-next-line
-  submitData = (_value: SerialPartTypization[] | AssemblyPartRelationship[], _submitUrl: string) => {
+  submitData = (_value: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[], _submitUrl: string) => {
     /* This is itentional */
   },
 }) {
@@ -121,7 +122,7 @@ export default function DynamicTable({
   }
 
   const addRows = () => {
-    const newRows: SerialPartTypization[] | AssemblyPartRelationship[] = [];
+    const newRows: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[] = [];
 
     Swal.fire({
       title: 'Insert number of rows',
@@ -175,7 +176,7 @@ export default function DynamicTable({
     const index = rows.findIndex(r => r.id === event.id);
     if (index !== -1) {
       if (auxRows[index].hasOwnProperty(event.field)) {
-        const f = event.field as keyof SerialPartTypization | keyof AssemblyPartRelationship;
+        const f = event.field as keyof SerialPartTypization | keyof Batch | keyof AssemblyPartRelationship;
         auxRows[index][f] =
           (f === 'uuid' || f === 'parent_uuid') && event.value !== '' && !event.value.startsWith('urn:uuid:')
             ? `urn:uuid:${event.value}`
