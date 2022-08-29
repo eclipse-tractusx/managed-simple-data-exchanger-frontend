@@ -25,8 +25,10 @@ EXPOSE 443
 
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html
-COPY ./.env .
 
+COPY ./env.sh .
+
+COPY .env .
 # Add bash
 #RUN apk add --no-cache bash
 RUN apt-get update -y && apt-get install -y nocache
@@ -34,6 +36,8 @@ RUN apt-get update -y && apt-get install -y nocache
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
 #USER ${UID}:${GID}
-
+RUN chmod 777 env.sh
+RUN chmod 777 -R /usr/share/nginx/html/*
 # Start Nginx server
+#CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
 CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
