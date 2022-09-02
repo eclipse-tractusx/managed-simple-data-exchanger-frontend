@@ -6,8 +6,8 @@ RUN yarn
 COPY ./ .
 RUN yarn build
 
-#FROM nginx:1.22.0-alpine
-FROM nginx:latest
+FROM nginx:1.22.0-alpine
+#FROM nginx:latest
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -17,8 +17,9 @@ COPY ./conf /etc/nginx
 COPY --from=builder /app/build /usr/share/nginx/html/
 
 # Default port exposure
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+#EXPOSE 80
+#EXPOSE 443
 
 #ARG UID=7000
 #ARG GID=7000
@@ -30,8 +31,8 @@ COPY ./env.sh .
 
 COPY .env .
 # Add bash
-#RUN apk add --no-cache bash
-RUN apt-get update -y && apt-get install -y nocache
+RUN apk add --no-cache bash
+#RUN apt-get update -y && apt-get install -y nocache
 
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
