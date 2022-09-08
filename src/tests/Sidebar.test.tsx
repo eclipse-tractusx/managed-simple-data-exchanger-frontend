@@ -38,12 +38,12 @@ test('expanded sidebar', () => {
   );
 
   // check upload file menu
-  const uploadFileMenu = screen.getByText('Upload file');
+  const uploadFileMenu = screen.getByText('Create Data');
   expect(uploadFileMenu).toBeInTheDocument();
   expect(uploadFileMenu).not.toHaveClass('hidden');
 
   // check upload history menu
-  const uploadHistoryMenu = screen.getByText('Upload history');
+  const uploadHistoryMenu = screen.getByText('Upload History');
   expect(uploadHistoryMenu).toBeInTheDocument();
   expect(uploadHistoryMenu).not.toHaveClass('hidden');
 
@@ -60,12 +60,12 @@ test('collapsed sidebar', () => {
     </MemoryRouter>,
   );
   // check upload file menu
-  const uploadFileMenu = screen.queryByText('Upload file');
-  expect(uploadFileMenu).toHaveClass('hidden');
+  const uploadFileMenu = screen.queryByText('Create Data');
+  expect(uploadFileMenu).not.toBeVisible();
   // check upload history menu
-  const uploadHistoryMenu = screen.queryByText('Upload history');
-  expect(uploadHistoryMenu).toHaveClass('hidden');
+  const uploadHistoryMenu = screen.queryByText('Upload History');
+  expect(uploadHistoryMenu).not.toBeVisible();
   // check help menu
   const helpMenu = screen.queryByText('Help');
-  expect(helpMenu).toHaveClass('hidden');
+  expect(helpMenu).not.toBeVisible();
 });

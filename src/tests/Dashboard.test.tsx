@@ -15,45 +15,51 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
+import { handleDialogOpen } from '../store/accessUsagePolicySlice';
+import { store } from '../store/store';
+import { ReduxWrapper } from '../utils/testUtils';
 
-test('dashboard - upload file menu', () => {
-  render(
-    <MemoryRouter>
-      <Dashboard />
-    </MemoryRouter>,
-  );
+describe('Dashboard', () => {
+  test('upload file page', () => {
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/dashboard/create-data' }]}>
+        <Dashboard />
+      </MemoryRouter>,
+      { wrapper: ReduxWrapper },
+    );
+    expect(screen.getByText('Drag and drop your file on this page')).toBeInTheDocument();
+    expect(screen.queryByText('Refresh')).not.toBeInTheDocument();
+    expect(screen.queryByText('Rules')).not.toBeInTheDocument();
+  });
 
-  const uploadFileMenu = screen.getByTestId('uploadFileMenu');
-  uploadFileMenu.click();
-  expect(screen.getByText('Drag and drop your file on this page')).toBeInTheDocument();
-  expect(screen.queryByText('Refresh')).not.toBeInTheDocument();
-  expect(screen.queryByText('Rules')).not.toBeInTheDocument();
-});
+  test('upload history page', () => {
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/dashboard/history' }]}>
+        <Dashboard />
+      </MemoryRouter>,
+      { wrapper: ReduxWrapper },
+    );
+    expect(screen.getByText('Refresh')).toBeInTheDocument();
+  });
 
-test('dashboard - upload history menu', () => {
-  render(
-    <MemoryRouter>
-      <Dashboard />
-    </MemoryRouter>,
-  );
+  test('help page', () => {
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/dashboard/help' }]}>
+        <Dashboard />
+      </MemoryRouter>,
+      { wrapper: ReduxWrapper },
+    );
+    expect(screen.getByText('Rules')).toBeInTheDocument();
+  });
 
-  const uploadHistoryMenu = screen.getByTestId('uploadHistoryMenu');
-  uploadHistoryMenu.click();
-  expect(screen.getByText('Refresh')).toBeInTheDocument();
-  expect(screen.queryByText('Drag and drop your file on this page')).not.toBeInTheDocument();
-  expect(screen.queryByText('Rules')).not.toBeInTheDocument();
-});
-
-test('dashboard - help menu', () => {
-  render(
-    <MemoryRouter>
-      <Dashboard />
-    </MemoryRouter>,
-  );
-
-  const helpMenu = screen.getByTestId('helpMenu');
-  helpMenu.click();
-  expect(screen.getByText('Rules')).toBeInTheDocument();
-  expect(screen.queryByText('Drag and drop your file on this page')).not.toBeInTheDocument();
-  expect(screen.queryByText('Refresh')).not.toBeInTheDocument();
+  test('Render Policies Dialog Componenet', async () => {
+    render(
+      <MemoryRouter initialEntries={[{ pathname: '/dashboard/create-data' }]}>
+        <Dashboard />
+      </MemoryRouter>,
+      { wrapper: ReduxWrapper },
+    );
+    store?.dispatch(handleDialogOpen(true));
+    expect(screen.queryByText('Policies')).toBeInTheDocument();
+  });
 });

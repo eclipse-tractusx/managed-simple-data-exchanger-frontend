@@ -11,19 +11,57 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-import { useNavigate, useLocation } from 'react-router-dom';
-import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
-import HelpIcon from '@mui/icons-material/Help';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles.module.scss';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Typography, Divider } from '@mui/material';
+import { List, ListItem, ListItemButton, ListItemText, ListItemIcon } from '@mui/material';
+import { IntMenuItemProps, MenuItems, icons } from '../models/Sidebar';
+
+/**
+ * Menu Item
+ * @param props
+ * @returns ListItem
+ */
+const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
+  const navigate = useNavigate();
+  const { menuIcon, to, text, dataId } = item;
+  const Icon = icons[menuIcon];
+  return (
+    <ListItem data-testid={dataId} onClick={() => navigate(to)} sx={{ p: 0 }}>
+      <ListItemButton sx={{ minHeight: '48px' }}>
+        <ListItemIcon>
+          <Icon fontSize="small" sx={{ color: `${location.pathname === to ? styles.blue : styles.black}` }} />
+        </ListItemIcon>
+        <ListItemText primary={text} sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }} />
+      </ListItemButton>
+    </ListItem>
+  );
+};
+
+/**
+ * Menu Title
+ * @param props
+ * @returns Typography
+ */
+const MenuItemHeading: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
+  return (
+    <>
+      <Typography
+        variant="body1"
+        sx={{ display: 'flex', justifyContent: 'space-between' }}
+        className={`${!isExpanded ? 'hidden' : 'flex'} gap-x-2 px-5 py-2 bg-[#efefef]`}
+      >
+        {isExpanded ? item.text : item.text.charAt(0)}
+      </Typography>
+      <Divider />
+    </>
+  );
+};
 
 // eslint-disable-next-line
 const Sidebar = (props: any) => {
   const { isExpanded } = props;
-  const navigate = useNavigate();
-  const location = useLocation();
-
   return (
     <aside
       className={`${
@@ -31,60 +69,17 @@ const Sidebar = (props: any) => {
       } will-change-width transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)] flex flex-col overflow-hidden z-auto order-none shadow-md`}
     >
       <div className={`${isExpanded ? 'w-64' : 'w-14 '} h-[calc(100%-4.75rem)] flex flex-col fixed`}>
-        <div className="will-change-width py-6 px-0 overflow-hidden relative">
-          <ul className="flex flex-col p-0 list-none overflow-hidden">
-            <li
-              className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
-              data-testid="uploadFileMenu"
-              onClick={() => navigate('/dashboard/create-data')}
-            >
-              <AddCircleOutlineIcon
-                fontSize="small"
-                sx={{ color: `${location.pathname === '/dashboard/create-data' ? styles.blue : styles.black}` }}
-              />
-              <p
-                className={`${
-                  !isExpanded ? 'hidden' : 'flex'
-                } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
-              >
-                Create data
-              </p>
-            </li>
-            <li
-              className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
-              data-testid="uploadHistoryMenu"
-              onClick={() => navigate('/dashboard/history')}
-            >
-              <HistoryOutlinedIcon
-                fontSize="small"
-                sx={{ color: `${location.pathname === '/dashboard/history' ? styles.blue : styles.black}` }}
-              />
-              <p
-                className={`${
-                  !isExpanded ? 'hidden' : 'flex'
-                } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
-              >
-                Upload history
-              </p>
-            </li>
-            <li
-              className="flex gap-x-2 p-4 cursor-pointer items-center relative hover:bg-[#efefef]"
-              data-testid="helpMenu"
-              onClick={() => navigate('/dashboard/help')}
-            >
-              <HelpIcon
-                fontSize="small"
-                sx={{ color: `${location.pathname === '/dashboard/help' ? styles.blue : styles.black}` }}
-              />
-              <p
-                className={`${
-                  !isExpanded ? 'hidden' : 'flex'
-                } will-change-display transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)]`}
-              >
-                Help
-              </p>
-            </li>
-          </ul>
+        <div className="will-change-width px-0 overflow-hidden relative">
+          <List>
+            {MenuItems.map((menuItem, index) => (
+              <div key={index}>
+                <MenuItemHeading item={menuItem} isExpanded={isExpanded} />
+                {menuItem.childrens.map((children, k) => {
+                  return <MenuItem key={k} item={children} isExpanded={isExpanded} />;
+                })}
+              </div>
+            ))}
+          </List>
         </div>
       </div>
     </aside>
