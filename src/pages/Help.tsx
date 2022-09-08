@@ -40,7 +40,7 @@ export const Help: React.FC = () => {
 
   const copyHeadersToasty = () => {
     return toast.success('Copied to clipboard!', {
-      position: 'bottom-right',
+      position: 'top-right',
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,

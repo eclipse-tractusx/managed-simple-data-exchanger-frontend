@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Copyright 2022 Catena-X
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useRef } from 'react';
-import { Box, Button, CircularProgress, Grid, Tab, Tabs, TextareaAutosize } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
+import { Box, Button, Grid, Tab, Tabs, TextareaAutosize } from '@mui/material';
 import DynamicTable from '../components/DynamicTable';
-import Timer from '../components/Timer';
-import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
 import { getColumnsBySubmodelType } from '../helpers/commonSubmodelColumns';
 import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
-import { formatDate } from '../utils/utils';
 import { SerialPartTypization } from '../models/SerialPartTypization';
 import { Batch } from '../models/Batch';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
 import Swal from 'sweetalert2';
 import UploadFile from '../components/UploadFile';
-import { ManageBpn } from '../components/ManageBpn';
-import DftService from '../services/DftService';
+import { useAppDispatch } from '../store/store';
+import { handleDialogOpen } from '../store/accessUsagePolicySlice';
+import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 
 const serialPartInitialData = [
   {
@@ -84,54 +76,16 @@ const assemblyRelationshipInitialData = [
   },
 ];
 
-export default function CreateData({
-  // eslint-disable-next-line
-  processingReportFirstCall = (_processId: string) => {
-    /* This is itentional */
-  },
-  // eslint-disable-next-line
-  setUploading = (_status: boolean) => {
-    /* This is itentional */
-  },
-  handleFiles = (_file: File) => {
-    /* This is itentional */
-  },
-  setUploadStatus = (_status: boolean) => {
-    /* This is itentional */
-  },
-  removeSelectedFiles = (_clearState: boolean) => {
-    /* This is itentional */
-  },
-  uploadFile = (_e: any) => {
-    /* This is itentional */
-  },
-  uploadStatus = false,
-  selectedFiles = [] as any,
-  uploading = false,
-  currentUploadData = {
-    processId: '',
-    csvType: CsvTypes.unknown,
-    numberOfItems: 0,
-    numberOfFailedItems: 0,
-    numberOfSucceededItems: 0,
-    status: Status.inProgress,
-    startDate: '',
-  },
-  // eslint-disable-next-line
-  setUploadData = (_data: ProcessReport) => {
-    /* This is itentional */
-  },
-  onAccessPolicyUpdate = (data: any) => {
-    /* This is itentional */
-  },
-}) {
-  const ref = useRef(null);
-  const [v, setValue] = React.useState(0);
-  const [serialTemplate] = React.useState<SerialPartTypization[]>(serialPartInitialData);
-  const [batchTemplate] = React.useState<Batch[]>(batchInitialData);
-  const [assemblyTemplate] = React.useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
-  const [accessType, setAccessType] = React.useState('restricted');
-  const [bpnList, setBpnList] = React.useState<string[]>([]);
+export default function CreateData({ handleFiles }: { handleFiles: (_file: File) => void }) {
+  const serialDataRef = useRef(null);
+  const batchDataRef = useRef(null);
+  const assemblyDataRef = useRef(null);
+  const [v, setValue] = useState(0);
+  const [serialTemplate] = useState<SerialPartTypization[]>(serialPartInitialData);
+  const [batchTemplate] = useState<Batch[]>(batchInitialData);
+  const [assemblyTemplate] = useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
+
+  const dispatch = useAppDispatch();
   const getInvalidDataMessage = () => {
     return Swal.fire({
       title: 'Invalid data!',
@@ -140,19 +94,7 @@ export default function CreateData({
       confirmButtonColor: '#01579b',
     });
   };
-  const showAccessTypeChangeAlert = () => {
-    return Swal.fire({
-      title: 'Unrestricted Access!',
-      html: '<p> Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you sure? </p>',
-      icon: 'warning',
-      confirmButtonColor: '#01579b',
-      showCancelButton: true,
-    }).then(result => {
-      if (result.dismiss === Swal.DismissReason.cancel) {
-        setAccessType('restricted');
-      }
-    });
-  };
+
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -241,9 +183,10 @@ export default function CreateData({
     return false;
   };
 
-  const submitData = async (
+  const validateData = async (
     value: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[],
     submitUrl: string,
+    type: string,
   ) => {
     let valid = false;
 
@@ -257,9 +200,8 @@ export default function CreateData({
       valid = validateSerialPartFiedls(value as SerialPartTypization[]);
     }
     const auxRows = JSON.parse(JSON.stringify(value));
-
     if (valid) {
-      // eslint-disable-next-line
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       auxRows.forEach((auxRow: any) => {
         Object.keys(auxRow).forEach(k => {
           if (auxRow[k] === '') {
@@ -267,19 +209,7 @@ export default function CreateData({
           }
         });
       });
-      const payload = {
-        bpn_numbers: accessType === 'restricted' ? bpnList : [],
-        type_of_access: accessType,
-        row_data: auxRows,
-      };
-      setUploading(true);
-      try {
-        const response = await DftService.getInstance().submitSubmodalData(submitUrl, payload);
-        // first call
-        processingReportFirstCall(response.data);
-      } catch (error) {
-        setUploadData({ ...currentUploadData, status: Status.failed });
-      }
+      dispatch(handleDialogOpen({ data: auxRows, url: submitUrl, type: type }));
     } else {
       getInvalidDataMessage();
     }
@@ -288,49 +218,40 @@ export default function CreateData({
   const submitSerialData = () => {
     let json;
     try {
-      json = JSON.parse(ref.current.value.trim());
+      json = JSON.parse(serialDataRef.current.value.trim());
     } catch (e) {
       getInvalidDataMessage();
     }
 
     if (json) {
-      submitData(json, '/aspect');
+      validateData(json, '/aspect', 'json');
     }
   };
 
   const submitBatchData = () => {
     let json;
     try {
-      json = JSON.parse(ref.current.value.trim());
+      json = JSON.parse(batchDataRef.current.value.trim());
     } catch (e) {
       getInvalidDataMessage();
     }
 
     if (json) {
-      submitData(json, '/batch');
+      validateData(json, '/batch', 'json');
     }
   };
-
   const submitAssemblyData = () => {
     let json;
     try {
-      json = JSON.parse(ref.current.value.trim());
+      json = JSON.parse(assemblyDataRef.current.value.trim());
     } catch (e) {
       getInvalidDataMessage();
     }
 
     if (json) {
-      submitData(json, '/aspect/relationship');
+      validateData(json, '/aspect/relationship', 'json');
     }
   };
-
-  const handleAccessTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newAccessType = (event.target as HTMLInputElement).value;
-    setAccessType(newAccessType);
-    if (newAccessType === 'unrestricted') showAccessTypeChangeAlert();
-  };
-
-  const onBpnListUpdate = (data: string[]) => setBpnList(data);
 
   interface TabPanelProps {
     children?: React.ReactNode;
@@ -340,7 +261,6 @@ export default function CreateData({
 
   function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-
     return (
       <div
         role="tabpanel"
@@ -365,151 +285,104 @@ export default function CreateData({
     };
   }
 
-  React.useEffect(() => {
-    onAccessPolicyUpdate({ accessType, bpnList });
+  useEffect(() => {
+    dispatch(setSelectedFiles([]));
+    dispatch(setUploadStatus(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessType, bpnList]);
+  }, []);
 
   return (
     <div className="flex-1 py-6 px-10">
-      {uploading ? (
-        <div className="flex flex-1 flex-col items-center justify-center min-w-0 relative mt-8">
-          <div className="flex-[1_0_0%] flex order-1">
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-center">
-                <CircularProgress size={100} />
-                <Timer />
-                <span>
-                  Upload started at: &nbsp;
-                  {currentUploadData.startDate && formatDate(currentUploadData.startDate)}
-                  {!currentUploadData.startDate && '-'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-      {!uploading ? (
-        <div>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={v} onChange={handleChange} aria-label="basic tabs example">
-                  <Tab label="Upload File" {...a11yProps(0)} />
-                  <Tab label="Serial Part Typization" {...a11yProps(1)} />
-                  <Tab label="Batch" {...a11yProps(2)} />
-                  <Tab label="Assembly Part Relationship" {...a11yProps(3)} />
-                  <Tab label="JSON" {...a11yProps(4)} />
-                </Tabs>
-              </Box>
-              <Box>
-                <TabPanel value={v} index={0}>
-                  <UploadFile
-                    uploading={uploading}
-                    currentUploadData={currentUploadData}
-                    uploadStatus={uploadStatus}
-                    selectedFiles={selectedFiles}
-                    setUploadStatus={setUploadStatus}
-                    handleFiles={(file: File) => handleFiles(file)}
-                    uploadFile={(e: any) => uploadFile(e)}
-                    removeSelectedFiles={removeSelectedFiles}
-                    selectedTabIndex={v}
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={v} onChange={handleChange} aria-label="basic tabs example">
+              <Tab label="Upload File" {...a11yProps(0)} />
+              <Tab label="Serial Part Typization" {...a11yProps(1)} />
+              <Tab label="Batch" {...a11yProps(2)} />
+              <Tab label="Assembly Part Relationship" {...a11yProps(3)} />
+              <Tab label="JSON" {...a11yProps(4)} />
+            </Tabs>
+          </Box>
+          <Box>
+            <TabPanel value={v} index={0}>
+              <UploadFile handleFiles={(file: File) => handleFiles(file)} selectedTabIndex={v} />
+            </TabPanel>
+            <TabPanel value={v} index={1}>
+              <DynamicTable
+                columns={getColumnsBySubmodelType('serialPartTypization')}
+                submitUrl={'/aspect'}
+                headerHeight={60}
+                validateData={validateData}
+              ></DynamicTable>
+            </TabPanel>
+            <TabPanel value={v} index={2}>
+              <DynamicTable
+                columns={getColumnsBySubmodelType('batch')}
+                submitUrl={'/batch'}
+                headerHeight={60}
+                validateData={validateData}
+              ></DynamicTable>
+            </TabPanel>
+            <TabPanel value={v} index={3}>
+              <DynamicTable
+                columns={getAssemblyPartRelationshipColumns()}
+                submitUrl={'/aspect/relationship'}
+                headerHeight={90}
+                validateData={validateData}
+              ></DynamicTable>
+            </TabPanel>
+            <TabPanel value={v} index={4}>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
+                  <TextareaAutosize
+                    ref={serialDataRef}
+                    minRows={20}
+                    placeholder={getSerialPlaceholder()}
+                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
                   />
-                </TabPanel>
-                <TabPanel value={v} index={1}>
-                  <DynamicTable
-                    columns={getColumnsBySubmodelType('serialPartTypization')}
-                    submitUrl={'/aspect'}
-                    submitData={submitData}
-                  ></DynamicTable>
-                </TabPanel>
-                <TabPanel value={v} index={2}>
-                  <DynamicTable
-                    columns={getColumnsBySubmodelType('batch')}
-                    submitUrl={'/batch'}
-                    submitData={submitData}
-                  ></DynamicTable>
-                </TabPanel>
-                <TabPanel value={v} index={3}>
-                  <DynamicTable
-                    columns={getAssemblyPartRelationshipColumns()}
-                    submitUrl={'/aspect/relationship'}
-                    headerHeight={90}
-                    submitData={submitData}
-                  ></DynamicTable>
-                </TabPanel>
-                <TabPanel value={v} index={4}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                      <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
-                      <TextareaAutosize
-                        ref={ref}
-                        minRows={20}
-                        placeholder={getSerialPlaceholder()}
-                        style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
-                      />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <h1 className="flex flex-row text-bold text-3xl">Batch</h1>
-                      <TextareaAutosize
-                        ref={ref}
-                        minRows={20}
-                        placeholder={getBatchPlaceHolder()}
-                        style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
-                      />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <h1 className="flex flex-row text-bold text-3xl">Assembly Part Relationship</h1>
-                      <TextareaAutosize
-                        minRows={20}
-                        placeholder={getAssemblyPlaceholder()}
-                        style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                      <Button variant="outlined" onClick={submitSerialData} sx={{ mt: 2 }} style={{ float: 'right' }}>
-                        Submit data
-                      </Button>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Button variant="outlined" onClick={submitBatchData} sx={{ mt: 2 }} style={{ float: 'right' }}>
-                        Submit data
-                      </Button>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Button variant="outlined" onClick={submitAssemblyData} sx={{ mt: 2 }} style={{ float: 'right' }}>
-                        Submit data
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </TabPanel>
-              </Box>
-              <Box style={{ marginTop: v === 1 || v === 2 || v === 3 ? '200px' : '0' }}>
-                <FormControl>
-                  <b className=" text-2xl text-[#444444] ml-4 mb-3">ACCESS POLICY</b>
-                  <RadioGroup className="pl-12" value={accessType} onChange={handleAccessTypeChange}>
-                    <FormControlLabel
-                      className="py-2"
-                      value="restricted"
-                      control={<Radio />}
-                      label="Restricted access"
-                    />
-                    {accessType === 'restricted' && <ManageBpn onBpnListUpdate={onBpnListUpdate} />}
-                    <FormControlLabel
-                      className="py-2"
-                      value="unrestricted"
-                      control={<Radio />}
-                      label="Unrestricted access"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Box>
-            </Grid>
-          </Grid>
-        </div>
-      ) : null}
+                </Grid>
+                <Grid item xs={4}>
+                  <h1 className="flex flex-row text-bold text-3xl">Batch</h1>
+                  <TextareaAutosize
+                    ref={batchDataRef}
+                    minRows={20}
+                    placeholder={getBatchPlaceHolder()}
+                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <h1 className="flex flex-row text-bold text-3xl">Assembly Part Relationship</h1>
+                  <TextareaAutosize
+                    ref={assemblyDataRef}
+                    minRows={20}
+                    placeholder={getAssemblyPlaceholder()}
+                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <Button variant="outlined" onClick={submitSerialData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                    Next Step - Configure Policies
+                  </Button>
+                </Grid>
+                <Grid item xs={4}>
+                  <Button variant="outlined" onClick={submitBatchData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                    Next Step - Configure Policies
+                  </Button>
+                </Grid>
+                <Grid item xs={4}>
+                  <Button variant="outlined" onClick={submitAssemblyData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                    Next Step - Configure Policies
+                  </Button>
+                </Grid>
+              </Grid>
+            </TabPanel>
+          </Box>
+        </Grid>
+      </Grid>
     </div>
   );
 }

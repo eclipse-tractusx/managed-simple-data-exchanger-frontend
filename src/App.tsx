@@ -17,19 +17,26 @@ import Dashboard from './pages/Dashboard';
 import PageNotFound from './pages/PageNotFound';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter } from 'react-router-dom';
+import PageLoading from './components/PageLoading';
 
 function App() {
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard/create-data" />}></Route>
-        <Route path="/dashboard" element={<Navigate to="/dashboard/create-data" />}></Route>
-        <Route key="create-data" path="/dashboard/create-data" element={<Dashboard />} />
-        <Route key="history" path="/dashboard/history" element={<Dashboard />} />
-        <Route key="help" path="/dashboard/help" element={<Dashboard />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard/create-data" />}></Route>
+          <Route path="/dashboard" element={<Navigate to="/dashboard/create-data" />}></Route>
+          <Route key="create-data" path="/dashboard/create-data" element={<Dashboard />} />
+          <Route key="history" path="/dashboard/history" element={<Dashboard />} />
+          <Route key="help" path="/dashboard/help" element={<Dashboard />} />
+          <Route key="consume-data" path="/dashboard/consume-data" element={<Dashboard />} />
+          <Route key="contract-history" path="/dashboard/contract-history" element={<Dashboard />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
       <ToastContainer />
+      <PageLoading />
     </div>
   );
 }

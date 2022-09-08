@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // Copyright 2022 Catena-X
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,148 +13,101 @@
 // limitations under the License.
 
 // components
-import Timer from '../components/Timer';
 import UploadForm from '../components/UploadForm';
 
 // icons
 import { HighlightOffOutlined, ReportGmailerrorredOutlined } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
-import CircularProgress from '@mui/material/CircularProgress';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 
 // models
-import { CsvTypes, Status } from '../models/ProcessReport';
-
-// utils
-import { formatDate } from '../utils/utils';
+import { Status } from '../models/ProcessReport';
 
 // styles
 import styles from '../styles.module.scss';
-import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { handleDialogOpen } from '../store/accessUsagePolicySlice';
+import { setUploadStatus } from '../store/providerSlice';
 
 export default function UploadFile({
-  uploading = false,
-  uploadStatus = false,
-  uploadFile = (_e: any) => {
-    /* This is itentional */
-  },
-  selectedFiles = [] as any,
-  removeSelectedFiles = (_clearState: boolean) => {
-    /* This is itentional */
-  },
-  setUploadStatus = (_status: boolean) => {
-    /* This is itentional */
-  },
-  handleFiles = (_files: File) => {
-    /* This is itentional */
-  },
-  currentUploadData = {
-    processId: '',
-    csvType: CsvTypes.unknown,
-    numberOfItems: 0,
-    numberOfFailedItems: 0,
-    numberOfSucceededItems: 0,
-    status: Status.inProgress,
-    startDate: '',
-  },
+  handleFiles,
   selectedTabIndex = 0,
+}: {
+  handleFiles: (file: File) => void;
+  selectedTabIndex: number;
 }) {
-  const UploadContainer = styled('div')({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  });
+  const { selectedFiles, currentUploadData, uploadStatus } = useAppSelector(state => state.providerSlice);
+  const dispatch = useAppDispatch();
   return (
-    <UploadContainer>
-      <div className="flex flex-1 flex-col items-center justify-center min-w-0 relative">
-        {selectedFiles.length && !uploadStatus ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'flex-end',
-              width: '100%',
-            }}
-          >
-            <Button variant="contained" onClick={uploadFile}>
-              SUBMIT DATA
-            </Button>
-          </Box>
-        ) : (
-          <></>
-        )}
-        <div className="flex-[1_0_0%] flex order-1">
-          <div className="flex flex-col items-center justify-center">
-            {uploading ? (
-              <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <CircularProgress size={100} />
-                <Timer />
-                <span>
-                  Upload started at: &nbsp;
-                  {currentUploadData.startDate && formatDate(currentUploadData.startDate)}
-                  {!currentUploadData.startDate && '-'}
+    <>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          width: '100%',
+        }}
+      >
+        <Button
+          disabled={selectedFiles.length === 0 && !uploadStatus}
+          variant="contained"
+          onClick={() => dispatch(handleDialogOpen({ type: 'file' }))}
+        >
+          Next Step - Configure Policies
+        </Button>
+      </Box>
+      <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div>
+          <UploadForm getSelectedFiles={(files: File) => handleFiles(files)} />
+          {uploadStatus && currentUploadData.status === Status.failed && (
+            <div className={'flex justify-between bg-red-100 p-4 w-full mt-4'}>
+              <div className="flex items-center gap-x-2">
+                <span title="Failed">
+                  <HighlightOffOutlined sx={{ color: styles.danger }} />
                 </span>
+                <p className="text-md">{selectedFiles[0].name}</p>
               </div>
-            ) : null}
-            {!uploading && (
-              <UploadForm
-                // eslint-disable-next-line
-                getSelectedFiles={(files: any) => handleFiles(files)}
-                selectedFiles={selectedFiles}
-                removeSelectedFiles={removeSelectedFiles}
-                uploadStatus={uploadStatus}
-              />
-            )}
-            {uploadStatus && currentUploadData.status === Status.failed && (
-              <div className={'flex justify-between bg-red-100 p-4 w-full mt-4'}>
+              <span className="cursor-pointer" onClick={() => dispatch(setUploadStatus(false))}>
+                <CloseIcon />
+              </span>
+            </div>
+          )}
+          {selectedTabIndex === 0 &&
+            uploadStatus &&
+            currentUploadData.status === Status.completed &&
+            currentUploadData.numberOfFailedItems === 0 && (
+              <div className={'flex justify-between bg-lime-200 p-4 w-full mt-4'}>
                 <div className="flex items-center gap-x-2">
-                  <span title="Failed">
-                    <HighlightOffOutlined sx={{ color: styles.danger }} />
+                  <span title="Completed">
+                    <CheckCircleOutlineOutlinedIcon sx={{ color: styles.success }} />
                   </span>
-                  <p className="text-md">{selectedFiles[0].name}</p>
+                  <p className="text-md">{selectedFiles[0]?.name}</p>
                 </div>
-                <span className="cursor-pointer" onClick={() => setUploadStatus(false)}>
+                <span className="cursor-pointer" onClick={() => dispatch(setUploadStatus(false))}>
                   <CloseIcon />
                 </span>
               </div>
             )}
-            {selectedTabIndex === 0 &&
-              uploadStatus &&
-              currentUploadData.status === Status.completed &&
-              currentUploadData.numberOfFailedItems === 0 && (
-                <div className={'flex justify-between bg-lime-200 p-4 w-full mt-4'}>
-                  <div className="flex items-center gap-x-2">
-                    <span title="Completed">
-                      <CheckCircleOutlineOutlinedIcon sx={{ color: styles.success }} />
-                    </span>
-                    <p className="text-md">{selectedFiles[0]?.name}</p>
-                  </div>
-                  <span className="cursor-pointer" onClick={() => setUploadStatus(false)}>
-                    <CloseIcon />
+          {selectedTabIndex === 0 &&
+            uploadStatus &&
+            currentUploadData.status === Status.completed &&
+            currentUploadData.numberOfFailedItems > 0 && (
+              <div className={'flex justify-between bg-orange-100 p-4 w-full mt-4'}>
+                <div className="flex items-center gap-x-2">
+                  <span title="Completed with warnings">
+                    <ReportGmailerrorredOutlined sx={{ color: styles.warning }} />
                   </span>
+                  <p className="text-md">{selectedFiles[0]?.name}</p>
                 </div>
-              )}
-            {selectedTabIndex === 0 &&
-              uploadStatus &&
-              currentUploadData.status === Status.completed &&
-              currentUploadData.numberOfFailedItems > 0 && (
-                <div className={'flex justify-between bg-orange-100 p-4 w-full mt-4'}>
-                  <div className="flex items-center gap-x-2">
-                    <span title="Completed with warnings">
-                      <ReportGmailerrorredOutlined sx={{ color: styles.warning }} />
-                    </span>
-                    <p className="text-md">{selectedFiles[0]?.name}</p>
-                  </div>
-                  <span className="cursor-pointer" onClick={() => setUploadStatus(false)}>
-                    <CloseIcon />
-                  </span>
-                </div>
-              )}
-          </div>
+                <span className="cursor-pointer" onClick={() => dispatch(setUploadStatus(false))}>
+                  <CloseIcon />
+                </span>
+              </div>
+            )}
         </div>
-      </div>
-    </UploadContainer>
+      </Box>
+    </>
   );
 }

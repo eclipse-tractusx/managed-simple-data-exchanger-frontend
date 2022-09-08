@@ -1,30 +1,16 @@
-import Keycloak, { KeycloakTokenParsed } from 'keycloak-js';
-import { getCentralIdp, getClientId } from './EnvironmentService';
-
-export interface IUser {
-  userName: string;
-  name: string;
-  email: string;
-  company: string;
-  tenant: string;
-  token: string;
-  parsedToken: KeycloakTokenParsed;
-}
+import Keycloak from 'keycloak-js';
+import { setLoggedInUser } from '../store/appSlice';
+import { store } from '../store/store';
+import { IUser } from '../models/User';
+import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
   url: getCentralIdp(),
-  realm: 'CX-Central',
+  realm: getClientRealm(),
   clientId: getClientId(),
 };
 
 const KC = new Keycloak(keycloakConfig);
-
-/**
- * Initializes Keycloak instance and calls the provided
- * callback function if successfully authenticated.
- *
- * @param onAuthenticatedCallback
- */
 
 const doLogin = KC.login;
 
@@ -34,7 +20,7 @@ const getToken = () => KC.token;
 
 const getParsedToken = () => KC.tokenParsed;
 
-const updateToken = () => KC.updateToken(50).catch(doLogin);
+const updateToken = (successCallback?: () => void) => KC.updateToken(5).then(successCallback).catch(doLogin);
 
 const getUsername = () => KC.tokenParsed.preferred_username;
 
@@ -50,6 +36,8 @@ const hasRole = (roles: string[]) => roles.some((role: string) => KC.hasRealmRol
 
 const isLoggedIn = () => !!KC.token;
 
+const getRoles = () => KC.tokenParsed?.resource_access[keycloakConfig.clientId]?.roles;
+
 const getLoggedUser = () => ({
   userName: getUsername(),
   name: getName(),
@@ -59,6 +47,13 @@ const getLoggedUser = () => ({
   token: getToken(),
   parsedToken: getParsedToken(),
 });
+
+/**
+ * Initializes Keycloak instance and calls the provided
+ * callback function if successfully authenticated.
+ *
+ * @param onAuthenticatedCallback
+ */
 
 const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) => {
   KC.init({
@@ -70,6 +65,7 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
       if (authenticated) {
         console.log(`${getUsername()} authenticated`);
         onAuthenticatedCallback(getLoggedUser());
+        store.dispatch(setLoggedInUser(getLoggedUser()));
       } else {
         doLogin();
       }
@@ -77,17 +73,16 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
     .catch(console.error);
 };
 
-KC.onTokenExpired = () => {
-  KC.updateToken(50)
-    .then((refreshed: boolean) => {
-      console.log(`${getUsername()} refreshed ${refreshed}`);
-      //TODO: update token in redux store
-      //store.dispatch(setLoggedUser(getLoggedUser()))
-    })
-    .catch(() => {
-      console.log(`${getUsername()} refresh failed`);
-    });
-};
+// KC.onTokenExpired = () => {
+//   KC.updateToken(50)
+//     .then((refreshed: boolean) => {
+//       console.log(`${getUsername()} refreshed ${refreshed}`);
+//       store.dispatch(setLoggedInUser(getLoggedUser()));
+//     })
+//     .catch(() => {
+//       console.log(`${getUsername()} refresh failed`);
+//     });
+// };
 
 const UserService = {
   initKeycloak,
@@ -100,6 +95,7 @@ const UserService = {
   getEmail,
   hasRole,
   getLoggedUser,
+  getRoles,
 };
 
 export default UserService;

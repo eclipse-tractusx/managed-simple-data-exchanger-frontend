@@ -16,7 +16,7 @@ import { ToastOptions } from 'react-toastify';
 
 export const toastProps = () => {
   const options: ToastOptions = {
-    position: 'bottom-right',
+    position: 'top-right',
     autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,

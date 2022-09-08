@@ -46,7 +46,7 @@ export function getAssemblyPartRelationshipColumns() {
     getObject('measurement_unit_lexical_value', 'Measurement Unit Lexical Value*', 'center'),
     getObject('manufacturer_part_id', 'Manufacturer Part ID*', 'center'),
     getObject('datatype_uri', 'Datatype URI*', 'center'),
-    getObject('assembled_on', 'Assembled On*', 'center'),
+    getObject('assembled_on', 'Assembled On*', 'center', 'date'),
   );
 
   return auxArray;

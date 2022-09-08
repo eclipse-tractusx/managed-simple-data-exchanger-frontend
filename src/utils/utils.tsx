@@ -23,3 +23,13 @@ export function formatDate(isoDate: string) {
   const seconds = date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds();
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
+
+// Removing console logs except local dev env
+export function clearConsoles() {
+  function noop() {}
+  if (process.env.NODE_ENV !== 'development') {
+    console.log = noop;
+    console.warn = noop;
+    console.error = noop;
+  }
+}

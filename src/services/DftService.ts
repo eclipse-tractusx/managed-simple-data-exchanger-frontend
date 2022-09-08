@@ -48,6 +48,14 @@ class DftService extends HttpService {
     });
     return res;
   }
+
+  public async fetchConsumerDataOffers(providerUrl: string) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/query-data-offers?providerUrl=${providerUrl}`,
+    });
+    return res;
+  }
 }
 
 export default DftService;

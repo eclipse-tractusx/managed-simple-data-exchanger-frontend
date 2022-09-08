@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { FileSize } from '../models/FileSize';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import styles from '../styles.module.scss';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { removeSelectedFiles } from '../store/providerSlice';
 
 // eslint-disable-next-line
 const UploadForm = (props: any) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { selectedFiles, uploadStatus } = props;
+  const dispatch = useAppDispatch();
+  const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
 
   const fileInputClicked = () => {
     if (fileInputRef.current) fileInputRef.current.click();
@@ -44,7 +47,7 @@ const UploadForm = (props: any) => {
 
   return (
     <div className="flex flex-col py-9">
-      <h2 className=" text-5xl font-sans text-[#444444] text-center mb-3">Upload a file </h2>
+      <h4 className=" text-3xl font-sans text-[#444444] text-center mb-5">Upload a file </h4>
       <div className="border border-dashed  border-3  flex flex-row justify-center w-auto h-full items-center">
         <div className="flex flex-col gap-y-4 mx-20 ">
           <div className="py-6 px-4 flex flex-col items-center gap-x-4 relative">
@@ -93,12 +96,7 @@ const UploadForm = (props: any) => {
               </div>
             </div>
             <span className="p-2 cursor-pointer">
-              <button
-                className="text-[#212121] text-sm"
-                onClick={() => {
-                  props.removeSelectedFiles(true);
-                }}
-              >
+              <button className="text-[#212121] text-sm" onClick={() => dispatch(removeSelectedFiles())}>
                 <CloseIcon />
               </button>
             </span>

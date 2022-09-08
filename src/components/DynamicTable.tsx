@@ -24,16 +24,20 @@ import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
 import { Batch } from '../models/Batch';
 
-const columnsData: DynamicTableColumn[] = [];
-
 export default function DynamicTable({
-  columns = columnsData,
-  headerHeight = 60,
+  columns = [],
+  headerHeight,
   submitUrl = '/aspect',
-  // eslint-disable-next-line
-  submitData = (_value: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[], _submitUrl: string) => {
-    /* This is itentional */
-  },
+  validateData,
+}: {
+  columns: DynamicTableColumn[];
+  headerHeight: number;
+  submitUrl: string;
+  validateData: (
+    _value: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[],
+    _submitUrl: string,
+    _type: string,
+  ) => void;
 }) {
   const [rows, setRows] = React.useState([]);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
@@ -115,12 +119,6 @@ export default function DynamicTable({
     columns[findIndex] = getRenderCell('uuid', 'UUID', 'center');
   }
 
-  // add button to generate parent_uuid
-  const findIndx = columns.findIndex(c => c.field === 'parent_uuid');
-  if (findIndx !== -1) {
-    columns[findIndx] = getRenderCell('parent_uuid', 'Parent UUID', 'center');
-  }
-
   const addRows = () => {
     const newRows: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[] = [];
 
@@ -178,7 +176,7 @@ export default function DynamicTable({
       if (auxRows[index].hasOwnProperty(event.field)) {
         const f = event.field as keyof SerialPartTypization | keyof Batch | keyof AssemblyPartRelationship;
         auxRows[index][f] =
-          (f === 'uuid' || f === 'parent_uuid') && event.value !== '' && !event.value.startsWith('urn:uuid:')
+          f === 'uuid' && event.value !== '' && !event.value.startsWith('urn:uuid:')
             ? `urn:uuid:${event.value}`
             : event.value;
       }
@@ -200,8 +198,8 @@ export default function DynamicTable({
           </Button>
         </Box>
         <Box textAlign="end">
-          <Button variant="contained" onClick={() => submitData(rows, submitUrl)} sx={{ mb: 2 }}>
-            Submit Data
+          <Button variant="contained" onClick={() => validateData(rows, submitUrl, 'json')} sx={{ mb: 2 }}>
+            Next Step - Configure Policies
           </Button>
         </Box>
       </div>

@@ -15,17 +15,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Config } from '../utils/config';
 
 interface ManageBpnProps {
-  onBpnListUpdate: (data: string[]) => void;
+  bpnList: string[];
+  setBpnList: (data: string[]) => void;
 }
-export const ManageBpn: React.FC<ManageBpnProps> = ({ onBpnListUpdate }) => {
+export const ManageBpn: React.FC<ManageBpnProps> = ({ bpnList, setBpnList }) => {
   const [inputBpn, setInputBpn] = React.useState<string>('');
   const defaultCompanyBPN = Config.REACT_APP_DEFAULT_COMPANY_BPN;
-  const [bpnList, setBpnList] = React.useState<string[]>(() => {
-    const savedItem = localStorage.getItem('persistedBpnList');
-    const parsedItem = JSON.parse(savedItem);
-    return parsedItem || [defaultCompanyBPN];
-  });
-
   const addBpn = () => {
     if (inputBpn) {
       setBpnList([...bpnList, inputBpn]);
@@ -35,7 +30,6 @@ export const ManageBpn: React.FC<ManageBpnProps> = ({ onBpnListUpdate }) => {
 
   const deleteBpn = (bpnNum: string) => setBpnList(bpnList.filter(item => item !== bpnNum));
   React.useEffect(() => {
-    onBpnListUpdate(bpnList);
     localStorage.setItem('persistedBpnList', JSON.stringify(bpnList));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bpnList]);

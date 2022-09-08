@@ -15,14 +15,20 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
 import UserService from './services/UserService';
+import { store } from './store/store';
+import { Provider } from 'react-redux';
+import React from 'react';
+import { clearConsoles } from './utils/utils';
+clearConsoles();
 
 UserService.initKeycloak(() => {
   ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>,
     document.getElementById('root'),
   );
 });

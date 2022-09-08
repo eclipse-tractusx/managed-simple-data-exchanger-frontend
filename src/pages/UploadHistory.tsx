@@ -40,7 +40,13 @@ export const UploadHistory: React.FC = () => {
   }, [page, rowsPerPage]);
 
   useEffect(() => {
-    refreshTable();
+    let isApiSubscribed = true;
+    if (isApiSubscribed) {
+      refreshTable();
+    }
+    return () => {
+      isApiSubscribed = false;
+    };
   }, [page, rowsPerPage, refreshTable]);
 
   const ColorButton = styled(Button)<ButtonProps>(() => ({
