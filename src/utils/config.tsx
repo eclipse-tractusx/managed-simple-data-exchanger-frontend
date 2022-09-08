@@ -14,4 +14,7 @@ export class Config {
   static REACT_APP_KEYCLOAK_URL = envSettings?.REACT_APP_KEYCLOAK_URL;
 
   static REACT_APP_KEYCLOAK_REALM = envSettings?.REACT_APP_KEYCLOAK_REALM;
+  
+  static REACT_APP_API_KEY = envSettings?.REACT_APP_API_KEY;
+
 }
