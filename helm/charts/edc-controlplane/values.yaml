@@ -96,7 +96,7 @@ edc:
     ## Default api exposing health checks etc
     default:
       # -- The network port, which the "default" api is going to be exposed by the container, pod and service
-      port: "6070"
+      port: "6161"
       # -- The path mapping the "default" api is going to be exposed at
       path: /api
     ## Data management API
