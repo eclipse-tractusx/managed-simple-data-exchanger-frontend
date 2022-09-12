@@ -96,19 +96,19 @@ edc:
     ## Default api exposing health checks etc
     default:
       # -- The network port, which the "default" api is going to be exposed by the container, pod and service
-      port: "6161"
+      port: "6060"
       # -- The path mapping the "default" api is going to be exposed at
       path: /api
     ## Data management API
     data:
       # -- The network port, which the "data" management api is going to be exposed by the container, pod and service
-      port: "6171"
+      port: "6161"
       # -- The path mapping the "data" management api is going to be exposed at
       path: /data
     ## Validation API
     validation:
       # -- The network port, which the "validation" api is going to be exposed by the container, pod and service
-      port: "6172"
+      port: "6162"
       # -- The path mapping the "validation" api is going to be exposed at
       path: /validation
     ## Control API
@@ -120,7 +120,7 @@ edc:
     ## IDS endpoints
     ids:
       # -- The network port, which the "ids" multipart api is going to be exposed by the container, pod and service
-      port: "6272"
+      port: "6262"
       # -- The path mapping the "ids" multipart api is going to be exposed at
       path: /api/v1/ids
     ## Prometheus endpoint
