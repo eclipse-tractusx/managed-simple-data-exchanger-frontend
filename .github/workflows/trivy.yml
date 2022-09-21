@@ -1,10 +1,12 @@
 name: "Trivy Scan"
 on:
   push:
-    branches: [main]
+    branches: 
+     - main
   schedule:
     # Once a day
-   - cron: "0 0 * * *"
+    - cron: "0 0 * * *"
+    
   workflow_dispatch:
   # Trigger manually
 
