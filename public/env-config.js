@@ -6,3 +6,4 @@ window._env_ = {
   REACT_APP_KEYCLOAK_URL: 'https://centralidp.demo.catena-x.net/auth',
   REACT_APP_KEYCLOAK_REALM: 'CX-Central'
 };
+
