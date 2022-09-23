@@ -54,8 +54,8 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: "ghcr.io/catenax-ng/product-dft-frontend:main"
-          format: "table"
-          output: "trivy-results2.sarif"
+          format: "json"
+          output: "trivy-results2.json"
 #          exit-code: "1"
           severity: "CRITICAL,HIGH"
 
@@ -63,4 +63,4 @@ jobs:
         if: always()
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: "trivy-results2.sarif"
+          sarif_file: "trivy-results2.json"
