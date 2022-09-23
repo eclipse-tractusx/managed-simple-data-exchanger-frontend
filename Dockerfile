@@ -2,7 +2,7 @@
 FROM node:18.9.0-alpine3.15 as builder
 WORKDIR /app
 COPY ./package.json .
-RUN yarn
+#RUN yarn
 COPY ./ .
 #RUN yarn build
 RUN npm build
