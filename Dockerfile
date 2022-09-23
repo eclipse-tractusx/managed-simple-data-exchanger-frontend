@@ -5,7 +5,7 @@ COPY ./package.json .
 #RUN yarn
 COPY ./ .
 #RUN yarn build
-RUN npm build
+RUN npm run build
 
 #FROM nginx:1.22.0-alpine
 FROM nginx:latest
