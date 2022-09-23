@@ -55,7 +55,7 @@ jobs:
         with:
           image-ref: "ghcr.io/catenax-ng/product-dft-frontend:main"
           format: "table"
-          output: "trivy-results2.sarif"
+#          output: "trivy-results2.sarif"
 #          exit-code: "1"
           severity: "CRITICAL,HIGH"
 
