@@ -8,3 +8,8 @@ type: application
 appVersion: "0.0.3"
 version: 0.0.3
 maintainers: []
+dependencies:
+  - condition: postgresql.enabled
+    name: postgresql
+    repository: https://charts.bitnami.com/bitnami
+    version: 11.x.x
