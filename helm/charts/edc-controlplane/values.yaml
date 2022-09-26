@@ -278,6 +278,8 @@ configuration:
     edc.vault.name=cxtsi-dev010-vault
     edc.vault.clientsecret=
     # Control- / Data- Plane configuration
+    edc.ids.endpoint.audience=https://dft-connector-cons-dp.int.demo.catena-x.net:6272/api/v1/ids/data
+    edc.data.encryption.keys.alias=encrypt-edc-alias
     edc.transfer.proxy.endpoint=http://dft-connector-cons-dp.int.demo.catena-x.net/public
     edc.transfer.proxy.token.signer.privatekey.alias=gds-data-plane-private-key
     edc.transfer.dataplane.sync.endpoint=http://dft-connector-cons-dp.int.demo.catena-x.net/public
