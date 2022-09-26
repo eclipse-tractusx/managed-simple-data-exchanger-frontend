@@ -10,11 +10,11 @@ replicaCount: 1
 image:
   # -- Which derivate of the edc control-plane to use.
   # One of: [ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql-hashicorp-vault, ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql, ghcr.io/catenax-ng/product-edc/edc-controlplane-memory]
-  repository: ghcr.io/catenax-ng/product-edc/edc-controlplane-memory
+  repository: ghcr.io/catenax-ng/product-edc/edc-controlplane-postgresql
   # -- [Kubernetes image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) to use
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.6"
+  tag: "0.1.1"
 
 imagePullSecret:
   # -- Image pull secret to create to [obtain the container image from private registries](https://kubernetes.io/docs/concepts/containers/images/#using-a-private-registry)
@@ -239,7 +239,14 @@ opentelemetry:
   properties: |-
     otel.javaagent.enabled=false
     otel.javaagent.debug=false
-
+    
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: "Connector@123"
+    password: "Connector@123"
+    username: "postgres"
+    database: "postgres"
 configuration:
   # -- EDC configuration.properties configuring aspects of the [eclipse-dataspaceconnector](https://github.com/eclipse-dataspaceconnector/DataSpaceConnector)
   properties: |-
@@ -279,22 +286,22 @@ configuration:
     edc.public.key.alias=gds-data-plane-public-key
     # Postgresql related configuration
     edc.datasource.asset.name=asset
-    edc.datasource.asset.url=jdbc:postgresql://postgres:5432/postgres
-    #edc.datasource.asset.user=admin
-    #edc.datasource.asset.password=password@123
+    edc.datasource.asset.url=postgresql://product-dft-frontend-postgresql:5432/postgres
+    edc.datasource.asset.user=postgres
+    edc.datasource.asset.password=Connector@123
     edc.datasource.contractdefinition.name=contractdefinition
-    edc.datasource.contractdefinition.url=jdbc:postgresql://postgres-postgresql:5432/postgres
-    #edc.datasource.contractdefinition.user=admin
-    #edc.datasource.contractdefinition.password=password@123
+    edc.datasource.contractdefinition.url=postgresql://product-dft-frontend-postgresql:5432/postgres
+    #edc.datasource.contractdefinition.user=postgres
+    #edc.datasource.contractdefinition.password=Connector@123
     edc.datasource.contractnegotiation.name=contractnegotiation
-    edc.datasource.contractnegotiation.url=jdbc:postgresql://postgres-postgresql:5432/postgres
-    #edc.datasource.contractnegotiation.user=admin
-    #edc.datasource.contractnegotiation.password=password@123
+    edc.datasource.contractnegotiation.url=postgresql://product-dft-frontend-postgresql:5432/postgres
+    #edc.datasource.contractnegotiation.user=postgres
+    #edc.datasource.contractnegotiation.password=Connector@123
     edc.datasource.policy.name=policy
-    edc.datasource.policy.url=jdbc:postgresql://postgres-postgresql:5432/postgres
-    #edc.datasource.policy.user=admin
-    #edc.datasource.policy.password=password@123
+    edc.datasource.policy.url=postgresql://product-dft-frontend-postgresql:5432/postgres
+    #edc.datasource.policy.user=postgres
+    #edc.datasource.policy.password=Connector@123
     edc.datasource.transferprocess.name=transferprocess
-    edc.datasource.transferprocess.url=jdbc:postgresql://postgres-postgresql:5432/postgres
-    #edc.datasource.transferprocess.user=admin
-    #edc.datasource.transferprocess.password=password@123
+    edc.datasource.transferprocess.url=postgresql://product-dft-frontend-postgresql:5432/postgres
+    #edc.datasource.transferprocess.user=postgres
+    #edc.datasource.transferprocess.password=Connector@123
