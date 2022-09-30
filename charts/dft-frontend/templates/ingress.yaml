@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "dft-frontend.fullname" . }}
+  name: {{ include "helm.fullname" . }}
   labels:
-      {{- include "dft-frontend.labels" . | nindent 4 }}
+      {{- include "helm.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -13,7 +13,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.host }}
-      secretName: {{ include "dft-frontend.fullname" . }}-tls
+      secretName: {{ include "helm.fullname" . }}-tls
   rules:
     - host: {{ .Values.ingress.host }}
       http:
@@ -22,6 +22,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "dft-frontend.fullname" . }}
+                name: {{ include "helm.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}

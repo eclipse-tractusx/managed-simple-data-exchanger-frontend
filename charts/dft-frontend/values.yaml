@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/catenax-ng/product-dft-frontend
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.3.0"
+  tag: "main"
   
 serviceAccount:
   # Specifies whether a service account should be created
@@ -33,20 +33,22 @@ securityContext: {}
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
-  #runAsNonRoot: true
-  #runAsUser: 1000
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 service:
   type: ClusterIP
   port: 80
 
 ingress:
+  enabled: false
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/enable-cors: 'false'
   host: dft.int.demo.catena-x.net
 
 resources:
