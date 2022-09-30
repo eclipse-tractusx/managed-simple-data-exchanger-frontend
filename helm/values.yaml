@@ -41,6 +41,7 @@ service:
   port: 80
 
 ingress:
+  enabled: false
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
