@@ -52,7 +52,7 @@ COPY ./env.sh .
 # Add bash
 #RUN apk add --no-cache bash
 
-RUN apt-get update -y && sudo apt-get install -y nocache
+#RUN apt-get update -y && sudo apt-get install -y nocache
 
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
