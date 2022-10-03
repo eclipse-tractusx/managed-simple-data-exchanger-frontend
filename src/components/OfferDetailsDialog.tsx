@@ -25,7 +25,6 @@ import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 interface IntDialogProps {
   open: boolean;
   offerObj?: IConsumerDataOffers;
-  // handleClose?: (flag: boolean) => void;
   handleButtonEvent?: (flag: string) => void;
   isMultiple?: boolean;
 }
@@ -36,7 +35,6 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
   const { typeOfAccess, bpnNumbers, title, created, description, publisher, usagePolicies, fileContentType } = offer;
 
   const closeModal = (flag: string) => {
-    // handleClose(flag);
     handleButtonEvent(flag);
   };
 

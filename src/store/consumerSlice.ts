@@ -19,7 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
+import { IConsumerDataOffers, IContractAgreements } from '../models/ConsumerContractOffers';
 
 interface IConsumerSlice {
   offersLoading: boolean;
@@ -27,6 +27,8 @@ interface IConsumerSlice {
   selectedOffersList: IConsumerDataOffers[];
   selectedOffer: IConsumerDataOffers;
   isMultipleContractSubscription: boolean;
+  contractAgreements: IContractAgreements[];
+  isContractAgreementsLoading: boolean;
 }
 
 const initialState: IConsumerSlice = {
@@ -35,7 +37,10 @@ const initialState: IConsumerSlice = {
   selectedOffersList: [],
   selectedOffer: null,
   isMultipleContractSubscription: false,
+  contractAgreements: [],
+  isContractAgreementsLoading: false,
 };
+
 export const consumerSlice = createSlice({
   name: 'consumerSlice',
   initialState,
@@ -55,6 +60,12 @@ export const consumerSlice = createSlice({
     setIsMultipleContractSubscription: (state, action: PayloadAction<boolean>) => {
       state.isMultipleContractSubscription = action.payload;
     },
+    setContractAgreements: (state, action: PayloadAction<IContractAgreements[]>) => {
+      state.contractAgreements = action.payload;
+    },
+    setIsContractAgreementsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isContractAgreementsLoading = action.payload;
+    },
   },
 });
 
@@ -64,5 +75,7 @@ export const {
   setSelectedOffersList,
   setSelectedOffer,
   setIsMultipleContractSubscription,
+  setContractAgreements,
+  setIsContractAgreementsLoading,
 } = consumerSlice.actions;
 export default consumerSlice.reducer;

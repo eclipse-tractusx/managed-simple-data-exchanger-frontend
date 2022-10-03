@@ -52,13 +52,19 @@ export const ConsumeData: React.FC = () => {
   const columns = [
     {
       field: 'title',
-      width: 300,
+      width: 330,
       headerName: 'Title',
       renderHeader: () => <strong>Title</strong>,
     },
     {
+      field: 'assetId',
+      width: 150,
+      headerName: 'Asset ID',
+      renderHeader: () => <strong>Asset ID</strong>,
+    },
+    {
       field: 'created',
-      width: 130,
+      width: 150,
       editable: false,
       headerName: 'Created on',
       renderHeader: () => <strong>Created on</strong>,
@@ -81,7 +87,7 @@ export const ConsumeData: React.FC = () => {
     },
     {
       field: 'bpnNumbers',
-      width: 300,
+      width: 180,
       editable: false,
       headerName: 'BPN',
       renderHeader: () => <strong>BPN</strong>,
@@ -92,7 +98,7 @@ export const ConsumeData: React.FC = () => {
     },
     {
       field: 'description',
-      width: 250,
+      width: 300,
       editable: false,
       headerName: 'Description',
       renderHeader: () => <strong>Description</strong>,
@@ -194,7 +200,6 @@ export const ConsumeData: React.FC = () => {
     } catch (error) {
       dispatch(setContractOffers([]));
       dispatch(setOffersLoading(false));
-      toast.error('Failed to retrieve data offers!', toastProps());
     }
   };
 
@@ -213,7 +218,7 @@ export const ConsumeData: React.FC = () => {
         useCasesList.push(offer.usagePolicies);
       }
     });
-    useCasesList.map(useCase => {
+    useCasesList.forEach(useCase => {
       if (arraysEqual(useCasesList[0], useCase)) isUsagePoliciesEqual = true;
       else isUsagePoliciesEqual = false;
     });

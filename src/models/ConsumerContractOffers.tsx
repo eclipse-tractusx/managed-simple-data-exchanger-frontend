@@ -49,3 +49,20 @@ export interface IConsumerDataOffers {
   fileName?: string;
   fileContentType?: string;
 }
+
+export interface IContractAgreementInfo {
+  contractSigningDate: number | Date;
+  contractStartDate: number | Date;
+  contractEndDate: number | Date;
+  assetId: string;
+  policies: IUsageControl[];
+}
+export interface IContractAgreements {
+  negotiationId: string;
+  counterPartyAddress: string;
+  state: string;
+  title: string;
+  organizationName: string;
+  contractAgreementId?: string;
+  contractAgreementInfo?: IContractAgreementInfo;
+}

@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-export function formatDate(isoDate: string) {
+export function formatDate(isoDate: string | number) {
   const date = new Date(isoDate);
 
   const day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
@@ -29,6 +29,11 @@ export function formatDate(isoDate: string) {
   const minutes = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes();
   const seconds = date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds();
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+
+export function convertEpochToDate(epoch: string) {
+  const epochToMilliseconds = +epoch * 1000;
+  return formatDate(epochToMilliseconds);
 }
 
 // Removing console logs except local dev env

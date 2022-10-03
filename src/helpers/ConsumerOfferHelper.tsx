@@ -28,3 +28,5 @@ export const objectsEqual = (o1: { [x: string]: any }, o2: { [x: string]: any })
 
 export const arraysEqual = (a1: any[], a2: any[]) =>
   a1.length === a2.length && a1.every((o, idx) => objectsEqual(o, a2[idx]));
+
+export const MAX_CONTRACTS_AGREEMENTS = 2147483647;

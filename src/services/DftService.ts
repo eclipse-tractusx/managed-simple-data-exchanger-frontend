@@ -78,12 +78,19 @@ class DftService extends HttpService {
     return res;
   }
 
-  // TODO: Initiate subscribe to offers
   public async subscribeToOffers(offers: unknown) {
     const res = await this.instance({
       method: 'POST',
       url: '/subscribe-data-offers',
       data: offers,
+    });
+    return res;
+  }
+
+  public async getContractAgreementsList(offSet: number, maxLimit: number) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/contract-offers?offset=${offSet}&limit=${maxLimit}`,
     });
     return res;
   }
