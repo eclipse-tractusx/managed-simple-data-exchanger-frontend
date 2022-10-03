@@ -28,7 +28,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 #USER $USERNAME
 
 # Nginx config
-RUN rm -rf /etc/nginx/conf.d
+RUN sudo rm -rf /etc/nginx/conf.d
 
 COPY ./conf /etc/nginx
 
