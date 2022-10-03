@@ -58,7 +58,7 @@ COPY ./env.sh .
 
 #USER ${UID}:${GID}
 
-RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/*
+#RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/*
 
 #RUN chmod 744 -R /usr/share/nginx/html/*
 
