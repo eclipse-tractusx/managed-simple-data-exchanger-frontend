@@ -38,7 +38,7 @@ spec:
               containerPort: 80
               protocol: TCP
           securityContext:
-          allowPrivilegeEscalation: false
+           allowPrivilegeEscalation: false
           capabilities:
             add:
             - NET_RAW
