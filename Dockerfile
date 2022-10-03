@@ -7,8 +7,8 @@ COPY ./ .
 #RUN yarn build
 RUN npm install && npm run build
 
-#FROM nginx:1.22.0-alpine
-FROM nginx:latest
+FROM nginx:1.22.0-alpine
+#FROM nginx:latest
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -30,16 +30,20 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-COPY .env .
+#COPY .env .
 # Add bash
-#RUN apk add --no-cache bash
-RUN apt-get update -y && apt-get install -y nocache
+RUN apk add --no-cache bash
+
+#RUN apt-get update -y && apt-get install -y nocache
 
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
 #USER ${UID}:${GID}
-RUN chmod 777 env.sh
-RUN chmod 777 -R /usr/share/nginx/html/*
+
+RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/*
+
+#RUN chmod 744 -R /usr/share/nginx/html/*
+
 # Start Nginx server
 #CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
 CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
