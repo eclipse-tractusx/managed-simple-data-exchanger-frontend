@@ -50,9 +50,9 @@ COPY ./env.sh .
 
 #COPY .env .
 # Add bash
-RUN apk add --no-cache bash
+#RUN apk add --no-cache bash
 
-#RUN apt-get update -y && apt-get install -y nocache
+RUN apt-get update -y && apt-get install -y nocache
 
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
