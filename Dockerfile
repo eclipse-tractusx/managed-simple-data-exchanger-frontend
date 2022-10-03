@@ -5,13 +5,31 @@ COPY ./package.json .
 #RUN yarn
 COPY ./ .
 #RUN yarn build
+
 RUN npm install && npm run build
 
-FROM nginx:1.22.0-alpine
+#FROM nginx:1.22.0-alpine
 #FROM nginx:latest
+FROM nginx:stable
+
+#NON-ROOT USER 
+ARG USERNAME=dftuser
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+USER $USERNAME
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
+
 COPY ./conf /etc/nginx
 
 # Static build
