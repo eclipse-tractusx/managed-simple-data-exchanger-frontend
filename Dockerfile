@@ -11,6 +11,7 @@ RUN npm install && npm run build
 #FROM nginx:1.22.0-alpine
 FROM ubuntu/nginx:latest
 #FROM nginx:stable
+RUN apt-get update && apt-get upgrade -y
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
