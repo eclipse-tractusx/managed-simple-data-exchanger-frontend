@@ -9,8 +9,8 @@ COPY ./ .
 RUN npm install && npm run build
 
 #FROM nginx:1.22.0-alpine
-FROM nginx:1.23.1
-#FROM nginx:stable
+#FROM nginx:1.23.1
+FROM nginx:stable
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
