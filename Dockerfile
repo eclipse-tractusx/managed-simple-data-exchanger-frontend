@@ -13,7 +13,8 @@ RUN npm install && npm run build
 #FROM ubuntu/nginx:latest
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get upgrade -y && apt-get install nginx
+RUN apt-get update && apt-get upgrade -y 
+RUN apt update && apt install nginx
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
