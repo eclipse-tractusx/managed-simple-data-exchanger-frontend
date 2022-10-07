@@ -15,7 +15,6 @@ FROM ubuntu:22.04
 
 RUN apt-get update && apt-get upgrade -y 
 RUN apt install nginx -y && apt update 
-RUN systemctl start nginx
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
