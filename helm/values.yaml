@@ -36,17 +36,7 @@ securityContext:
    readOnlyRootFilesystem: true
    runAsNonRoot: true
    runAsUser: 1000
-   volumes:
-    - name: cache
-      emptyDir: {}
-    - name: run
-      emptyDir: {}
-   volumeMounts:
-    - mountPath: /var/cache/nginx/
-      name: cache
-    - name: run
-      mountPath: /var/run
-
+   
 service:
   type: ClusterIP
   port: 80
