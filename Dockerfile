@@ -8,10 +8,11 @@ COPY ./ .
 
 RUN npm install && npm run build
 
-#FROM nginx:mainline
+#### Stage 2: Serve the application from Nginx 
+
 FROM ubuntu/nginx:latest
-#FROM nginx:stable
-RUN apt-get update && apt-get upgrade -y
+
+RUN apt-get update && apt-get upgrade -y && rm -rf /etc/nginx/conf.d
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
