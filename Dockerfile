@@ -14,7 +14,7 @@ RUN npm install && npm run build
 FROM ubuntu:22.04
 
 RUN apt-get update && apt-get upgrade -y 
-RUN apt update && apt install nginx -y
+RUN apt install nginx -y && apt update && systemctl start nginx.service
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
@@ -35,7 +35,9 @@ USER $USERNAME
 # Nginx config
 #RUN sudo rm -rf /etc/nginx/conf.d
 
-COPY nginx.conf /etc/nginx
+RUN mv /etc/nginx/nginx.conf nginx.cong.bak
+
+COPY nginx.conf /etc/nginx/conf.d
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
