@@ -28,6 +28,7 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
+
 securityContext: 
    allowPrivilegeEscalation: true
    capabilities:
@@ -36,7 +37,7 @@ securityContext:
    readOnlyRootFilesystem: true
    runAsNonRoot: true
    runAsUser: 3000
-
+   
 service:
   type: ClusterIP
   port: 80
