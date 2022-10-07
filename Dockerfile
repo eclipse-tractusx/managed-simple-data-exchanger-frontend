@@ -8,8 +8,8 @@ COPY ./ .
 
 RUN npm install && npm run build
 
-FROM nginx:mainline
-#FROM ubuntu/nginx:latest
+#FROM nginx:mainline
+FROM ubuntu/nginx:latest
 #FROM nginx:stable
 RUN apt-get update && apt-get upgrade -y
 
