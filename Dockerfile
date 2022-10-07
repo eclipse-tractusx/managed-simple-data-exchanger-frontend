@@ -14,7 +14,10 @@ RUN npm install && npm run build
 FROM ubuntu:22.04
 
 RUN apt-get update && apt-get upgrade -y 
+
 RUN apt install nginx -y && apt update 
+
+RUN mv /etc/nginx/nginx.conf nginx.cong.bak
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
@@ -34,8 +37,6 @@ USER $USERNAME
 
 # Nginx config
 #RUN sudo rm -rf /etc/nginx/conf.d
-
-RUN mv /etc/nginx/nginx.conf nginx.cong.bak
 
 COPY nginx.conf /etc/nginx/conf.d
 
