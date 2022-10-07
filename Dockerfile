@@ -10,9 +10,10 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM ubuntu/nginx:latest
+#FROM ubuntu/nginx:latest
+FROM ubuntu:22.04
 
-RUN apt-get update && apt-get upgrade -y && rm -rf /etc/nginx/conf.d 
+RUN apt-get update && apt-get upgrade -y && apt-get install nginx
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
