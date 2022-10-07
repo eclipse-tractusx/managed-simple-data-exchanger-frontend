@@ -12,7 +12,7 @@ RUN npm install && npm run build
 
 FROM ubuntu/nginx:latest
 
-RUN apt-get update && apt-get upgrade -y && rm -rf /etc/nginx/conf.d && rm -rf /var/log/nginx/error.log && /var/log/nginx/access.log
+RUN apt-get update && apt-get upgrade -y && rm -rf /etc/nginx/conf.d 
 
 #NON-ROOT USER 
 ARG USERNAME=dftuser
