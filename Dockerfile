@@ -25,7 +25,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
- 
+    && sudo chown -R dftuser:dftuser /var/log/nginx;
+    && sudo chmod -R 755 /var/log/nginx;
     
 USER $USERNAME
 
