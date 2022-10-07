@@ -24,10 +24,9 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && apt-get update \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME \
-    && /etc/init.d/nginx start
+    && chmod 0440 /etc/sudoers.d/$USERNAME 
     
-RUN  chown -R $USERNAME:$USERNAME /var/log/nginx/error.log && chmod -R 755 /var/log/nginx/error.log
+RUN  chmod g+rwx /var/log/nginx/
     
 USER $USERNAME
 
