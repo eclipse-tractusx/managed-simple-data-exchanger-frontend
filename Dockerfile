@@ -18,7 +18,7 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR  WORKDIR /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
 
 RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html && \
         chown -R nginx:nginx /var/log/nginx && \
