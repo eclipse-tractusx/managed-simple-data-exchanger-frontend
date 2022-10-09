@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: adgajbhi/nginx
+  repository: ghcr.io/catenax-ng/product-dft-frontend
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "1.5.1"
   
 serviceAccount:
   # Specifies whether a service account should be created
