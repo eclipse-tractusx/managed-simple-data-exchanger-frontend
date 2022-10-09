@@ -13,7 +13,7 @@ RUN npm install && npm run build
 #FROM ubuntu/nginx:latest
 FROM nginx:stable
 
-RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y 
+RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y && apt-get install -y nocache
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
