@@ -26,7 +26,7 @@ RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/
         chown -R nginx:nginx /var/log/nginx && \
         chown -R nginx:nginx /var/lib/nginx && \
         chown -R nginx:nginx /etc/nginx/conf.d && \
-        chown -R nginx:nginx /var/log && \
+        chown -R nginx:nginx /var/log 
         
 RUN touch /var/run/nginx.pid && \
         chown -R nginx:nginx /var/run/nginx.pid
