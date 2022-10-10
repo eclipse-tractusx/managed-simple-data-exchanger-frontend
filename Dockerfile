@@ -11,7 +11,8 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 #FROM ubuntu:22.04
-FROM nginxinc/nginx-unprivileged:1.22-alpine
+#FROM nginxinc/nginx-unprivileged:1.22-alpine
+FROM nginxinc/nginx-unprivileged:latest
 
 #RUN apt-get update && apt-get upgrade -y &&apt install nginx -y && apt-get install -y nocache && apt update
 
