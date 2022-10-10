@@ -10,17 +10,18 @@ COPY ./ .
 RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
-FROM ubuntu:22.04
+#FROM ubuntu:22.04
+FROM nginxinc/nginx-unprivileged:1.22-alpine
 
-RUN apt-get update && apt-get upgrade -y &&apt install nginx -y && apt-get install -y nocache && apt update
+RUN apk update && apk upgrade
+
+#RUN apt-get update && apt-get upgrade -y &&apt install nginx -y && apt-get install -y nocache && apt update
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html
-
-RUN chmod -R 777 /var/lib/nginx && /var/log/nginx
 
 #RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html && \
 #    chown -R nginx:nginx /var/log/nginx && \
@@ -33,15 +34,14 @@ RUN chmod -R 777 /var/lib/nginx && /var/log/nginx
 #RUN touch /var/run/nginx.pid && \
 #    chown -R nginx:nginx /var/run/nginx.pid
 
-USER nginx
+#USER nginx
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
 
 # Default port exposure
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
 
 COPY ./env.sh .
 
