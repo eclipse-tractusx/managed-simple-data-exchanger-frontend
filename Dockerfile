@@ -13,6 +13,7 @@ RUN npm install && npm run build
 FROM nginx:1.23.1
 
 RUN apt-get update -y && apt-get install -y nocache
+RUN chmod -R 777 /var/cache/nginx/
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
