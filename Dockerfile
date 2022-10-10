@@ -12,6 +12,8 @@ RUN npm install && npm run build
 
 FROM nginx:1.23.1
 
+RUN apt-get update -y && apt-get install -y nocache
+
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 
@@ -30,9 +32,7 @@ EXPOSE 443
 
 #COPY .env .
 # Add bash
-RUN apk add --no-cache bash
-
-#RUN apt-get update -y && sudo apt-get install -y nocache
+#RUN apk add --no-cache bash
 
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
