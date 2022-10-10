@@ -12,7 +12,7 @@ RUN npm install && npm run build
 #### Stage 2: Serve the application from Nginx 
 FROM ubuntu/nginx:latest
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y nocache
+RUN apt-get update && apt-get upgrade -y &&apt install nginx -y && apt-get install -y nocache && apt update
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
@@ -20,16 +20,16 @@ COPY ./default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /usr/share/nginx/html
 
-RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html && \
-    chown -R nginx:nginx /var/log/nginx && \
-    chown -R nginx:nginx /var/lib/nginx && \
-    chown -R nginx:nginx /etc/nginx/conf.d && \
-    chown -R nginx:nginx /var/log 
+#RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html && \
+#    chown -R nginx:nginx /var/log/nginx && \
+#    chown -R nginx:nginx /var/lib/nginx && \
+#    chown -R nginx:nginx /etc/nginx/conf.d && \
+#    chown -R nginx:nginx /var/log 
 
-RUN chown -R nginx:nginx /var/log/nginx/error.log && chmod -R 755 /var/log/nginx/error.log
+#RUN chown -R nginx:nginx /var/log/nginx/error.log && chmod -R 755 /var/log/nginx/error.log
         
-RUN touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid
+#RUN touch /var/run/nginx.pid && \
+#    chown -R nginx:nginx /var/run/nginx.pid
 
 USER nginx
 
