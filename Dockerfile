@@ -43,4 +43,5 @@ EXPOSE 8181
 
 COPY ./env.sh .
 
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+#CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+CMD ["nginx", "-g", "daemon off;"]
