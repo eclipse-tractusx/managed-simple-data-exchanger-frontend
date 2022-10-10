@@ -10,10 +10,7 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM ubuntu/nginx:latest
-#FROM ubuntu:22.04
-
-RUN apt-get update && apt-get upgrade -y && apt-get install -y nocache
+FROM nginx:1.23.1
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -33,7 +30,7 @@ EXPOSE 443
 
 #COPY .env .
 # Add bash
-#RUN apk add --no-cache bash
+RUN apk add --no-cache bash
 
 #RUN apt-get update -y && sudo apt-get install -y nocache
 
