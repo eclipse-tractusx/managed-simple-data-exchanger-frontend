@@ -19,8 +19,6 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 
 COPY ./default.conf /etc/nginx/conf.d/default.conf
 
-RUN /bin/sh -c "apk add --no-cache bash"
-
 WORKDIR /usr/share/nginx/html
 
 #RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html && \
