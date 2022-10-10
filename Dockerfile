@@ -1,46 +1,49 @@
 # => Build container
 FROM node:18.9.0-alpine3.15 as builder
-
 WORKDIR /app
-
 COPY ./package.json .
-
+#RUN yarn
 COPY ./ .
+#RUN yarn build
 
 RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
+
+FROM ubuntu/nginx:latest
 #FROM ubuntu:22.04
-#FROM nginxinc/nginx-unprivileged:1.22-alpine
-FROM nginxinc/nginx-unprivileged:latest
 
-#RUN apt-get update && apt-get upgrade -y &&apt install nginx -y && apt-get install -y nocache && apt update
+RUN apt-get update && apt-get upgrade -y && apt-get install -y nocache
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+# Nginx config
+RUN rm -rf /etc/nginx/conf.d
 
-COPY ./default.conf /etc/nginx/conf.d/default.conf
-
-WORKDIR /usr/share/nginx/html
-
-#RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html && \
-#    chown -R nginx:nginx /var/log/nginx && \
-#    chown -R nginx:nginx /var/lib/nginx && \
-#    chown -R nginx:nginx /etc/nginx/conf.d && \
-#    chown -R nginx:nginx /var/log 
-       
-#RUN touch /var/run/nginx.pid && \
-#    chown -R nginx:nginx /var/run/nginx.pid
-
-#USER nginx
+COPY ./conf /etc/nginx
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
 
-# Default port exposure
-
-EXPOSE 8181
+# Copy .env file and shell script to container
+WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-#CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 80
+EXPOSE 443
+
+#COPY .env .
+# Add bash
+#RUN apk add --no-cache bash
+
+#RUN apt-get update -y && sudo apt-get install -y nocache
+
+#RUN chown ${UID}:${GID} /usr/share/nginx/html
+
+#USER ${UID}:${GID}
+
+#RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/*
+
+#RUN chmod 744 -R /usr/share/nginx/html/*
+
+# Start Nginx server
+CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
