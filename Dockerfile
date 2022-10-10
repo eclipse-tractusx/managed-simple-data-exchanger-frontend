@@ -13,7 +13,7 @@ RUN npm install && npm run build
 FROM nginx:1.23.1
 
 RUN apt-get update -y && apt-get install -y nocache
-RUN chmod -R 777 /var/cache/nginx/
+RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -28,7 +28,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 443
 
 #COPY .env .
