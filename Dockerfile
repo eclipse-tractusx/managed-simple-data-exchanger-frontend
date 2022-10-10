@@ -13,8 +13,6 @@ RUN npm install && npm run build
 #FROM ubuntu:22.04
 FROM nginxinc/nginx-unprivileged:1.22-alpine
 
-RUN apk update && apk upgrade
-
 #RUN apt-get update && apt-get upgrade -y &&apt install nginx -y && apt-get install -y nocache && apt update
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
@@ -41,7 +39,7 @@ COPY --from=builder /app/build /usr/share/nginx/html/
 
 # Default port exposure
 
-EXPOSE 8080
+EXPOSE 8181
 
 COPY ./env.sh .
 
