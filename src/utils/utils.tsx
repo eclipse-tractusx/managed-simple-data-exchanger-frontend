@@ -36,6 +36,10 @@ export function convertEpochToDate(epoch: string) {
   return formatDate(epochToMilliseconds);
 }
 
+export function epochToDate(epoch: number) {
+  const epochToMilliseconds = epoch * 1000;
+  return new Date(epochToMilliseconds);
+}
 // Removing console logs except local dev env
 export function clearConsoles() {
   if (process.env.NODE_ENV === 'production') {

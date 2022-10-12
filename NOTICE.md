@@ -1,4 +1,4 @@
-## Notices
+# Notices
 
 This content is part of [CatenaX](https://catena-x.net).
 

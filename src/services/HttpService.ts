@@ -31,7 +31,6 @@ abstract class HttpService {
 
   public constructor(requestConfig: AxiosRequestConfig) {
     this.instance = axios.create(requestConfig);
-
     this.instance.interceptors.request.use(request => {
       request.baseURL = HOST;
       if (UserService.isLoggedIn()) {
