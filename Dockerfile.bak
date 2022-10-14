@@ -45,8 +45,8 @@ COPY --from=builder /app/build /usr/share/nginx/html/
 
 # Default port exposure
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8080
+EXPOSE 4433
 
 #ARG UID=7000
 #ARG GID=7000
