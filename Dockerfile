@@ -6,7 +6,7 @@ RUN addgroup -g 1000 -S www-group && \
 COPY --chown=www-user:www-group ./nginx.conf /etc/nginx/nginx.conf
 COPY --chown=www-user:www-group ./default.conf /etc/nginx/conf.d/default.conf
 
-COPY --chown=www-user:www-group index.html /var/www/htdocs/index.html
+#COPY --chown=www-user:www-group index.html /var/www/htdocs/index.html
 
 RUN touch /var/run/nginx.pid && \
   chown -R www-user:www-group /var/run/nginx.pid && \
