@@ -266,7 +266,7 @@ configuration:
     edc.hostname=dft-connector-cons-cp-pen.int.demo.catena-x.net
     # DAPS Properties
     edc.oauth.token.url=https://daps-pen.int.demo.catena-x.net/token
-    edc.oauth.client.id=68:C2:85:9A:43:5B:A1:FC:B2:31:A8:56:8E:4B:B3:B7:E9:EF:D6:8C:keyid:68:C2:85:9A:43:5B:A1:FC:B2:31:A8:56:8E:4B:B3:B7:E9:EF:D6:8C
+    edc.oauth.client.id=BD:95:53:8B:D8:11:1B:87:E6:6D:8D:D1:A2:B6:AD:52:8E:3F:CF:C3:keyid:BD:95:53:8B:D8:11:1B:87:E6:6D:8D:D1:A2:B6:AD:52:8E:3F:CF:C3
     edc.oauth.provider.audience=idsc:IDS_CONNECTORS_ALL
     edc.oauth.provider.jwks.url=https://daps-pen.int.demo.catena-x.net/.well-known/jwks.json
     # OAUTH Properties
