@@ -1,4 +1,4 @@
-FROM node:18.9.0-alpine3.15 as builder
+FROM nginx:1.15.4-alpine
 
 RUN addgroup -g 1033 -S www-group && \
     adduser -u 1033 -S www-user -G www-group
