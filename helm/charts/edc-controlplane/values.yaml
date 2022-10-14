@@ -273,10 +273,10 @@ configuration:
     edc.oauth.public.key.alias=gds-dft-cons-pen-crt
     edc.oauth.private.key.alias=gds-dft-cons-pen-key
     # Azure vault related configuration
-    edc.vault.clientsecret=
     edc.vault.clientid=2f0e6b4e-de1a-42bd-b30e-453d558d2dd4
     edc.vault.tenantid=495463c3-0991-4659-9cc5-94b4a3f7b1d6
     edc.vault.name=cxtsi-dev010-vault
+    edc.vault.clientsecret=
 
     # Control- / Data- Plane configuration
     edc.ids.endpoint.audience=https://dft-connector-cons-cp-pen.int.demo.catena-x.net/api/v1/ids/data
