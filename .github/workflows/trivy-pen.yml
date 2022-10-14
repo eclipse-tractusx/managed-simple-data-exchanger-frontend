@@ -1,8 +1,8 @@
-name: "Trivy Scan"
+name: "Trivy-pen"
 on:
   push:
     branches: 
-     - main
+     - QA-env
   schedule:
     # Once a day
     - cron: "0 0 * * *"
