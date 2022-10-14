@@ -20,7 +20,7 @@ RUN apt install nginx -y && apt update
 RUN mv /etc/nginx/nginx.conf nginx.cong.bak
 
 #NON-ROOT USER 
-ARG USERNAME=dftuser
+ARG USERNAME=www-data
 ARG USER_UID=3000
 ARG USER_GID=$USER_UID
 
@@ -34,6 +34,11 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 
 USER $USERNAME
+
+EXPOSE 8080
+USER www-data
+ADD nginx-log.conf /etc/nginx.conf \
+    && pub /usr/local/nginx/html
 
 # Nginx config
 #RUN sudo rm -rf /etc/nginx/conf.d
