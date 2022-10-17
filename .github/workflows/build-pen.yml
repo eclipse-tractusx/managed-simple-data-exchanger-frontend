@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: build-pen
+name: sdefrontend-pen
 
 on:
   push:
@@ -22,7 +22,6 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
@@ -52,9 +51,9 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=semver,pattern={{version}},value=v1.5.1
+          images: ${{ env.REGISTRY }}/catenax-ng/product-dft-frontend-mod
+          #tags: |
+          # type=semver,pattern={{version}},value=v1.5.1
           flavor: |
               latest=true
 
