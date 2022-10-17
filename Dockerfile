@@ -10,10 +10,11 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM nginx:1.23.1
+#FROM nginx:1.23.1
+FROM nginxinc/nginx-unprivileged:1.23-alpine
 
-RUN apt-get update -y && apt-get install -y nocache
-RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+#RUN apt-get update -y && apt-get install -y nocache
+#RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -33,7 +34,7 @@ EXPOSE 443
 
 #COPY .env .
 # Add bash
-#RUN apk add --no-cache bash
+RUN apk add --no-cache bash
 
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
