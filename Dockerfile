@@ -34,7 +34,7 @@ EXPOSE 443
 
 #COPY .env .
 # Add bash
-RUN apk add --no-cache bash
+#RUN apk add --no-cache bash
 
 #RUN chown ${UID}:${GID} /usr/share/nginx/html
 
