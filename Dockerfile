@@ -19,8 +19,11 @@ RUN rm -rf /etc/nginx/conf.d
 #RUN mv /etc/nginx/nginx.conf nginx.cong.bak 
 
 #COPY default.conf /etc/nginx/conf.d
-COPY  default.conf/etc/nginx/
+
+COPY  default.conf /etc/nginx/
+
 #RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
+
 RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
 
 # Static build
