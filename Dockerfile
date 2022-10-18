@@ -1,19 +1,41 @@
-FROM nginx:1.15.4-alpine
+# => Build container
+FROM node:18.9.0-alpine3.15 as builder
+WORKDIR /app
+COPY ./package.json .
+#RUN yarn
+COPY ./ .
+#RUN yarn build
 
-RUN addgroup -g 1033 -S www-group && \
-    adduser -u 1033 -S www-user -G www-group
+RUN npm install && npm run build
 
-COPY --chown=www-user:www-group ./nginx.conf /etc/nginx/nginx.conf
-COPY --chown=www-user:www-group ./default.conf /etc/nginx/conf.d/default.conf
+#### Stage 2: Serve the application from Nginx 
 
-#COPY --chown=www-user:www-group index.html /var/www/htdocs/index.html
+FROM nginx:mainline
 
-RUN touch /var/run/nginx.pid && \
-  chown -R www-user:www-group /var/run/nginx.pid && \
-  chown -R www-user:www-group /var/cache/nginx
 
-USER 1033
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
+RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+
+# Nginx config
+RUN rm -rf /etc/nginx/conf.d
+
+COPY ./conf /etc/nginx
+
+# Static build
+COPY --from=builder /app/build /usr/share/nginx/html/
+
+# Copy .env file and shell script to container
+WORKDIR /usr/share/nginx/html
+
+COPY ./env.sh .
+
+USER nginx 
 
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+# Start Nginx server
+CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+
+#EXPOSE 8080
+
+#CMD ["nginx", "-g", "daemon off;"]
