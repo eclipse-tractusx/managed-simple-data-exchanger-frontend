@@ -10,11 +10,9 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM nginx:1.23.1
+FROM ubuntu/nginx:latest 
 
-
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nginx && apt-get install -y nocache 
-
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -22,7 +20,7 @@ RUN rm -rf /etc/nginx/conf.d
 COPY ./conf /etc/nginx
 
 #RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
-RUN chmod -R 777 /var/log/nginx/
+#RUN chmod -R 777 /var/log/nginx/
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
