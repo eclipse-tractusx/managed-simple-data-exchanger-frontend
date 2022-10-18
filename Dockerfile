@@ -11,7 +11,8 @@ RUN npm install && npm run build
 #### Stage 2: Serve the application from Nginx 
 
 #FROM nginx:1.23.1
-FROM nginxinc/nginx-unprivileged:1.23-alpine
+#FROM nginxinc/nginx-unprivileged:1.23-alpine
+FROM nginxinc/nginx-unprivileged:latest
 
 #RUN apt-get update -y && apt-get install -y nocache
 #RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
