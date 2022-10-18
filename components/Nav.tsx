@@ -71,9 +71,7 @@ const Nav = (props: any) => {
           />
         </div>
 
-        <div className="font-bold text-2xl cursor-pointer flex items-center text-[#fbfcfa] ">
-          Data Format Transformation
-        </div>
+        <div className="font-bold text-2xl cursor-pointer flex items-center text-[#fbfcfa]">Simple Data Exchanger</div>
         <span className="cursor-pointer" onClick={handleMenu}>
           <AccountCircleIcon sx={{ color: styles.white }} />
         </span>

@@ -29,6 +29,6 @@ test('render navbar', () => {
       <Nav getIsExpanded={true} />
     </MemoryRouter>,
   );
-  const text = screen.getByText('Data Format Transformation');
+  const text = screen.getByText('Simple Data Exchanger');
   expect(text).toBeInTheDocument();
 });
