@@ -15,10 +15,12 @@ FROM ubuntu/nginx:latest
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
 
 # Nginx config
-RUN rm -rf /etc/nginx/conf.d
+#RUN rm -rf /etc/nginx/conf.d 
+RUN mv /etc/nginx/nginx.conf nginx.cong.bak 
 
-COPY ./conf /etc/nginx
+COPY nginx.conf /etc/nginx/conf.d
 
+#COPY  default.conf/etc/nginx/
 #RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
 #RUN chmod -R 777 /var/log/nginx/
 
