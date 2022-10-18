@@ -18,7 +18,7 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache
 #RUN rm -rf /etc/nginx/conf.d 
 #RUN mv /etc/nginx/nginx.conf nginx.cong.bak 
 
-COPY nginx.conf /etc/nginx/conf.d
+COPY default.conf /etc/nginx/conf.d
 
 #COPY  default.conf/etc/nginx/
 #RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
