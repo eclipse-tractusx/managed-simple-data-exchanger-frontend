@@ -10,10 +10,10 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM nginx:mainline
+FROM ubuntu:22.10
 
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nginx && apt-get install -y nocache 
 RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
 
 # Nginx config
