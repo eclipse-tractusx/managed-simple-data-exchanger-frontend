@@ -10,7 +10,7 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM ubuntu:22.10
+FROM nginx:1.23.1
 
 
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nginx && apt-get install -y nocache 
