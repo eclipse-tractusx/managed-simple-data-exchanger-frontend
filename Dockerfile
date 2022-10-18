@@ -12,14 +12,21 @@ RUN npm install && npm run build
 
 #FROM nginx:1.23.1
 #FROM nginxinc/nginx-unprivileged:1.23-alpine
-FROM nginxinc/nginx-unprivileged:latest
+#FROM nginxinc/nginx-unprivileged:latest
 
 #RUN apt-get update -y && apt-get install -y nocache
 #RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
 
 # Nginx config
-RUN rm -rf /etc/nginx/conf.d
+#RUN rm -rf /etc/nginx/conf.d
 
+#COPY ./conf /etc/nginx
+FROM nginx:mainline
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
+RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+
+# Nginx config
+RUN rm -rf /etc/nginx/conf.d
 COPY ./conf /etc/nginx
 
 # Static build
