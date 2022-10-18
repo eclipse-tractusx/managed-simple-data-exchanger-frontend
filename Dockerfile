@@ -10,9 +10,11 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM ubuntu/nginx:latest 
+#FROM ubuntu/nginx:latest 
+FROM nginx:mainline-alpine
 
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
+#RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
+RUN apk update && apk upgrade
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d 
@@ -24,7 +26,7 @@ COPY ./conf /etc/nginx
 
 #RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
 
-RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
+#RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
