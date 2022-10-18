@@ -22,7 +22,7 @@ COPY nginx.conf /etc/nginx/conf.d
 
 #COPY  default.conf/etc/nginx/
 #RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
-RUN chmod -R 777 /var/log/nginx/
+RUN chmod -R 777 /var/lib/nginx
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
