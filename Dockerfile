@@ -41,8 +41,8 @@ USER nginx
 EXPOSE 8080
 
 # Start Nginx server
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+WCMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
 
 #EXPOSE 8080
 
-#CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
