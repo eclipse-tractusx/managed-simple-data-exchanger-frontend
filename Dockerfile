@@ -14,13 +14,14 @@ FROM ubuntu:22.10
 
 
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nginx && apt-get install -y nocache 
-RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
+
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 
 COPY ./conf /etc/nginx
 
+RUN chmod -R 777 /var/nginx/ && chmod -R 777 /var/run/
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
 
