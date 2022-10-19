@@ -58,17 +58,11 @@ const Nav = (props: any) => {
 
   return (
     <div className="shadow-md w-full fixed top-0 left-0 bg-[#01579b] z-50">
-      <div className="md:flex items-center justify-between py-1 md:px-4">
+      <div className="md:flex items-center justify-between py-1 md:px-4" style={{ height: '4rem' }}>
         <div className="flex flex-row items-center gap-x-8">
           <span className="cursor-pointer" onClick={handleExpanded}>
             <MenuOutlinedIcon fontSize="medium" sx={{ color: styles.white }} />
           </span>
-
-          <img
-            src={window.location.origin + '/images/logo-dft.svg'}
-            alt="DFT logo"
-            className="w-14 h-14 fill-white  hover:fill-teal-600"
-          />
         </div>
 
         <div className="font-bold text-2xl cursor-pointer flex items-center text-[#fbfcfa]">Simple Data Exchanger</div>
