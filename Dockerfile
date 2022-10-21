@@ -31,7 +31,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/* \
+RUN chmod 755 -R var/log/nginx/* && chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/* \
     && chmod 744 -R /usr/share/nginx/html/*
 
 # Default port exposure
