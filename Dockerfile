@@ -18,7 +18,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y && apt upda
 RUN mv /etc/nginx/nginx.conf nginx.cong.bak
 
 # Nginx config
-RUN sudo rm -rf /etc/nginx/conf.d
+RUN rm -rf /etc/nginx/conf.d
 
 COPY nginx.conf /etc/nginx/conf.d
 
