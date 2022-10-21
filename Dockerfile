@@ -25,10 +25,6 @@ COPY nginx.conf /etc/nginx/conf.d
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
 
-# Default port exposure
-
-EXPOSE 80
-EXPOSE 443
 
 # Copy .env file and shell script to container
 WORKDIR /usr/share/nginx/html
@@ -37,6 +33,13 @@ COPY ./env.sh .
 
 RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/* \
     && chmod 744 -R /usr/share/nginx/html/*
+
+# Default port exposure
+
+EXPOSE 80
+EXPOSE 443
+
+USER nginx 
 
 # Start Nginx server
 CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
