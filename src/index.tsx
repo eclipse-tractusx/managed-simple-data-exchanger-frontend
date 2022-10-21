@@ -37,7 +37,6 @@ UserService.initKeycloak(() => {
       <Provider store={store}>
         <SharedThemeProvider>
           <App />
-          <App />
         </SharedThemeProvider>
       </Provider>
     </React.StrictMode>,
