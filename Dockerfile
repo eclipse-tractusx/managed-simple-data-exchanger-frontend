@@ -13,7 +13,7 @@ RUN npm install && npm run build
 
 FROM ubuntu:22.04
 
-RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y && apt update 
+RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y && apt-get install -y nocache
 
 RUN mv /etc/nginx/nginx.conf nginx.cong.bak
 
@@ -35,8 +35,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-RUN apt-get update -y && sudo apt-get install -y nocache \
-    && chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/* \
+RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/* \
     && chmod 744 -R /usr/share/nginx/html/*
 
 # Start Nginx server
