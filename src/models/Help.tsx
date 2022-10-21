@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 FEV Consulting GmbH
+ * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -18,17 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
- @import "../theme.scss";
+interface SubmodelRows {
+  name: string;
+  mandatory: boolean;
+  position: number;
+}
 
- .submodel-help-table {
-   & h5.MuiTypography-root.MuiTypography-h5 span {
-       display: none;
-   }
-   & .MuiDataGrid-columnHeaderTitle {
-       color: white;
-   }
-   & .MuiDataGrid-row:nth-child(odd){
-       background-color: #e3e3e3bc;
-   }
- }
- 
+export interface ISubmodelHelpProps {
+  submodelName: string;
+  rows: Array<SubmodelRows>;
+  onCopyHeaders?: () => void;
+  downloadUrl: string;
+}
