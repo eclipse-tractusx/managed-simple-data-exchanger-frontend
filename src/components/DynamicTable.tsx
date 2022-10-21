@@ -21,9 +21,10 @@
 
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, Button, Card, CardContent, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardContent } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
+import { Button, IconButton, Typography } from 'cx-portal-shared-components';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import Swal from 'sweetalert2';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
@@ -33,12 +34,10 @@ import { Batch } from '../models/Batch';
 
 export default function DynamicTable({
   columns = [],
-  headerHeight,
   submitUrl = '/aspect',
   validateData,
 }: {
   columns: DynamicTableColumn[];
-  headerHeight: number;
   submitUrl: string;
   validateData: (
     _value: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[],
@@ -78,11 +77,6 @@ export default function DynamicTable({
     },
   }));
 
-  const rulesCardStyle = {
-    display: 'block',
-    transitionDuration: '0.3s',
-    height: '116px',
-  };
   // end styles
 
   const generateUUID = (rowId: number, field: string) => {
@@ -196,16 +190,16 @@ export default function DynamicTable({
     <div style={{ width: '100%', height: 80 + 6 * 52 + 'px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box textAlign="start">
-          <Button variant="outlined" onClick={addRows} sx={{ mb: 2 }}>
+          <Button variant="outlined" onClick={addRows} sx={{ mb: 2 }} size="small">
             Add rows(s)
           </Button>
           &nbsp;
-          <Button variant="outlined" onClick={deleteSelectedRows} sx={{ mb: 2 }}>
+          <Button variant="outlined" onClick={deleteSelectedRows} sx={{ mb: 2 }} size="small">
             Delete row(s)
           </Button>
         </Box>
         <Box textAlign="end">
-          <Button variant="contained" onClick={() => validateData(rows, submitUrl, 'json')} sx={{ mb: 2 }}>
+          <Button variant="contained" onClick={() => validateData(rows, submitUrl, 'json')} sx={{ mb: 2 }} size="small">
             Next Step - Configure Policies
           </Button>
         </Box>
@@ -215,7 +209,7 @@ export default function DynamicTable({
         autoHeight={false}
         columns={columns}
         rows={rows}
-        headerHeight={headerHeight}
+        headerHeight={60}
         disableColumnMenu={true}
         hideFooter={true}
         checkboxSelection={true}
@@ -231,10 +225,16 @@ export default function DynamicTable({
             lineHeight: 1.5,
             textAlign: 'center',
           },
+          '& .MuiDataGrid-columnHeader': {
+            padding: '0 10px',
+          },
+          '& .MuiDataGrid-columnHeaderCheckbox': {
+            height: 'auto !important',
+          },
         }}
       />
       &nbsp;
-      <Card style={rulesCardStyle}>
+      <Card>
         <CardContent>
           <h3>
             <b> Rules </b>

@@ -20,7 +20,8 @@
  ********************************************************************************/
 
 import { useEffect, useRef, useState } from 'react';
-import { Box, Button, Grid, Tab, Tabs, TextareaAutosize } from '@mui/material';
+import { Box, Grid, TextareaAutosize } from '@mui/material';
+import { Button, Tab, Tabs } from 'cx-portal-shared-components';
 import DynamicTable from '../components/DynamicTable';
 import { getColumnsBySubmodelType } from '../helpers/commonSubmodelColumns';
 import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
@@ -292,7 +293,7 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={v} onChange={handleChange} aria-label="basic tabs example">
+            <Tabs value={v} onChange={handleChange} aria-label="basic tabs example" sx={{ pt: 0 }}>
               <Tab label="Upload File" {...a11yProps(0)} />
               <Tab label="Serial Part Typization" {...a11yProps(1)} />
               <Tab label="Batch" {...a11yProps(2)} />
@@ -308,7 +309,6 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
               <DynamicTable
                 columns={getColumnsBySubmodelType('serialPartTypization')}
                 submitUrl={'/aspect'}
-                headerHeight={60}
                 validateData={validateData}
               ></DynamicTable>
             </TabPanel>
@@ -316,7 +316,6 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
               <DynamicTable
                 columns={getColumnsBySubmodelType('batch')}
                 submitUrl={'/batch'}
-                headerHeight={60}
                 validateData={validateData}
               ></DynamicTable>
             </TabPanel>
@@ -324,7 +323,6 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
               <DynamicTable
                 columns={getAssemblyPartRelationshipColumns()}
                 submitUrl={'/aspect/relationship'}
-                headerHeight={90}
                 validateData={validateData}
               ></DynamicTable>
             </TabPanel>

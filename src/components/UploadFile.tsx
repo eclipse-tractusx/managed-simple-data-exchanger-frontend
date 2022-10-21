@@ -32,7 +32,8 @@ import { Status } from '../models/ProcessReport';
 
 // styles
 import styles from '../styles.module.scss';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
+import { Button } from 'cx-portal-shared-components';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
 import { setUploadStatus } from '../store/providerSlice';
@@ -59,6 +60,7 @@ export default function UploadFile({
       >
         <Button
           disabled={selectedFiles.length === 0 && !uploadStatus}
+          size="small"
           variant="contained"
           onClick={() => dispatch(handleDialogOpen({ type: 'file' }))}
         >

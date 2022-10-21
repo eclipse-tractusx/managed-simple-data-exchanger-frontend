@@ -27,13 +27,18 @@ import { store } from './store/store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { clearConsoles } from './utils/utils';
+import { SharedThemeProvider } from 'cx-portal-shared-components';
+
 clearConsoles();
 
 UserService.initKeycloak(() => {
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <SharedThemeProvider>
+          <App />
+          <App />
+        </SharedThemeProvider>
       </Provider>
     </React.StrictMode>,
     document.getElementById('root'),

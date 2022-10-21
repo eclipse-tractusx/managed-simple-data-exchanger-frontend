@@ -27,6 +27,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import styles from '../styles.module.scss';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { removeSelectedFiles } from '../store/providerSlice';
+import { Button } from 'cx-portal-shared-components';
 
 // eslint-disable-next-line
 const UploadForm = (props: any) => {
@@ -70,12 +71,9 @@ const UploadForm = (props: any) => {
             <h2 className=" my-1">Drag and drop your file on this page</h2>
             <h2 className=" my-1">or</h2>
 
-            <label
-              htmlFor="round"
-              className="relative rounded-md cursor-pointer p-2 text-sky-500  border items-center hover:bg-[#efefef]"
-            >
+            <Button variant="outlined" size="small" onClick={fileInputClicked}>
               CHOOSE A FILE
-            </label>
+            </Button>
           </div>
         </div>
       </div>
