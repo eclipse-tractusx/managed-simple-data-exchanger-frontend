@@ -32,7 +32,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-RUN chmod -R 777 /var/log/nginx/*
+RUN chmod -R 777 /var/log/nginx/* && chmod -R 777 /var/lib/nginx/body
 
 # Default port exposure
 
