@@ -15,7 +15,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y && apt-get install -y nocache
 
-RUN mv /etc/nginx/nginx.conf nginx.cong.bak
+#RUN mv /etc/nginx/nginx.conf nginx.cong.bak
 
 
 # Nginx config
