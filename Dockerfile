@@ -17,8 +17,6 @@ RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y && apt-get 
 
 #RUN mv /etc/nginx/nginx.conf nginx.cong.bak
 
-RUN chmod -R 777 /var/lib/nginx/*
-
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 
@@ -34,6 +32,7 @@ WORKDIR /usr/share/nginx/html
 COPY ./env.sh .
 
 RUN chmod -R 777 /var/log/nginx/* 
+RUN chmod -R 777 /var/lib/nginx/body
 
 # Default port exposure
 
