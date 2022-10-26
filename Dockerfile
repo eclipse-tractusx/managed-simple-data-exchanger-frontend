@@ -15,7 +15,8 @@ FROM ubuntu:22.04
 
 RUN apt-get update && apt-get upgrade -y && apt-get install nginx -y && apt-get install -y nocache
 
-RUN mv /etc/nginx/nginx.conf nginx.cong.bak && chmod -R 777 /var/log/nginx/
+RUN mv /etc/nginx/nginx.conf nginx.cong.bak && 
+
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -31,7 +32,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-RUN chmod 755 -R var/log/nginx/* 
+RUN chmod -R 777 /var/log/nginx/*
 
 # Default port exposure
 
