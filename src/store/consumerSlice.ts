@@ -21,12 +21,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IConsumerDataOffers, IContractAgreements } from '../models/ConsumerContractOffers';
 
+export interface IntOption {
+  _id: number | string;
+  bpn: string;
+  value: string;
+}
+
+export interface IntConnectorItem {
+  id: number;
+  value: string;
+}
+
 interface IConsumerSlice {
   offersLoading: boolean;
   contractOffers: IConsumerDataOffers[];
   selectedOffersList: IConsumerDataOffers[];
   selectedOffer: IConsumerDataOffers;
   isMultipleContractSubscription: boolean;
+  searchFilterByType: string;
+  filterProviderUrl: string;
+  filterCompanyOptions: IntOption[];
+  filterCompanyOptionsLoading: boolean;
+  filterSelectedCompanyOption: IntOption | null;
+  filterSelectedBPN: string | null;
+  filterConnectors: IntConnectorItem[];
+  filterSelectedConnector: string;
   contractAgreements: IContractAgreements[];
   isContractAgreementsLoading: boolean;
 }
@@ -37,6 +56,15 @@ const initialState: IConsumerSlice = {
   selectedOffersList: [],
   selectedOffer: null,
   isMultipleContractSubscription: false,
+  // search filter
+  searchFilterByType: 'company',
+  filterProviderUrl: '',
+  filterCompanyOptions: [],
+  filterCompanyOptionsLoading: false,
+  filterSelectedCompanyOption: null,
+  filterSelectedBPN: '',
+  filterConnectors: [],
+  filterSelectedConnector: '',
   contractAgreements: [],
   isContractAgreementsLoading: false,
 };
@@ -60,6 +88,30 @@ export const consumerSlice = createSlice({
     setIsMultipleContractSubscription: (state, action: PayloadAction<boolean>) => {
       state.isMultipleContractSubscription = action.payload;
     },
+    setSearchFilterByType: (state, action: PayloadAction<string>) => {
+      state.searchFilterByType = action.payload;
+    },
+    setFilterProviderUrl: (state, action: PayloadAction<string>) => {
+      state.filterProviderUrl = action.payload;
+    },
+    setFilterCompanyOptions: (state, action: PayloadAction<IntOption[]>) => {
+      state.filterCompanyOptions = action.payload;
+    },
+    setFfilterCompanyOptionsLoading: (state, action: PayloadAction<boolean>) => {
+      state.filterCompanyOptionsLoading = action.payload;
+    },
+    setSelectedFilterCompanyOption: (state, action: PayloadAction<IntOption>) => {
+      state.filterSelectedCompanyOption = action.payload;
+    },
+    setFilterSelectedBPN: (state, action: PayloadAction<string>) => {
+      state.filterSelectedBPN = action.payload;
+    },
+    setFilterConnectors: (state, action: PayloadAction<IntConnectorItem[]>) => {
+      state.filterConnectors = action.payload;
+    },
+    setFilterSelectedConnector: (state, action: PayloadAction<string>) => {
+      state.filterSelectedConnector = action.payload;
+    },
     setContractAgreements: (state, action: PayloadAction<IContractAgreements[]>) => {
       state.contractAgreements = action.payload;
     },
@@ -75,6 +127,14 @@ export const {
   setSelectedOffersList,
   setSelectedOffer,
   setIsMultipleContractSubscription,
+  setSearchFilterByType,
+  setFilterProviderUrl,
+  setFilterCompanyOptions,
+  setFfilterCompanyOptionsLoading,
+  setSelectedFilterCompanyOption,
+  setFilterConnectors,
+  setFilterSelectedConnector,
+  setFilterSelectedBPN,
   setContractAgreements,
   setIsContractAgreementsLoading,
 } = consumerSlice.actions;

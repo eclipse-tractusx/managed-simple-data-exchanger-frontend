@@ -23,7 +23,6 @@ export interface IUsageControl {
   value?: string;
   durationUnit?: string | Record<string, never>;
 }
-
 export interface IConsumerDataOffers {
   // connectorOfferid same assetId
   connectorOfferid?: string;
@@ -49,7 +48,41 @@ export interface IConsumerDataOffers {
   fileName?: string;
   fileContentType?: string;
 }
-
+export interface ILegalEntityName {
+  value?: string;
+  shortname?: string | null;
+  type?: unknown;
+  language?: unknown;
+}
+export interface ILegalentity {
+  bpn?: string;
+  identifiers?: unknown[];
+  names?: ILegalEntityName[];
+  legalForm?: null | unknown;
+  status?: null | unknown;
+}
+export interface ILegalEntityContent {
+  score?: number;
+  legalEntity?: ILegalentity;
+  name?: string;
+  bpn?: string;
+}
+export interface ILegalEntity {
+  totalElements?: number;
+  totalPages?: number;
+  page?: number;
+  contentSize?: number;
+  content?: ILegalEntityContent[];
+}
+export interface IntOption {
+  _id: number | string;
+  bpn: string;
+  value: string;
+}
+export interface IConnectorResponse {
+  bpn: string;
+  connectorEndpoint: string[];
+}
 export interface IContractAgreementInfo {
   contractSigningDate: number | Date;
   contractStartDate: number | Date;
@@ -65,4 +98,6 @@ export interface IContractAgreements {
   organizationName: string;
   contractAgreementId?: string;
   contractAgreementInfo?: IContractAgreementInfo;
+  dateCreated: number;
+  dateUpdated: number;
 }

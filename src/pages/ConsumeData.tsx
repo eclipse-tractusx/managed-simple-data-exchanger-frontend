@@ -19,12 +19,28 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Box, Button, Grid, LinearProgress, Stack, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  LinearProgress,
+  Stack,
+  TextField,
+  Typography,
+  Autocomplete,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { DataGrid, GridSelectionModel, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
+import { ILegalEntityContent, IConnectorResponse } from '../models/ConsumerContractOffers';
 import DftService from '../services/DftService';
 import {
   setContractOffers,
@@ -32,16 +48,36 @@ import {
   setOffersLoading,
   setSelectedOffersList,
   setIsMultipleContractSubscription,
+  setSearchFilterByType,
+  setFilterProviderUrl,
+  setFilterCompanyOptions,
+  setFfilterCompanyOptionsLoading,
+  setSelectedFilterCompanyOption,
+  setFilterSelectedBPN,
+  setFilterSelectedConnector,
+  setFilterConnectors,
 } from '../store/consumerSlice';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { toast } from 'react-toastify';
 import { toastProps } from '../helpers/ToastOptions';
+import { IntOption } from '../models/ConsumerContractOffers';
 import Swal from 'sweetalert2';
 
 export const ConsumeData: React.FC = () => {
-  const [providerUrl, setProviderUrl] = useState('');
-  const { contractOffers, offersLoading, selectedOffer, selectedOffersList, isMultipleContractSubscription } =
-    useAppSelector(state => state.consumerSlice);
+  const {
+    contractOffers,
+    offersLoading,
+    selectedOffer,
+    selectedOffersList,
+    isMultipleContractSubscription,
+    searchFilterByType,
+    filterProviderUrl,
+    filterCompanyOptions,
+    filterCompanyOptionsLoading,
+    filterConnectors,
+    filterSelectedConnector,
+    filterSelectedBPN,
+  } = useAppSelector(state => state.consumerSlice);
   const [isOpenOfferDialog, setIsOpenOfferDialog] = useState<boolean>(false);
   const [isOpenOfferConfirmDialog, setIsOpenOfferConfirmDialog] = useState<boolean>(false);
   const [isOfferSubLoading, setIsOfferSubLoading] = useState<boolean>(false);
@@ -148,7 +184,10 @@ export const ConsumeData: React.FC = () => {
           });
           payload = {
             connectorId: selectedOffersList[0].connectorId,
-            providerUrl: providerUrl,
+            providerUrl:
+              searchFilterByType === 'company' || searchFilterByType === 'bpn'
+                ? filterSelectedConnector
+                : filterProviderUrl,
             offers: offersList,
             policies: selectedOffersList[0].usagePolicies,
           };
@@ -161,7 +200,10 @@ export const ConsumeData: React.FC = () => {
           });
           payload = {
             connectorId: connectorId,
-            providerUrl: providerUrl,
+            providerUrl:
+              searchFilterByType === 'company' || searchFilterByType === 'bpn'
+                ? filterSelectedConnector
+                : filterProviderUrl,
             offers: offersList,
             policies: usagePolicies,
           };
@@ -192,8 +234,17 @@ export const ConsumeData: React.FC = () => {
   };
 
   const fetchConsumerDataOffers = async () => {
-    dispatch(setOffersLoading(true));
     try {
+      let providerUrl = '';
+      if (searchFilterByType === 'company' || searchFilterByType === 'bpn') {
+        providerUrl = filterSelectedConnector;
+      } else {
+        providerUrl = filterProviderUrl;
+      }
+      if (providerUrl == '' || providerUrl == null) {
+        return true;
+      }
+      dispatch(setOffersLoading(true));
       const response = await DftService.getInstance().fetchConsumerDataOffers(providerUrl);
       dispatch(setContractOffers(response.data));
       dispatch(setOffersLoading(false));
@@ -237,11 +288,91 @@ export const ConsumeData: React.FC = () => {
     }
   };
 
+  // get company name oninput change
+  const onChangeSearchInputValue = async (params: string) => {
+    const searchStr = params.toLowerCase();
+    if (searchStr.length > 2) {
+      dispatch(setFilterCompanyOptions([]));
+      dispatch(setFfilterCompanyOptionsLoading(true));
+      const res: [] = await DftService.getInstance().searchLegalEntities(searchStr);
+      dispatch(setFfilterCompanyOptionsLoading(false));
+      if (res.length > 0) {
+        const filterContent = res.map((item: ILegalEntityContent, index) => {
+          return {
+            _id: index,
+            bpn: item.bpn,
+            value: item.name,
+          };
+        });
+        dispatch(setFilterCompanyOptions(filterContent));
+      }
+    } else {
+      dispatch(setFilterCompanyOptions([]));
+    }
+  };
+
+  // on change search type filter option
+  const handleSearchTypeChange = (event: SelectChangeEvent) => {
+    dispatch(setSearchFilterByType(event.target.value as string));
+    dispatch(setSelectedFilterCompanyOption(null));
+    dispatch(setFilterProviderUrl(''));
+    dispatch(setFilterSelectedBPN(''));
+    dispatch(setFilterConnectors([]));
+    dispatch(setFilterSelectedConnector(''));
+  };
+
+  // TODO:: get connector by bpn number
+  const getConnectorByBPN = async (bpn: string) => {
+    const payload = [];
+    payload.push(bpn);
+    dispatch(setFilterSelectedConnector(''));
+    dispatch(setFilterConnectors([]));
+    const res = await DftService.getInstance().searchConnectoByBPN(payload);
+    if (res.length) {
+      const resC: IConnectorResponse[] = res;
+      const connector = resC[0];
+      const optionConnectors = connector.connectorEndpoint.map((item, index) => {
+        return {
+          id: index,
+          value: item,
+        };
+      });
+      dispatch(setFilterConnectors(optionConnectors));
+    } else {
+      toast.warning('Connector not available', toastProps());
+    }
+  };
+
+  // on option selected of company dropdown
+  const onCompanyOptionChange = (value: IntOption | string) => {
+    const payload = value as IntOption;
+    dispatch(setSelectedFilterCompanyOption(payload));
+    if (payload !== null) {
+      getConnectorByBPN(payload.bpn);
+    }
+  };
+
+  // TODO:: on blur bpn get the connectors
+  const onBlurBPN = () => {
+    if (filterSelectedBPN.length > 3) {
+      getConnectorByBPN(filterSelectedBPN);
+    } else {
+      dispatch(setFilterConnectors([]));
+    }
+  };
+
   const init = () => {
     dispatch(setContractOffers([]));
     dispatch(setSelectedOffer(null));
     dispatch(setSelectedOffersList([]));
     setSelectionModel([]);
+    dispatch(setSearchFilterByType('company'));
+    dispatch(setSelectedFilterCompanyOption(null));
+    dispatch(setFilterCompanyOptions([]));
+    dispatch(setFilterProviderUrl(''));
+    dispatch(setFilterSelectedBPN(''));
+    dispatch(setFilterConnectors([]));
+    dispatch(setFilterSelectedConnector(''));
   };
 
   useEffect(() => {
@@ -257,27 +388,131 @@ export const ConsumeData: React.FC = () => {
         </Grid>
         <Grid item xs={12} mb={4}>
           <Stack direction="row" spacing={2}>
-            <Typography ml={1} variant="subtitle1" gutterBottom>
-              Enter data provider connector URL
-            </Typography>
             <Box
               sx={{
-                width: 600,
+                width: 800,
                 maxWidth: '100%',
               }}
             >
-              <TextField
-                value={providerUrl}
-                type="url"
-                onChange={e => setProviderUrl(e.target.value)}
-                onKeyPress={handleKeypress}
-                fullWidth
-                size="small"
-                label="Provider URL"
-              />
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
+                    <InputLabel id="select--search-label-small">Search By</InputLabel>
+                    <Select
+                      labelId="select--search-label-small"
+                      value={searchFilterByType}
+                      label="Select Search Type"
+                      fullWidth
+                      size="small"
+                      onChange={handleSearchTypeChange}
+                    >
+                      <MenuItem value="company">Company Name</MenuItem>
+                      <MenuItem value="bpn">Business Partner Number</MenuItem>
+                      <MenuItem value="url">Connector URL</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={8}>
+                  {searchFilterByType === 'url' ? (
+                    <TextField
+                      value={filterProviderUrl}
+                      type="url"
+                      onChange={e => dispatch(setFilterProviderUrl(e.target.value))}
+                      onKeyPress={handleKeypress}
+                      fullWidth
+                      size="small"
+                      label="Enter connector URL"
+                    />
+                  ) : (
+                    <Grid container spacing={1}>
+                      <Grid item xs={7}>
+                        {searchFilterByType === 'bpn' ? (
+                          <TextField
+                            value={filterSelectedBPN}
+                            type="text"
+                            onChange={e => dispatch(setFilterSelectedBPN(e.target.value))}
+                            onBlur={() => onBlurBPN()}
+                            fullWidth
+                            size="small"
+                            label="Enter Business Partner Number"
+                          />
+                        ) : (
+                          <Autocomplete
+                            options={filterCompanyOptions}
+                            includeInputInList
+                            loading={filterCompanyOptionsLoading}
+                            onChange={(event, value) => onCompanyOptionChange(value)}
+                            onInputChange={debounce((event, newInputValue) => {
+                              onChangeSearchInputValue(newInputValue);
+                            }, 1000)}
+                            isOptionEqualToValue={(option, value) => option.value === value.value}
+                            getOptionLabel={option => {
+                              return typeof option === 'string' ? option : `${option.value}`;
+                            }}
+                            renderInput={params => (
+                              <TextField {...params} label="Search company name" size="small" fullWidth />
+                            )}
+                            renderOption={(props, option) => (
+                              <Box
+                                component="li"
+                                {...props}
+                                sx={{
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  alignItems: 'initial!important',
+                                  justifyContent: 'initial',
+                                }}
+                              >
+                                <Typography variant="subtitle1">{option.value}</Typography>
+                                <Typography variant="subtitle2">{option.bpn}</Typography>
+                              </Box>
+                            )}
+                          />
+                        )}
+                      </Grid>
+                      <Grid item xs={5}>
+                        <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
+                          <InputLabel id="select--search-label-small">Select connector</InputLabel>
+                          <Select
+                            labelId="select--search-label-small"
+                            label="Select connectors"
+                            fullWidth
+                            size="small"
+                            value={filterSelectedConnector}
+                            onChange={e => dispatch(setFilterSelectedConnector(e.target.value as string))}
+                          >
+                            {filterConnectors.length === 0 ? (
+                              <MenuItem disabled value="">
+                                <em>No connector available</em>
+                              </MenuItem>
+                            ) : (
+                              <MenuItem disabled value="">
+                                <em>Select connector</em>
+                              </MenuItem>
+                            )}
+                            {filterConnectors.map(item => (
+                              <MenuItem key={item.id} value={item.value}>
+                                {item.value}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
             </Box>
-            <Button variant="contained" onClick={fetchConsumerDataOffers}>
-              Query
+            <Button
+              variant="contained"
+              onClick={fetchConsumerDataOffers}
+              disabled={
+                ((searchFilterByType === 'bpn' || searchFilterByType === 'company') &&
+                  filterSelectedConnector.length === 0) ||
+                (searchFilterByType === 'url' && filterProviderUrl.length === 0)
+              }
+            >
+              Search
             </Button>
           </Stack>
         </Grid>

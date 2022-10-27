@@ -20,7 +20,6 @@
  ********************************************************************************/
 
 import HttpService from './HttpService';
-
 class DftService extends HttpService {
   public constructor() {
     super({});
@@ -85,6 +84,25 @@ class DftService extends HttpService {
       data: offers,
     });
     return res;
+  }
+
+  // Get company name by free text
+  public async searchLegalEntities(searchStr: string) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/legal-entities?searchText=${searchStr}&page=0&size=40`,
+    });
+    return res.data;
+  }
+
+  // Get connectors by bpn number
+  public async searchConnectoByBPN(payload: string[]) {
+    const res = await this.instance({
+      method: 'POST',
+      url: '/connectors-discovery',
+      data: payload,
+    });
+    return res.data;
   }
 
   public async getContractAgreementsList(offSet: number, maxLimit: number) {

@@ -19,23 +19,63 @@
  ********************************************************************************/
 
 import React, { useEffect, useState } from 'react';
-import { Box, Grid, LinearProgress, Stack, Typography } from '@mui/material';
+import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { Refresh } from '@mui/icons-material';
-import { DataGrid, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import { convertEpochToDate } from '../utils/utils';
+import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
+import { convertEpochToDate, epochToDate } from '../utils/utils';
 import { styled } from '@mui/material/styles';
 import styles from '../styles.module.scss';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import DftService from '../services/DftService';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
+import { IContractAgreements } from '../models/ConsumerContractOffers';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ErrorIcon from '@mui/icons-material/Error';
 
 const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
   const { contractAgreements, isContractAgreementsLoading } = useAppSelector(state => state.consumerSlice);
   const dispatch = useAppDispatch();
 
+  const renderContractAgreementStatus = (params: GridRenderCellParams) => {
+    switch (params.value) {
+      case 'CONFIRMED':
+        return (
+          <Chip
+            color="success"
+            icon={<CheckCircleIcon fontSize="small" />}
+            title={params.value}
+            label={params.value}
+            variant="outlined"
+          />
+        );
+      case 'DECLINED':
+        return (
+          <Chip
+            color="error"
+            icon={<CancelIcon fontSize="small" />}
+            title={params.value}
+            label={params.value}
+            variant="outlined"
+          />
+        );
+      case 'ERROR':
+        return (
+          <Chip
+            color="warning"
+            icon={<ErrorIcon fontSize="small" />}
+            title={params.value}
+            label={params.value}
+            variant="outlined"
+          />
+        );
+      default:
+        return <Chip color="default" title={params.value} label={params.value} variant="outlined" />;
+    }
+  };
   const columns = [
     {
       field: 'contractAgreementId',
@@ -106,6 +146,7 @@ const ContractHistory: React.FC = () => {
       editable: false,
       headerName: 'Status',
       renderHeader: () => <strong>Status</strong>,
+      renderCell: renderContractAgreementStatus,
     },
   ];
 
@@ -113,7 +154,13 @@ const ContractHistory: React.FC = () => {
     dispatch(setIsContractAgreementsLoading(true));
     try {
       const response = await DftService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
-      dispatch(setContractAgreements(response.data));
+      const contractAgreementsList = response.data;
+      contractAgreementsList.sort((contract1: IContractAgreements, contract2: IContractAgreements) => {
+        const d1 = epochToDate(contract1.dateUpdated).valueOf();
+        const d2 = epochToDate(contract2.dateUpdated).valueOf();
+        return d2 - d1;
+      });
+      dispatch(setContractAgreements(contractAgreementsList));
       dispatch(setIsContractAgreementsLoading(false));
     } catch (error) {
       dispatch(setContractAgreements([]));
