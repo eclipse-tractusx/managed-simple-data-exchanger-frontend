@@ -12,8 +12,6 @@ RUN npm install && npm run build
 
 #FROM ubuntu/nginx:latest 
 FROM nginx:latest
- 
-RUN apk update && apk upgrade
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d 
