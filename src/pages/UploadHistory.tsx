@@ -22,7 +22,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Refresh } from '@mui/icons-material';
 import { Grid } from '@mui/material';
-import { Button } from 'cx-portal-shared-components';
+import { Button, Typography } from 'cx-portal-shared-components';
 import { ProcessReport } from '../models/ProcessReport';
 import StickyHeadTable from '../components/StickyHeadTable';
 import DftService from '../services/DftService';
@@ -55,12 +55,12 @@ export const UploadHistory: React.FC = () => {
 
   return (
     <div className="flex-1 py-6 px-20">
-      <Grid container spacing={2}>
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs={6}>
-          <h1 className="flex flex-row text-bold text-3xl">Upload History</h1>
+          <Typography variant="h4">Upload History</Typography>
         </Grid>
         <Grid item xs={6} className="text-right">
-          <Button variant="contained" onClick={() => refreshTable()}>
+          <Button size="small" variant="contained" onClick={() => refreshTable()}>
             <Refresh />
             &nbsp; Refresh
           </Button>

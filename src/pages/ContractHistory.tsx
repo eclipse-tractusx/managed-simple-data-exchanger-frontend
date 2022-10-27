@@ -77,7 +77,7 @@ const ContractHistory: React.FC = () => {
   const columns = [
     {
       field: 'contractAgreementId',
-      width: 230,
+      flex: 1,
       editable: false,
       headerName: 'Contract Agreement ID',
       renderHeader: () => <strong>Contract Agreement ID</strong>,
@@ -85,7 +85,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.assetId',
-      width: 230,
+      flex: 1,
       editable: false,
       headerName: 'Asset ID',
       renderHeader: () => <strong>Asset ID</strong>,
@@ -94,7 +94,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'counterPartyAddress',
-      width: 350,
+      flex: 1,
       editable: false,
       headerName: 'Counter Party Address',
       renderHeader: () => <strong>Counter Party Address</strong>,
@@ -102,7 +102,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'title',
-      width: 100,
+      flex: 1,
       editable: false,
       headerName: 'Title',
       renderHeader: () => <strong>Title</strong>,
@@ -110,7 +110,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'organizationName',
-      width: 120,
+      flex: 1,
       editable: false,
       headerName: 'Organization',
       renderHeader: () => <strong>Organization</strong>,
@@ -118,7 +118,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.contractSigningDate',
-      width: 160,
+      flex: 1,
       editable: false,
       headerName: 'Signing Date',
       renderHeader: () => <strong>Signing Date</strong>,
@@ -129,7 +129,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.contractEndDate',
-      width: 160,
+      flex: 1,
       editable: false,
       headerName: 'End Date',
       renderHeader: () => <strong>End Date</strong>,
@@ -140,7 +140,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'state',
-      width: 150,
+      flex: 1,
       editable: false,
       headerName: 'Status',
       renderHeader: () => <strong>Status</strong>,
@@ -174,12 +174,12 @@ const ContractHistory: React.FC = () => {
 
   return (
     <div className="flex-1 py-6 px-10">
-      <Grid container spacing={2}>
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs={6} my={4}>
           <Typography variant="h4">Contract Agreements History</Typography>
         </Grid>
         <Grid item xs={6} my={4} className="text-right">
-          <Button variant="contained" onClick={() => fetchContractAgreements()}>
+          <Button variant="contained" size="small" onClick={() => fetchContractAgreements()}>
             <span>
               <Refresh />
               <span style={{ marginLeft: 5 }}>Refresh</span>
