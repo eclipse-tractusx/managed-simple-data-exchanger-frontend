@@ -56,7 +56,7 @@ const UploadForm = (props: any) => {
 
   return (
     <div className="flex flex-col py-9">
-      <h4 className=" text-3xl font-sans text-[#444444] text-center mb-5">Upload a file </h4>
+      <h4 className=" text-3xl font-sans text-center mb-5">Upload a file </h4>
       <div className="border border-dashed  border-3  flex flex-row justify-center w-auto h-full items-center">
         <div className="flex flex-col gap-y-4 mx-20 ">
           <div className="py-6 px-4 flex flex-col items-center gap-x-4 relative">
@@ -68,7 +68,7 @@ const UploadForm = (props: any) => {
               onChange={filesSelected}
               className="hidden"
             />
-            <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[100] }} />
+            <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
             <h2 className=" my-1">Drag and drop your file on this page</h2>
             <h2 className=" my-1">or</h2>
 

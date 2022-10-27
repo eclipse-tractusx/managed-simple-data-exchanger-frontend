@@ -52,7 +52,11 @@ const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
             sx={{ color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}` }}
           />
         </ListItemIcon>
-        <ListItemText primary={text} sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }} />
+        <ListItemText
+          primaryTypographyProps={{ sx: { fontSize: '14px' } }}
+          primary={text}
+          sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }}
+        />
       </ListItemButton>
     </ListItem>
   );
@@ -89,7 +93,7 @@ const Sidebar = (props: any) => {
     >
       <div className={`${isExpanded ? 'w-64' : 'w-14 '} h-[calc(100%-4.75rem)] flex flex-col fixed`}>
         <div className="will-change-width px-0 overflow-hidden relative">
-          <List>
+          <List sx={{ p: 0 }}>
             {MenuItems.map((menuItem, index) => (
               <div key={index}>
                 <MenuItemHeading item={menuItem} isExpanded={isExpanded} />

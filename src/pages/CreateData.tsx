@@ -358,17 +358,35 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
-                  <Button variant="outlined" onClick={submitSerialData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={submitSerialData}
+                    sx={{ mt: 2 }}
+                    style={{ float: 'right' }}
+                  >
                     Next Step - Configure Policies
                   </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button variant="outlined" onClick={submitBatchData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={submitBatchData}
+                    sx={{ mt: 2 }}
+                    style={{ float: 'right' }}
+                  >
                     Next Step - Configure Policies
                   </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button variant="outlined" onClick={submitAssemblyData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={submitAssemblyData}
+                    sx={{ mt: 2 }}
+                    style={{ float: 'right' }}
+                  >
                     Next Step - Configure Policies
                   </Button>
                 </Grid>

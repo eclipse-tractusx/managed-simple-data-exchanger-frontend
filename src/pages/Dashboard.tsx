@@ -22,7 +22,6 @@
 
 import React, { SyntheticEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../styles/Table.scss';
 
 // components
 import Nav from '../components/Nav';

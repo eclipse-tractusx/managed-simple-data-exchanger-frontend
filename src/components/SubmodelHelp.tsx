@@ -57,7 +57,6 @@ export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
       <Card variant="outlined">
         <CardContent>
           <Table
-            className="submodel-help-table"
             rows={rows}
             columns={columns}
             getRowId={row => row.position}
@@ -79,7 +78,7 @@ export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
               '& .MuiDataGrid-columnHeaderTitle': {
                 color: 'white',
               },
-              '& .MuiDataGrid-row:nth-child(odd)': { background: theme.palette.grey[100] },
+              '& .MuiDataGrid-row:nth-of-type(odd)': { background: theme.palette.grey[100] },
             }}
           />
         </CardContent>
