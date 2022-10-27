@@ -22,11 +22,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Refresh } from '@mui/icons-material';
 import { Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Button, { ButtonProps } from '@mui/material/Button';
+import { Button } from 'cx-portal-shared-components';
 import { ProcessReport } from '../models/ProcessReport';
 import StickyHeadTable from '../components/StickyHeadTable';
-import styles from '../styles.module.scss';
 import DftService from '../services/DftService';
 
 export const UploadHistory: React.FC = () => {
@@ -55,15 +53,6 @@ export const UploadHistory: React.FC = () => {
     };
   }, [page, rowsPerPage, refreshTable]);
 
-  const ColorButton = styled(Button)<ButtonProps>(() => ({
-    color: styles.white,
-    backgroundColor: styles.blue,
-    '&:hover': {
-      backgroundColor: styles.white,
-      color: styles.blue,
-    },
-  }));
-
   return (
     <div className="flex-1 py-6 px-20">
       <Grid container spacing={2}>
@@ -71,12 +60,10 @@ export const UploadHistory: React.FC = () => {
           <h1 className="flex flex-row text-bold text-3xl">Upload History</h1>
         </Grid>
         <Grid item xs={6} className="text-right">
-          <ColorButton variant="contained" onClick={() => refreshTable()}>
-            <span>
-              <Refresh />
-              &nbsp; Refresh
-            </span>
-          </ColorButton>
+          <Button variant="contained" onClick={() => refreshTable()}>
+            <Refresh />
+            &nbsp; Refresh
+          </Button>
         </Grid>
       </Grid>
       <div className="mt-8">

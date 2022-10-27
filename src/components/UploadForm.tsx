@@ -24,13 +24,14 @@ import { FileSize } from '../models/FileSize';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import styles from '../styles.module.scss';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { removeSelectedFiles } from '../store/providerSlice';
 import { Button } from 'cx-portal-shared-components';
+import { useTheme } from '@mui/material';
 
 // eslint-disable-next-line
 const UploadForm = (props: any) => {
+  const theme = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
@@ -67,7 +68,7 @@ const UploadForm = (props: any) => {
               onChange={filesSelected}
               className="hidden"
             />
-            <CloudUploadIcon sx={{ fontSize: 40, color: styles.grey }} />
+            <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[100] }} />
             <h2 className=" my-1">Drag and drop your file on this page</h2>
             <h2 className=" my-1">or</h2>
 

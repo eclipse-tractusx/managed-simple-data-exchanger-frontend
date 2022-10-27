@@ -31,8 +31,7 @@ import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutli
 import { Status } from '../models/ProcessReport';
 
 // styles
-import styles from '../styles.module.scss';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { Button } from 'cx-portal-shared-components';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
@@ -45,6 +44,7 @@ export default function UploadFile({
   handleFiles: (file: File) => void;
   selectedTabIndex: number;
 }) {
+  const theme = useTheme();
   const { selectedFiles, currentUploadData, uploadStatus } = useAppSelector(state => state.providerSlice);
   const dispatch = useAppDispatch();
   return (
@@ -74,7 +74,7 @@ export default function UploadFile({
             <div className={'flex justify-between bg-red-100 p-4 w-full mt-4'}>
               <div className="flex items-center gap-x-2">
                 <span title="Failed">
-                  <HighlightOffOutlined sx={{ color: styles.danger }} />
+                  <HighlightOffOutlined sx={{ color: theme.palette.error.main }} />
                 </span>
                 <p className="text-md">{selectedFiles[0].name}</p>
               </div>
@@ -90,7 +90,7 @@ export default function UploadFile({
               <div className={'flex justify-between bg-lime-200 p-4 w-full mt-4'}>
                 <div className="flex items-center gap-x-2">
                   <span title="Completed">
-                    <CheckCircleOutlineOutlinedIcon sx={{ color: styles.success }} />
+                    <CheckCircleOutlineOutlinedIcon sx={{ color: theme.palette.success.main }} />
                   </span>
                   <p className="text-md">{selectedFiles[0]?.name}</p>
                 </div>
@@ -106,7 +106,7 @@ export default function UploadFile({
               <div className={'flex justify-between bg-orange-100 p-4 w-full mt-4'}>
                 <div className="flex items-center gap-x-2">
                   <span title="Completed with warnings">
-                    <ReportGmailerrorredOutlined sx={{ color: styles.warning }} />
+                    <ReportGmailerrorredOutlined sx={{ color: theme.palette.warning.main }} />
                   </span>
                   <p className="text-md">{selectedFiles[0]?.name}</p>
                 </div>

@@ -20,12 +20,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
-import Button, { ButtonProps } from '@mui/material/Button';
 import { Refresh } from '@mui/icons-material';
 import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { convertEpochToDate, epochToDate } from '../utils/utils';
-import { styled } from '@mui/material/styles';
-import styles from '../styles.module.scss';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import DftService from '../services/DftService';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
@@ -34,6 +31,7 @@ import { IContractAgreements } from '../models/ConsumerContractOffers';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ErrorIcon from '@mui/icons-material/Error';
+import { Button } from 'cx-portal-shared-components';
 
 const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
@@ -168,15 +166,6 @@ const ContractHistory: React.FC = () => {
     }
   };
 
-  const ColorButton = styled(Button)<ButtonProps>(() => ({
-    color: styles.white,
-    backgroundColor: styles.blue,
-    '&:hover': {
-      backgroundColor: styles.white,
-      color: styles.blue,
-    },
-  }));
-
   useEffect(() => {
     dispatch(setContractAgreements([]));
     fetchContractAgreements();
@@ -190,12 +179,12 @@ const ContractHistory: React.FC = () => {
           <Typography variant="h4">Contract Agreements History</Typography>
         </Grid>
         <Grid item xs={6} my={4} className="text-right">
-          <ColorButton variant="contained" onClick={() => fetchContractAgreements()}>
+          <Button variant="contained" onClick={() => fetchContractAgreements()}>
             <span>
               <Refresh />
               <span style={{ marginLeft: 5 }}>Refresh</span>
             </span>
-          </ColorButton>
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>

@@ -27,13 +27,14 @@ import { store } from './store/store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { clearConsoles } from './utils/utils';
-import { SharedThemeProvider } from 'cx-portal-shared-components';
+import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
 
 clearConsoles();
 
 UserService.initKeycloak(() => {
   ReactDOM.render(
     <React.StrictMode>
+      <SharedCssBaseline />
       <Provider store={store}>
         <SharedThemeProvider>
           <App />

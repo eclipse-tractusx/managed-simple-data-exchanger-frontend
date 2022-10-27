@@ -53,3 +53,6 @@ body {
   color: black;
   font-weight: 300;
 }
+.swal2-container {
+  z-index: 1500 !important;
+}

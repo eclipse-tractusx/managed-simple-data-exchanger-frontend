@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import React from 'react';
-import { Card, CardActions, CardContent } from '@mui/material';
+import { Card, CardActions, CardContent, useTheme } from '@mui/material';
 import { Button, Table } from 'cx-portal-shared-components';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { Link } from 'react-router-dom';
@@ -51,6 +51,7 @@ export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
       sortable: false,
     },
   ];
+  const theme = useTheme();
   return (
     <>
       <Card variant="outlined">
@@ -61,7 +62,7 @@ export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
             columns={columns}
             getRowId={row => row.position}
             autoHeight
-            columnHeadersBackgroundColor="#00579b"
+            columnHeadersBackgroundColor={theme.palette.primary.main}
             disableColumnFilter
             disableColumnMenu
             disableColumnSelector
@@ -71,6 +72,15 @@ export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
             hideFooter
             title={submodelName}
             rowHeight={40}
+            sx={{
+              '& h5.MuiTypography-root.MuiTypography-h5 span': {
+                display: 'none',
+              },
+              '& .MuiDataGrid-columnHeaderTitle': {
+                color: 'white',
+              },
+              '& .MuiDataGrid-row:nth-child(odd)': { background: theme.palette.grey[100] },
+            }}
           />
         </CardContent>
         <CardActions>

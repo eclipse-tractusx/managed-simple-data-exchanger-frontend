@@ -21,8 +21,16 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles.module.scss';
-import { List, ListItem, ListItemButton, ListItemText, ListItemIcon, Divider, Typography } from '@mui/material';
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  ListItemIcon,
+  Divider,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { IntMenuItemProps, MenuItems, icons } from '../models/Sidebar';
 
 /**
@@ -31,6 +39,7 @@ import { IntMenuItemProps, MenuItems, icons } from '../models/Sidebar';
  * @returns ListItem
  */
 const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const { menuIcon, to, text, dataId } = item;
   const Icon = icons[menuIcon];
@@ -38,7 +47,10 @@ const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
     <ListItem data-testid={dataId} onClick={() => navigate(to)} sx={{ p: 0 }}>
       <ListItemButton sx={{ minHeight: '48px' }}>
         <ListItemIcon>
-          <Icon fontSize="small" sx={{ color: `${location.pathname === to ? styles.blue : styles.black}` }} />
+          <Icon
+            fontSize="small"
+            sx={{ color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}` }}
+          />
         </ListItemIcon>
         <ListItemText primary={text} sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }} />
       </ListItemButton>
