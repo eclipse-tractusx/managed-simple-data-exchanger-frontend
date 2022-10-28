@@ -73,7 +73,6 @@ import {
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { toast } from 'react-toastify';
 import { toastProps } from '../helpers/ToastOptions';
-import { IntOption } from '../models/ConsumerContractOffers';
 import Swal from 'sweetalert2';
 
 export const ConsumeData: React.FC = () => {
