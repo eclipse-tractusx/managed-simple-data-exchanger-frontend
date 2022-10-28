@@ -46,14 +46,14 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
-import { SelectList, Button, Input, Typography } from 'cx-portal-shared-components';
+import { Button, Input, Typography } from 'cx-portal-shared-components';
 import { DataGrid, GridSelectionModel, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
-import { ILegalEntityContent, IConnectorResponse } from '../models/ConsumerContractOffers';
+import { ILegalEntityContent, IConnectorResponse, IntOption } from '../models/ConsumerContractOffers';
 import DftService from '../services/DftService';
 import {
   setContractOffers,
@@ -73,7 +73,6 @@ import {
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { toast } from 'react-toastify';
 import { toastProps } from '../helpers/ToastOptions';
-import { IntOption } from '../models/ConsumerContractOffers';
 import Swal from 'sweetalert2';
 
 export const ConsumeData: React.FC = () => {
@@ -334,7 +333,6 @@ export const ConsumeData: React.FC = () => {
     dispatch(setFilterSelectedConnector(''));
   };
 
-  // TODO:: get connector by bpn number
   const getConnectorByBPN = async (bpn: string) => {
     const payload = [];
     payload.push(bpn);
@@ -365,7 +363,6 @@ export const ConsumeData: React.FC = () => {
     }
   };
 
-  // TODO:: on blur bpn get the connectors
   const onBlurBPN = () => {
     if (filterSelectedBPN.length > 3) {
       getConnectorByBPN(filterSelectedBPN);
@@ -410,9 +407,11 @@ export const ConsumeData: React.FC = () => {
               size="small"
               onChange={e => handleSearchTypeChange(e.target.value)}
             >
-              <MenuItem value="company">Company Name</MenuItem>
-              <MenuItem value="bpn">Business Partner Number</MenuItem>
-              <MenuItem value="url">Connector URL</MenuItem>
+              {ITEMS.map(e => (
+                <MenuItem key={e.id} value={e.value}>
+                  {e.title}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
