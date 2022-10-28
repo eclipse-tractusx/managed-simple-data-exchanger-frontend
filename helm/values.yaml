@@ -8,8 +8,8 @@ image:
   repository: ghcr.io/catenax-ng/product-dft-frontend-mod
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
-  
+  tag: 'latest'
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -17,27 +17,27 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "dft-service"
-  
+  name: 'dft-service'
+
 imagePullSecrets: []
-nameOverride: "product-dft-frontend"
-fullnameOverride: "dft-frontend"
+nameOverride: 'product-dft-frontend'
+fullnameOverride: 'dft-frontend'
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
+securityContext:
+  allowPrivilegeEscalation: true
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: false
+  runAsUser: 1000
 
-securityContext: 
-   allowPrivilegeEscalation: true
-   capabilities:
-     drop:
-     - ALL
-   readOnlyRootFilesystem: false
-   runAsNonRoot: false
-   runAsUser: 1000
-   
 service:
   type: ClusterIP
   port: 8080
@@ -47,9 +47,9 @@ ingress:
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    nginx.ingress.kubernetes.io/affinity: 'cookie'
+    nginx.ingress.kubernetes.io/session-cookie-max-age: '172800'
     nginx.ingress.kubernetes.io/enable-cors: 'false'
   host: dft.int.demo.catena-x.net
 

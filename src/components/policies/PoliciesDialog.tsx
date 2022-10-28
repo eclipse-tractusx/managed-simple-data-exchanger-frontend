@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Dialog, DialogTitle, DialogContent, Box, DialogActions, Button } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { toastProps } from '../../helpers/ToastOptions';
@@ -201,21 +201,12 @@ export default function PoliciesDialog() {
   }
 
   return (
-    <Dialog
-      open={openDialog}
-      onClose={() => dispatch(handleDialogClose())}
-      sx={{ '&.MuiModal-root': { zIndex: 100 }, '& .MuiDialog-paper': { width: '450px' } }}
-    >
-      <DialogTitle>
-        <b>Policies</b>
-      </DialogTitle>
-      <DialogContent>
-        <Box>
-          <AccessPolicy />
-        </Box>
-        <Box>
-          <UsagePolicy />
-        </Box>
+    // Dialog width change is not available currently in cx-shared-components library
+    <Dialog open={openDialog} sx={{ '.MuiDialog-paper': { maxWidth: '500px' } }}>
+      <DialogHeader closeWithIcon onCloseWithIcon={() => dispatch(handleDialogClose())} title="Policies" />
+      <DialogContent sx={{ p: '40px' }}>
+        <AccessPolicy />
+        <UsagePolicy />
       </DialogContent>
       <DialogActions>
         <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>

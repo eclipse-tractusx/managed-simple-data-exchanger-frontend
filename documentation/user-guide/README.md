@@ -1,4 +1,4 @@
-# DFT - User Guide
+# SDE - User Guide
 
 ## Table of contents
 

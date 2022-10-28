@@ -21,15 +21,16 @@
 
 import DangerousOutlinedIcon from '@mui/icons-material/DangerousOutlined';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import styles from '../styles.module.scss';
+import { useTheme } from '@mui/material';
 
 // eslint-disable-next-line
 const Notification = (props: any) => {
+  const theme = useTheme();
   const { errorMessage } = props;
   return (
     <section className="flex justify-between p-4 bg-red-300">
       <div className="flex flex-row items-center gap-x-2">
-        <DangerousOutlinedIcon sx={{ color: styles.danger }} />
+        <DangerousOutlinedIcon sx={{ color: theme.palette.error.main }} />
         <p className="text-md text-red-600">{errorMessage}</p>
       </div>
       <span style={{ marginRight: '4rem' }} className="cursor-pointer" onClick={() => props.clear()}>

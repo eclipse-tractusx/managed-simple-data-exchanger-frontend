@@ -25,11 +25,12 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Logout } from '@mui/icons-material';
-import styles from '../styles.module.scss';
 import UserService from '../services/UserService';
+import { Box, useTheme } from '@mui/material';
 
 // eslint-disable-next-line
 const Nav = (props: any) => {
+  const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -57,25 +58,20 @@ const Nav = (props: any) => {
   };
 
   return (
-    <div className="shadow-md w-full fixed top-0 left-0 bg-[#01579b] z-50">
-      <div className="md:flex items-center justify-between py-1 md:px-4">
+    <Box
+      className="shadow-md"
+      sx={{ background: theme.palette.primary.main, position: 'fixed', top: 0, left: 0, zIndex: 50, width: '100%' }}
+    >
+      <div className="md:flex items-center justify-between py-1 md:px-4" style={{ height: '4rem' }}>
         <div className="flex flex-row items-center gap-x-8">
           <span className="cursor-pointer" onClick={handleExpanded}>
-            <MenuOutlinedIcon fontSize="medium" sx={{ color: styles.white }} />
+            <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
           </span>
-
-          <img
-            src={window.location.origin + '/images/logo-dft.svg'}
-            alt="DFT logo"
-            className="w-14 h-14 fill-white  hover:fill-teal-600"
-          />
         </div>
 
-        <div className="font-bold text-2xl cursor-pointer flex items-center text-[#fbfcfa] ">
-          Data Format Transformation
-        </div>
+        <div className="font-bold text-2xl cursor-pointer flex items-center text-[#fff]">Simple Data Exchanger</div>
         <span className="cursor-pointer" onClick={handleMenu}>
-          <AccountCircleIcon sx={{ color: styles.white }} />
+          <AccountCircleIcon sx={{ color: theme.palette.common.white }} />
         </span>
         <Menu
           id="menu-appbar"
@@ -99,7 +95,7 @@ const Nav = (props: any) => {
           </MenuItem>
         </Menu>
       </div>
-    </div>
+    </Box>
   );
 };
 export default Nav;

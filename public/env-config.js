@@ -4,6 +4,5 @@ window._env_ = {
   REACT_APP_DEFAULT_COMPANY_BPN: 'BPNL00000PN1PROV',
   REACT_APP_CLIENT_ID: 'Cl15-CX-DFT',
   REACT_APP_KEYCLOAK_URL: 'https://centralidp.demo.catena-x.net/auth',
-  REACT_APP_KEYCLOAK_REALM: 'CX-Central'
+  REACT_APP_KEYCLOAK_REALM: 'CX-Central',
 };
-

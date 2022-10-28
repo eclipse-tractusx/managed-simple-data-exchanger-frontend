@@ -18,17 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-export interface Batch {
-  id?: number;
-  uuid: string;
-  batch_id: string;
-  manufacturing_date: string;
-  manufacturing_country: string;
-  manufacturer_part_id: string;
-  customer_part_id: string;
-  classification: string;
-  name_at_manufacturer: string;
-  name_at_customer: string;
-  optional_identifier_key: string;
-  optional_identifier_value: string;
+interface SubmodelRows {
+  name: string;
+  mandatory: boolean;
+  position: number;
+}
+
+export interface ISubmodelHelpProps {
+  submodelName: string;
+  rows: Array<SubmodelRows>;
+  onCopyHeaders?: () => void;
+  downloadUrl: string;
 }

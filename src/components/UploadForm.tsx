@@ -24,12 +24,14 @@ import { FileSize } from '../models/FileSize';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import styles from '../styles.module.scss';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { removeSelectedFiles } from '../store/providerSlice';
+import { Button, Typography } from 'cx-portal-shared-components';
+import { useTheme } from '@mui/material';
 
 // eslint-disable-next-line
 const UploadForm = (props: any) => {
+  const theme = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
@@ -54,7 +56,9 @@ const UploadForm = (props: any) => {
 
   return (
     <div className="flex flex-col py-9">
-      <h4 className=" text-3xl font-sans text-[#444444] text-center mb-5">Upload a file </h4>
+      <Typography variant="h4" marginBottom={3} textAlign="center">
+        Upload a file
+      </Typography>
       <div className="border border-dashed  border-3  flex flex-row justify-center w-auto h-full items-center">
         <div className="flex flex-col gap-y-4 mx-20 ">
           <div className="py-6 px-4 flex flex-col items-center gap-x-4 relative">
@@ -66,16 +70,13 @@ const UploadForm = (props: any) => {
               onChange={filesSelected}
               className="hidden"
             />
-            <CloudUploadIcon sx={{ fontSize: 40, color: styles.grey }} />
+            <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
             <h2 className=" my-1">Drag and drop your file on this page</h2>
             <h2 className=" my-1">or</h2>
 
-            <label
-              htmlFor="round"
-              className="relative rounded-md cursor-pointer p-2 text-sky-500  border items-center hover:bg-[#efefef]"
-            >
+            <Button variant="outlined" size="small" onClick={fileInputClicked}>
               CHOOSE A FILE
-            </label>
+            </Button>
           </div>
         </div>
       </div>

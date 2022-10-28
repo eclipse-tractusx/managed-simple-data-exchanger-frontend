@@ -20,7 +20,7 @@
  ********************************************************************************/
 
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import {
   AccessTime,
@@ -38,7 +38,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { ProcessReport, CsvTypes, Status } from '../models/ProcessReport';
 import { formatDate } from '../utils/utils';
-import styles from '../styles.module.scss';
 
 interface Column {
   id: 'processId' | 'csvType' | 'numberOfItems' | 'numberOfFailedItems' | 'status' | 'startDate' | 'duration';
@@ -100,6 +99,7 @@ export default function StickyHeadTable({
     /* This is itentional */
   },
 }) {
+  const theme = useTheme();
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -111,15 +111,15 @@ export default function StickyHeadTable({
 
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: styles.blue,
-      color: styles.white,
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
   }));
 
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  const StyledTableRow = styled(TableRow)(() => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.action.hover,
     },
@@ -179,22 +179,25 @@ export default function StickyHeadTable({
                           value}
                         {column.id === 'status' && value === Status.completed && row.numberOfFailedItems === 0 && (
                           <span title="Completed">
-                            <CheckCircleOutlineOutlinedIcon fontSize="small" sx={{ color: styles.success }} />
+                            <CheckCircleOutlineOutlinedIcon
+                              fontSize="small"
+                              sx={{ color: theme.palette.success.main }}
+                            />
                           </span>
                         )}
                         {column.id === 'status' && value === Status.completed && row.numberOfFailedItems > 0 && (
                           <span title="Completed with warnings">
-                            <ReportGmailerrorredOutlined fontSize="small" sx={{ color: styles.warning }} />
+                            <ReportGmailerrorredOutlined fontSize="small" sx={{ color: theme.palette.warning.main }} />
                           </span>
                         )}
                         {column.id === 'status' && value === Status.failed && (
                           <span title="Failed">
-                            <HighlightOffOutlined fontSize="small" sx={{ color: styles.danger }} />
+                            <HighlightOffOutlined fontSize="small" sx={{ color: theme.palette.error.main }} />
                           </span>
                         )}
                         {column.id === 'status' && value === Status.inProgress && (
                           <span title="In progress">
-                            <HourglassEmptyOutlined fontSize="small" sx={{ color: styles.primary }} />
+                            <HourglassEmptyOutlined fontSize="small" sx={{ color: theme.palette.primary.main }} />
                           </span>
                         )}
                         {column.id === 'duration' && (

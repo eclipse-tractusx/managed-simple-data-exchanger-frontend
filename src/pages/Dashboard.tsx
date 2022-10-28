@@ -21,9 +21,7 @@
  ********************************************************************************/
 
 import React, { SyntheticEvent, useState } from 'react';
-import styles from '../styles.module.scss';
 import { useLocation } from 'react-router-dom';
-import '../styles/Table.scss';
 
 // components
 import Nav from '../components/Nav';
@@ -46,8 +44,10 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import { setPageLoading } from '../store/appSlice';
+import { useTheme } from '@mui/material';
 
 const Dashboard: React.FC = () => {
+  const theme = useTheme();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -161,7 +161,7 @@ const Dashboard: React.FC = () => {
         <div className="relative w-full h-full bg-[#03a9f4]">
           <div className="inset-x-0 inset-y-1/2 absolute z-5 flex flex-col justify-center gap-y-2 text-center">
             <span>
-              <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: styles.white }} />
+              <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: theme.palette.common.white }} />
             </span>
             <h1 className="text-4xl text-white">Drop it like it's hot :)</h1>
             <p className="text-lg text-white">Upload your file by dropping it in this window</p>
