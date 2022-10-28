@@ -1,15 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Box,
-  CircularProgress,
-  Checkbox,
-  FormControlLabel,
-} from '@mui/material';
+import { Box, CircularProgress, Checkbox, FormControlLabel } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
 import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 
 interface IntConfirmOffer {
@@ -45,8 +36,8 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
   }
 
   return (
-    <Dialog fullWidth={true} maxWidth="xs" open={open} onClose={() => handleButton('close')}>
-      <DialogTitle>{title}</DialogTitle>
+    <Dialog open={open}>
+      <DialogHeader closeWithIcon onCloseWithIcon={() => handleButton('close')} title={title} />
       <DialogContent dividers sx={{ py: 3 }}>
         {children ? (
           children
