@@ -30,6 +30,7 @@ export interface IntOption {
 export interface IntConnectorItem {
   id: number;
   value: string;
+  title: string;
 }
 
 interface IConsumerSlice {

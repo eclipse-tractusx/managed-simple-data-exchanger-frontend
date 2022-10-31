@@ -35,18 +35,8 @@ const ITEMS = [
     value: 'url',
   },
 ];
-import {
-  Box,
-  Grid,
-  LinearProgress,
-  Stack,
-  Autocomplete,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from '@mui/material';
-import { Button, Input, Typography } from 'cx-portal-shared-components';
+import { Box, Grid, LinearProgress, Stack, Autocomplete } from '@mui/material';
+import { Button, Input, SelectList, Typography } from 'cx-portal-shared-components';
 import { DataGrid, GridSelectionModel, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
@@ -346,6 +336,7 @@ export const ConsumeData: React.FC = () => {
         return {
           id: index,
           value: item,
+          title: item,
         };
       });
       dispatch(setFilterConnectors(optionConnectors));
@@ -397,23 +388,16 @@ export const ConsumeData: React.FC = () => {
       </Typography>
       <Grid container spacing={2} alignItems="end">
         <Grid item xs={3}>
-          <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
-            <InputLabel id="select--search-label-small">Search By</InputLabel>
-            <Select
-              labelId="select--search-label-small"
-              value={searchFilterByType}
-              label="Select Search Type"
-              fullWidth
-              size="small"
-              onChange={e => handleSearchTypeChange(e.target.value)}
-            >
-              {ITEMS.map(e => (
-                <MenuItem key={e.id} value={e.value}>
-                  {e.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <SelectList
+            label="Select Search Type"
+            fullWidth
+            size="small"
+            onChangeItem={e => handleSearchTypeChange(e.value)}
+            items={ITEMS}
+            placeholder="Select Search Type"
+            value={searchFilterByType}
+            hiddenLabel
+          />
         </Grid>
         <Grid item xs={5}>
           {searchFilterByType === 'url' ? (
@@ -475,33 +459,16 @@ export const ConsumeData: React.FC = () => {
                 )}
               </Grid>
               <Grid item xs={5}>
-                <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
-                  <InputLabel id="select--search-label-small">Select connector</InputLabel>
-                  <Select
-                    labelId="select--search-label-small"
-                    label="Select connectors"
-                    placeholder="Select connectors"
-                    fullWidth
-                    size="small"
-                    value={filterSelectedConnector}
-                    onChange={e => dispatch(setFilterSelectedConnector(e.target.value as string))}
-                  >
-                    {filterConnectors.length === 0 ? (
-                      <MenuItem disabled value="">
-                        <em>No connector available</em>
-                      </MenuItem>
-                    ) : (
-                      <MenuItem disabled value="">
-                        <em>Select connector</em>
-                      </MenuItem>
-                    )}
-                    {filterConnectors.map(item => (
-                      <MenuItem key={item.id} value={item.value}>
-                        {item.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <SelectList
+                  label="Select connectors"
+                  placeholder="Select connectors"
+                  fullWidth
+                  size="small"
+                  value={filterSelectedConnector}
+                  onChangeItem={e => dispatch(setFilterSelectedConnector(e.value))}
+                  items={filterConnectors}
+                  noOptionsText="No connector available"
+                />
               </Grid>
             </Grid>
           )}

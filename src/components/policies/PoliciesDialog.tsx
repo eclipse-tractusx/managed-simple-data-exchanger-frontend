@@ -204,7 +204,7 @@ export default function PoliciesDialog() {
     // Dialog width change is not available currently in cx-shared-components library
     <Dialog open={openDialog} sx={{ '.MuiDialog-paper': { maxWidth: '500px' } }}>
       <DialogHeader closeWithIcon onCloseWithIcon={() => dispatch(handleDialogClose())} title="Policies" />
-      <DialogContent sx={{ p: '40px' }}>
+      <DialogContent>
         <AccessPolicy />
         <UsagePolicy />
       </DialogContent>

@@ -54,7 +54,7 @@ export const UploadHistory: React.FC = () => {
   }, [page, rowsPerPage, refreshTable]);
 
   return (
-    <div className="flex-1 py-6 px-20">
+    <div className="flex-1 py-6 px-10">
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={6}>
           <Typography variant="h4">Upload History</Typography>

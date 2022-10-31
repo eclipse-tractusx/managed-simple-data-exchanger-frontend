@@ -26,7 +26,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Logout } from '@mui/icons-material';
 import UserService from '../services/UserService';
-import { Box, useTheme } from '@mui/material';
+import { Box, Link, Paper, useTheme } from '@mui/material';
+import { Typography } from 'cx-portal-shared-components';
 
 // eslint-disable-next-line
 const Nav = (props: any) => {
@@ -58,21 +59,38 @@ const Nav = (props: any) => {
   };
 
   return (
-    <Box
-      className="shadow-md"
-      sx={{ background: theme.palette.primary.main, position: 'fixed', top: 0, left: 0, zIndex: 50, width: '100%' }}
+    <Paper
+      elevation={3}
+      sx={{
+        background: theme.palette.primary.main,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        borderRadius: 0,
+        zIndex: 1,
+      }}
     >
-      <div className="md:flex items-center justify-between py-1 md:px-4" style={{ height: '4rem' }}>
-        <div className="flex flex-row items-center gap-x-8">
-          <span className="cursor-pointer" onClick={handleExpanded}>
-            <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
-          </span>
-        </div>
+      <Box
+        sx={{
+          height: '4rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          py: 1,
+          px: 2,
+        }}
+      >
+        <Link onClick={handleExpanded}>
+          <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
+        </Link>
 
-        <div className="font-bold text-2xl cursor-pointer flex items-center text-[#fff]">Simple Data Exchanger</div>
-        <span className="cursor-pointer" onClick={handleMenu}>
+        <Typography variant="h4" color="white">
+          Simple Data Exchanger
+        </Typography>
+        <Link onClick={handleMenu}>
           <AccountCircleIcon sx={{ color: theme.palette.common.white }} />
-        </span>
+        </Link>
         <Menu
           id="menu-appbar"
           anchorEl={anchorEl}
@@ -94,8 +112,8 @@ const Nav = (props: any) => {
             </span>
           </MenuItem>
         </Menu>
-      </div>
-    </Box>
+      </Box>
+    </Paper>
   );
 };
 export default Nav;

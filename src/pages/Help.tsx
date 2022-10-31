@@ -27,7 +27,10 @@ import { rulesCardStyle, rulesContentStyle, submodelHelpArr } from '../utils/hel
 
 export const Help: React.FC = () => {
   return (
-    <div className="flex-1 py-6 px-20">
+    <div className="flex-1 py-6 px-10">
+      <Typography variant="h4" mb={4}>
+        Help
+      </Typography>
       <Grid container spacing={2}>
         {submodelHelpArr.map((submodel: any, key: number) => (
           <Grid key={key} item xs={6}>
