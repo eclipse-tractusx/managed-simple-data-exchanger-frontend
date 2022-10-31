@@ -24,7 +24,7 @@ RUN npm install && npm run build
 #FROM nginx:mainline
 FROM ubuntu/nginx:latest
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
-RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+#RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
