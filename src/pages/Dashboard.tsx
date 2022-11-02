@@ -20,13 +20,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React, { SyntheticEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // components
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
-import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
+// import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 
 // models
 import { File } from '../models/File';
@@ -39,21 +39,21 @@ import CreateData from './CreateData';
 import { Config } from '../utils/config';
 import { ConsumeData } from './ConsumeData';
 import ContractHistory from './ContractHistory';
-import { useAppDispatch, useAppSelector } from '../store/store';
+import { useAppDispatch } from '../store/store';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import { setPageLoading } from '../store/appSlice';
-import { Box, useTheme } from '@mui/material';
-import { PageNotifications, Typography } from 'cx-portal-shared-components';
+import { Box } from '@mui/material';
+import { PageNotifications } from 'cx-portal-shared-components';
 
 const Dashboard: React.FC = () => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  // const [isDragging, setIsDragging] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { selectedFiles } = useAppSelector(state => state.providerSlice);
-  let dragCounter = 0;
+  // const { selectedFiles } = useAppSelector(state => state.providerSlice);
+  // let dragCounter = 0;
   const dispatch = useAppDispatch();
   const handleExpanded = (expanded: boolean) => {
     setIsExpanded(expanded);
@@ -78,39 +78,39 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const dragEnter = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounter++;
-    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-      setIsDragging(true);
-    }
-  };
+  // const dragEnter = (e: any) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   dragCounter++;
+  //   if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+  //     setIsDragging(true);
+  //   }
+  // };
 
-  const dragLeave = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounter--;
-    if (dragCounter > 0) return;
-    setIsDragging(false);
-  };
+  // const dragLeave = (e: any) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   dragCounter--;
+  //   if (dragCounter > 0) return;
+  //   setIsDragging(false);
+  // };
 
-  const fileDrop = (e: any) => {
-    e.preventDefault();
-    const files = e.dataTransfer.files;
-    if (files.length && files.length < 2 && selectedFiles.length === 0) {
-      handleFiles(files[0]);
-      dispatch(setUploadStatus(false));
-      dispatch(setPageLoading(false));
-    } else if (files.length && files.length < 2 && selectedFiles.length > 0) {
-      dispatch(setSelectedFiles([files[0]]));
-      dispatch(setUploadStatus(false));
-      dispatch(setPageLoading(false));
-    } else {
-      setErrorMessage('Only one file is permitted');
-    }
-    setIsDragging(false);
-  };
+  // const fileDrop = (e: any) => {
+  //   e.preventDefault();
+  //   const files = e.dataTransfer.files;
+  //   if (files.length && files.length < 2 && selectedFiles.length === 0) {
+  //     handleFiles(files[0]);
+  //     dispatch(setUploadStatus(false));
+  //     dispatch(setPageLoading(false));
+  //   } else if (files.length && files.length < 2 && selectedFiles.length > 0) {
+  //     dispatch(setSelectedFiles([files[0]]));
+  //     dispatch(setUploadStatus(false));
+  //     dispatch(setPageLoading(false));
+  //   } else {
+  //     setErrorMessage('Only one file is permitted');
+  //   }
+  //   setIsDragging(false);
+  // };
 
   const layout = () => {
     switch (location.pathname) {
@@ -135,45 +135,66 @@ const Dashboard: React.FC = () => {
   };
   return (
     <Box
-      sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden' }}
-      onDragOver={(e: SyntheticEvent) => e.preventDefault()}
-      onDragEnter={dragEnter}
-      onDragLeave={dragLeave}
-      onDrop={fileDrop}
+      sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden', height: '100vh' }}
+      // onDragOver={(e: SyntheticEvent) => e.preventDefault()}
+      // onDragEnter={dragEnter}
+      // onDragLeave={dragLeave}
+      // onDrop={fileDrop}
     >
-      {errorMessage !== '' && (
-        <PageNotifications
-          severity="error"
-          description={errorMessage}
-          open
-          onCloseNotification={() => setErrorMessage('')}
-        />
-      )}
-      {!isDragging && (
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', pt: 8 }}>
-          <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
-          <Box className="flex">
-            <Sidebar isExpanded={isExpanded} />
-          </Box>
-          <Box sx={{ display: 'flex', width: '100%' }}>{layout()}</Box>
+      {errorMessage !== '' ? (
+        <Box
+          sx={{
+            width: 350,
+            position: 'fixed',
+            top: 16,
+            right: 16,
+            zIndex: 10,
+            backgroundColor: 'white',
+            borderRadius: 2,
+          }}
+        >
+          <PageNotifications
+            severity="error"
+            description={errorMessage}
+            open
+            onCloseNotification={() => setErrorMessage('')}
+          />
         </Box>
+      ) : (
+        ''
       )}
+      {/* {!isDragging && ( */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          pt: 8,
+          height: '100%',
+          position: 'relative',
+        }}
+      >
+        <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
+        <Sidebar isExpanded={isExpanded} />
+        <Box sx={{ display: 'flex', width: '100%' }}>{layout()}</Box>
+      </Box>
+      {/* )} */}
 
-      {isDragging && (
-        <Box className="relative w-full h-full bg-[#03a9f4]">
-          <Box sx={{}} className="inset-x-0 inset-y-1/2 absolute z-5 flex flex-col justify-center gap-y-2 text-center">
-            <span>
-              <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: theme.palette.common.white }} />
-            </span>
-            <Typography color="white" variant="h2">
-              Drop it like it's hot :)
-            </Typography>
-            <Typography color="white" variant="h4">
-              Upload your file by dropping it in this window
-            </Typography>
-          </Box>
-        </Box>
-      )}
+      {/* {isDragging && (
+         <Box className="relative w-full h-full bg-[#03a9f4]">
+           <Box sx={{}} className="inset-x-0 inset-y-1/2 absolute z-5 flex flex-col justify-center gap-y-2 text-center">
+             <span>
+               <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: theme.palette.common.white }} />
+             </span>
+             <Typography color="white" variant="h2">
+               Drop it like it's hot :)
+             </Typography>
+             <Typography color="white" variant="h4">
+               Upload your file by dropping it in this window
+             </Typography>
+           </Box>
+         </Box>
+       )} */}
     </Box>
   );
 };

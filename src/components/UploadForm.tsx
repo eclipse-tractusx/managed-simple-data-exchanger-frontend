@@ -69,6 +69,7 @@ const UploadForm = (props: any) => {
               onClick={fileInputClicked}
               onChange={filesSelected}
               className="hidden"
+              accept=".csv"
             />
             <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
             <h2 className=" my-1">Drag and drop your file on this page</h2>

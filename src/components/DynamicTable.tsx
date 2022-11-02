@@ -19,18 +19,28 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Box, Card, CardContent } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
-import { Button, IconButton, Typography } from 'cx-portal-shared-components';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  IconButton,
+  Input,
+  Typography,
+} from 'cx-portal-shared-components';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import Swal from 'sweetalert2';
 import { AssemblyPartRelationship } from '../models/AssemblyPartRelationship';
 import { DynamicTableColumn } from '../models/DynamicTableColumn';
 import { SerialPartTypization } from '../models/SerialPartTypization';
 import { Batch } from '../models/Batch';
+import { useAppSelector } from '../store/store';
+import { Status } from '../models/ProcessReport';
 
 export default function DynamicTable({
   columns = [],
@@ -48,6 +58,13 @@ export default function DynamicTable({
   const [rows, setRows] = React.useState([]);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
+  const { currentUploadData } = useAppSelector(state => state.providerSlice);
+
+  useEffect(() => {
+    if (currentUploadData.status === Status.completed) {
+      setRows([]);
+    }
+  }, [currentUploadData]);
 
   // styles
   const ODD_OPACITY = 0.2;
@@ -119,34 +136,24 @@ export default function DynamicTable({
   if (findIndex !== -1) {
     columns[findIndex] = getRenderCell('uuid', 'UUID', 'center');
   }
-
+  const [addRowCount, setaddRowCount] = useState<number>();
+  const [dialogOpen, setdialogOpen] = useState<boolean>(false);
+  const showAddDialog = () => {
+    setdialogOpen(prev => !prev);
+  };
   const addRows = () => {
     const newRows: SerialPartTypization[] | Batch[] | AssemblyPartRelationship[] = [];
-
-    Swal.fire({
-      title: 'Insert number of rows',
-      input: 'number',
-      confirmButtonColor: '#01579b',
-      preConfirm: numberOfNewRows => {
-        if (!numberOfNewRows || numberOfNewRows < 1) {
-          Swal.showValidationMessage(`Please enter number of rows above 0.`);
-        }
-      },
-    }).then(result => {
-      for (let i = 0; i < Number(result.value); i++) {
-        // eslint-disable-next-line
-        const newRow: any = { id: id + (i + 1) };
-
-        for (const c of columns) {
-          newRow[c.field] = '';
-        }
-
-        newRows.push(newRow);
+    for (let i = 0; i < addRowCount; i++) {
+      // eslint-disable-next-line
+      const newRow: any = { id: id + (i + 1) };
+      for (const c of columns) {
+        newRow[c.field] = '';
       }
-
-      setRows(prevRows => prevRows.concat(newRows));
-      setId(id + Number(result.value));
-    });
+      newRows.push(newRow);
+    }
+    setRows(prevRows => prevRows.concat(newRows));
+    setId(id + addRowCount);
+    showAddDialog();
   };
 
   const onSelectionChange = (newSelectionModel: GridSelectionModel) => {
@@ -187,10 +194,10 @@ export default function DynamicTable({
   };
 
   return (
-    <div style={{ width: '100%', height: 80 + 6 * 52 + 'px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <Box style={{ width: '100%', height: 80 + 6 * 52 + 'px' }}>
+      <Box style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Box textAlign="start">
-          <Button variant="outlined" onClick={addRows} sx={{ mb: 2 }} size="small">
+          <Button variant="outlined" onClick={showAddDialog} sx={{ mb: 2 }} size="small">
             Add rows(s)
           </Button>
           &nbsp;
@@ -203,7 +210,7 @@ export default function DynamicTable({
             Next Step - Configure Policies
           </Button>
         </Box>
-      </div>
+      </Box>
       <StripedDataGrid
         getRowId={row => row.id}
         autoHeight={false}
@@ -236,15 +243,36 @@ export default function DynamicTable({
       &nbsp;
       <Card>
         <CardContent>
-          <h3>
-            <b> Rules </b>
-          </h3>
-          <ul>
-            <li> &bull; Fields with * are required. </li>
-            <li> &bull; Optional value(s) and Optional key(s) must either be empty or both filled.</li>
-          </ul>
+          <Typography variant="h5">Rules</Typography>
+          <Typography variant="body2">&bull; Fields with * are required.</Typography>
+          <Typography variant="body2">
+            &bull; Optional value(s) and Optional key(s) must either be empty or both filled.
+          </Typography>
         </CardContent>
       </Card>
-    </div>
+      {/* Add rows dialog */}
+      <Dialog open={dialogOpen}>
+        <DialogHeader title="Add rows" />
+        <DialogContent>
+          <Input
+            label="Insert number of rows"
+            placeholder="Enter a number"
+            onChange={e => setaddRowCount(Number(e.target.value))}
+            type="number"
+            error={0 > addRowCount}
+            helperText="Please enter number of rows above 0"
+            inputProps={{ min: 1 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={showAddDialog}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={addRows}>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
