@@ -31,14 +31,13 @@ import {
   List,
   ListItem,
   ListItemText,
-  TextField,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ChangeEvent, useState } from 'react';
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../store/accessUsagePolicySlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import { Config } from '../../utils/config';
-import { Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
+import { Dialog, DialogActions, DialogContent, DialogHeader, Input, Typography } from 'cx-portal-shared-components';
 
 export default function AccessPolicy() {
   const { accessType, bpnList, inputBpn } = useAppSelector(state => state.accessUsagePolicySlice);
@@ -58,29 +57,31 @@ export default function AccessPolicy() {
 
   return (
     <>
-      <p>
-        <b className="text-[#444444]">ACCESS POLICY</b>
-      </p>
+      <Typography>ACCESS POLICY</Typography>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={accessType}
         onChange={handleAccessTypeChange}
       >
-        <FormControlLabel className="py-2" value="restricted" control={<Radio />} label="Restricted access" />
+        <FormControlLabel sx={{ mt: 2 }} value="restricted" control={<Radio />} label="Restricted access" />
         {accessType === 'restricted' && (
           <Box>
-            <Grid item xs={12}>
-              <TextField
-                label="Enter BPN"
-                variant="outlined"
-                size="small"
-                value={inputBpn}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setInputBpn(e.target.value))}
-              />
-              <Button variant="contained" sx={{ marginLeft: 1 }} onClick={() => dispatch(addBpn())}>
-                Add
-              </Button>
+            <Grid container alignItems={'flex-end'}>
+              <Grid item xs={5}>
+                <Input
+                  label="Enter BPN"
+                  placeholder="Enter BPN"
+                  size="small"
+                  value={inputBpn}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setInputBpn(e.target.value))}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Button variant="contained" sx={{ marginLeft: 1 }} onClick={() => dispatch(addBpn())}>
+                  Add
+                </Button>
+              </Grid>
             </Grid>
             <Grid item xs={12}>
               <Card sx={{ maxWidth: 260, marginTop: 1 }}>
@@ -116,7 +117,7 @@ export default function AccessPolicy() {
             </Grid>
           </Box>
         )}
-        <FormControlLabel className="py-2" value="unrestricted" control={<Radio />} label="Unrestricted access" />
+        <FormControlLabel sx={{ mt: 2 }} value="unrestricted" control={<Radio />} label="Unrestricted access" />
       </RadioGroup>
       <hr style={{ marginBottom: 50 }} />
       <Dialog open={dialogOpen}>

@@ -24,7 +24,6 @@
     "react-router-dom": "^6.2.1",
     "react-toastify": "^9.0.1",
     "sass": "^1.50.1",
-    "sweetalert2": "^11.4.16",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

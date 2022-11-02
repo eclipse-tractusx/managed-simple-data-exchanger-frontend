@@ -20,8 +20,8 @@
  ********************************************************************************/
 
 import { useEffect, useRef, useState } from 'react';
-import { Box, Grid, TextareaAutosize } from '@mui/material';
-import { Button, Tab, Tabs } from 'cx-portal-shared-components';
+import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
+import { Button, Tab, Tabs, Typography } from 'cx-portal-shared-components';
 import DynamicTable from '../components/DynamicTable';
 import { getColumnsBySubmodelType } from '../helpers/commonSubmodelColumns';
 import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
@@ -93,6 +93,7 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
   const [serialTemplate] = useState<SerialPartTypization[]>(serialPartInitialData);
   const [batchTemplate] = useState<Batch[]>(batchInitialData);
   const [assemblyTemplate] = useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
+  const theme = useTheme();
 
   const dispatch = useAppDispatch();
   const getInvalidDataMessage = () => toast.error('Invalid data! Enter Required * fields.', toastProps());
@@ -287,9 +288,16 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
     dispatch(setUploadStatus(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const textareaStyle = {
+    width: '100%',
+    border: `1px solid ${theme.palette.grey[500]}`,
+    marginTop: '16px',
+    padding: '16px',
+    borderRadius: 4,
+  };
 
   return (
-    <div className="flex-1 py-6 px-10">
+    <Box sx={{ flex: 1, p: 4 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -329,30 +337,30 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
             <TabPanel value={v} index={4}>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
-                  <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
+                  <Typography variant="h4">Serial Part Typization</Typography>
                   <TextareaAutosize
                     ref={serialDataRef}
                     minRows={20}
                     placeholder={getSerialPlaceholder()}
-                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                    style={textareaStyle}
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <h1 className="flex flex-row text-bold text-3xl">Batch</h1>
+                  <Typography variant="h4">Batch</Typography>
                   <TextareaAutosize
                     ref={batchDataRef}
                     minRows={20}
                     placeholder={getBatchPlaceHolder()}
-                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                    style={textareaStyle}
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <h1 className="flex flex-row text-bold text-3xl">Assembly Part Relationship</h1>
+                  <Typography variant="h4">Assembly Part Relationship</Typography>
                   <TextareaAutosize
                     ref={assemblyDataRef}
                     minRows={20}
                     placeholder={getAssemblyPlaceholder()}
-                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                    style={textareaStyle}
                   />
                 </Grid>
               </Grid>
@@ -395,6 +403,6 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 }

@@ -36,7 +36,16 @@ const ITEMS = [
   },
 ];
 import { Box, Grid, LinearProgress, Stack, Autocomplete } from '@mui/material';
-import { Button, Input, SelectList, Typography } from 'cx-portal-shared-components';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  Input,
+  SelectList,
+  Typography,
+} from 'cx-portal-shared-components';
 import { DataGrid, GridSelectionModel, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
@@ -63,7 +72,6 @@ import {
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { toast } from 'react-toastify';
 import { toastProps } from '../helpers/ToastOptions';
-import Swal from 'sweetalert2';
 
 export const ConsumeData: React.FC = () => {
   const {
@@ -262,6 +270,10 @@ export const ConsumeData: React.FC = () => {
       fetchConsumerDataOffers();
     }
   };
+  const [dialogOpen, setdialogOpen] = useState<boolean>(false);
+  const showAddDialog = () => {
+    setdialogOpen(prev => !prev);
+  };
 
   const checkoutSelectedOffers = () => {
     let isUsagePoliciesEqual = false;
@@ -279,12 +291,7 @@ export const ConsumeData: React.FC = () => {
       setIsOpenOfferDialog(true);
       dispatch(setIsMultipleContractSubscription(true));
     } else {
-      Swal.fire({
-        title: 'Usage policies are not identical!',
-        html: '<p> The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy. </p>',
-        icon: 'error',
-        confirmButtonColor: '#01579b',
-      });
+      showAddDialog();
       setIsOpenOfferDialog(false);
       dispatch(setIsMultipleContractSubscription(false));
     }
@@ -382,7 +389,7 @@ export const ConsumeData: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 py-6 px-10">
+    <Box sx={{ flex: 1, p: 4 }}>
       <Typography variant="h4" py={4}>
         Consumer View {searchFilterByType}
       </Typography>
@@ -593,6 +600,18 @@ export const ConsumeData: React.FC = () => {
           />
         </>
       )}
-    </div>
+      <Dialog open={dialogOpen}>
+        <DialogHeader title="Usage policies are not identical!" />
+        <DialogContent>
+          The contract offers within your search results do not have an identical usage policy. Subscribing to multiple
+          offers is only available for contract offers that have an identical policy.
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={showAddDialog}>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };

@@ -28,8 +28,8 @@ import {
   RadioGroup,
   Select,
   Stack,
-  TextField,
 } from '@mui/material';
+import { Input } from 'cx-portal-shared-components';
 import { setDurationUnit } from '../../store/accessUsagePolicySlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
@@ -82,9 +82,7 @@ export default function UsagePolicyItem({
   }
   return (
     <Box component="form" noValidate autoComplete="off">
-      <FormLabel className="text-2xl text-[#444444] mb-4">
-        <b>{constraintType} restriction</b>
-      </FormLabel>
+      <FormLabel sx={{ mb: 2 }}>{constraintType} restriction</FormLabel>
       <RadioGroup row value={restrictionType} onChange={e => setRestrictionType(e.target.value)}>
         <FormControlLabel value="UNRESTRICTED" control={<Radio />} label="Unrestricted" />
         <FormControlLabel value="RESTRICTED" control={<Radio />} label="Restricted" />
@@ -94,10 +92,10 @@ export default function UsagePolicyItem({
         {restrictionType === 'RESTRICTED' && (
           <>
             <FormLabel sx={{ my: 1, display: 'block' }}>{displayText}</FormLabel>
-            <Stack direction="row" spacing={2}>
-              <TextField
+            <Stack direction="row" alignItems={'flex-end'} spacing={2}>
+              <Input
                 label="Enter a value"
-                variant="outlined"
+                placeholder="Enter a value"
                 size="small"
                 type={constraintType === 'Duration' ? 'number' : 'text'}
                 InputProps={{
@@ -112,6 +110,7 @@ export default function UsagePolicyItem({
               />
               {constraintType === 'Duration' && (
                 <FormControl sx={{ minWidth: 80 }} size="small">
+                  {/* need to replace with cx-lib selectList */}
                   <Select
                     value={durationUnit}
                     onChange={e => {

@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { Box } from '@mui/material';
+import { Typography } from 'cx-portal-shared-components';
 import {
   setCustom,
   setCustomValue,
@@ -40,9 +41,7 @@ export default function UsagePolicy() {
 
   return (
     <>
-      <p>
-        <b className="text-[#444444] mb-2">USAGE POLICY</b>
-      </p>
+      <Typography>ACCESS POLICY</Typography>
       <Box sx={{ mt: 2 }}>
         <UsagePolicyItem
           restrictionType={duration}
