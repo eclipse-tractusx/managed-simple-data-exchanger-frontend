@@ -324,6 +324,7 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
                 columns={getColumnsBySubmodelType('serialPartTypization')}
                 submitUrl={'/aspect'}
                 validateData={validateData}
+                title="Serial Part Typization"
               ></DynamicTable>
             </TabPanel>
             <TabPanel value={v} index={2}>
@@ -331,6 +332,7 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
                 columns={getColumnsBySubmodelType('batch')}
                 submitUrl={'/batch'}
                 validateData={validateData}
+                title="Batch"
               ></DynamicTable>
             </TabPanel>
             <TabPanel value={v} index={3}>
@@ -338,6 +340,7 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
                 columns={getAssemblyPartRelationshipColumns()}
                 submitUrl={'/aspect/relationship'}
                 validateData={validateData}
+                title="Assembly Part Relationship"
               ></DynamicTable>
             </TabPanel>
             <TabPanel value={v} index={4}>

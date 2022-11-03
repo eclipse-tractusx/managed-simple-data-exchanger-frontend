@@ -430,6 +430,7 @@ export const ConsumeData: React.FC = () => {
               fullWidth
               size="small"
               label="Enter connector URL"
+              placeholder="Enter connector URL"
             />
           ) : (
             <Grid container spacing={1} alignItems="flex-end">
@@ -443,6 +444,7 @@ export const ConsumeData: React.FC = () => {
                     fullWidth
                     size="small"
                     label="Enter Business Partner Number"
+                    placeholder="Enter Business Partner Number"
                   />
                 ) : (
                   <Autocomplete

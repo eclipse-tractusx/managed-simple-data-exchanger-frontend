@@ -21,8 +21,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, Card, CardContent, useTheme } from '@mui/material';
-import { DataGrid, GridSelectionModel } from '@mui/x-data-grid';
+import { Box, Card, CardContent } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { GridSelectionModel } from '@mui/x-data-grid';
 import {
   Button,
   Dialog,
@@ -31,6 +32,7 @@ import {
   DialogHeader,
   IconButton,
   Input,
+  Table,
   Typography,
 } from 'cx-portal-shared-components';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
@@ -45,6 +47,7 @@ export default function DynamicTable({
   columns = [],
   submitUrl = '/aspect',
   validateData,
+  title,
 }: {
   columns: DynamicTableColumn[];
   submitUrl: string;
@@ -53,18 +56,36 @@ export default function DynamicTable({
     _submitUrl: string,
     _type: string,
   ) => void;
+  title: string;
 }) {
   const [rows, setRows] = React.useState([]);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
   const { currentUploadData } = useAppSelector(state => state.providerSlice);
-  const theme = useTheme();
 
   useEffect(() => {
     if (currentUploadData.status === Status.completed) {
       setRows([]);
     }
   }, [currentUploadData]);
+
+  const StripedDataGrid = styled(Table)(() => ({
+    '& .MuiDataGrid-columnHeaderTitle': {
+      textOverflow: 'clip',
+      whiteSpace: 'break-spaces',
+      lineHeight: 1.5,
+      textAlign: 'center',
+    },
+    '& .MuiDataGrid-columnHeader': {
+      padding: '0 10px',
+    },
+    '& .MuiDataGrid-columnHeaderCheckbox': {
+      height: 'auto !important',
+    },
+    '& h5.MuiTypography-root.MuiTypography-h5 span': {
+      display: 'none',
+    },
+  }));
 
   // end styles
 
@@ -183,7 +204,8 @@ export default function DynamicTable({
           </Button>
         </Box>
       </Box>
-      <DataGrid
+      <StripedDataGrid
+        title={title}
         getRowId={row => row.id}
         autoHeight={true}
         columns={columns}
@@ -197,21 +219,7 @@ export default function DynamicTable({
         selectionModel={selectionModel}
         onCellEditCommit={onCellEditCommit}
         getRowClassName={params => (params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd')}
-        sx={{
-          '& .MuiDataGrid-columnHeaderTitle': {
-            textOverflow: 'clip',
-            whiteSpace: 'break-spaces',
-            lineHeight: 1.5,
-            textAlign: 'center',
-          },
-          '& .MuiDataGrid-columnHeader': {
-            padding: '0 10px',
-          },
-          '& .MuiDataGrid-row:nth-of-type(odd)': { background: theme.palette.grey[100] },
-          '& .MuiDataGrid-columnHeaderCheckbox': {
-            height: 'auto !important',
-          },
-        }}
+        sx={{}}
       />
       &nbsp;
       <Card>
