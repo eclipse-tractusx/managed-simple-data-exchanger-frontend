@@ -391,7 +391,7 @@ export const ConsumeData: React.FC = () => {
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Typography variant="h4" py={4}>
-        Consumer View {searchFilterByType}
+        Consumer View
       </Typography>
       <Grid container spacing={2} alignItems="end">
         <Grid item xs={3}>
@@ -399,7 +399,7 @@ export const ConsumeData: React.FC = () => {
             label="Select Search Type"
             fullWidth
             size="small"
-            onChangeItem={e => handleSearchTypeChange(e.value)}
+            onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
             items={ITEMS}
             placeholder="Select Search Type"
             value={searchFilterByType}

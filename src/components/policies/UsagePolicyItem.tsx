@@ -72,9 +72,7 @@ export default function UsagePolicyItem({
   ];
   function checkErrors() {
     if (constraintType === 'Duration') {
-      console.log(constraintType);
       const result = /^[1-9]\d*$/.test(inputFreeText);
-      console.log(result);
       return !result;
     } else if (restrictionType === 'RESTRICTED' && inputFreeText === '') {
       return true;

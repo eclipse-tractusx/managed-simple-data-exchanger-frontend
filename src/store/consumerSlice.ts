@@ -58,7 +58,7 @@ const initialState: IConsumerSlice = {
   selectedOffer: null,
   isMultipleContractSubscription: false,
   // search filter
-  searchFilterByType: 'company',
+  searchFilterByType: '',
   filterProviderUrl: '',
   filterCompanyOptions: [],
   filterCompanyOptionsLoading: false,
