@@ -25,6 +25,7 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import providerSlice from './providerSlice';
 import consumerSlice from './consumerSlice';
 import appSlice from './appSlice';
+import notificationSlice from './Notifiication/slice';
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
     accessUsagePolicySlice: accessUsagePolicySlice,
     providerSlice: providerSlice,
     consumerSlice: consumerSlice,
+    notification: notificationSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

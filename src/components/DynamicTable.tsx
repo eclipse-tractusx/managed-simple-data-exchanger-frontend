@@ -21,9 +21,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, Card, CardContent } from '@mui/material';
-import { alpha, styled } from '@mui/material/styles';
-import { DataGrid, gridClasses, GridSelectionModel } from '@mui/x-data-grid';
+import { Box, Card, CardContent, useTheme } from '@mui/material';
+import { DataGrid, GridSelectionModel } from '@mui/x-data-grid';
 import {
   Button,
   Dialog,
@@ -59,40 +58,13 @@ export default function DynamicTable({
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [id, setId] = React.useState(0);
   const { currentUploadData } = useAppSelector(state => state.providerSlice);
+  const theme = useTheme();
 
   useEffect(() => {
     if (currentUploadData.status === Status.completed) {
       setRows([]);
     }
   }, [currentUploadData]);
-
-  // styles
-  const ODD_OPACITY = 0.2;
-
-  const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-    [`& .${gridClasses.row}.even`]: {
-      backgroundColor: theme.palette.grey[200],
-      '&:hover, &.Mui-hovered': {
-        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-        '@media (hover: none)': {
-          backgroundColor: 'transparent',
-        },
-      },
-      '&.Mui-selected': {
-        backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
-        '&:hover, &.Mui-hovered': {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity,
-          ),
-          // Reset on touch devices, it doesn't add specificity
-          '@media (hover: none)': {
-            backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY + theme.palette.action.selectedOpacity),
-          },
-        },
-      },
-    },
-  }));
 
   // end styles
 
@@ -211,9 +183,9 @@ export default function DynamicTable({
           </Button>
         </Box>
       </Box>
-      <StripedDataGrid
+      <DataGrid
         getRowId={row => row.id}
-        autoHeight={false}
+        autoHeight={true}
         columns={columns}
         rows={rows}
         headerHeight={60}
@@ -235,6 +207,7 @@ export default function DynamicTable({
           '& .MuiDataGrid-columnHeader': {
             padding: '0 10px',
           },
+          '& .MuiDataGrid-row:nth-of-type(odd)': { background: theme.palette.grey[100] },
           '& .MuiDataGrid-columnHeaderCheckbox': {
             height: 'auto !important',
           },

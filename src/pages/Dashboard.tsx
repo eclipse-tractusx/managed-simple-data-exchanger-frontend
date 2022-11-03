@@ -44,14 +44,13 @@ import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import { setPageLoading } from '../store/appSlice';
 import { Box } from '@mui/material';
-import { PageNotifications } from 'cx-portal-shared-components';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
 
 const Dashboard: React.FC = () => {
   // const theme = useTheme();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   // const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState('');
   // const { selectedFiles } = useAppSelector(state => state.providerSlice);
   // let dragCounter = 0;
   const dispatch = useAppDispatch();
@@ -71,10 +70,14 @@ const Dashboard: React.FC = () => {
     if (validateFile(file) && file.size < maxFileSize) {
       dispatch(setSelectedFiles([file] as any));
       file.invalid = false;
-      setErrorMessage('');
     } else {
       file.invalid = true;
-      setErrorMessage('File not permitted');
+      dispatch(
+        setSnackbarMessage({
+          message: 'File not permitted!',
+          type: 'error',
+        }),
+      );
     }
   };
 
@@ -141,42 +144,13 @@ const Dashboard: React.FC = () => {
       // onDragLeave={dragLeave}
       // onDrop={fileDrop}
     >
-      {errorMessage !== '' ? (
-        <Box
-          sx={{
-            width: 350,
-            position: 'fixed',
-            top: 16,
-            right: 16,
-            zIndex: 10,
-            backgroundColor: 'white',
-            borderRadius: 2,
-          }}
-        >
-          <PageNotifications
-            severity="error"
-            description={errorMessage}
-            open
-            onCloseNotification={() => setErrorMessage('')}
-          />
-        </Box>
-      ) : (
-        ''
-      )}
       {/* {!isDragging && ( */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          pt: 8,
-          height: '100%',
-          position: 'relative',
-        }}
-      >
+      <Box>
         <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
-        <Sidebar isExpanded={isExpanded} />
-        <Box sx={{ display: 'flex', width: '100%' }}>{layout()}</Box>
+        <Box sx={{ display: 'flex', mt: 8, height: `calc(100vh - 64px)`, overflow: 'hidden' }}>
+          <Sidebar isExpanded={isExpanded} />
+          <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>{layout()}</Box>
+        </Box>
       </Box>
       {/* )} */}
 

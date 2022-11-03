@@ -1,5 +1,3 @@
-import { toast } from 'react-toastify';
-
 export const rulesCardStyle = {
   display: 'block',
   transitionDuration: '0.3s',
@@ -11,41 +9,22 @@ export const rulesContentStyle = {
   padding: '10px 0 0 20px',
 };
 
-const copyHeadersToasty = () => {
-  return toast.success('Copied to clipboard!', {
-    position: 'top-right',
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  });
-};
-
 const copyHeadersSerialPartTypization = () => {
   navigator.clipboard.writeText(
     'UUID;part_instance_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
   );
-
-  copyHeadersToasty();
 };
 
 const copyHeadersBatch = () => {
   navigator.clipboard.writeText(
     'UUID;batch_id;manufacturing_date;manufacturing_country;manufacturer_part_id;customer_part_id;classification;name_at_manufacturer;name_at_customer;optional_identifier_key;optional_identifier_value',
   );
-
-  copyHeadersToasty();
 };
 
 const copyHeadersAssemblyPartRelationship = () => {
   navigator.clipboard.writeText(
     'parent_UUID;parent_part_instance_id;parent_manufacturer_part_id;parent_optional_identifier_key;parent_optional_identifier_value;UUID;part_instance_id;manufacturer_part_id;optional_identifier_key;optional_identifier_value;lifecycle_context;quantity_number;measurement_unit_lexical_value;datatype_URI;assembled_on',
   );
-
-  copyHeadersToasty();
 };
 
 const serialPartTypizationRows = [

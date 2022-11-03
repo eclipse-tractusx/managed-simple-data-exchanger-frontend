@@ -22,9 +22,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import PageNotFound from './pages/PageNotFound';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import PageLoading from './components/PageLoading';
+import Notification from './store/Notifiication';
 
 function App() {
   return (
@@ -41,7 +40,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer />
+      <Notification />
       <PageLoading />
     </div>
   );

@@ -32,8 +32,7 @@ import UploadFile from '../components/UploadFile';
 import { useAppDispatch } from '../store/store';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
-import { toast } from 'react-toastify';
-import { toastProps } from '../helpers/ToastOptions';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
 
 const serialPartInitialData = [
   {
@@ -96,7 +95,14 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
   const theme = useTheme();
 
   const dispatch = useAppDispatch();
-  const getInvalidDataMessage = () => toast.error('Invalid data! Enter Required * fields.', toastProps());
+  const getInvalidDataMessage = () => {
+    dispatch(
+      setSnackbarMessage({
+        message: 'Invalid data! Enter Required * fields.',
+        type: 'error',
+      }),
+    );
+  };
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };

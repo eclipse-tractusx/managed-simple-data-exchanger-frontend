@@ -70,8 +70,7 @@ import {
   setFilterConnectors,
 } from '../store/consumerSlice';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { toast } from 'react-toastify';
-import { toastProps } from '../helpers/ToastOptions';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
 
 export const ConsumeData: React.FC = () => {
   const {
@@ -222,7 +221,12 @@ export const ConsumeData: React.FC = () => {
         const response = await DftService.getInstance().subscribeToOffers(payload);
         setIsOfferSubLoading(false);
         if (response.status == 200) {
-          toast.success('Contract offers subscription successfully initiated', toastProps());
+          dispatch(
+            setSnackbarMessage({
+              message: 'Contract offers subscription successfully initiated',
+              type: 'success',
+            }),
+          );
           setIsOpenOfferDialog(false);
           setIsOpenOfferConfirmDialog(false);
           dispatch(setIsMultipleContractSubscription(false));
@@ -232,7 +236,12 @@ export const ConsumeData: React.FC = () => {
         }
       } catch (error) {
         setIsOfferSubLoading(false);
-        toast.error('Contract offers subscription failed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Contract offers subscription failed!',
+            type: 'error',
+          }),
+        );
       }
     }
   };
@@ -348,7 +357,12 @@ export const ConsumeData: React.FC = () => {
       });
       dispatch(setFilterConnectors(optionConnectors));
     } else {
-      toast.warning('Connector not available', toastProps());
+      dispatch(
+        setSnackbarMessage({
+          message: 'Connector not available!',
+          type: 'warning',
+        }),
+      );
     }
   };
 

@@ -20,12 +20,11 @@
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { toastProps } from '../../helpers/ToastOptions';
 import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
 import DftService from '../../services/DftService';
 import { handleDialogClose } from '../../store/accessUsagePolicySlice';
 import { setPageLoading } from '../../store/appSlice';
+import { setSnackbarMessage } from '../../store/Notifiication/slice';
 import { setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
@@ -102,11 +101,26 @@ export default function PoliciesDialog() {
       clearUpload();
       dispatch(setUploadData(defaultUploadData));
       if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
-        toast.success('Upload completed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload completed!',
+            type: 'success',
+          }),
+        );
       } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
-        toast.warning('Upload completed with warnings!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload completed with warnings!',
+            type: 'warning',
+          }),
+        );
       } else {
-        toast.error('Upload failed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload failed!',
+            type: 'error',
+          }),
+        );
       }
     }
   };
