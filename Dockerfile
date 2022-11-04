@@ -38,6 +38,16 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+RUN addgroup -g ${GROUP_ID} nginx \
+ && adduser -D nginx -u ${USER_ID} -g nginx -G nginx -s /bin/sh -h /
+ 
+RUN chmod -R 755 /var/log/nginx/
+
+USER nginx 
+
 EXPOSE 8080
 EXPOSE 443
 
