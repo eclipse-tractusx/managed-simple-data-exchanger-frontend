@@ -38,8 +38,6 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-USER nginx 
-
 EXPOSE 8080
 EXPOSE 443
 
