@@ -10,25 +10,17 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-#FROM nginx:1.23.1
-#FROM nginxinc/nginx-unprivileged:1.23-alpine
-#FROM nginxinc/nginx-unprivileged:latest
-
-#RUN apt-get update -y && apt-get install -y nocache
-#RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+#FROM ubuntu/nginx:latest 
+FROM nginx:latest
 
 # Nginx config
-#RUN rm -rf /etc/nginx/conf.d
+RUN rm -rf /etc/nginx/conf.d 
 
-#COPY ./conf /etc/nginx
-#FROM nginx:mainline
-FROM ubuntu/nginx:1.18-22.04_beta
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
-#RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+COPY ./conf /etc/nginx 
 
-# Nginx config
-RUN rm -rf /etc/nginx/conf.d
-COPY ./conf /etc/nginx
+RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
+
+#RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
@@ -38,30 +30,13 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-
-RUN addgroup -g ${GROUP_ID} nginx \
- && adduser -D nginx -u ${USER_ID} -g nginx -G nginx -s /bin/sh -h /
- 
-RUN chmod -R 755 /var/log/nginx/
-
 USER nginx 
 
 EXPOSE 8080
-EXPOSE 443
-
-#COPY .env .
-# Add bash
-#RUN apk add --no-cache bash
-
-#RUN chown ${UID}:${GID} /usr/share/nginx/html
-
-#USER ${UID}:${GID}
-
-#RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/*
-
-#RUN chmod 744 -R /usr/share/nginx/html/*
 
 # Start Nginx server
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+#CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+
+#EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]
