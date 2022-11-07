@@ -20,17 +20,16 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React, { useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 // components
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
-// import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
+import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
 
 // models
 import { File } from '../models/File';
-import { FileType } from '../models/FileType';
 
 // utils
 import { Help } from './Help';
@@ -39,39 +38,33 @@ import CreateData from './CreateData';
 import { Config } from '../utils/config';
 import { ConsumeData } from './ConsumeData';
 import ContractHistory from './ContractHistory';
-import { useAppDispatch } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import { setPageLoading } from '../store/appSlice';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { Typography } from 'cx-portal-shared-components';
 
 const Dashboard: React.FC = () => {
-  // const theme = useTheme();
+  const theme = useTheme();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
-  // const [isDragging, setIsDragging] = useState<boolean>(false);
-  // const { selectedFiles } = useAppSelector(state => state.providerSlice);
-  // let dragCounter = 0;
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const { selectedFiles } = useAppSelector(state => state.providerSlice);
+  let dragCounter = 0;
   const dispatch = useAppDispatch();
   const handleExpanded = (expanded: boolean) => {
     setIsExpanded(expanded);
-  };
-
-  const validateFile = (file: File) => {
-    const validTypes: string[] = Object.values(FileType);
-    return validTypes.includes(file.type) || file.name.endsWith('.csv');
   };
 
   const handleFiles = (file: File) => {
     dispatch(setUploadStatus(false));
     dispatch(setPageLoading(false));
     const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
-    if (validateFile(file) && file.size < maxFileSize) {
+    if (file.size < maxFileSize) {
       dispatch(setSelectedFiles([file] as any));
-      file.invalid = false;
     } else {
-      file.invalid = true;
       dispatch(
         setSnackbarMessage({
           message: 'File not permitted!',
@@ -81,39 +74,44 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // const dragEnter = (e: any) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   dragCounter++;
-  //   if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-  //     setIsDragging(true);
-  //   }
-  // };
+  const dragEnter = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter++;
+    if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      setIsDragging(true);
+    }
+  };
 
-  // const dragLeave = (e: any) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   dragCounter--;
-  //   if (dragCounter > 0) return;
-  //   setIsDragging(false);
-  // };
+  const dragLeave = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter--;
+    if (dragCounter > 0) return;
+    setIsDragging(false);
+  };
 
-  // const fileDrop = (e: any) => {
-  //   e.preventDefault();
-  //   const files = e.dataTransfer.files;
-  //   if (files.length && files.length < 2 && selectedFiles.length === 0) {
-  //     handleFiles(files[0]);
-  //     dispatch(setUploadStatus(false));
-  //     dispatch(setPageLoading(false));
-  //   } else if (files.length && files.length < 2 && selectedFiles.length > 0) {
-  //     dispatch(setSelectedFiles([files[0]]));
-  //     dispatch(setUploadStatus(false));
-  //     dispatch(setPageLoading(false));
-  //   } else {
-  //     setErrorMessage('Only one file is permitted');
-  //   }
-  //   setIsDragging(false);
-  // };
+  const fileDrop = (e: any) => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    if (files.length && files.length < 2 && selectedFiles.length === 0) {
+      handleFiles(files[0]);
+      dispatch(setUploadStatus(false));
+      dispatch(setPageLoading(false));
+    } else if (files.length && files.length < 2 && selectedFiles.length > 0) {
+      dispatch(setSelectedFiles([files[0]]));
+      dispatch(setUploadStatus(false));
+      dispatch(setPageLoading(false));
+    } else {
+      dispatch(
+        setSnackbarMessage({
+          message: 'nly one file is permitted',
+          type: 'error',
+        }),
+      );
+    }
+    setIsDragging(false);
+  };
 
   const layout = () => {
     switch (location.pathname) {
@@ -139,36 +137,44 @@ const Dashboard: React.FC = () => {
   return (
     <Box
       sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden', height: '100vh' }}
-      // onDragOver={(e: SyntheticEvent) => e.preventDefault()}
-      // onDragEnter={dragEnter}
-      // onDragLeave={dragLeave}
-      // onDrop={fileDrop}
+      onDragOver={(e: SyntheticEvent) => e.preventDefault()}
+      onDragEnter={dragEnter}
+      onDragLeave={dragLeave}
+      onDrop={fileDrop}
     >
-      {/* {!isDragging && ( */}
-      <Box>
-        <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
-        <Box sx={{ display: 'flex', mt: 8, height: `calc(100vh - 64px)`, overflow: 'hidden' }}>
-          <Sidebar isExpanded={isExpanded} />
-          <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>{layout()}</Box>
+      {!isDragging && (
+        <Box>
+          <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
+          <Box sx={{ display: 'flex', mt: 8, height: `calc(100vh - 64px)`, overflow: 'hidden' }}>
+            <Sidebar isExpanded={isExpanded} />
+            <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>{layout()}</Box>
+          </Box>
         </Box>
-      </Box>
-      {/* )} */}
+      )}
 
-      {/* {isDragging && (
-         <Box className="relative w-full h-full bg-[#03a9f4]">
-           <Box sx={{}} className="inset-x-0 inset-y-1/2 absolute z-5 flex flex-col justify-center gap-y-2 text-center">
-             <span>
-               <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: theme.palette.common.white }} />
-             </span>
-             <Typography color="white" variant="h2">
-               Drop it like it's hot :)
-             </Typography>
-             <Typography color="white" variant="h4">
-               Upload your file by dropping it in this window
-             </Typography>
-           </Box>
-         </Box>
-       )} */}
+      {isDragging && (
+        <Box
+          sx={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            background: theme.palette.primary.main,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ textAlign: 'center' }}>
+            <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: theme.palette.common.white }} />
+            <Typography color="white" variant="h4">
+              Drop it like it's hot :)
+            </Typography>
+            <Typography color="white" variant="body1">
+              Upload your file by dropping it in this window
+            </Typography>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 };

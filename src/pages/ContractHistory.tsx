@@ -176,14 +176,12 @@ const ContractHistory: React.FC = () => {
     <Box sx={{ flex: 1, p: 4 }}>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={6} my={4}>
-          <Typography variant="h4">Contract Agreements History</Typography>
+          <Typography variant="body1">Contract Agreements History</Typography>
         </Grid>
         <Grid item xs={6} my={4} textAlign={'right'}>
-          <Button variant="contained" size="small" onClick={() => fetchContractAgreements()}>
-            <span>
-              <Refresh />
-              <span style={{ marginLeft: 5 }}>Refresh</span>
-            </span>
+          <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
+            <Refresh />
+            &nbsp; Refresh
           </Button>
         </Grid>
         <Grid item xs={12}>

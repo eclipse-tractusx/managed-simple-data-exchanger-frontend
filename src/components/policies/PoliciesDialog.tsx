@@ -25,7 +25,7 @@ import DftService from '../../services/DftService';
 import { handleDialogClose } from '../../store/accessUsagePolicySlice';
 import { setPageLoading } from '../../store/appSlice';
 import { setSnackbarMessage } from '../../store/Notifiication/slice';
-import { setUploadData, setUploadStatus } from '../../store/providerSlice';
+import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
@@ -100,6 +100,7 @@ export default function PoliciesDialog() {
     } else {
       clearUpload();
       dispatch(setUploadData(defaultUploadData));
+      dispatch(removeSelectedFiles());
       if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
         dispatch(
           setSnackbarMessage({
