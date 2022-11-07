@@ -23,6 +23,7 @@ import { setLoggedInUser } from '../store/appSlice';
 import { store } from '../store/store';
 import { IUser } from '../models/User';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
+import { Config } from '../utils/config';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
   url: getCentralIdp(),
@@ -83,9 +84,14 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
   })
     .then(authenticated => {
       if (authenticated) {
+        console.log(getParsedToken());
         console.log(`${getUsername()} authenticated`);
-        onAuthenticatedCallback(getLoggedUser());
-        store.dispatch(setLoggedInUser(getLoggedUser()));
+        if (Object.hasOwn(getLoggedUser().parsedToken.resource_access, Config.REACT_APP_CLIENT_ID)) {
+          onAuthenticatedCallback(getLoggedUser());
+          store.dispatch(setLoggedInUser(getLoggedUser()));
+        } else {
+          window.location.href = '/unknown-page.html';
+        }
       } else {
         doLogin();
       }
