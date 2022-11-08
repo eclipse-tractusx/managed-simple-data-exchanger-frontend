@@ -1,6 +1,6 @@
 # => Build container
-#FROM node:18.9.0-alpine3.15 as builder
-FROM node:fermium-alpine3.15 as builder
+FROM node:18.9.0-alpine3.15 as builder
+#FROM node:fermium-alpine3.15 as builder
 
 WORKDIR /app
 COPY ./package.json .
@@ -8,7 +8,7 @@ COPY ./package.json .
 COPY ./ .
 #RUN yarn build
 
-#RUN npm install && npm run build
+RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
