@@ -1,6 +1,6 @@
 # => Build container
 #FROM node:18.9.0-alpine3.15 as builder
-FROM node:latest as builder
+FROM node:14.21.0-alpine3.16 as builder
 
 WORKDIR /app
 COPY ./package.json .
