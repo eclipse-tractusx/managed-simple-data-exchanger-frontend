@@ -8,7 +8,7 @@ COPY ./package.json .
 COPY ./ .
 #RUN yarn build
 
-RUN npm install && npm run build
+#RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
