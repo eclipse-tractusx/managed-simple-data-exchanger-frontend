@@ -20,14 +20,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Card, CardContent, Grid } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import { Typography } from 'cx-portal-shared-components';
 import { SubmodelHelp } from '../components/SubmodelHelp';
 import { rulesCardStyle, rulesContentStyle, submodelHelpArr } from '../utils/helpUtils';
 
 export const Help: React.FC = () => {
   return (
-    <div className="flex-1 py-6 px-20">
+    <Box sx={{ flex: 1, p: 4 }}>
+      <Typography variant="h4" mb={4}>
+        Help
+      </Typography>
       <Grid container spacing={2}>
         {submodelHelpArr.map((submodel: any, key: number) => (
           <Grid key={key} item xs={6}>
@@ -52,7 +55,7 @@ export const Help: React.FC = () => {
           </Card>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

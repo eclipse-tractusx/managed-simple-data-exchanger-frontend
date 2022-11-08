@@ -20,14 +20,14 @@
  ********************************************************************************/
 
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './index.scss';
 import UserService from './services/UserService';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { clearConsoles } from './utils/utils';
 import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
+import Root from './Root';
 
 clearConsoles();
 
@@ -37,7 +37,7 @@ UserService.initKeycloak(() => {
       <SharedCssBaseline />
       <Provider store={store}>
         <SharedThemeProvider>
-          <App />
+          <Root />
         </SharedThemeProvider>
       </Provider>
     </React.StrictMode>,

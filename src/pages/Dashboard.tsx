@@ -27,11 +27,9 @@ import { useLocation } from 'react-router-dom';
 import Nav from '../components/Nav';
 import Sidebar from '../components/Sidebar';
 import UploadFileOutlinedIcon from '@mui/icons-material/UploadFileOutlined';
-import Notification from '../components/Notification';
 
 // models
 import { File } from '../models/File';
-import { FileType } from '../models/FileType';
 
 // utils
 import { Help } from './Help';
@@ -44,14 +42,15 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import { setPageLoading } from '../store/appSlice';
-import { useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { Typography } from 'cx-portal-shared-components';
 
 const Dashboard: React.FC = () => {
   const theme = useTheme();
   const location = useLocation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const { selectedFiles } = useAppSelector(state => state.providerSlice);
   let dragCounter = 0;
   const dispatch = useAppDispatch();
@@ -59,22 +58,19 @@ const Dashboard: React.FC = () => {
     setIsExpanded(expanded);
   };
 
-  const validateFile = (file: File) => {
-    const validTypes: string[] = Object.values(FileType);
-    return validTypes.includes(file.type) || file.name.endsWith('.csv');
-  };
-
   const handleFiles = (file: File) => {
     dispatch(setUploadStatus(false));
     dispatch(setPageLoading(false));
     const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
-    if (validateFile(file) && file.size < maxFileSize) {
+    if (file.size < maxFileSize) {
       dispatch(setSelectedFiles([file] as any));
-      file.invalid = false;
-      setErrorMessage('');
     } else {
-      file.invalid = true;
-      setErrorMessage('File not permitted');
+      dispatch(
+        setSnackbarMessage({
+          message: 'File not permitted!',
+          type: 'error',
+        }),
+      );
     }
   };
 
@@ -107,7 +103,12 @@ const Dashboard: React.FC = () => {
       dispatch(setUploadStatus(false));
       dispatch(setPageLoading(false));
     } else {
-      setErrorMessage('Only one file is permitted');
+      dispatch(
+        setSnackbarMessage({
+          message: 'nly one file is permitted',
+          type: 'error',
+        }),
+      );
     }
     setIsDragging(false);
   };
@@ -134,41 +135,47 @@ const Dashboard: React.FC = () => {
     }
   };
   return (
-    <div
-      className="max-w-screen-4xl my-0 mx-auto overflow-y-auto overflow-x-hidden h-screen block"
+    <Box
+      sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden', height: '100vh' }}
       onDragOver={(e: SyntheticEvent) => e.preventDefault()}
       onDragEnter={dragEnter}
       onDragLeave={dragLeave}
       onDrop={fileDrop}
     >
       {!isDragging && (
-        <main className="flex-1 flex flex-row justify-start min-h-screen pt-16 relative">
+        <Box>
           <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
-          <div className="flex">
+          <Box sx={{ display: 'flex', mt: 8, height: `calc(100vh - 64px)`, overflow: 'hidden' }}>
             <Sidebar isExpanded={isExpanded} />
-          </div>
-          {errorMessage !== '' && (
-            <div className={`${isExpanded ? 'left-64' : 'left-14'} absolute top-16 z-50 w-screen`}>
-              <Notification errorMessage={errorMessage} clear={() => setErrorMessage('')} />
-            </div>
-          )}
-
-          <div className="flex w-screen">{layout()}</div>
-        </main>
+            <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>{layout()}</Box>
+          </Box>
+        </Box>
       )}
 
       {isDragging && (
-        <div className="relative w-full h-full bg-[#03a9f4]">
-          <div className="inset-x-0 inset-y-1/2 absolute z-5 flex flex-col justify-center gap-y-2 text-center">
-            <span>
-              <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: theme.palette.common.white }} />
-            </span>
-            <h1 className="text-4xl text-white">Drop it like it's hot :)</h1>
-            <p className="text-lg text-white">Upload your file by dropping it in this window</p>
-          </div>
-        </div>
+        <Box
+          sx={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            background: theme.palette.primary.main,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Box sx={{ textAlign: 'center' }}>
+            <UploadFileOutlinedIcon style={{ fontSize: 60 }} sx={{ color: theme.palette.common.white }} />
+            <Typography color="white" variant="h4">
+              Drop it like it's hot :)
+            </Typography>
+            <Typography color="white" variant="body1">
+              Upload your file by dropping it in this window
+            </Typography>
+          </Box>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

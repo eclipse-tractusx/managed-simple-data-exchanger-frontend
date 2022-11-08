@@ -20,13 +20,12 @@
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { toastProps } from '../../helpers/ToastOptions';
 import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
 import DftService from '../../services/DftService';
 import { handleDialogClose } from '../../store/accessUsagePolicySlice';
 import { setPageLoading } from '../../store/appSlice';
-import { setUploadData, setUploadStatus } from '../../store/providerSlice';
+import { setSnackbarMessage } from '../../store/Notifiication/slice';
+import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
@@ -101,12 +100,28 @@ export default function PoliciesDialog() {
     } else {
       clearUpload();
       dispatch(setUploadData(defaultUploadData));
+      dispatch(removeSelectedFiles());
       if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
-        toast.success('Upload completed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload completed!',
+            type: 'success',
+          }),
+        );
       } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
-        toast.warning('Upload completed with warnings!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload completed with warnings!',
+            type: 'warning',
+          }),
+        );
       } else {
-        toast.error('Upload failed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload failed!',
+            type: 'error',
+          }),
+        );
       }
     }
   };
@@ -202,9 +217,9 @@ export default function PoliciesDialog() {
 
   return (
     // Dialog width change is not available currently in cx-shared-components library
-    <Dialog open={openDialog} sx={{ '.MuiDialog-paper': { maxWidth: '500px' } }}>
+    <Dialog open={openDialog}>
       <DialogHeader closeWithIcon onCloseWithIcon={() => dispatch(handleDialogClose())} title="Policies" />
-      <DialogContent sx={{ p: '40px' }}>
+      <DialogContent>
         <AccessPolicy />
         <UsagePolicy />
       </DialogContent>

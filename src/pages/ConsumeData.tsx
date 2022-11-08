@@ -35,18 +35,17 @@ const ITEMS = [
     value: 'url',
   },
 ];
+import { Box, Grid, LinearProgress, Stack, Autocomplete } from '@mui/material';
 import {
-  Box,
-  Grid,
-  LinearProgress,
-  Stack,
-  Autocomplete,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from '@mui/material';
-import { Button, Input, Typography } from 'cx-portal-shared-components';
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  Input,
+  SelectList,
+  Typography,
+} from 'cx-portal-shared-components';
 import { DataGrid, GridSelectionModel, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
@@ -71,9 +70,7 @@ import {
   setFilterConnectors,
 } from '../store/consumerSlice';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { toast } from 'react-toastify';
-import { toastProps } from '../helpers/ToastOptions';
-import Swal from 'sweetalert2';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
 
 export const ConsumeData: React.FC = () => {
   const {
@@ -224,7 +221,12 @@ export const ConsumeData: React.FC = () => {
         const response = await DftService.getInstance().subscribeToOffers(payload);
         setIsOfferSubLoading(false);
         if (response.status == 200) {
-          toast.success('Contract offers subscription successfully initiated', toastProps());
+          dispatch(
+            setSnackbarMessage({
+              message: 'Contract offers subscription successfully initiated',
+              type: 'success',
+            }),
+          );
           setIsOpenOfferDialog(false);
           setIsOpenOfferConfirmDialog(false);
           dispatch(setIsMultipleContractSubscription(false));
@@ -234,7 +236,12 @@ export const ConsumeData: React.FC = () => {
         }
       } catch (error) {
         setIsOfferSubLoading(false);
-        toast.error('Contract offers subscription failed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Contract offers subscription failed!',
+            type: 'error',
+          }),
+        );
       }
     }
   };
@@ -272,6 +279,10 @@ export const ConsumeData: React.FC = () => {
       fetchConsumerDataOffers();
     }
   };
+  const [dialogOpen, setdialogOpen] = useState<boolean>(false);
+  const showAddDialog = () => {
+    setdialogOpen(prev => !prev);
+  };
 
   const checkoutSelectedOffers = () => {
     let isUsagePoliciesEqual = false;
@@ -289,12 +300,7 @@ export const ConsumeData: React.FC = () => {
       setIsOpenOfferDialog(true);
       dispatch(setIsMultipleContractSubscription(true));
     } else {
-      Swal.fire({
-        title: 'Usage policies are not identical!',
-        html: '<p> The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy. </p>',
-        icon: 'error',
-        confirmButtonColor: '#01579b',
-      });
+      showAddDialog();
       setIsOpenOfferDialog(false);
       dispatch(setIsMultipleContractSubscription(false));
     }
@@ -346,11 +352,17 @@ export const ConsumeData: React.FC = () => {
         return {
           id: index,
           value: item,
+          title: item,
         };
       });
       dispatch(setFilterConnectors(optionConnectors));
     } else {
-      toast.warning('Connector not available', toastProps());
+      dispatch(
+        setSnackbarMessage({
+          message: 'Connector not available!',
+          type: 'warning',
+        }),
+      );
     }
   };
 
@@ -391,29 +403,22 @@ export const ConsumeData: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 py-6 px-10">
+    <Box sx={{ flex: 1, p: 4 }}>
       <Typography variant="h4" py={4}>
-        Consumer View {searchFilterByType}
+        Consumer View
       </Typography>
       <Grid container spacing={2} alignItems="end">
         <Grid item xs={3}>
-          <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
-            <InputLabel id="select--search-label-small">Search By</InputLabel>
-            <Select
-              labelId="select--search-label-small"
-              value={searchFilterByType}
-              label="Select Search Type"
-              fullWidth
-              size="small"
-              onChange={e => handleSearchTypeChange(e.target.value)}
-            >
-              {ITEMS.map(e => (
-                <MenuItem key={e.id} value={e.value}>
-                  {e.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <SelectList
+            label="Select Search Type"
+            fullWidth
+            size="small"
+            onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
+            items={ITEMS}
+            placeholder="Select Search Type"
+            value={searchFilterByType}
+            hiddenLabel
+          />
         </Grid>
         <Grid item xs={5}>
           {searchFilterByType === 'url' ? (
@@ -425,6 +430,7 @@ export const ConsumeData: React.FC = () => {
               fullWidth
               size="small"
               label="Enter connector URL"
+              placeholder="Enter connector URL"
             />
           ) : (
             <Grid container spacing={1} alignItems="flex-end">
@@ -438,6 +444,7 @@ export const ConsumeData: React.FC = () => {
                     fullWidth
                     size="small"
                     label="Enter Business Partner Number"
+                    placeholder="Enter Business Partner Number"
                   />
                 ) : (
                   <Autocomplete
@@ -475,33 +482,16 @@ export const ConsumeData: React.FC = () => {
                 )}
               </Grid>
               <Grid item xs={5}>
-                <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
-                  <InputLabel id="select--search-label-small">Select connector</InputLabel>
-                  <Select
-                    labelId="select--search-label-small"
-                    label="Select connectors"
-                    placeholder="Select connectors"
-                    fullWidth
-                    size="small"
-                    value={filterSelectedConnector}
-                    onChange={e => dispatch(setFilterSelectedConnector(e.target.value as string))}
-                  >
-                    {filterConnectors.length === 0 ? (
-                      <MenuItem disabled value="">
-                        <em>No connector available</em>
-                      </MenuItem>
-                    ) : (
-                      <MenuItem disabled value="">
-                        <em>Select connector</em>
-                      </MenuItem>
-                    )}
-                    {filterConnectors.map(item => (
-                      <MenuItem key={item.id} value={item.value}>
-                        {item.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <SelectList
+                  label="Select connectors"
+                  placeholder="Select connectors"
+                  fullWidth
+                  size="small"
+                  value={filterSelectedConnector}
+                  onChangeItem={e => dispatch(setFilterSelectedConnector(e.value))}
+                  items={filterConnectors}
+                  noOptionsText="No connector available"
+                />
               </Grid>
             </Grid>
           )}
@@ -626,6 +616,18 @@ export const ConsumeData: React.FC = () => {
           />
         </>
       )}
-    </div>
+      <Dialog open={dialogOpen}>
+        <DialogHeader title="Usage policies are not identical!" />
+        <DialogContent>
+          The contract offers within your search results do not have an identical usage policy. Subscribing to multiple
+          offers is only available for contract offers that have an identical policy.
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={showAddDialog}>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };

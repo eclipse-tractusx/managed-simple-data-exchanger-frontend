@@ -27,7 +27,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { removeSelectedFiles } from '../store/providerSlice';
 import { Button, Typography } from 'cx-portal-shared-components';
-import { useTheme } from '@mui/material';
+import { Box, Link, useTheme } from '@mui/material';
 
 // eslint-disable-next-line
 const UploadForm = (props: any) => {
@@ -55,65 +55,72 @@ const UploadForm = (props: any) => {
   };
 
   return (
-    <div className="flex flex-col py-9">
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography variant="h4" marginBottom={3} textAlign="center">
         Upload a file
       </Typography>
-      <div className="border border-dashed  border-3  flex flex-row justify-center w-auto h-full items-center">
-        <div className="flex flex-col gap-y-4 mx-20 ">
-          <div className="py-6 px-4 flex flex-col items-center gap-x-4 relative">
-            <input
-              id="round"
-              ref={fileInputRef}
-              type="file"
-              onClick={fileInputClicked}
-              onChange={filesSelected}
-              className="hidden"
-            />
-            <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
-            <h2 className=" my-1">Drag and drop your file on this page</h2>
-            <h2 className=" my-1">or</h2>
+      <Box
+        sx={{
+          border: '1px dashed lightgrey',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          p: 3,
+        }}
+      >
+        <input
+          id="round"
+          ref={fileInputRef}
+          type="file"
+          onClick={fileInputClicked}
+          onChange={filesSelected}
+          style={{ display: 'none' }}
+          accept=".csv"
+        />
+        <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
+        <Typography variant="body1" my={3} textAlign="center">
+          Upload a fileDrag and drop your file on this page
+        </Typography>
+        <Typography variant="body1" mb={3} textAlign="center">
+          or
+        </Typography>
 
-            <Button variant="outlined" size="small" onClick={fileInputClicked}>
-              CHOOSE A FILE
-            </Button>
-          </div>
-        </div>
-      </div>
+        <Button variant="outlined" size="small" onClick={fileInputClicked}>
+          CHOOSE A FILE
+        </Button>
+      </Box>
       &nbsp;
-      <div>
-        <ul>
-          <li>The upload must be performed in the following order:</li>
-          <li> 1 - serialPartTypization.csv </li>
-          <li> 2 - batch.csv </li>
-          <li> 3 - assemblyPartRelationship.csv</li>
-        </ul>
-      </div>
+      <Box>
+        <Typography variant="subtitle1" mb={1} fontWeight={'bold'}>
+          The upload must be performed in the following order:
+        </Typography>
+        <Typography variant="body1">1 - serialPartTypization.csv</Typography>
+        <Typography variant="body1">2 - batch.csv</Typography>
+        <Typography variant="body1">3 - assemblyPartRelationship.csv</Typography>
+      </Box>
       {selectedFiles.length && !uploadStatus ? (
-        <div className="flex flex-col mt-5 ">
-          <label htmlFor="" className="font-bold text-[#000000] block mb-5  text-left ">
+        <Box sx={{ display: 'flex', mt: 2, flexDirection: 'column' }}>
+          <Typography variant="subtitle1" mb={2} fontWeight={'bold'}>
             Selected file
-          </label>
+          </Typography>
 
-          <div className="flex justify-between bg-[#f1f1f1] p-2">
-            <div className="flex flex-row items-center gap-x-4 relative">
-              <UploadFileIcon className="ml-2" />
-              <div className="flex flex-row gap-x-4 items-center">
-                <p className="text-md">{selectedFiles[0].name}</p>
-                <p className="text-sm">({fileSize(selectedFiles[0].size)})</p>
-              </div>
-            </div>
-            <span className="p-2 cursor-pointer">
-              <button className="text-[#212121] text-sm" onClick={() => dispatch(removeSelectedFiles())}>
-                <CloseIcon />
-              </button>
-            </span>
-          </div>
-        </div>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 1.5, px: 2, background: 'lightgrey' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
+              <UploadFileIcon />
+              <Typography fontSize={16}>
+                {selectedFiles[0].name} ({fileSize(selectedFiles[0].size)})
+              </Typography>
+            </Box>
+            <Link sx={{ color: 'black' }} onClick={() => dispatch(removeSelectedFiles())}>
+              <CloseIcon />
+            </Link>
+          </Box>
+        </Box>
       ) : (
-        <div />
+        ''
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -48,7 +48,6 @@ export const providerSlice = createSlice({
     setUploadData: (state, action: PayloadAction<ProcessReport>) => {
       state.currentUploadData = action.payload;
     },
-
     setUploadStatus: (state, action: PayloadAction<boolean>) => {
       state.uploadStatus = action.payload;
     },

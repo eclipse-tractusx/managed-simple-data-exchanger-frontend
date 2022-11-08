@@ -19,10 +19,11 @@
  ********************************************************************************/
 
 import Keycloak from 'keycloak-js';
-import { setLoggedInUser } from '../store/appSlice';
+import { setIsUserValid, setLoggedInUser } from '../store/appSlice';
 import { store } from '../store/store';
 import { IUser } from '../models/User';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
+import { Config } from '../utils/config';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
   url: getCentralIdp(),
@@ -83,7 +84,13 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
   })
     .then(authenticated => {
       if (authenticated) {
-        console.log(`${getUsername()} authenticated`);
+        const parsedToken = getParsedToken();
+        const resourceAccess = parsedToken.resource_access;
+        if (resourceAccess.hasOwnProperty(Config.REACT_APP_CLIENT_ID)) {
+          store.dispatch(setIsUserValid(true));
+        } else {
+          store.dispatch(setIsUserValid(false));
+        }
         onAuthenticatedCallback(getLoggedUser());
         store.dispatch(setLoggedInUser(getLoggedUser()));
       } else {
@@ -99,6 +106,7 @@ const UserService = {
   doLogout,
   isLoggedIn,
   getToken,
+  getParsedToken,
   updateToken,
   getUsername,
   getEmail,

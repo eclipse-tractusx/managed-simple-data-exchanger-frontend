@@ -24,6 +24,8 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import { Link } from 'react-router-dom';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { ISubmodelHelpProps } from '../models/Help';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { useDispatch } from 'react-redux';
 
 export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
   submodelName = '',
@@ -52,6 +54,8 @@ export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
     },
   ];
   const theme = useTheme();
+  const dispatch = useDispatch();
+
   return (
     <>
       <Card variant="outlined">
@@ -88,7 +92,20 @@ export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
               Download sample
             </Link>
           </Button>
-          <Button onClick={onCopyHeaders} size="small" variant="text" startIcon={<ContentCopyIcon />}>
+          <Button
+            onClick={() => {
+              onCopyHeaders();
+              dispatch(
+                setSnackbarMessage({
+                  message: 'Copied to clipboard!',
+                  type: 'success',
+                }),
+              );
+            }}
+            size="small"
+            variant="text"
+            startIcon={<ContentCopyIcon />}
+          >
             Copy headers to clipboard
           </Button>
         </CardActions>

@@ -30,6 +30,7 @@ import {
   Divider,
   Typography,
   useTheme,
+  Box,
 } from '@mui/material';
 import { IntMenuItemProps, MenuItems, icons } from '../models/Sidebar';
 
@@ -45,11 +46,13 @@ const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
   const Icon = icons[menuIcon];
   return (
     <ListItem data-testid={dataId} onClick={() => navigate(to)} sx={{ p: 0 }}>
-      <ListItemButton sx={{ minHeight: '48px' }}>
-        <ListItemIcon>
+      <ListItemButton sx={{ minHeight: '48px', display: 'flex', alignItems: 'center' }}>
+        <ListItemIcon sx={{ minWidth: 30 }}>
           <Icon
             fontSize="small"
-            sx={{ color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}` }}
+            sx={{
+              color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}`,
+            }}
           />
         </ListItemIcon>
         <ListItemText
@@ -72,8 +75,13 @@ const MenuItemHeading: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
     <>
       <Typography
         variant="body1"
-        sx={{ display: 'flex', justifyContent: 'space-between' }}
-        className={`${!isExpanded ? 'hidden' : 'flex'} gap-x-2 px-5 py-2 bg-[#efefef]`}
+        sx={{
+          display: !isExpanded ? 'hidden' : 'flex',
+          justifyContent: 'space-between',
+          textAlign: 'center',
+          px: 2.4,
+          py: 1,
+        }}
       >
         {isExpanded ? item.text : item.text.charAt(0)}
       </Typography>
@@ -82,30 +90,28 @@ const MenuItemHeading: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
   );
 };
 
-// eslint-disable-next-line
-const Sidebar = (props: any) => {
-  const { isExpanded } = props;
+const Sidebar = ({ isExpanded }: { isExpanded: boolean }) => {
+  const theme = useTheme();
   return (
-    <aside
-      className={`${
-        isExpanded ? 'w-64' : 'w-14'
-      } will-change-width transition-width duration-300 ease-[cubic-bezier(0.2, 0, 0, 1, 0)] flex flex-col overflow-hidden z-auto order-none shadow-md`}
+    <Box
+      sx={{
+        width: isExpanded ? 200 : 56,
+        height: '100vh',
+        overflow: 'hidden',
+        borderRight: `1px solid ${theme.palette.grey[300]}`,
+      }}
     >
-      <div className={`${isExpanded ? 'w-64' : 'w-14 '} h-[calc(100%-4.75rem)] flex flex-col fixed`}>
-        <div className="will-change-width px-0 overflow-hidden relative">
-          <List sx={{ p: 0 }}>
-            {MenuItems.map((menuItem, index) => (
-              <div key={index}>
-                <MenuItemHeading item={menuItem} isExpanded={isExpanded} />
-                {menuItem.childrens.map((children, k) => {
-                  return <MenuItem key={k} item={children} isExpanded={isExpanded} />;
-                })}
-              </div>
-            ))}
-          </List>
-        </div>
-      </div>
-    </aside>
+      <List sx={{ p: 0 }}>
+        {MenuItems.map((menuItem, index) => (
+          <div key={index}>
+            <MenuItemHeading item={menuItem} isExpanded={isExpanded} />
+            {menuItem.childrens.map((children, k) => {
+              return <MenuItem key={k} item={children} isExpanded={isExpanded} />;
+            })}
+          </div>
+        ))}
+      </List>
+    </Box>
   );
 };
 export default Sidebar;

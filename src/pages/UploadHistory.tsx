@@ -21,7 +21,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { Refresh } from '@mui/icons-material';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
 import { ProcessReport } from '../models/ProcessReport';
 import StickyHeadTable from '../components/StickyHeadTable';
@@ -54,19 +54,19 @@ export const UploadHistory: React.FC = () => {
   }, [page, rowsPerPage, refreshTable]);
 
   return (
-    <div className="flex-1 py-6 px-20">
+    <Box sx={{ flex: 1, p: 4 }}>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={6}>
           <Typography variant="h4">Upload History</Typography>
         </Grid>
-        <Grid item xs={6} className="text-right">
+        <Grid item xs={6} textAlign="right">
           <Button size="small" variant="contained" onClick={() => refreshTable()}>
             <Refresh />
             &nbsp; Refresh
           </Button>
         </Grid>
       </Grid>
-      <div className="mt-8">
+      <Box sx={{ mt: 4 }}>
         <StickyHeadTable
           rows={tableData}
           page={page}
@@ -75,8 +75,8 @@ export const UploadHistory: React.FC = () => {
           setPage={setPage}
           setRowsPerPage={setRowsPerPage}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
