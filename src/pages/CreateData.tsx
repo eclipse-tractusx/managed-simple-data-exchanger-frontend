@@ -84,7 +84,7 @@ const assemblyRelationshipInitialData = [
   },
 ];
 
-export default function CreateData({ handleFiles }: { handleFiles: (_file: File) => void }) {
+export default function CreateData() {
   const serialDataRef = useRef(null);
   const batchDataRef = useRef(null);
   const assemblyDataRef = useRef(null);
@@ -317,7 +317,7 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
           </Box>
           <Box>
             <TabPanel value={v} index={0}>
-              <UploadFile handleFiles={(file: File) => handleFiles(file)} selectedTabIndex={v} />
+              <UploadFile />
             </TabPanel>
             <TabPanel value={v} index={1}>
               <DynamicTable
