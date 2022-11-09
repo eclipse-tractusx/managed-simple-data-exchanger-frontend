@@ -219,7 +219,6 @@ export default function DynamicTable({
         selectionModel={selectionModel}
         onCellEditCommit={onCellEditCommit}
         getRowClassName={params => (params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd')}
-        sx={{}}
       />
       &nbsp;
       <Card>

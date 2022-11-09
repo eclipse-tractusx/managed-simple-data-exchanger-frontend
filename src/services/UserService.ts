@@ -85,8 +85,8 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
     .then(authenticated => {
       if (authenticated) {
         const parsedToken = getParsedToken();
-        const resourceAccess = parsedToken.resource_access;
-        if (resourceAccess.hasOwnProperty(Config.REACT_APP_CLIENT_ID)) {
+        const resourceAccess = parsedToken?.resource_access;
+        if (resourceAccess && resourceAccess.hasOwnProperty(Config.REACT_APP_CLIENT_ID)) {
           store.dispatch(setIsUserValid(true));
         } else {
           store.dispatch(setIsUserValid(false));
