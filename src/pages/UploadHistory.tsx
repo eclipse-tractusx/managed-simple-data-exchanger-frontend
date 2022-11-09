@@ -74,6 +74,7 @@ export const UploadHistory: React.FC = () => {
           totalElements={totalElements}
           setPage={setPage}
           setRowsPerPage={setRowsPerPage}
+          refreshTable={refreshTable}
         />
       </Box>
     </Box>

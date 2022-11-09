@@ -38,9 +38,25 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { ProcessReport, CsvTypes, Status } from '../models/ProcessReport';
 import { formatDate } from '../utils/utils';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DftService from '../services/DftService';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { useAppDispatch } from '../store/store';
 
 interface Column {
-  id: 'processId' | 'csvType' | 'numberOfItems' | 'numberOfFailedItems' | 'status' | 'startDate' | 'duration';
+  id:
+    | 'processId'
+    | 'csvType'
+    | 'numberOfItems'
+    | 'numberOfSucceededItems'
+    | 'numberOfUpdatedItems'
+    | 'numberOfDeletedItems'
+    | 'numberOfFailedItems'
+    | 'status'
+    | 'startDate'
+    | 'duration'
+    | 'actions';
   label: string;
   minWidth?: number;
   align?: 'right' | 'left' | 'center';
@@ -48,24 +64,40 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'processId', label: 'Process Id', minWidth: 170 },
+  {
+    id: 'processId',
+    label: 'Process Id',
+    minWidth: 300,
+  },
   { id: 'csvType', label: 'CSV Type', minWidth: 100 },
   {
-    id: 'numberOfItems',
-    label: 'Number of Items',
+    id: 'numberOfSucceededItems',
+    label: 'Number of Created Items',
     minWidth: 170,
+    align: 'center',
+  },
+  {
+    id: 'numberOfUpdatedItems',
+    label: 'Number of Updated Items',
+    minWidth: 160,
+    align: 'center',
+  },
+  {
+    id: 'numberOfDeletedItems',
+    label: 'Number of Deleted Items',
+    minWidth: 160,
     align: 'center',
   },
   {
     id: 'numberOfFailedItems',
     label: 'Number of Failed Items',
-    minWidth: 170,
+    minWidth: 160,
     align: 'center',
   },
   {
     id: 'status',
     label: 'Status',
-    minWidth: 100,
+    minWidth: 90,
     align: 'center',
   },
   {
@@ -78,8 +110,12 @@ const columns: readonly Column[] = [
   {
     id: 'duration',
     label: 'Duration',
-    minWidth: 170,
+    minWidth: 130,
     align: 'center',
+  },
+  {
+    id: 'actions',
+    label: '',
   },
 ];
 
@@ -98,8 +134,13 @@ export default function StickyHeadTable({
   setRowsPerPage = (_r: number) => {
     /* This is itentional */
   },
+  // eslint-disable-next-line
+  refreshTable = () => {
+    /* This is itentional */
+  },
 }) {
   const theme = useTheme();
+  const dispatch = useAppDispatch();
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -141,6 +182,36 @@ export default function StickyHeadTable({
     return '-';
   };
 
+  const deleteSubmodal = async (subModel: ProcessReport) => {
+    try {
+      const { processId, csvType } = subModel;
+      const response = await DftService.getInstance().deleteSubmodal(processId, csvType);
+      if (response.data && response.status === 200) {
+        dispatch(
+          setSnackbarMessage({
+            message: 'Submodel deleted successfully',
+            type: 'success',
+          }),
+        );
+      } else {
+        dispatch(
+          setSnackbarMessage({
+            message: 'Failed to delete Submodel!',
+            type: 'error',
+          }),
+        );
+      }
+      refreshTable();
+    } catch (error) {
+      dispatch(
+        setSnackbarMessage({
+          message: 'Failed to delete Submodel!',
+          type: 'error',
+        }),
+      );
+    }
+  };
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 640 }}>
@@ -175,8 +246,16 @@ export default function StickyHeadTable({
                           column.format(value)}
                         {column.id !== 'status' &&
                           column.id !== 'csvType' &&
-                          (!column.format || typeof value !== 'string') &&
+                          (!column.format || typeof value === 'string') &&
                           value}
+                        {column.id === 'processId' && row.referenceProcessId && (
+                          <>
+                            {row.processId}{' '}
+                            <p>
+                              (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
+                            </p>
+                          </>
+                        )}
                         {column.id === 'status' && value === Status.completed && row.numberOfFailedItems === 0 && (
                           <span title="Completed">
                             <CheckCircleOutlineOutlinedIcon
@@ -206,6 +285,11 @@ export default function StickyHeadTable({
                             &nbsp;
                             {caclDuration(row)}
                           </span>
+                        )}
+                        {column.id === 'actions' && row.numberOfDeletedItems === 0 && (
+                          <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)}>
+                            <DeleteIcon color="error" fontSize="small" />
+                          </IconButton>
                         )}
                       </StyledTableCell>
                     );

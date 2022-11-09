@@ -32,8 +32,12 @@ import UsagePolicy from './UsagePolicy';
 
 const defaultUploadData: ProcessReport = {
   processId: '',
+  referenceProcessId: '',
   csvType: CsvTypes.unknown,
   numberOfItems: 0,
+  numberOfCreatedItems: 0,
+  numberOfUpdatedItems: 0,
+  numberOfDeletedItems: 0,
   numberOfFailedItems: 0,
   numberOfSucceededItems: 0,
   status: Status.inProgress,
