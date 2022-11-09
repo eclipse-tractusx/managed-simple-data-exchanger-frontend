@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
@@ -24,6 +25,7 @@ import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
 import { Button, Tab, Tabs, Typography } from 'cx-portal-shared-components';
 import DynamicTable from '../components/DynamicTable';
 import { getColumnsBySubmodelType } from '../helpers/commonSubmodelColumns';
+// eslint-disable-next-line no-unused-vars
 import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
 import { SerialPartTypization } from '../models/SerialPartTypization';
 import { Batch } from '../models/Batch';
@@ -33,6 +35,8 @@ import { useAppDispatch } from '../store/store';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import { setSnackbarMessage } from '../store/Notifiication/slice';
+import SelectSubmodel from '../components/SelectSubmodel';
+import DataTable from '../components/DataTable';
 
 const serialPartInitialData = [
   {
@@ -301,7 +305,7 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
     padding: '16px',
     borderRadius: 4,
   };
-
+  const jsonInputRef = useRef(null);
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Grid container spacing={2}>
@@ -309,10 +313,10 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={v} onChange={handleChange} aria-label="basic tabs example" sx={{ pt: 0 }}>
               <Tab label="Upload File" {...a11yProps(0)} />
-              <Tab label="Serial Part Typization" {...a11yProps(1)} />
-              <Tab label="Batch" {...a11yProps(2)} />
-              <Tab label="Assembly Part Relationship" {...a11yProps(3)} />
-              <Tab label="JSON" {...a11yProps(4)} />
+              <Tab label="Table" {...a11yProps(1)} />
+              {/* <Tab label="Batch" {...a11yProps(2)} />
+              <Tab label="Assembly Part Relationship" {...a11yProps(3)} /> */}
+              <Tab label="JSON" {...a11yProps(2)} />
             </Tabs>
           </Box>
           <Box>
@@ -320,90 +324,24 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
               <UploadFile handleFiles={(file: File) => handleFiles(file)} selectedTabIndex={v} />
             </TabPanel>
             <TabPanel value={v} index={1}>
-              <DynamicTable
-                columns={getColumnsBySubmodelType('serialPartTypization')}
-                submitUrl={'/aspect'}
-                validateData={validateData}
-                title="Serial Part Typization"
-              ></DynamicTable>
-            </TabPanel>
-            <TabPanel value={v} index={2}>
-              <DynamicTable
-                columns={getColumnsBySubmodelType('batch')}
-                submitUrl={'/batch'}
-                validateData={validateData}
-                title="Batch"
-              ></DynamicTable>
-            </TabPanel>
-            <TabPanel value={v} index={3}>
-              <DynamicTable
-                columns={getAssemblyPartRelationshipColumns()}
-                submitUrl={'/aspect/relationship'}
-                validateData={validateData}
-                title="Assembly Part Relationship"
-              ></DynamicTable>
-            </TabPanel>
-            <TabPanel value={v} index={4}>
               <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <Typography variant="h4">Serial Part Typization</Typography>
-                  <TextareaAutosize
-                    ref={serialDataRef}
-                    minRows={20}
-                    placeholder={getSerialPlaceholder()}
-                    style={textareaStyle}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="h4">Batch</Typography>
-                  <TextareaAutosize
-                    ref={batchDataRef}
-                    minRows={20}
-                    placeholder={getBatchPlaceHolder()}
-                    style={textareaStyle}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="h4">Assembly Part Relationship</Typography>
-                  <TextareaAutosize
-                    ref={assemblyDataRef}
-                    minRows={20}
-                    placeholder={getAssemblyPlaceholder()}
-                    style={textareaStyle}
-                  />
+                <Grid item xs={3}>
+                  <SelectSubmodel />
                 </Grid>
               </Grid>
+              <DataTable />
+            </TabPanel>
+            <TabPanel value={v} index={2}>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={submitSerialData}
-                    sx={{ mt: 2 }}
-                    style={{ float: 'right' }}
-                  >
-                    Next Step - Configure Policies
-                  </Button>
-                </Grid>
-                <Grid item xs={4}>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={submitBatchData}
-                    sx={{ mt: 2 }}
-                    style={{ float: 'right' }}
-                  >
-                    Next Step - Configure Policies
-                  </Button>
-                </Grid>
-                <Grid item xs={4}>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    onClick={submitAssemblyData}
-                    sx={{ mt: 2 }}
-                    style={{ float: 'right' }}
-                  >
+                  {/* <SelectSubmodel /> */}
+                  <TextareaAutosize
+                    ref={jsonInputRef}
+                    minRows={20}
+                    placeholder="hello"
+                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                  />
+                  <Button variant="contained" onClick={submitSerialData} sx={{ mt: 2 }} fullWidth>
                     Next Step - Configure Policies
                   </Button>
                 </Grid>

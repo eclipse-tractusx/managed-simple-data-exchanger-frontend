@@ -19,7 +19,6 @@
  ********************************************************************************/
 
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { setLoggedInUser } from '../store/appSlice';
 import { setSnackbarMessage } from '../store/Notifiication/slice';
 import { store } from '../store/store';
 import { HOST } from './ApiHelper';
@@ -34,7 +33,6 @@ abstract class HttpService {
       request.baseURL = HOST;
       if (UserService.isLoggedIn()) {
         const cb = () => {
-          store.dispatch(setLoggedInUser(UserService.getLoggedUser()));
           request.headers.Authorization = `Bearer ${UserService.getToken()}`;
           return Promise.resolve(request);
         };

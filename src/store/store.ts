@@ -26,6 +26,7 @@ import providerSlice from './providerSlice';
 import consumerSlice from './consumerSlice';
 import appSlice from './appSlice';
 import notificationSlice from './Notifiication/slice';
+import submodelSlice from '../features/submodels/slice';
 
 export const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ export const store = configureStore({
     providerSlice: providerSlice,
     consumerSlice: consumerSlice,
     notification: notificationSlice,
+    submodelSlice: submodelSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
