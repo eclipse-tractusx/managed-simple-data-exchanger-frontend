@@ -27,7 +27,7 @@ import { Button } from 'cx-portal-shared-components';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
 
-export default function UploadFile({ handleFiles }: { handleFiles: (file: File) => void; selectedTabIndex: number }) {
+export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
   const dispatch = useAppDispatch();
   return (
@@ -52,7 +52,7 @@ export default function UploadFile({ handleFiles }: { handleFiles: (file: File) 
         </Button>
       </Box>
       <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <UploadForm getSelectedFiles={(files: File) => handleFiles(files)} />
+        <UploadForm />
       </Box>
     </>
   );

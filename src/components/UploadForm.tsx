@@ -19,32 +19,55 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { useRef } from 'react';
+import { useCallback } from 'react';
 import { FileSize } from '../models/FileSize';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { removeSelectedFiles } from '../store/providerSlice';
+import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import { Button, Typography } from 'cx-portal-shared-components';
 import { Box, Link, useTheme } from '@mui/material';
+import { useDropzone } from 'react-dropzone';
+import { setPageLoading } from '../store/appSlice';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { Config } from '../utils/config';
 
-// eslint-disable-next-line
-const UploadForm = (props: any) => {
+const UploadForm = () => {
   const theme = useTheme();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
 
-  const fileInputClicked = () => {
-    if (fileInputRef.current) fileInputRef.current.click();
-  };
-
-  const filesSelected = () => {
-    if (fileInputRef.current && fileInputRef.current.files) {
-      props.getSelectedFiles(fileInputRef.current.files[0]);
+  const handleFiles = (file: File) => {
+    dispatch(setUploadStatus(false));
+    dispatch(setPageLoading(false));
+    const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
+    if (file.size < maxFileSize) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      dispatch(setSelectedFiles([file] as any));
+    } else {
+      dispatch(
+        setSnackbarMessage({
+          message: 'File not permitted!',
+          type: 'error',
+        }),
+      );
     }
   };
+
+  const onDrop = useCallback(acceptedFiles => {
+    console.log(acceptedFiles);
+    handleFiles(acceptedFiles[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxFiles: 1,
+    accept: {
+      'text/csv': ['.csv'],
+    },
+  });
 
   const fileSize = (size: number) => {
     if (size === 0) return '0 Bytes';
@@ -67,28 +90,47 @@ const UploadForm = (props: any) => {
           justifyContent: 'center',
           alignItems: 'center',
           p: 3,
+          position: 'relative',
         }}
+        {...getRootProps()}
       >
-        <input
-          id="round"
-          ref={fileInputRef}
-          type="file"
-          onClick={fileInputClicked}
-          onChange={filesSelected}
-          style={{ display: 'none' }}
-          accept=".csv"
-        />
+        <input {...getInputProps()} />
         <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
         <Typography variant="body1" my={3} textAlign="center">
-          Upload a fileDrag and drop your file on this page
+          Upload your file by dropping it here.
         </Typography>
         <Typography variant="body1" mb={3} textAlign="center">
           or
         </Typography>
-
-        <Button variant="outlined" size="small" onClick={fileInputClicked}>
+        <Button variant="outlined" size="small">
           CHOOSE A FILE
         </Button>
+
+        {isDragActive ? (
+          <Box
+            sx={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              background: theme.palette.primary.main,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Box sx={{ textAlign: 'center' }}>
+              <CloudUploadIcon style={{ fontSize: 40 }} sx={{ color: theme.palette.common.white }} />
+              <Typography color="white" variant="h4">
+                Drop it like it's hot :)
+              </Typography>
+              <Typography color="white" variant="body1">
+                Upload your file by dropping it here.
+              </Typography>
+            </Box>
+          </Box>
+        ) : (
+          ''
+        )}
       </Box>
       &nbsp;
       <Box>
