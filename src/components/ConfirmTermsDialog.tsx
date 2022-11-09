@@ -57,10 +57,10 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
                   '-.'
                 )}
               </p>
-              <p>Please confirm that</p>
+              <p>Please confirm that:</p>
             </Box>
-            <p>(1) You are entitled to represent your organization</p>
-            <p>(2) You have read and understood the access/usage policy</p>
+            <p>(1) You are entitled to represent your organization.</p>
+            <p>(2) You have read and understood the access/usage policy.</p>
             <p>(3) Your organization will be responsible to adhere by the rules stated in the access/usage policy.</p>
             <FormControlLabel
               control={<Checkbox checked={isAgreed} onChange={() => setIsAgreed(!isAgreed)} name="gilad" />}
