@@ -112,6 +112,14 @@ class DftService extends HttpService {
     });
     return res;
   }
+
+  public async deleteSubmodal(processId: string, csvType: string) {
+    const res = await this.instance({
+      method: 'DELETE',
+      url: `/delete/${processId}/${csvType}`,
+    });
+    return res;
+  }
 }
 
 export default DftService;
