@@ -21,14 +21,19 @@
 
 export interface ProcessReport {
   processId: string;
+  referenceProcessId: string;
   csvType: CsvTypes;
   numberOfItems: number;
+  numberOfCreatedItems: number;
+  numberOfUpdatedItems: number;
+  numberOfDeletedItems: number;
   numberOfFailedItems: number;
   numberOfSucceededItems: number;
   status: Status;
   startDate: string;
   endDate?: string;
   duration?: string;
+  actions?: unknown;
 }
 
 export enum Status {
