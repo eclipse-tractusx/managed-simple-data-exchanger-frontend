@@ -1,6 +1,6 @@
 # => Build container
 #FROM node:18.9.0-alpine3.15 as builder
-FROM node:16.18.1-alpine3.16 as builder
+FROM node:18.12.1-alpine3.15 as builder
 
 WORKDIR /app
 COPY ./package.json .
@@ -12,7 +12,7 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM nginx:latest 
+FROM nginx:stable 
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d 
