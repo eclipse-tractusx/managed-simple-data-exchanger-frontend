@@ -13,7 +13,7 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM ubuntu/nginx:latest 
+FROM nginx:latest 
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d 
