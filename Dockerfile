@@ -18,7 +18,7 @@ RUN yarn build
 
 # Step 2
 FROM nginxinc/nginx-unprivileged:alpine
-COPY .conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY conf/conf.d/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-step /app/cx-portal/build /usr/share/nginx/html
 USER 101
 
