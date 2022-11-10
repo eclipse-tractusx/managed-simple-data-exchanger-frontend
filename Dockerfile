@@ -1,7 +1,6 @@
 # => Build container
 #FROM node:18.9.0-alpine3.15 as builder
-#FROM node:18.12.1-alpine3.16 as builder
-FROM mtr.devops.telekom.de/community/nodejs:16.17.1
+FROM node:18.12.1-alpine3.16 as builder
 
 WORKDIR /app
 COPY ./package.json .
