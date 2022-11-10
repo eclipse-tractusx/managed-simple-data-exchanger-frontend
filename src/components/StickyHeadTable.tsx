@@ -250,7 +250,7 @@ export default function StickyHeadTable({
                           value}
                         {column.id === 'processId' && row.referenceProcessId && (
                           <>
-                            {row.processId}{' '}
+                            {row.processId}
                             <p>
                               (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
                             </p>
@@ -286,7 +286,7 @@ export default function StickyHeadTable({
                             {caclDuration(row)}
                           </span>
                         )}
-                        {column.id === 'actions' && row.numberOfDeletedItems === 0 && (
+                        {column.id === 'actions' && row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
                           <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)}>
                             <DeleteIcon color="error" fontSize="small" />
                           </IconButton>
