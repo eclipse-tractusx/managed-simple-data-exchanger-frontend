@@ -13,8 +13,10 @@ FROM node:16-alpine as build-step
 RUN apk add jq
 COPY . /app
 WORKDIR /app
-RUN yarn
-RUN yarn build
+#RUN yarn
+#RUN yarn build
+
+RUN npm install && npm run build
 
 # Step 2
 FROM nginxinc/nginx-unprivileged:alpine
