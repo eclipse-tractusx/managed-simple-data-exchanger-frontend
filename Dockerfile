@@ -12,7 +12,8 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx 
 
-FROM nginx:1-alpine
+FROM nginx:1.23.0-alpine
+
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d 
