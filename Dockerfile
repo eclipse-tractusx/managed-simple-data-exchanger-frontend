@@ -13,7 +13,14 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-FROM nginx:stable-alpine
+FROM nginx:1.22.1-alpine
+
+ENV CURL_VERSION=7.83.1-r4
+
+RUN set -eux; \
+      apk add --no-cache \
+        curl="${CURL_VERSION}" \
+        libcurl="${CURL_VERSION}" \
 
 
 # Nginx config
