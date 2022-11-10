@@ -110,7 +110,7 @@ const columns: readonly Column[] = [
   {
     id: 'duration',
     label: 'Duration',
-    minWidth: 130,
+    minWidth: 150,
     align: 'center',
   },
   {
@@ -241,13 +241,10 @@ export default function StickyHeadTable({
                         {column.id === 'csvType' && value === CsvTypes.unknown && <b> UNKNOWN </b>}
                         {column.id !== 'status' &&
                           column.id !== 'csvType' &&
-                          column.format &&
-                          typeof value === 'string' &&
-                          column.format(value)}
-                        {column.id !== 'status' &&
-                          column.id !== 'csvType' &&
+                          column.id !== 'startDate' &&
                           (!column.format || typeof value === 'string') &&
                           value}
+                        {column.id === 'startDate' && column.format && column.format(value as string)}
                         {column.id === 'processId' && row.referenceProcessId && (
                           <>
                             {row.processId}
@@ -280,11 +277,17 @@ export default function StickyHeadTable({
                           </span>
                         )}
                         {column.id === 'duration' && (
-                          <span>
-                            <AccessTime fontSize="small"> </AccessTime>
-                            &nbsp;
-                            {caclDuration(row)}
-                          </span>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              flexWrap: 'wrap',
+                              marginLeft: 20,
+                            }}
+                          >
+                            <AccessTime fontSize="small" />
+                            <span style={{ marginLeft: 5 }}>{caclDuration(row)}</span>
+                          </div>
                         )}
                         {column.id === 'actions' && row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
                           <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)}>
