@@ -1,38 +1,31 @@
 # => Build container
 #FROM node:18.9.0-alpine3.15 as builder
-FROM node:18.12.1-alpine3.15 as builder
+#
+# Dockerfile with full build after checkout
+#
+# usage:
+#        yarn build:docker:full
+#
 
+# Step 1
+FROM node:16-alpine as build-step
+
+RUN apk add jq
+COPY . /app
 WORKDIR /app
-COPY ./package.json .
-#RUN yarn
-COPY ./ .
-#RUN yarn build
+RUN yarn
+RUN yarn build
 
-RUN npm install && npm run build
-
-#### Stage 2: Serve the application from Nginx 
-
-FROM nginx:1.23.0-alpine
+# Step 2
+FROM nginxinc/nginx-unprivileged:alpine
+COPY .conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-step /app/cx-portal/build /usr/share/nginx/html
+USER 101
 
 
-# Nginx config
-RUN rm -rf /etc/nginx/conf.d 
 
-COPY ./conf /etc/nginx 
 
-RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
-
-#RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
-
-# Static build
-COPY --from=builder /app/build /usr/share/nginx/html/
-
-# Copy .env file and shell script to container
-WORKDIR /usr/share/nginx/html
-
-COPY ./env.sh .
-
-USER nginx 
+#USER nginx 
 
 EXPOSE 8080
 
