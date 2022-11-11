@@ -23,6 +23,7 @@ import { IUser } from '../models/User';
 interface IAppSlice {
   pageLoading: boolean;
   loggedInUser: IUser;
+  isUserValid: boolean;
 }
 const initialState: IAppSlice = {
   pageLoading: false,
@@ -35,6 +36,7 @@ const initialState: IAppSlice = {
     token: '',
     parsedToken: {},
   },
+  isUserValid: false,
 };
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -46,8 +48,11 @@ export const appSlice = createSlice({
     setLoggedInUser: (state, action: PayloadAction<IUser>) => {
       state.loggedInUser = action.payload;
     },
+    setIsUserValid: (state, action: PayloadAction<boolean>) => {
+      state.isUserValid = action.payload;
+    },
   },
 });
 
-export const { setPageLoading, setLoggedInUser } = appSlice.actions;
+export const { setPageLoading, setLoggedInUser, setIsUserValid } = appSlice.actions;
 export default appSlice.reducer;

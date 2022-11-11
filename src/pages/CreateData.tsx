@@ -20,7 +20,8 @@
  ********************************************************************************/
 
 import { useEffect, useRef, useState } from 'react';
-import { Box, Button, Grid, Tab, Tabs, TextareaAutosize } from '@mui/material';
+import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
+import { Button, Tab, Tabs, Typography } from 'cx-portal-shared-components';
 import DynamicTable from '../components/DynamicTable';
 import { getColumnsBySubmodelType } from '../helpers/commonSubmodelColumns';
 import { getAssemblyPartRelationshipColumns } from '../helpers/AssemblyPartRelationshipColumns';
@@ -31,8 +32,7 @@ import UploadFile from '../components/UploadFile';
 import { useAppDispatch } from '../store/store';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
-import { toast } from 'react-toastify';
-import { toastProps } from '../helpers/ToastOptions';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
 
 const serialPartInitialData = [
   {
@@ -84,7 +84,7 @@ const assemblyRelationshipInitialData = [
   },
 ];
 
-export default function CreateData({ handleFiles }: { handleFiles: (_file: File) => void }) {
+export default function CreateData() {
   const serialDataRef = useRef(null);
   const batchDataRef = useRef(null);
   const assemblyDataRef = useRef(null);
@@ -92,9 +92,17 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
   const [serialTemplate] = useState<SerialPartTypization[]>(serialPartInitialData);
   const [batchTemplate] = useState<Batch[]>(batchInitialData);
   const [assemblyTemplate] = useState<AssemblyPartRelationship[]>(assemblyRelationshipInitialData);
+  const theme = useTheme();
 
   const dispatch = useAppDispatch();
-  const getInvalidDataMessage = () => toast.error('Invalid data! Enter Required * fields.', toastProps());
+  const getInvalidDataMessage = () => {
+    dispatch(
+      setSnackbarMessage({
+        message: 'Invalid data! Enter Required * fields.',
+        type: 'error',
+      }),
+    );
+  };
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -286,13 +294,20 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
     dispatch(setUploadStatus(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const textareaStyle = {
+    width: '100%',
+    border: `1px solid ${theme.palette.grey[500]}`,
+    marginTop: '16px',
+    padding: '16px',
+    borderRadius: 4,
+  };
 
   return (
-    <div className="flex-1 py-6 px-10">
+    <Box sx={{ flex: 1, p: 4 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={v} onChange={handleChange} aria-label="basic tabs example">
+            <Tabs value={v} onChange={handleChange} aria-label="basic tabs example" sx={{ pt: 0 }}>
               <Tab label="Upload File" {...a11yProps(0)} />
               <Tab label="Serial Part Typization" {...a11yProps(1)} />
               <Tab label="Batch" {...a11yProps(2)} />
@@ -302,75 +317,93 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
           </Box>
           <Box>
             <TabPanel value={v} index={0}>
-              <UploadFile handleFiles={(file: File) => handleFiles(file)} selectedTabIndex={v} />
+              <UploadFile />
             </TabPanel>
             <TabPanel value={v} index={1}>
               <DynamicTable
                 columns={getColumnsBySubmodelType('serialPartTypization')}
                 submitUrl={'/aspect'}
-                headerHeight={60}
                 validateData={validateData}
+                title="Serial Part Typization"
               ></DynamicTable>
             </TabPanel>
             <TabPanel value={v} index={2}>
               <DynamicTable
                 columns={getColumnsBySubmodelType('batch')}
                 submitUrl={'/batch'}
-                headerHeight={60}
                 validateData={validateData}
+                title="Batch"
               ></DynamicTable>
             </TabPanel>
             <TabPanel value={v} index={3}>
               <DynamicTable
                 columns={getAssemblyPartRelationshipColumns()}
                 submitUrl={'/aspect/relationship'}
-                headerHeight={90}
                 validateData={validateData}
+                title="Assembly Part Relationship"
               ></DynamicTable>
             </TabPanel>
             <TabPanel value={v} index={4}>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
-                  <h1 className="flex flex-row text-bold text-3xl">Serial Part Typization</h1>
+                  <Typography variant="h4">Serial Part Typization</Typography>
                   <TextareaAutosize
                     ref={serialDataRef}
                     minRows={20}
                     placeholder={getSerialPlaceholder()}
-                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                    style={textareaStyle}
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <h1 className="flex flex-row text-bold text-3xl">Batch</h1>
+                  <Typography variant="h4">Batch</Typography>
                   <TextareaAutosize
                     ref={batchDataRef}
                     minRows={20}
                     placeholder={getBatchPlaceHolder()}
-                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                    style={textareaStyle}
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <h1 className="flex flex-row text-bold text-3xl">Assembly Part Relationship</h1>
+                  <Typography variant="h4">Assembly Part Relationship</Typography>
                   <TextareaAutosize
                     ref={assemblyDataRef}
                     minRows={20}
                     placeholder={getAssemblyPlaceholder()}
-                    style={{ width: '100%', border: '1px solid black', marginTop: '10px' }}
+                    style={textareaStyle}
                   />
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
-                  <Button variant="outlined" onClick={submitSerialData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={submitSerialData}
+                    sx={{ mt: 2 }}
+                    style={{ float: 'right' }}
+                  >
                     Next Step - Configure Policies
                   </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button variant="outlined" onClick={submitBatchData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={submitBatchData}
+                    sx={{ mt: 2 }}
+                    style={{ float: 'right' }}
+                  >
                     Next Step - Configure Policies
                   </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button variant="outlined" onClick={submitAssemblyData} sx={{ mt: 2 }} style={{ float: 'right' }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={submitAssemblyData}
+                    sx={{ mt: 2 }}
+                    style={{ float: 'right' }}
+                  >
                     Next Step - Configure Policies
                   </Button>
                 </Grid>
@@ -379,6 +412,6 @@ export default function CreateData({ handleFiles }: { handleFiles: (_file: File)
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 }

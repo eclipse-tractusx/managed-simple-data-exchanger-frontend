@@ -19,9 +19,8 @@
  ********************************************************************************/
 
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { toast } from 'react-toastify';
-import { toastProps } from '../helpers/ToastOptions';
 import { setLoggedInUser } from '../store/appSlice';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
 import { store } from '../store/store';
 import { HOST } from './ApiHelper';
 import UserService from './UserService';
@@ -48,7 +47,12 @@ abstract class HttpService {
         return response;
       },
       (error: AxiosError) => {
-        toast.error('Something went wrong!', toastProps());
+        store.dispatch(
+          setSnackbarMessage({
+            message: 'Something went wrong!',
+            type: 'error',
+          }),
+        );
         Promise.reject(error.response);
       },
     );

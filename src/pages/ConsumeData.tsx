@@ -18,29 +18,41 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-
+const ITEMS = [
+  {
+    id: 1,
+    title: 'Company Name',
+    value: 'company',
+  },
+  {
+    id: 2,
+    title: 'Business Partner Number',
+    value: 'bpn',
+  },
+  {
+    id: 3,
+    title: 'Connector URL',
+    value: 'url',
+  },
+];
+import { Box, Grid, LinearProgress, Stack, Autocomplete } from '@mui/material';
 import {
-  Box,
   Button,
-  Grid,
-  LinearProgress,
-  Stack,
-  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  Input,
+  SelectList,
   Typography,
-  Autocomplete,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-} from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
+} from 'cx-portal-shared-components';
 import { DataGrid, GridSelectionModel, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
-import { ILegalEntityContent, IConnectorResponse } from '../models/ConsumerContractOffers';
+import { ILegalEntityContent, IConnectorResponse, IntOption } from '../models/ConsumerContractOffers';
 import DftService from '../services/DftService';
 import {
   setContractOffers,
@@ -58,10 +70,7 @@ import {
   setFilterConnectors,
 } from '../store/consumerSlice';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { toast } from 'react-toastify';
-import { toastProps } from '../helpers/ToastOptions';
-import { IntOption } from '../models/ConsumerContractOffers';
-import Swal from 'sweetalert2';
+import { setSnackbarMessage } from '../store/Notifiication/slice';
 
 export const ConsumeData: React.FC = () => {
   const {
@@ -88,19 +97,19 @@ export const ConsumeData: React.FC = () => {
   const columns = [
     {
       field: 'title',
-      width: 330,
+      flex: 1,
       headerName: 'Title',
       renderHeader: () => <strong>Title</strong>,
     },
     {
       field: 'assetId',
-      width: 150,
+      flex: 1,
       headerName: 'Asset ID',
       renderHeader: () => <strong>Asset ID</strong>,
     },
     {
       field: 'created',
-      width: 150,
+      flex: 1,
       editable: false,
       headerName: 'Created on',
       renderHeader: () => <strong>Created on</strong>,
@@ -108,7 +117,7 @@ export const ConsumeData: React.FC = () => {
     },
     {
       field: 'publisher',
-      width: 130,
+      flex: 1,
       editable: false,
       headerName: 'Publisher',
       renderHeader: () => <strong>Publisher</strong>,
@@ -116,14 +125,14 @@ export const ConsumeData: React.FC = () => {
     },
     {
       field: 'typeOfAccess',
-      width: 150,
+      flex: 1,
       editable: false,
       headerName: 'Access type',
       renderHeader: () => <strong>Access type</strong>,
     },
     {
       field: 'bpnNumbers',
-      width: 180,
+      flex: 1,
       editable: false,
       headerName: 'BPN',
       renderHeader: () => <strong>BPN</strong>,
@@ -134,7 +143,7 @@ export const ConsumeData: React.FC = () => {
     },
     {
       field: 'description',
-      width: 300,
+      flex: 1,
       editable: false,
       headerName: 'Description',
       renderHeader: () => <strong>Description</strong>,
@@ -212,7 +221,12 @@ export const ConsumeData: React.FC = () => {
         const response = await DftService.getInstance().subscribeToOffers(payload);
         setIsOfferSubLoading(false);
         if (response.status == 200) {
-          toast.success('Contract offers subscription successfully initiated', toastProps());
+          dispatch(
+            setSnackbarMessage({
+              message: 'Contract offers subscription successfully initiated',
+              type: 'success',
+            }),
+          );
           setIsOpenOfferDialog(false);
           setIsOpenOfferConfirmDialog(false);
           dispatch(setIsMultipleContractSubscription(false));
@@ -222,7 +236,12 @@ export const ConsumeData: React.FC = () => {
         }
       } catch (error) {
         setIsOfferSubLoading(false);
-        toast.error('Contract offers subscription failed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Contract offers subscription failed!',
+            type: 'error',
+          }),
+        );
       }
     }
   };
@@ -260,6 +279,10 @@ export const ConsumeData: React.FC = () => {
       fetchConsumerDataOffers();
     }
   };
+  const [dialogOpen, setdialogOpen] = useState<boolean>(false);
+  const showAddDialog = () => {
+    setdialogOpen(prev => !prev);
+  };
 
   const checkoutSelectedOffers = () => {
     let isUsagePoliciesEqual = false;
@@ -277,12 +300,7 @@ export const ConsumeData: React.FC = () => {
       setIsOpenOfferDialog(true);
       dispatch(setIsMultipleContractSubscription(true));
     } else {
-      Swal.fire({
-        title: 'Usage policies are not identical!',
-        html: '<p> The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy. </p>',
-        icon: 'error',
-        confirmButtonColor: '#01579b',
-      });
+      showAddDialog();
       setIsOpenOfferDialog(false);
       dispatch(setIsMultipleContractSubscription(false));
     }
@@ -312,8 +330,8 @@ export const ConsumeData: React.FC = () => {
   };
 
   // on change search type filter option
-  const handleSearchTypeChange = (event: SelectChangeEvent) => {
-    dispatch(setSearchFilterByType(event.target.value as string));
+  const handleSearchTypeChange = (value: string) => {
+    dispatch(setSearchFilterByType(value));
     dispatch(setSelectedFilterCompanyOption(null));
     dispatch(setFilterProviderUrl(''));
     dispatch(setFilterSelectedBPN(''));
@@ -321,7 +339,6 @@ export const ConsumeData: React.FC = () => {
     dispatch(setFilterSelectedConnector(''));
   };
 
-  // TODO:: get connector by bpn number
   const getConnectorByBPN = async (bpn: string) => {
     const payload = [];
     payload.push(bpn);
@@ -335,11 +352,17 @@ export const ConsumeData: React.FC = () => {
         return {
           id: index,
           value: item,
+          title: item,
         };
       });
       dispatch(setFilterConnectors(optionConnectors));
     } else {
-      toast.warning('Connector not available', toastProps());
+      dispatch(
+        setSnackbarMessage({
+          message: 'Connector not available!',
+          type: 'warning',
+        }),
+      );
     }
   };
 
@@ -352,7 +375,6 @@ export const ConsumeData: React.FC = () => {
     }
   };
 
-  // TODO:: on blur bpn get the connectors
   const onBlurBPN = () => {
     if (filterSelectedBPN.length > 3) {
       getConnectorByBPN(filterSelectedBPN);
@@ -381,199 +403,180 @@ export const ConsumeData: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 py-6 px-10">
-      <Grid container spacing={2}>
-        <Grid item xs={12} my={4}>
-          <Typography variant="h4">Consumer View</Typography>
+    <Box sx={{ flex: 1, p: 4 }}>
+      <Typography variant="h4" py={4}>
+        Consumer View
+      </Typography>
+      <Grid container spacing={2} alignItems="end">
+        <Grid item xs={3}>
+          <SelectList
+            label="Select Search Type"
+            fullWidth
+            size="small"
+            onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
+            items={ITEMS}
+            placeholder="Select Search Type"
+            value={searchFilterByType}
+            hiddenLabel
+          />
         </Grid>
-        <Grid item xs={12} mb={4}>
-          <Stack direction="row" spacing={2}>
-            <Box
-              sx={{
-                width: 800,
-                maxWidth: '100%',
-              }}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
-                    <InputLabel id="select--search-label-small">Search By</InputLabel>
-                    <Select
-                      labelId="select--search-label-small"
-                      value={searchFilterByType}
-                      label="Select Search Type"
-                      fullWidth
-                      size="small"
-                      onChange={handleSearchTypeChange}
-                    >
-                      <MenuItem value="company">Company Name</MenuItem>
-                      <MenuItem value="bpn">Business Partner Number</MenuItem>
-                      <MenuItem value="url">Connector URL</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={8}>
-                  {searchFilterByType === 'url' ? (
-                    <TextField
-                      value={filterProviderUrl}
-                      type="url"
-                      onChange={e => dispatch(setFilterProviderUrl(e.target.value))}
-                      onKeyPress={handleKeypress}
-                      fullWidth
-                      size="small"
-                      label="Enter connector URL"
-                    />
-                  ) : (
-                    <Grid container spacing={1}>
-                      <Grid item xs={7}>
-                        {searchFilterByType === 'bpn' ? (
-                          <TextField
-                            value={filterSelectedBPN}
-                            type="text"
-                            onChange={e => dispatch(setFilterSelectedBPN(e.target.value))}
-                            onBlur={() => onBlurBPN()}
-                            fullWidth
-                            size="small"
-                            label="Enter Business Partner Number"
-                          />
-                        ) : (
-                          <Autocomplete
-                            options={filterCompanyOptions}
-                            includeInputInList
-                            loading={filterCompanyOptionsLoading}
-                            onChange={(event, value) => onCompanyOptionChange(value)}
-                            onInputChange={debounce((event, newInputValue) => {
-                              onChangeSearchInputValue(newInputValue);
-                            }, 1000)}
-                            isOptionEqualToValue={(option, value) => option.value === value.value}
-                            getOptionLabel={option => {
-                              return typeof option === 'string' ? option : `${option.value}`;
-                            }}
-                            renderInput={params => (
-                              <TextField {...params} label="Search company name" size="small" fullWidth />
-                            )}
-                            renderOption={(props, option) => (
-                              <Box
-                                component="li"
-                                {...props}
-                                sx={{
-                                  display: 'flex',
-                                  flexDirection: 'column',
-                                  alignItems: 'initial!important',
-                                  justifyContent: 'initial',
-                                }}
-                              >
-                                <Typography variant="subtitle1">{option.value}</Typography>
-                                <Typography variant="subtitle2">{option.bpn}</Typography>
-                              </Box>
-                            )}
-                          />
-                        )}
-                      </Grid>
-                      <Grid item xs={5}>
-                        <FormControl fullWidth sx={{ minWidth: 120 }} size="small">
-                          <InputLabel id="select--search-label-small">Select connector</InputLabel>
-                          <Select
-                            labelId="select--search-label-small"
-                            label="Select connectors"
-                            fullWidth
-                            size="small"
-                            value={filterSelectedConnector}
-                            onChange={e => dispatch(setFilterSelectedConnector(e.target.value as string))}
-                          >
-                            {filterConnectors.length === 0 ? (
-                              <MenuItem disabled value="">
-                                <em>No connector available</em>
-                              </MenuItem>
-                            ) : (
-                              <MenuItem disabled value="">
-                                <em>Select connector</em>
-                              </MenuItem>
-                            )}
-                            {filterConnectors.map(item => (
-                              <MenuItem key={item.id} value={item.value}>
-                                {item.value}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                  )}
-                </Grid>
-              </Grid>
-            </Box>
-            <Button
-              variant="contained"
-              onClick={fetchConsumerDataOffers}
-              disabled={
-                ((searchFilterByType === 'bpn' || searchFilterByType === 'company') &&
-                  filterSelectedConnector.length === 0) ||
-                (searchFilterByType === 'url' && filterProviderUrl.length === 0)
-              }
-            >
-              Search
-            </Button>
-          </Stack>
-        </Grid>
-        <Grid item xs={12}>
-          <Box display="flex" justifyContent="flex-end">
-            <Button variant="contained" onClick={checkoutSelectedOffers} disabled={!selectedOffersList.length}>
-              Subscribe to selected
-            </Button>
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
-            <DataGrid
-              sx={{ py: 1 }}
-              autoHeight={true}
-              getRowId={row => row.assetId}
-              rows={contractOffers}
-              onRowClick={onRowClick}
-              columns={columns}
-              loading={offersLoading}
-              checkboxSelection
-              pagination
-              pageSize={pageSize}
-              onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-              rowsPerPageOptions={[10, 25, 50, 100]}
-              onSelectionModelChange={newSelectionModel => {
-                const selectedIDs = new Set(newSelectionModel);
-                const selectedRowData = contractOffers.filter(row => selectedIDs.has(row.assetId.toString()));
-                dispatch(setSelectedOffersList(selectedRowData));
-                setSelectionModel(newSelectionModel);
-              }}
-              selectionModel={selectionModel}
-              components={{
-                Toolbar: GridToolbar,
-                LoadingOverlay: LinearProgress,
-                NoRowsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    No Data offers!
-                  </Stack>
-                ),
-                NoResultsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    Data offer not found!
-                  </Stack>
-                ),
-              }}
-              componentsProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: { debounceMs: 500 },
-                  printOptions: { disableToolbarButton: true },
-                },
-              }}
-              disableColumnMenu
-              disableColumnSelector
-              disableDensitySelector
-              disableSelectionOnClick
+        <Grid item xs={5}>
+          {searchFilterByType === 'url' ? (
+            <Input
+              value={filterProviderUrl}
+              type="url"
+              onChange={e => dispatch(setFilterProviderUrl(e.target.value))}
+              onKeyPress={handleKeypress}
+              fullWidth
+              size="small"
+              label="Enter connector URL"
+              placeholder="Enter connector URL"
             />
-          </Box>
+          ) : (
+            <Grid container spacing={1} alignItems="flex-end">
+              <Grid item xs={7}>
+                {searchFilterByType === 'bpn' ? (
+                  <Input
+                    value={filterSelectedBPN}
+                    type="text"
+                    onChange={e => dispatch(setFilterSelectedBPN(e.target.value))}
+                    onBlur={() => onBlurBPN()}
+                    fullWidth
+                    size="small"
+                    label="Enter Business Partner Number"
+                    placeholder="Enter Business Partner Number"
+                  />
+                ) : (
+                  <Autocomplete
+                    options={filterCompanyOptions}
+                    includeInputInList
+                    loading={filterCompanyOptionsLoading}
+                    onChange={(event, value) => onCompanyOptionChange(value)}
+                    onInputChange={debounce((event, newInputValue) => {
+                      onChangeSearchInputValue(newInputValue);
+                    }, 1000)}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    getOptionLabel={option => {
+                      return typeof option === 'string' ? option : `${option.value}`;
+                    }}
+                    renderInput={params => (
+                      <Input {...params} label="Select a company name" placeholder="Search company name" fullWidth />
+                    )}
+                    renderOption={(props, option) => (
+                      <Box
+                        component="li"
+                        key={option.bpn}
+                        {...props}
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'initial!important',
+                          justifyContent: 'initial',
+                        }}
+                      >
+                        <Typography variant="subtitle1">{option.value}</Typography>
+                        <Typography variant="subtitle2">{option.bpn}</Typography>
+                      </Box>
+                    )}
+                  />
+                )}
+              </Grid>
+              <Grid item xs={5}>
+                <SelectList
+                  label="Select connectors"
+                  placeholder="Select connectors"
+                  fullWidth
+                  size="small"
+                  value={filterSelectedConnector}
+                  onChangeItem={e => dispatch(setFilterSelectedConnector(e.value))}
+                  items={filterConnectors}
+                  noOptionsText="No connector available"
+                />
+              </Grid>
+            </Grid>
+          )}
+        </Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            size="medium"
+            onClick={fetchConsumerDataOffers}
+            disabled={
+              ((searchFilterByType === 'bpn' || searchFilterByType === 'company') &&
+                filterSelectedConnector.length === 0) ||
+              (searchFilterByType === 'url' && filterProviderUrl.length === 0)
+            }
+          >
+            Search
+          </Button>
         </Grid>
       </Grid>
+      <Box display="flex" justifyContent="flex-end" mb={3}>
+        <Button variant="contained" size="small" onClick={checkoutSelectedOffers} disabled={!selectedOffersList.length}>
+          Subscribe to selected
+        </Button>
+      </Box>
+      <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+        <DataGrid
+          autoHeight={true}
+          getRowId={row => row.assetId}
+          rows={contractOffers}
+          onRowClick={onRowClick}
+          columns={columns}
+          loading={offersLoading}
+          checkboxSelection
+          pagination
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[10, 25, 50, 100]}
+          onSelectionModelChange={newSelectionModel => {
+            const selectedIDs = new Set(newSelectionModel);
+            const selectedRowData = contractOffers.filter(row => selectedIDs.has(row.assetId.toString()));
+            dispatch(setSelectedOffersList(selectedRowData));
+            setSelectionModel(newSelectionModel);
+          }}
+          selectionModel={selectionModel}
+          components={{
+            Toolbar: GridToolbar,
+            LoadingOverlay: LinearProgress,
+            NoRowsOverlay: () => (
+              <Stack height="100%" alignItems="center" justifyContent="center">
+                No Data offers!
+              </Stack>
+            ),
+            NoResultsOverlay: () => (
+              <Stack height="100%" alignItems="center" justifyContent="center">
+                Data offer not found!
+              </Stack>
+            ),
+          }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+              printOptions: { disableToolbarButton: true },
+            },
+          }}
+          disableColumnMenu
+          disableColumnSelector
+          disableDensitySelector
+          disableSelectionOnClick
+          sx={{
+            '& .MuiDataGrid-columnHeaderTitle': {
+              textOverflow: 'clip',
+              whiteSpace: 'break-spaces',
+              lineHeight: 1.5,
+              textAlign: 'center',
+            },
+            '& .MuiDataGrid-columnHeader': {
+              padding: '0 10px',
+            },
+            '& .MuiDataGrid-columnHeaderCheckbox': {
+              height: 'auto !important',
+            },
+          }}
+        />
+      </Box>
       {isMultipleContractSubscription && (
         <>
           <OfferDetailsDialog
@@ -613,6 +616,18 @@ export const ConsumeData: React.FC = () => {
           />
         </>
       )}
-    </div>
+      <Dialog open={dialogOpen}>
+        <DialogHeader title="Usage policies are not identical!" />
+        <DialogContent>
+          The contract offers within your search results do not have an identical usage policy. Subscribing to multiple
+          offers is only available for contract offers that have an identical policy.
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={showAddDialog}>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };

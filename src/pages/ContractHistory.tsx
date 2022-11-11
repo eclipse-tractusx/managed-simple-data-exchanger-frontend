@@ -20,12 +20,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
-import Button, { ButtonProps } from '@mui/material/Button';
 import { Refresh } from '@mui/icons-material';
 import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { convertEpochToDate, epochToDate } from '../utils/utils';
-import { styled } from '@mui/material/styles';
-import styles from '../styles.module.scss';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import DftService from '../services/DftService';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
@@ -34,6 +31,7 @@ import { IContractAgreements } from '../models/ConsumerContractOffers';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ErrorIcon from '@mui/icons-material/Error';
+import { Button } from 'cx-portal-shared-components';
 
 const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
@@ -79,7 +77,7 @@ const ContractHistory: React.FC = () => {
   const columns = [
     {
       field: 'contractAgreementId',
-      width: 230,
+      flex: 1,
       editable: false,
       headerName: 'Contract Agreement ID',
       renderHeader: () => <strong>Contract Agreement ID</strong>,
@@ -87,7 +85,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.assetId',
-      width: 230,
+      flex: 1,
       editable: false,
       headerName: 'Asset ID',
       renderHeader: () => <strong>Asset ID</strong>,
@@ -96,7 +94,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'counterPartyAddress',
-      width: 350,
+      flex: 1,
       editable: false,
       headerName: 'Counter Party Address',
       renderHeader: () => <strong>Counter Party Address</strong>,
@@ -104,7 +102,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'title',
-      width: 100,
+      flex: 1,
       editable: false,
       headerName: 'Title',
       renderHeader: () => <strong>Title</strong>,
@@ -112,7 +110,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'organizationName',
-      width: 120,
+      flex: 1,
       editable: false,
       headerName: 'Organization',
       renderHeader: () => <strong>Organization</strong>,
@@ -120,7 +118,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.contractSigningDate',
-      width: 160,
+      flex: 1,
       editable: false,
       headerName: 'Signing Date',
       renderHeader: () => <strong>Signing Date</strong>,
@@ -131,7 +129,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.contractEndDate',
-      width: 160,
+      flex: 1,
       editable: false,
       headerName: 'End Date',
       renderHeader: () => <strong>End Date</strong>,
@@ -142,7 +140,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'state',
-      width: 150,
+      flex: 1,
       editable: false,
       headerName: 'Status',
       renderHeader: () => <strong>Status</strong>,
@@ -168,15 +166,6 @@ const ContractHistory: React.FC = () => {
     }
   };
 
-  const ColorButton = styled(Button)<ButtonProps>(() => ({
-    color: styles.white,
-    backgroundColor: styles.blue,
-    '&:hover': {
-      backgroundColor: styles.white,
-      color: styles.blue,
-    },
-  }));
-
   useEffect(() => {
     dispatch(setContractAgreements([]));
     fetchContractAgreements();
@@ -184,18 +173,16 @@ const ContractHistory: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 py-6 px-10">
-      <Grid container spacing={2}>
+    <Box sx={{ flex: 1, p: 4 }}>
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs={6} my={4}>
           <Typography variant="h4">Contract Agreements History</Typography>
         </Grid>
-        <Grid item xs={6} my={4} className="text-right">
-          <ColorButton variant="contained" onClick={() => fetchContractAgreements()}>
-            <span>
-              <Refresh />
-              <span style={{ marginLeft: 5 }}>Refresh</span>
-            </span>
-          </ColorButton>
+        <Grid item xs={6} my={4} textAlign={'right'}>
+          <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
+            <Refresh />
+            &nbsp; Refresh
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
@@ -239,7 +226,7 @@ const ContractHistory: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

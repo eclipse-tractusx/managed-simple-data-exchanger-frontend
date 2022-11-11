@@ -21,10 +21,9 @@ RUN npm install && npm run build
 #RUN rm -rf /etc/nginx/conf.d
 
 #COPY ./conf /etc/nginx
-#FROM nginx:mainline
-FROM ubuntu/nginx:1.18-22.04_beta
+FROM nginx:mainline
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
-#RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d

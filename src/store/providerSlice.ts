@@ -30,8 +30,12 @@ interface IProviderSlice {
 const initialState: IProviderSlice = {
   currentUploadData: {
     processId: '',
+    referenceProcessId: '',
     csvType: CsvTypes.unknown,
     numberOfItems: 0,
+    numberOfCreatedItems: 0,
+    numberOfUpdatedItems: 0,
+    numberOfDeletedItems: 0,
     numberOfFailedItems: 0,
     numberOfSucceededItems: 0,
     status: Status.inProgress,
@@ -48,7 +52,6 @@ export const providerSlice = createSlice({
     setUploadData: (state, action: PayloadAction<ProcessReport>) => {
       state.currentUploadData = action.payload;
     },
-
     setUploadStatus: (state, action: PayloadAction<boolean>) => {
       state.uploadStatus = action.payload;
     },
