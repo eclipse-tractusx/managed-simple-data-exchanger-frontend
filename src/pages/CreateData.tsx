@@ -34,7 +34,7 @@ import UploadFile from '../components/UploadFile';
 import { useAppDispatch } from '../store/store';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
 import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
-import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import SelectSubmodel from '../components/SelectSubmodel';
 import DataTable from '../components/DataTable';
 
@@ -309,6 +309,11 @@ export default function CreateData() {
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Grid container spacing={2}>
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <SelectSubmodel />
+          </Grid>
+        </Grid>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={v} onChange={handleChange} aria-label="basic tabs example" sx={{ pt: 0 }}>
@@ -324,17 +329,11 @@ export default function CreateData() {
               <UploadFile />
             </TabPanel>
             <TabPanel value={v} index={1}>
-              <Grid container spacing={2}>
-                <Grid item xs={3}>
-                  <SelectSubmodel />
-                </Grid>
-              </Grid>
               <DataTable />
             </TabPanel>
             <TabPanel value={v} index={2}>
               <Grid container spacing={2}>
                 <Grid item xs={4}>
-                  {/* <SelectSubmodel /> */}
                   <TextareaAutosize
                     ref={jsonInputRef}
                     minRows={20}

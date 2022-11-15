@@ -19,7 +19,7 @@
  ********************************************************************************/
 
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import { store } from '../store/store';
 import { HOST } from './ApiHelper';
 import UserService from './UserService';

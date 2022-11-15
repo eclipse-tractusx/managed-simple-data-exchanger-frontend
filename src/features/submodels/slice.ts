@@ -17,6 +17,17 @@ const initialState: ISubmodelsSlice = {
 };
 let idCounter = -1;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const handleColumnTypes = (value: any) => {
+  if (value.format === 'date-time') {
+    return 'dateTime';
+  } else if (value.enum?.length) {
+    return 'singleSelect';
+  } else {
+    return 'string';
+  }
+};
+
 export const submodelSlice = createSlice({
   name: 'submodelSlice',
   initialState,
@@ -25,7 +36,7 @@ export const submodelSlice = createSlice({
       state.selectedSubmodel = action.payload;
     },
     addRows: state => {
-      state.rows = state.rows.concat({ id: (idCounter += 1), ...state.row, UUID: `urn:uuid:${uuidv4()}` });
+      state.rows = state.rows.concat({ id: (idCounter += 1), ...state.row, uuid: `urn:uuid:${uuidv4()}` });
     },
     deleteRows: state => {
       const selectedIDs = new Set(state.selectionModel);
@@ -38,16 +49,20 @@ export const submodelSlice = createSlice({
     },
     setSelectionModel: (state, action: PayloadAction<GridSelectionModel>) => {
       state.selectionModel = action.payload;
-      const selectedIDs = new Set(action.payload);
-      state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
     },
     validateTableData: state => {
-      schemaValidator(state.submodelDetails, state.selectedRows);
+      const selectedIDs = new Set(state.selectionModel);
+      state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
+      schemaValidator(state.submodelDetails.items, state.selectedRows);
     },
   },
   extraReducers: builder => {
     builder.addCase(fetchSubmodelList.fulfilled, (state, { payload }) => {
-      state.submodelList = payload;
+      const list = payload.map((e: { id: string; name: string }, index: number) => {
+        const item = { id: index, title: e.name, value: e.id };
+        return item;
+      });
+      state.submodelList = list;
     });
     builder.addCase(fetchSubmodelDetails.pending, state => {
       state.row = {};
@@ -59,11 +74,18 @@ export const submodelSlice = createSlice({
       state.columns = Object.entries(payload.items.properties).map(([key, value]: any) => ({
         field: key,
         headerName: value.title,
-        editable: key === 'UUID' ? false : true,
+        editable: true,
         sortable: false,
         flex: 1,
-        headerAlign: 'center',
-        type: value.format === 'date-time' ? 'date' : 'string',
+        headerAlign: 'left',
+        type: handleColumnTypes(value),
+        valueOptions: value.enum,
+        // preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+        //   if (key === 'manufacturing_country') {
+        //     const hasError = params.props.value.length < 3;
+        //     return { ...params.props, error: hasError };
+        //   }
+        // },
       }));
       Object.keys(payload.items.properties).forEach(e => {
         state.row[e] = '';

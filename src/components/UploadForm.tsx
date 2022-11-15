@@ -30,7 +30,7 @@ import { Button, Typography } from 'cx-portal-shared-components';
 import { Box, Link, useTheme } from '@mui/material';
 import { useDropzone } from 'react-dropzone';
 import { setPageLoading } from '../store/appSlice';
-import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import { Config } from '../utils/config';
 
 const UploadForm = () => {

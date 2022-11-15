@@ -41,7 +41,7 @@ import { formatDate } from '../utils/utils';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DftService from '../services/DftService';
-import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useAppDispatch } from '../store/store';
 
 interface Column {

@@ -19,12 +19,17 @@
  ********************************************************************************/
 
 import { GridValidRowModel, GridSelectionModel } from '@mui/x-data-grid';
-import { JTDDataType } from 'ajv/dist/core';
 
+export interface ISubmodelList {
+  id: number;
+  name: string;
+  value: string;
+}
 export interface ISubmodelsSlice {
   selectedSubmodel: string;
-  submodelList: string[];
-  submodelDetails: JTDDataType<unknown>;
+  submodelList: ISubmodelList[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  submodelDetails: any;
   columns: DynamicTableColumn[];
   rows: GridValidRowModel[];
   row: GridValidRowModel;
@@ -44,5 +49,5 @@ export interface DynamicTableColumn {
   flex: number;
   headerAlign: 'center' | 'right' | 'left';
   type?: 'singleSelect' | 'date' | 'dateTime' | 'string';
-  valueOptions?: { value: string; label: string }[];
+  valueOptions?: string[];
 }

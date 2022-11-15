@@ -24,7 +24,7 @@ import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
 import DftService from '../../services/DftService';
 import { handleDialogClose } from '../../store/accessUsagePolicySlice';
 import { setPageLoading } from '../../store/appSlice';
-import { setSnackbarMessage } from '../../store/Notifiication/slice';
+import { setSnackbarMessage } from '../../features/notifiication/slice';
 import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
