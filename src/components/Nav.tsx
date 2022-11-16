@@ -81,13 +81,15 @@ const Nav = (props: any) => {
           px: 2,
         }}
       >
-        <Link onClick={handleExpanded}>
-          <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
-        </Link>
+        <Box display={'flex'} alignItems="center">
+          <Link onClick={handleExpanded}>
+            <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
+          </Link>
 
-        <Typography variant="h4" color="white">
-          Simple Data Exchanger
-        </Typography>
+          <Typography variant="h4" color="white" ml={3}>
+            Simple Data Exchanger
+          </Typography>
+        </Box>
         <Link onClick={handleMenu}>
           <AccountCircleIcon sx={{ color: theme.palette.common.white }} />
         </Link>

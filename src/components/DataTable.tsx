@@ -1,28 +1,42 @@
-import { Box, Button } from '@mui/material';
-import { DataGrid, GridCellEditCommitParams, GridRowId } from '@mui/x-data-grid';
-import { useEffect } from 'react';
-import { fetchSubmodelDetails } from '../features/submodels/actions';
+import { Box } from '@mui/material';
+import { GridCellEditCommitParams, GridRowId } from '@mui/x-data-grid';
+import { Button, Table } from 'cx-portal-shared-components';
 import { addRows, deleteRows, setRows, setSelectionModel, validateTableData } from '../features/submodels/slice';
+import schemaValidator from '../helpers/SchemaValidator';
 import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function DataTable() {
-  const { selectedSubmodel, columns, rows, selectionModel } = useAppSelector(state => state.submodelSlice);
+  const { submodelDetails, columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchSubmodelDetails(selectedSubmodel));
-  }, []);
-  //TODO
-  //1. Required fields
-  //2. check validation
-  //3. add proper formats(date fields)
   return (
-    <Box sx={{ height: 600, width: '100%' }}>
-      <Button onClick={() => dispatch(addRows())}>Add row</Button>
-      <Button onClick={() => dispatch(deleteRows())}>Delete row</Button>
-      <Button onClick={() => dispatch(validateTableData())}>Validate</Button>
-      <DataGrid
+    <Box>
+      <Box display="flex" justifyContent="space-between" mb={3}>
+        <Box>
+          <Button variant="contained" size="small" onClick={() => dispatch(addRows())}>
+            Add row
+          </Button>
+        </Box>
+        <Box>
+          <Button variant="contained" size="small" onClick={() => dispatch(deleteRows())} sx={{ mr: 2 }}>
+            Delete row(s)
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            disabled={!Boolean(selectedRows.length)}
+            onClick={() => {
+              dispatch(validateTableData());
+              schemaValidator(selectedRows);
+            }}
+          >
+            Next Step - Configure Policies
+          </Button>
+        </Box>
+      </Box>
+      <Table
+        title={submodelDetails.title}
         getRowId={row => row.id}
-        autoHeight={false}
+        autoHeight
         rows={rows}
         columns={columns}
         hideFooter={true}
@@ -48,6 +62,9 @@ export default function DataTable() {
           },
           '& .MuiDataGrid-columnHeaderCheckbox': {
             height: 'auto !important',
+          },
+          '& h5.MuiTypography-root.MuiTypography-h5 span': {
+            display: 'none',
           },
         }}
       />

@@ -22,7 +22,7 @@ export default function SelectSubmodel() {
       label="Select Submodel"
       fullWidth
       size="small"
-      value={submodelList[0]}
+      defaultValue={submodelList[0]}
       onChangeItem={e => handleTypeChange(e ? e.value : '')}
       items={submodelList}
       placeholder="Select Submodel"

@@ -1,9 +1,9 @@
 import { GridSelectionModel, GridValidRowModel } from '@mui/x-data-grid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import schemaValidator from '../../helpers/SchemaValidator';
 import { fetchSubmodelList, fetchSubmodelDetails } from './actions';
 import { ISubmodelsSlice } from './types';
 import { v4 as uuidv4 } from 'uuid';
+import _ from 'lodash';
 
 const initialState: ISubmodelsSlice = {
   selectedSubmodel: 'Aspect',
@@ -28,6 +28,11 @@ const handleColumnTypes = (value: any) => {
   }
 };
 
+//TODO
+//1. Required fields - done
+//2. check validation - partially done, chain errors pending
+//3. add proper formats(date fields) - pending (remove zone)
+
 export const submodelSlice = createSlice({
   name: 'submodelSlice',
   initialState,
@@ -49,11 +54,12 @@ export const submodelSlice = createSlice({
     },
     setSelectionModel: (state, action: PayloadAction<GridSelectionModel>) => {
       state.selectionModel = action.payload;
+      const selectedIDs = new Set(state.selectionModel);
+      state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
     },
     validateTableData: state => {
       const selectedIDs = new Set(state.selectionModel);
       state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
-      schemaValidator(state.submodelDetails.items, state.selectedRows);
     },
   },
   extraReducers: builder => {
@@ -73,19 +79,13 @@ export const submodelSlice = createSlice({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       state.columns = Object.entries(payload.items.properties).map(([key, value]: any) => ({
         field: key,
-        headerName: value.title,
+        headerName: `${value.title}${_.indexOf(state.submodelDetails.items.required, key) > -1 ? '*' : ''}`,
         editable: true,
         sortable: false,
         flex: 1,
         headerAlign: 'left',
         type: handleColumnTypes(value),
         valueOptions: value.enum,
-        // preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-        //   if (key === 'manufacturing_country') {
-        //     const hasError = params.props.value.length < 3;
-        //     return { ...params.props, error: hasError };
-        //   }
-        // },
       }));
       Object.keys(payload.items.properties).forEach(e => {
         state.row[e] = '';
