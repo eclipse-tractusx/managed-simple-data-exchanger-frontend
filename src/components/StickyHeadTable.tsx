@@ -246,12 +246,9 @@ export default function StickyHeadTable({
                           value}
                         {column.id === 'startDate' && column.format && column.format(value as string)}
                         {column.id === 'processId' && row.referenceProcessId && (
-                          <>
-                            {row.processId}
-                            <p>
-                              (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
-                            </p>
-                          </>
+                          <p>
+                            (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
+                          </p>
                         )}
                         {column.id === 'status' && value === Status.completed && row.numberOfFailedItems === 0 && (
                           <span title="Completed">
