@@ -152,7 +152,7 @@ export default function PoliciesDialog() {
     bpn_numbers: accessType === 'restricted' ? [companyBpn, ...bpnList] : [],
     type_of_access: accessType,
     row_data: uploadData,
-    usage_policy: [
+    usage_policies: [
       {
         type: 'DURATION',
         typeOfAccess: duration,

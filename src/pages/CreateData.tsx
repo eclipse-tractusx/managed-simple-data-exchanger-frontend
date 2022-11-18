@@ -28,7 +28,7 @@ import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import SelectSubmodel from '../components/SelectSubmodel';
 import DataTable from '../components/DataTable';
-import schemaValidator from '../helpers/SchemaValidator';
+import { schemaValidator } from '../helpers/SchemaValidator';
 import { fetchSubmodelDetails } from '../features/submodels/actions';
 
 export default function CreateData() {

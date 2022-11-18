@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
 
 const initialState: ISubmodelsSlice = {
-  selectedSubmodel: 'Aspect',
+  selectedSubmodel: 'aspect',
   submodelList: [],
   submodelDetails: {},
   columns: [],
@@ -15,23 +15,17 @@ const initialState: ISubmodelsSlice = {
   selectionModel: [],
   selectedRows: [],
 };
-let idCounter = -1;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleColumnTypes = (value: any) => {
-  if (value.format === 'date-time') {
-    return 'dateTime';
-  } else if (value.enum?.length) {
-    return 'singleSelect';
+  if (value.type.includes('number')) {
+    return value.enum?.length ? 'singleSelect' : 'number';
+  } else if (value.type.includes('string')) {
+    return value.enum?.length ? 'singleSelect' : 'string';
   } else {
     return 'string';
   }
 };
-
-//TODO
-//1. Required fields - done
-//2. check validation - partially done, chain errors pending
-//3. add proper formats(date fields) - pending (remove zone)
 
 export const submodelSlice = createSlice({
   name: 'submodelSlice',
@@ -41,7 +35,7 @@ export const submodelSlice = createSlice({
       state.selectedSubmodel = action.payload;
     },
     addRows: state => {
-      state.rows = state.rows.concat({ id: (idCounter += 1), ...state.row, uuid: `urn:uuid:${uuidv4()}` });
+      state.rows = state.rows.concat({ id: state.rows.length, ...state.row, uuid: `urn:uuid:${uuidv4()}` });
     },
     deleteRows: state => {
       const selectedIDs = new Set(state.selectionModel);
@@ -54,10 +48,6 @@ export const submodelSlice = createSlice({
     },
     setSelectionModel: (state, action: PayloadAction<GridSelectionModel>) => {
       state.selectionModel = action.payload;
-      const selectedIDs = new Set(state.selectionModel);
-      state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
-    },
-    validateTableData: state => {
       const selectedIDs = new Set(state.selectionModel);
       state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
     },
@@ -93,6 +83,5 @@ export const submodelSlice = createSlice({
     });
   },
 });
-export const { setSelectedSubmodel, addRows, setRows, setSelectionModel, deleteRows, validateTableData } =
-  submodelSlice.actions;
+export const { setSelectedSubmodel, addRows, setRows, setSelectionModel, deleteRows } = submodelSlice.actions;
 export default submodelSlice.reducer;

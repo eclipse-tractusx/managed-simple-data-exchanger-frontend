@@ -1,13 +1,19 @@
 import { Box } from '@mui/material';
 import { GridCellEditCommitParams, GridRowId } from '@mui/x-data-grid';
 import { Button, Table } from 'cx-portal-shared-components';
-import { addRows, deleteRows, setRows, setSelectionModel, validateTableData } from '../features/submodels/slice';
-import schemaValidator from '../helpers/SchemaValidator';
+import { addRows, deleteRows, setRows, setSelectionModel } from '../features/submodels/slice';
+import { schemaValidator } from '../helpers/SchemaValidator';
 import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function DataTable() {
   const { submodelDetails, columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
+  const handleSubmitData = () => {
+    const selectedIDs = new Set(selectionModel);
+    const tableData = rows.filter(row => selectedIDs.has(row.id));
+    schemaValidator(tableData);
+  };
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" mb={3}>
@@ -25,8 +31,7 @@ export default function DataTable() {
             size="small"
             disabled={!Boolean(selectedRows.length)}
             onClick={() => {
-              dispatch(validateTableData());
-              schemaValidator(selectedRows);
+              handleSubmitData();
             }}
           >
             Next Step - Configure Policies

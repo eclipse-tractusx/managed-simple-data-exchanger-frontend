@@ -63,7 +63,7 @@ class DftService extends HttpService {
   public async submitSubmodalData(url: string, data: unknown) {
     const res = await this.instance({
       method: 'POST',
-      url,
+      url: `${url}/manualentry`,
       data,
     });
     return res;

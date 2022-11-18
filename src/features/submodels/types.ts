@@ -48,6 +48,6 @@ export interface DynamicTableColumn {
   renderCell?: (params: any) => {};
   flex: number;
   headerAlign: 'center' | 'right' | 'left';
-  type?: 'singleSelect' | 'date' | 'dateTime' | 'string';
+  type?: 'singleSelect' | 'number' | 'string';
   valueOptions?: string[];
 }

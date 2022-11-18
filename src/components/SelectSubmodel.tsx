@@ -15,6 +15,7 @@ export default function SelectSubmodel() {
 
   useEffect(() => {
     dispatch(fetchSubmodelList());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

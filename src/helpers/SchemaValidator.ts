@@ -5,24 +5,21 @@ import { DefinedError } from 'ajv/dist/core';
 import { store } from '../store/store';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { handleDialogOpen } from '../store/accessUsagePolicySlice';
+import { GridValidRowModel } from '@mui/x-data-grid';
 
-export default function schemaValidator(data: any) {
+export const schemaValidator = async (data: GridValidRowModel[]) => {
   const ajv = new Ajv2019();
   addFormats(ajv);
 
   const submodelSlice = store.getState().submodelSlice;
   const validate = ajv.compile(submodelSlice.submodelDetails.items);
-
+  const result: boolean[] = [];
   data.forEach((item: any, index: number) => {
     const valid = validate(item);
     if (valid) {
-      // data is MyData here
-      console.log('valid data', data);
-      store.dispatch(handleDialogOpen({ data: data, url: submodelSlice.selectedSubmodel, type: 'json' }));
+      result.push(true);
     } else {
-      // The type cast is needed, as Ajv uses a wider type to allow extension
-      // You can extend this type to include your error types as needed.
-      console.log(validate.errors);
+      result.push(false);
       const errors = [];
       for (const err of validate.errors as DefinedError[]) {
         console.log(index + 1, err.message);
@@ -36,4 +33,7 @@ export default function schemaValidator(data: any) {
       }
     }
   });
-}
+  if (!result.includes(false)) {
+    store.dispatch(handleDialogOpen({ data: data, url: submodelSlice.selectedSubmodel, type: 'json' }));
+  }
+};
