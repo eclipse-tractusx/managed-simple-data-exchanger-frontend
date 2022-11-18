@@ -45,6 +45,6 @@ export enum Status {
 export enum CsvTypes {
   aspect = 'ASPECT',
   batch = 'BATCH',
-  aspectRelationship = 'ASPECT_RELATIONSHIP',
+  aspectRelationship = 'ASPECTRELATIONSHIP',
   unknown = 'UNKNOWN',
 }

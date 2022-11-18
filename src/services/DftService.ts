@@ -51,10 +51,10 @@ class DftService extends HttpService {
     return res;
   }
 
-  public async uploadData(data: FormData) {
+  public async uploadData(data: FormData, selectedSubmodel: string) {
     const res = await this.instance({
       method: 'POST',
-      url: '/upload',
+      url: `${selectedSubmodel}/upload`,
       data,
     });
     return res;
@@ -116,7 +116,7 @@ class DftService extends HttpService {
   public async deleteSubmodal(processId: string, csvType: string) {
     const res = await this.instance({
       method: 'DELETE',
-      url: `/delete/${processId}/${csvType}`,
+      url: `${csvType}/delete/${processId}`,
     });
     return res;
   }

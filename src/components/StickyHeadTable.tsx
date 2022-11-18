@@ -233,12 +233,12 @@ export default function StickyHeadTable({
                     const value = row[column.id];
                     return (
                       <StyledTableCell key={column.id} align={column.align}>
-                        {column.id === 'csvType' && value === CsvTypes.aspect && <b> ASPECT </b>}
-                        {column.id === 'csvType' && value === CsvTypes.batch && <b> BATCH </b>}
+                        {column.id === 'csvType' && value === CsvTypes.aspect && <strong> ASPECT </strong>}
+                        {column.id === 'csvType' && value === CsvTypes.batch && <strong> BATCH </strong>}
                         {column.id === 'csvType' && value === CsvTypes.aspectRelationship && (
-                          <b> ASPECT RELATIONSHIP </b>
+                          <strong> ASPECT RELATIONSHIP </strong>
                         )}
-                        {column.id === 'csvType' && value === CsvTypes.unknown && <b> UNKNOWN </b>}
+                        {column.id === 'csvType' && value === CsvTypes.unknown && <strong> UNKNOWN </strong>}
                         {column.id !== 'status' &&
                           column.id !== 'csvType' &&
                           column.id !== 'startDate' &&
