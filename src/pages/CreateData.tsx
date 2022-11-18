@@ -20,18 +20,17 @@
  ********************************************************************************/
 
 import { SyntheticEvent, useEffect, useState } from 'react';
-import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
-import { Button, Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
+import { Box, Grid } from '@mui/material';
+import { Tab, TabPanel, Tabs } from 'cx-portal-shared-components';
 import UploadFile from '../components/UploadFile';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import SelectSubmodel from '../components/SelectSubmodel';
 import DataTable from '../components/DataTable';
-import { fetchSubmodelDetails, submitJsonData } from '../features/submodels/actions';
-import { setJsonInputData } from '../features/submodels/slice';
+import { fetchSubmodelDetails } from '../features/submodels/actions';
+import JsonInput from '../components/JsonInput';
 
 export default function CreateData() {
-  const theme = useTheme();
-  const { submodelDetails, selectedSubmodel, jsonInputData } = useAppSelector(state => state.submodelSlice);
+  const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
 
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState(0);
@@ -41,27 +40,9 @@ export default function CreateData() {
   };
 
   useEffect(() => {
-    let isCancelled = false;
-    if (!isCancelled) {
-    }
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchSubmodelDetails(selectedSubmodel));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const textareaStyle = {
-    width: '100%',
-    border: `1px solid ${theme.palette.grey[500]}`,
-    marginTop: '16px',
-    padding: '16px',
-    borderRadius: 4,
-    fontSize: 16,
-  };
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
@@ -87,28 +68,7 @@ export default function CreateData() {
               <DataTable />
             </TabPanel>
             <TabPanel value={activeTab} index={2}>
-              <Grid display={'flex'} justifyContent="center" alignContent={'center'} pt={4}>
-                <Grid item xs={4}>
-                  <Typography variant="h4">{submodelDetails.title}</Typography>
-                  <TextareaAutosize
-                    value={jsonInputData}
-                    minRows={20}
-                    placeholder={JSON.stringify(submodelDetails.examples, undefined, 4)}
-                    style={{ ...textareaStyle }}
-                    onChange={e => {
-                      dispatch(setJsonInputData(e.target.value));
-                    }}
-                  />
-                  <Button
-                    variant="contained"
-                    onClick={() => dispatch(submitJsonData(jsonInputData))}
-                    sx={{ mt: 2 }}
-                    fullWidth
-                  >
-                    Next Step - Configure Policies
-                  </Button>
-                </Grid>
-              </Grid>
+              <JsonInput />
             </TabPanel>
           </Box>
         </Grid>
