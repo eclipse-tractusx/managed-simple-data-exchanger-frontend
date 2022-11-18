@@ -35,6 +35,7 @@ export interface ISubmodelsSlice {
   row: GridValidRowModel;
   selectionModel: GridSelectionModel;
   selectedRows: GridValidRowModel[];
+  jsonInputData: string;
 }
 
 export interface DynamicTableColumn {

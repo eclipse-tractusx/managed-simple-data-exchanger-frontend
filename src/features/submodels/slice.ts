@@ -14,6 +14,7 @@ const initialState: ISubmodelsSlice = {
   row: {},
   selectionModel: [],
   selectedRows: [],
+  jsonInputData: '',
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,7 +43,6 @@ export const submodelSlice = createSlice({
       state.rows = state.rows.filter(x => !selectedIDs.has(x.id));
     },
     setRows: (state, action: PayloadAction<GridValidRowModel>) => {
-      console.log(action.payload);
       const { id, field, value } = action.payload;
       state.rows[id][field] = value;
     },
@@ -50,6 +50,13 @@ export const submodelSlice = createSlice({
       state.selectionModel = action.payload;
       const selectedIDs = new Set(state.selectionModel);
       state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
+    },
+    setJsonInputData: (state, action: PayloadAction<string>) => {
+      state.jsonInputData = action.payload;
+    },
+    clearRows: state => {
+      state.rows = [];
+      state.jsonInputData = '';
     },
   },
   extraReducers: builder => {
@@ -83,5 +90,6 @@ export const submodelSlice = createSlice({
     });
   },
 });
-export const { setSelectedSubmodel, addRows, setRows, setSelectionModel, deleteRows } = submodelSlice.actions;
+export const { setSelectedSubmodel, addRows, setRows, setSelectionModel, deleteRows, clearRows, setJsonInputData } =
+  submodelSlice.actions;
 export default submodelSlice.reducer;

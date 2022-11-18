@@ -19,7 +19,7 @@
  ********************************************************************************/
 
 import { configureStore } from '@reduxjs/toolkit';
-import accessUsagePolicySlice from './accessUsagePolicySlice';
+import accessUsagePolicySlice from '../features/policies/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 import providerSlice from './providerSlice';

@@ -51,10 +51,10 @@ class DftService extends HttpService {
     return res;
   }
 
-  public async uploadData(data: FormData) {
+  public async uploadData(url: string, data: FormData) {
     const res = await this.instance({
       method: 'POST',
-      url: '/upload',
+      url: `${url}/upload`,
       data,
     });
     return res;

@@ -19,7 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Config } from '../utils/config';
+import { Config } from '../../utils/config';
 
 // Define a type for the slice state
 interface IAccessPolicyState {

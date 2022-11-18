@@ -19,22 +19,19 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
 import { Button, Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
 import UploadFile from '../components/UploadFile';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { setSelectedFiles, setUploadStatus } from '../store/providerSlice';
-import { setSnackbarMessage } from '../features/notifiication/slice';
 import SelectSubmodel from '../components/SelectSubmodel';
 import DataTable from '../components/DataTable';
-import { schemaValidator } from '../helpers/SchemaValidator';
-import { fetchSubmodelDetails } from '../features/submodels/actions';
+import { fetchSubmodelDetails, submitJsonData } from '../features/submodels/actions';
+import { setJsonInputData } from '../features/submodels/slice';
 
 export default function CreateData() {
-  const jsonDataRef = useRef(null);
   const theme = useTheme();
-  const { submodelDetails, selectedSubmodel } = useAppSelector(state => state.submodelSlice);
+  const { submodelDetails, selectedSubmodel, jsonInputData } = useAppSelector(state => state.submodelSlice);
 
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState(0);
@@ -52,26 +49,7 @@ export default function CreateData() {
     };
   }, []);
 
-  const submitJsonData = () => {
-    let json;
-    try {
-      json = JSON.parse(jsonDataRef.current.value.trim());
-    } catch (e) {
-      dispatch(
-        setSnackbarMessage({
-          message: 'Invalid data! Enter Required * fields.',
-          type: 'error',
-        }),
-      );
-    }
-    if (json) {
-      schemaValidator(json);
-    }
-  };
-
   useEffect(() => {
-    dispatch(setSelectedFiles([]));
-    dispatch(setUploadStatus(false));
     dispatch(fetchSubmodelDetails(selectedSubmodel));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -113,12 +91,20 @@ export default function CreateData() {
                 <Grid item xs={4}>
                   <Typography variant="h4">{submodelDetails.title}</Typography>
                   <TextareaAutosize
-                    ref={jsonDataRef}
+                    value={jsonInputData}
                     minRows={20}
                     placeholder={JSON.stringify(submodelDetails.examples, undefined, 4)}
                     style={{ ...textareaStyle }}
+                    onChange={e => {
+                      dispatch(setJsonInputData(e.target.value));
+                    }}
                   />
-                  <Button variant="contained" onClick={submitJsonData} sx={{ mt: 2 }} fullWidth>
+                  <Button
+                    variant="contained"
+                    onClick={() => dispatch(submitJsonData(jsonInputData))}
+                    sx={{ mt: 2 }}
+                    fullWidth
+                  >
                     Next Step - Configure Policies
                   </Button>
                 </Grid>

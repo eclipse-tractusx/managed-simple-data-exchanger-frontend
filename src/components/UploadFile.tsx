@@ -25,7 +25,7 @@ import UploadForm from '../components/UploadForm';
 import { Box } from '@mui/material';
 import { Button } from 'cx-portal-shared-components';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { handleDialogOpen } from '../store/accessUsagePolicySlice';
+import { handleDialogOpen } from '../features/policies/slice';
 
 export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);

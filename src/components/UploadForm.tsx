@@ -56,7 +56,6 @@ const UploadForm = () => {
   };
 
   const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles);
     handleFiles(acceptedFiles[0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

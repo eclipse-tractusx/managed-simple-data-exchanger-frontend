@@ -22,13 +22,14 @@ import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-p
 import { useState, useEffect } from 'react';
 import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
 import DftService from '../../services/DftService';
-import { handleDialogClose } from '../../store/accessUsagePolicySlice';
+import { handleDialogClose } from '../../features/policies/slice';
 import { setPageLoading } from '../../store/appSlice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
 import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
+import { clearRows } from '../../features/submodels/slice';
 
 const defaultUploadData: ProcessReport = {
   processId: '',
@@ -65,6 +66,7 @@ export default function PoliciesDialog() {
     customValue,
   } = useAppSelector(state => state.accessUsagePolicySlice);
   const { currentUploadData, selectedFiles } = useAppSelector(state => state.providerSlice);
+  const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
   const [showError, setshowError] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -81,6 +83,7 @@ export default function PoliciesDialog() {
     dispatch(setPageLoading(false));
     dispatch(setUploadStatus(true));
     dispatch(setPageLoading(false));
+    dispatch(clearRows());
     dispatch(handleDialogClose());
   };
 
@@ -195,7 +198,7 @@ export default function PoliciesDialog() {
 
     try {
       dispatch(setPageLoading(true));
-      const resp = await DftService.getInstance().uploadData(formData);
+      const resp = await DftService.getInstance().uploadData(selectedSubmodel, formData);
       const processId = resp.data;
       // first call
       processingReportFirstCall(processId);

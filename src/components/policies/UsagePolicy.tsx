@@ -29,7 +29,7 @@ import {
   setPurposeValue,
   setRole,
   setRoleValue,
-} from '../../store/accessUsagePolicySlice';
+} from '../../features/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import UsagePolicyItem from './UsagePolicyItem';
 
