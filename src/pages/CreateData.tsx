@@ -54,7 +54,7 @@ export default function CreateData() {
       <Grid container>
         <Grid item xs={12}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={activeTab} onChange={handleChange} aria-label="basic tabs example" sx={{ pt: 0 }}>
+            <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
               <Tab label="Upload File" />
               <Tab label="Table" />
               <Tab label="JSON" />
