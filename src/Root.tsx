@@ -1,19 +1,17 @@
 import { ErrorPage } from 'cx-portal-shared-components';
-import React from 'react';
 import App from './App';
-import { useAppSelector } from './store/store';
+import { IUser } from './models/User';
+import { Config } from './utils/config';
 
-const Root: React.FC = () => {
-  const { isUserValid } = useAppSelector(state => state.appSlice);
+export default function Root({ loggedInUser }: { loggedInUser: IUser }) {
+  const access = loggedInUser?.parsedToken?.resource_access;
   return (
     <>
-      {isUserValid ? (
+      {access?.hasOwnProperty(Config.REACT_APP_CLIENT_ID) ? (
         <App />
       ) : (
         <ErrorPage header="This webpage is not available." title="Sorry for this inconvenience." />
       )}
     </>
   );
-};
-
-export default Root;
+}

@@ -1,6 +1,5 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -19,28 +18,37 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import ReactDOM from 'react-dom';
-import './index.scss';
-import UserService from './services/UserService';
-import { store } from './store/store';
-import { Provider } from 'react-redux';
-import React from 'react';
-import { clearConsoles } from './utils/utils';
-import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
-import Root from './Root';
+import { GridValidRowModel, GridSelectionModel } from '@mui/x-data-grid';
 
-clearConsoles();
+export interface ISubmodelList {
+  id: number;
+  name: string;
+  value: string;
+}
+export interface ISubmodelsSlice {
+  selectedSubmodel: string;
+  submodelList: ISubmodelList[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  submodelDetails: any;
+  columns: DynamicTableColumn[];
+  rows: GridValidRowModel[];
+  row: GridValidRowModel;
+  selectionModel: GridSelectionModel;
+  selectedRows: GridValidRowModel[];
+  jsonInputData: string;
+}
 
-UserService.initKeycloak(user => {
-  ReactDOM.render(
-    <React.StrictMode>
-      <SharedCssBaseline />
-      <Provider store={store}>
-        <SharedThemeProvider>
-          <Root loggedInUser={user} />
-        </SharedThemeProvider>
-      </Provider>
-    </React.StrictMode>,
-    document.getElementById('root'),
-  );
-});
+export interface DynamicTableColumn {
+  field: string;
+  headerName: string;
+  editable: boolean;
+  sortable: boolean;
+  // eslint-disable-next-line
+  renderHeader?: () => {};
+  // eslint-disable-next-line
+  renderCell?: (params: any) => {};
+  flex: number;
+  headerAlign: 'center' | 'right' | 'left';
+  type?: 'singleSelect' | 'number' | 'string';
+  valueOptions?: string[];
+}

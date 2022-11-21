@@ -25,7 +25,7 @@ import UploadForm from '../components/UploadForm';
 import { Box } from '@mui/material';
 import { Button, SelectList } from 'cx-portal-shared-components';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { handleDialogOpen } from '../store/accessUsagePolicySlice';
+import { handleDialogOpen } from '../features/policies/slice';
 import { setSelectedSubmodel } from '../store/providerSlice';
 
 interface ISubmodelList {
