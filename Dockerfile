@@ -1,5 +1,8 @@
+
 # => Build container
-FROM node:18.9.0-alpine3.15 as builder
+#FROM node:18.9.0-alpine3.15 as builder
+FROM node:18.12.1-alpine3.15 as builder
+
 WORKDIR /app
 COPY ./package.json .
 #RUN yarn
@@ -8,26 +11,26 @@ COPY ./ .
 
 RUN npm install && npm run build
 
-#### Stage 2: Serve the application from Nginx 
+#### Stage 2: Serve the application from Nginx
 
-#FROM nginx:1.23.1
-#FROM nginxinc/nginx-unprivileged:1.23-alpine
-#FROM nginxinc/nginx-unprivileged:latest
+FROM nginx:1.22.1-alpine
 
-#RUN apt-get update -y && apt-get install -y nocache
-#RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
+ENV CURL_VERSION=7.83.1-r4
 
-# Nginx config
-#RUN rm -rf /etc/nginx/conf.d
+RUN set -eux; \
+      apk add --no-cache \
+        curl="${CURL_VERSION}" \
+        libcurl="${CURL_VERSION}" \
 
-#COPY ./conf /etc/nginx
-FROM nginx:mainline
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y nocache 
-RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run/
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
+
 COPY ./conf /etc/nginx
+
+RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
+
+#RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
 
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
@@ -37,22 +40,13 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-USER nginx 
+USER nginx
 
 EXPOSE 8080
-EXPOSE 443
-
-#COPY .env .
-# Add bash
-#RUN apk add --no-cache bash
-
-#RUN chown ${UID}:${GID} /usr/share/nginx/html
-
-#USER ${UID}:${GID}
-
-#RUN chmod 744 env.sh && chmod 744 -R /usr/share/nginx/html/*
-
-#RUN chmod 744 -R /usr/share/nginx/html/*
 
 # Start Nginx server
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+#CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+
+#EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]
