@@ -34,7 +34,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ChangeEvent, useState } from 'react';
-import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../store/accessUsagePolicySlice';
+import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import { Config } from '../../utils/config';
 import { Dialog, DialogActions, DialogContent, DialogHeader, Input, Typography } from 'cx-portal-shared-components';

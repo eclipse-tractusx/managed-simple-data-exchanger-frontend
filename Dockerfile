@@ -1,5 +1,8 @@
+
 # => Build container
-FROM node:18.9.0-alpine3.15 as builder
+#FROM node:18.9.0-alpine3.15 as builder
+FROM node:18.12.1-alpine3.15 as builder
+
 WORKDIR /app
 COPY ./package.json .
 #RUN yarn
@@ -8,7 +11,7 @@ COPY ./ .
 
 RUN npm install && npm run build
 
-#### Stage 2: Serve the application from Nginx 
+#### Stage 2: Serve the application from Nginx
 
 #FROM ubuntu/nginx:latest 
 FROM nginx:latest
@@ -22,6 +25,10 @@ RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
 
 #RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
 
+RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
+
+#RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
+
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
 
@@ -30,7 +37,7 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-USER nginx 
+USER nginx
 
 EXPOSE 8080
 

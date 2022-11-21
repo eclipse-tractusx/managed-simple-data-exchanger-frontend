@@ -1,6 +1,5 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -19,32 +18,37 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-export interface ProcessReport {
-  processId: string;
-  referenceProcessId: string;
-  csvType: CsvTypes;
-  numberOfItems: number;
-  numberOfCreatedItems: number;
-  numberOfUpdatedItems: number;
-  numberOfDeletedItems: number;
-  numberOfFailedItems: number;
-  numberOfSucceededItems: number;
-  status: Status;
-  startDate: string;
-  endDate?: string;
-  duration?: string;
-  actions?: unknown;
+import { GridValidRowModel, GridSelectionModel } from '@mui/x-data-grid';
+
+export interface ISubmodelList {
+  id: number;
+  name: string;
+  value: string;
+}
+export interface ISubmodelsSlice {
+  selectedSubmodel: string;
+  submodelList: ISubmodelList[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  submodelDetails: any;
+  columns: DynamicTableColumn[];
+  rows: GridValidRowModel[];
+  row: GridValidRowModel;
+  selectionModel: GridSelectionModel;
+  selectedRows: GridValidRowModel[];
+  jsonInputData: string;
 }
 
-export enum Status {
-  completed = 'COMPLETED',
-  failed = 'FAILED',
-  inProgress = 'IN_PROGRESS',
-}
-
-export enum CsvTypes {
-  aspect = 'ASPECT',
-  batch = 'BATCH',
-  aspectRelationship = 'ASPECTRELATIONSHIP',
-  unknown = 'UNKNOWN',
+export interface DynamicTableColumn {
+  field: string;
+  headerName: string;
+  editable: boolean;
+  sortable: boolean;
+  // eslint-disable-next-line
+  renderHeader?: () => {};
+  // eslint-disable-next-line
+  renderCell?: (params: any) => {};
+  flex: number;
+  headerAlign: 'center' | 'right' | 'left';
+  type?: 'singleSelect' | 'number' | 'string';
+  valueOptions?: string[];
 }

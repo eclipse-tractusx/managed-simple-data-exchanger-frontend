@@ -23,7 +23,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import PageNotFound from './pages/PageNotFound';
 import PageLoading from './components/PageLoading';
-import Notification from './store/Notifiication';
+import Notification from './features/notifiication';
 
 function App() {
   return (

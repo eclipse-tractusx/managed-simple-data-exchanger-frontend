@@ -31,13 +31,13 @@ import Root from './Root';
 
 clearConsoles();
 
-UserService.initKeycloak(() => {
+UserService.initKeycloak(user => {
   ReactDOM.render(
     <React.StrictMode>
       <SharedCssBaseline />
       <Provider store={store}>
         <SharedThemeProvider>
-          <Root />
+          <Root loggedInUser={user} />
         </SharedThemeProvider>
       </Provider>
     </React.StrictMode>,
