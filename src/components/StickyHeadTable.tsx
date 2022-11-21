@@ -233,12 +233,12 @@ export default function StickyHeadTable({
                     const value = row[column.id];
                     return (
                       <StyledTableCell key={column.id} align={column.align}>
-                        {column.id === 'csvType' && value === CsvTypes.aspect && <b> ASPECT </b>}
-                        {column.id === 'csvType' && value === CsvTypes.batch && <b> BATCH </b>}
+                        {column.id === 'csvType' && value === CsvTypes.aspect && <strong> ASPECT </strong>}
+                        {column.id === 'csvType' && value === CsvTypes.batch && <strong> BATCH </strong>}
                         {column.id === 'csvType' && value === CsvTypes.aspectRelationship && (
-                          <b> ASPECT RELATIONSHIP </b>
+                          <strong> ASPECT RELATIONSHIP </strong>
                         )}
-                        {column.id === 'csvType' && value === CsvTypes.unknown && <b> UNKNOWN </b>}
+                        {column.id === 'csvType' && value === CsvTypes.unknown && <strong> UNKNOWN </strong>}
                         {column.id !== 'status' &&
                           column.id !== 'csvType' &&
                           column.id !== 'startDate' &&
@@ -246,12 +246,9 @@ export default function StickyHeadTable({
                           value}
                         {column.id === 'startDate' && column.format && column.format(value as string)}
                         {column.id === 'processId' && row.referenceProcessId && (
-                          <>
-                            {row.processId}
-                            <p>
-                              (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
-                            </p>
-                          </>
+                          <p>
+                            (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
+                          </p>
                         )}
                         {column.id === 'status' && value === Status.completed && row.numberOfFailedItems === 0 && (
                           <span title="Completed">

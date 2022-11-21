@@ -232,7 +232,7 @@ export default function CreateData() {
     }
 
     if (json) {
-      validateData(json, '/aspect', 'json');
+      validateData(json, '/aspect/manualentry', 'json');
     }
   };
 
@@ -245,7 +245,7 @@ export default function CreateData() {
     }
 
     if (json) {
-      validateData(json, '/batch', 'json');
+      validateData(json, '/batch/manualentry', 'json');
     }
   };
   const submitAssemblyData = () => {
@@ -257,7 +257,7 @@ export default function CreateData() {
     }
 
     if (json) {
-      validateData(json, '/aspect/relationship', 'json');
+      validateData(json, '/aspectrelationship/manualentry', 'json');
     }
   };
 
@@ -322,7 +322,7 @@ export default function CreateData() {
             <TabPanel value={v} index={1}>
               <DynamicTable
                 columns={getColumnsBySubmodelType('serialPartTypization')}
-                submitUrl={'/aspect'}
+                submitUrl={'/aspect/manualentry'}
                 validateData={validateData}
                 title="Serial Part Typization"
               ></DynamicTable>
@@ -330,7 +330,7 @@ export default function CreateData() {
             <TabPanel value={v} index={2}>
               <DynamicTable
                 columns={getColumnsBySubmodelType('batch')}
-                submitUrl={'/batch'}
+                submitUrl={'/batch/manualentry'}
                 validateData={validateData}
                 title="Batch"
               ></DynamicTable>
@@ -338,7 +338,7 @@ export default function CreateData() {
             <TabPanel value={v} index={3}>
               <DynamicTable
                 columns={getAssemblyPartRelationshipColumns()}
-                submitUrl={'/aspect/relationship'}
+                submitUrl={'/aspectrelationship/manualentry'}
                 validateData={validateData}
                 title="Assembly Part Relationship"
               ></DynamicTable>

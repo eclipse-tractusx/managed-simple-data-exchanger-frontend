@@ -45,7 +45,7 @@ import { Status } from '../models/ProcessReport';
 
 export default function DynamicTable({
   columns = [],
-  submitUrl = '/aspect',
+  submitUrl = '/aspect/manualentry',
   validateData,
   title,
 }: {

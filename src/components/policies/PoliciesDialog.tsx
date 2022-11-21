@@ -25,7 +25,7 @@ import DftService from '../../services/DftService';
 import { handleDialogClose } from '../../store/accessUsagePolicySlice';
 import { setPageLoading } from '../../store/appSlice';
 import { setSnackbarMessage } from '../../store/Notifiication/slice';
-import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
+import { removeSelectedFiles, setSelectedSubmodel, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
@@ -64,7 +64,7 @@ export default function PoliciesDialog() {
     custom,
     customValue,
   } = useAppSelector(state => state.accessUsagePolicySlice);
-  const { currentUploadData, selectedFiles } = useAppSelector(state => state.providerSlice);
+  const { currentUploadData, selectedFiles, selectedSubmodel } = useAppSelector(state => state.providerSlice);
   const [showError, setshowError] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -152,7 +152,7 @@ export default function PoliciesDialog() {
     bpn_numbers: accessType === 'restricted' ? [companyBpn, ...bpnList] : [],
     type_of_access: accessType,
     row_data: uploadData,
-    usage_policy: [
+    usage_policies: [
       {
         type: 'DURATION',
         typeOfAccess: duration,
@@ -192,16 +192,30 @@ export default function PoliciesDialog() {
     const formData = new FormData();
     formData.append('file', selectedFiles[0]);
     formData.append('meta_data', JSON.stringify(payload));
+    formData.append('submodel', selectedSubmodel);
 
     try {
       dispatch(setPageLoading(true));
-      const resp = await DftService.getInstance().uploadData(formData);
-      const processId = resp.data;
-      // first call
-      processingReportFirstCall(processId);
+      if (selectedSubmodel) {
+        const resp = await DftService.getInstance().uploadData(formData, selectedSubmodel);
+        const processId = resp.data;
+        // first call
+        processingReportFirstCall(processId);
+        dispatch(setSelectedSubmodel(''));
+      } else {
+        dispatch(setPageLoading(false));
+        dispatch(
+          setSnackbarMessage({
+            message: 'Please select the submodel from the submodel list which you want to upload',
+            type: 'error',
+          }),
+        );
+        return;
+      }
     } catch (error) {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
       clearUpload();
+      dispatch(setSelectedSubmodel(''));
     }
   };
 
