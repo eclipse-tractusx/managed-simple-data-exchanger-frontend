@@ -65,8 +65,14 @@ export default function DataTable() {
           '& .MuiDataGrid-columnHeader': {
             padding: '0 10px',
           },
+          '& .MuiDataGrid-cell': {
+            padding: '0 10px',
+          },
           '& .MuiDataGrid-columnHeaderCheckbox': {
             height: 'auto !important',
+          },
+          '& .MuiDataGrid-cellCheckbox': {
+            padding: '0 30px',
           },
           '& h5.MuiTypography-root.MuiTypography-h5 span': {
             display: 'none',
