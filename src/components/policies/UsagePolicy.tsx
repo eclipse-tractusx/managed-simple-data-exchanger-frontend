@@ -29,7 +29,7 @@ import {
   setPurposeValue,
   setRole,
   setRoleValue,
-} from '../../store/accessUsagePolicySlice';
+} from '../../features/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import UsagePolicyItem from './UsagePolicyItem';
 
@@ -41,7 +41,7 @@ export default function UsagePolicy() {
 
   return (
     <>
-      <Typography>ACCESS POLICY</Typography>
+      <Typography>USAGE POLICY</Typography>
       <Box sx={{ mt: 2 }}>
         <UsagePolicyItem
           restrictionType={duration}

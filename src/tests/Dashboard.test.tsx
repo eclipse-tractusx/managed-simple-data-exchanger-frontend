@@ -22,7 +22,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
-import { handleDialogOpen } from '../store/accessUsagePolicySlice';
+import { handleDialogOpen } from '../features/policies/slice';
 import { store } from '../store/store';
 import { ReduxWrapper } from '../utils/testUtils';
 

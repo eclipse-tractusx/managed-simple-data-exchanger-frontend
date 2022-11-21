@@ -70,7 +70,7 @@ import {
   setFilterConnectors,
 } from '../store/consumerSlice';
 import { useAppSelector, useAppDispatch } from '../store/store';
-import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 
 export const ConsumeData: React.FC = () => {
   const {

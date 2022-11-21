@@ -22,13 +22,14 @@ import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-p
 import { useState, useEffect } from 'react';
 import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
 import DftService from '../../services/DftService';
-import { handleDialogClose } from '../../store/accessUsagePolicySlice';
+import { handleDialogClose } from '../../features/policies/slice';
 import { setPageLoading } from '../../store/appSlice';
-import { setSnackbarMessage } from '../../store/Notifiication/slice';
-import { removeSelectedFiles, setSelectedSubmodel, setUploadData, setUploadStatus } from '../../store/providerSlice';
+import { setSnackbarMessage } from '../../features/notifiication/slice';
+import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
+import { clearRows } from '../../features/submodels/slice';
 
 const defaultUploadData: ProcessReport = {
   processId: '',
@@ -64,7 +65,8 @@ export default function PoliciesDialog() {
     custom,
     customValue,
   } = useAppSelector(state => state.accessUsagePolicySlice);
-  const { currentUploadData, selectedFiles, selectedSubmodel } = useAppSelector(state => state.providerSlice);
+  const { currentUploadData, selectedFiles } = useAppSelector(state => state.providerSlice);
+  const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
   const [showError, setshowError] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -81,6 +83,7 @@ export default function PoliciesDialog() {
     dispatch(setPageLoading(false));
     dispatch(setUploadStatus(true));
     dispatch(setPageLoading(false));
+    dispatch(clearRows());
     dispatch(handleDialogClose());
   };
 
@@ -196,26 +199,13 @@ export default function PoliciesDialog() {
 
     try {
       dispatch(setPageLoading(true));
-      if (selectedSubmodel) {
-        const resp = await DftService.getInstance().uploadData(formData, selectedSubmodel);
-        const processId = resp.data;
-        // first call
-        processingReportFirstCall(processId);
-        dispatch(setSelectedSubmodel(''));
-      } else {
-        dispatch(setPageLoading(false));
-        dispatch(
-          setSnackbarMessage({
-            message: 'Please select the submodel from the submodel list which you want to upload',
-            type: 'error',
-          }),
-        );
-        return;
-      }
+      const resp = await DftService.getInstance().uploadData(selectedSubmodel, formData);
+      const processId = resp.data;
+      // first call
+      processingReportFirstCall(processId);
     } catch (error) {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
       clearUpload();
-      dispatch(setSelectedSubmodel(''));
     }
   };
 

@@ -30,7 +30,7 @@ import {
   Stack,
 } from '@mui/material';
 import { Input } from 'cx-portal-shared-components';
-import { setDurationUnit } from '../../store/accessUsagePolicySlice';
+import { setDurationUnit } from '../../features/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 interface FreeTextProps {

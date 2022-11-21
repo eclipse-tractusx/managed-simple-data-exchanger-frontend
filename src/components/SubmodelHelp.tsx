@@ -24,7 +24,7 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import { Link } from 'react-router-dom';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { ISubmodelHelpProps } from '../models/Help';
-import { setSnackbarMessage } from '../store/Notifiication/slice';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useDispatch } from 'react-redux';
 
 export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
