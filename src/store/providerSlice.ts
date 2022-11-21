@@ -64,12 +64,8 @@ export const providerSlice = createSlice({
       state.selectedFiles = [];
       state.uploadStatus = false;
     },
-    setSelectedSubmodel: (state, action: PayloadAction<string>) => {
-      state.selectedSubmodel = action.payload;
-    },
   },
 });
 
-export const { setUploadData, setSelectedFiles, setUploadStatus, removeSelectedFiles, setSelectedSubmodel } =
-  providerSlice.actions;
+export const { setUploadData, setSelectedFiles, setUploadStatus, removeSelectedFiles } = providerSlice.actions;
 export default providerSlice.reducer;

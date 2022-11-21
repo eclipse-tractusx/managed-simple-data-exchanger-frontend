@@ -206,7 +206,6 @@ export default function PoliciesDialog() {
     } catch (error) {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
       clearUpload();
-      dispatch(setSelectedSubmodel(''));
     }
   };
 

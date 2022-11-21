@@ -23,34 +23,9 @@
 import UploadForm from '../components/UploadForm';
 // styles
 import { Box } from '@mui/material';
-import { Button, SelectList } from 'cx-portal-shared-components';
+import { Button } from 'cx-portal-shared-components';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { handleDialogOpen } from '../features/policies/slice';
-import { setSelectedSubmodel } from '../store/providerSlice';
-
-interface ISubmodelList {
-  id: number;
-  title: string;
-  value: string;
-}
-
-const submodelList: Array<ISubmodelList> = [
-  {
-    id: 1,
-    title: 'Serial Part Typization',
-    value: 'aspect',
-  },
-  {
-    id: 2,
-    title: 'Batch',
-    value: 'batch',
-  },
-  {
-    id: 3,
-    title: 'Assembly Part Relationship',
-    value: 'aspectrelationship',
-  },
-];
 
 export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
@@ -75,22 +50,6 @@ export default function UploadFile() {
         >
           Next Step - Configure Policies
         </Button>
-      </Box>
-      <Box
-        sx={{
-          width: 300,
-          height: 150,
-        }}
-      >
-        <SelectList
-          label="Select Submodel"
-          size="small"
-          items={submodelList}
-          defaultValue={submodelList[0].value}
-          onChangeItem={e => dispatch(setSelectedSubmodel(e.value))}
-          placeholder="Select Submodel"
-          hiddenLabel
-        />
       </Box>
       <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <UploadForm />
