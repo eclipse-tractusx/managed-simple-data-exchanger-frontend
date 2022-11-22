@@ -18,17 +18,11 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-export interface Batch {
-  id?: number;
-  uuid: string;
-  batch_id: string;
-  manufacturing_date: string;
-  manufacturing_country: string;
-  manufacturer_part_id: string;
-  customer_part_id: string;
-  classification: string;
-  name_at_manufacturer: string;
-  name_at_customer: string;
-  optional_identifier_key: string;
-  optional_identifier_value: string;
-}
+import { Config } from '../utils/config';
+import UserService from '../services/UserService';
+
+export const HOST = Config.REACT_APP_API_URL;
+
+export const DEFAULT_HEADERS = {
+  Authorization: `Bearer ${UserService.getToken()}`,
+};

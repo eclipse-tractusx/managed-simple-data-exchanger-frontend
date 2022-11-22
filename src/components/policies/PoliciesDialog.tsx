@@ -21,7 +21,6 @@
 import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
 import { useState, useEffect } from 'react';
 import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
-import DftService from '../../services/DftService';
 import { handleDialogClose } from '../../features/policies/slice';
 import { setPageLoading } from '../../store/appSlice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
@@ -30,6 +29,7 @@ import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
 import { clearRows } from '../../features/submodels/slice';
+import ProviderService from '../../services/ProviderService';
 
 const defaultUploadData: ProcessReport = {
   processId: '',
@@ -93,7 +93,7 @@ export default function PoliciesDialog() {
       // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
       const interval = setInterval(
         () =>
-          DftService.getInstance()
+          ProviderService.getInstance()
             .getReportById(processId)
             .then(result => {
               dispatch(setUploadData(result.data));
@@ -135,7 +135,7 @@ export default function PoliciesDialog() {
 
   const processingReportFirstCall = (processId: string) => {
     setTimeout(async () => {
-      DftService.getInstance()
+      ProviderService.getInstance()
         .getReportById(processId)
         .then(response => {
           processingReport(response, processId);
@@ -182,7 +182,7 @@ export default function PoliciesDialog() {
   const submitData = async () => {
     try {
       dispatch(setPageLoading(true));
-      const response = await DftService.getInstance().submitSubmodalData(uploadUrl, payload);
+      const response = await ProviderService.getInstance().submitSubmodalData(uploadUrl, payload);
       // first call
       processingReportFirstCall(response.data);
     } catch (error) {
@@ -199,7 +199,7 @@ export default function PoliciesDialog() {
 
     try {
       dispatch(setPageLoading(true));
-      const resp = await DftService.getInstance().uploadData(selectedSubmodel, formData);
+      const resp = await ProviderService.getInstance().uploadData(selectedSubmodel, formData);
       const processId = resp.data;
       // first call
       processingReportFirstCall(processId);
