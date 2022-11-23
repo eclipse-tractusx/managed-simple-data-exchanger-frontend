@@ -20,7 +20,7 @@
 
 import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
 import { useState, useEffect } from 'react';
-import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
+import { Status, ProcessReport } from '../../models/ProcessReport';
 import { handleDialogClose } from '../../features/policies/slice';
 import { setPageLoading } from '../../store/appSlice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
@@ -34,7 +34,7 @@ import ProviderService from '../../services/ProviderService';
 const defaultUploadData: ProcessReport = {
   processId: '',
   referenceProcessId: '',
-  csvType: CsvTypes.unknown,
+  csvType: '',
   numberOfItems: 0,
   numberOfCreatedItems: 0,
   numberOfUpdatedItems: 0,

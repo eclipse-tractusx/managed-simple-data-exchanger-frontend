@@ -19,7 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
+import { ProcessReport, Status } from '../models/ProcessReport';
 
 interface IProviderSlice {
   currentUploadData: ProcessReport;
@@ -32,7 +32,7 @@ const initialState: IProviderSlice = {
   currentUploadData: {
     processId: '',
     referenceProcessId: '',
-    csvType: CsvTypes.unknown,
+    csvType: '',
     numberOfItems: 0,
     numberOfCreatedItems: 0,
     numberOfUpdatedItems: 0,
