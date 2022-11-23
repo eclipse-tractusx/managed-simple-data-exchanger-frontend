@@ -53,7 +53,7 @@ import OfferDetailsDialog from '../components/OfferDetailsDialog';
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
 import { ILegalEntityContent, IConnectorResponse, IntOption } from '../models/ConsumerContractOffers';
-import DftService from '../services/DftService';
+import ConsumerService from '../services/ConsumerService';
 import {
   setContractOffers,
   setSelectedOffer,
@@ -218,7 +218,7 @@ export const ConsumeData: React.FC = () => {
           };
         }
         setIsOfferSubLoading(true);
-        const response = await DftService.getInstance().subscribeToOffers(payload);
+        const response = await ConsumerService.getInstance().subscribeToOffers(payload);
         setIsOfferSubLoading(false);
         if (response.status == 200) {
           dispatch(
@@ -264,7 +264,7 @@ export const ConsumeData: React.FC = () => {
         return true;
       }
       dispatch(setOffersLoading(true));
-      const response = await DftService.getInstance().fetchConsumerDataOffers(providerUrl);
+      const response = await ConsumerService.getInstance().fetchConsumerDataOffers(providerUrl);
       dispatch(setContractOffers(response.data));
       dispatch(setOffersLoading(false));
     } catch (error) {
@@ -312,7 +312,7 @@ export const ConsumeData: React.FC = () => {
     if (searchStr.length > 2) {
       dispatch(setFilterCompanyOptions([]));
       dispatch(setFfilterCompanyOptionsLoading(true));
-      const res: [] = await DftService.getInstance().searchLegalEntities(searchStr);
+      const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
       dispatch(setFfilterCompanyOptionsLoading(false));
       if (res.length > 0) {
         const filterContent = res.map((item: ILegalEntityContent, index) => {
@@ -344,7 +344,7 @@ export const ConsumeData: React.FC = () => {
     payload.push(bpn);
     dispatch(setFilterSelectedConnector(''));
     dispatch(setFilterConnectors([]));
-    const res = await DftService.getInstance().searchConnectoByBPN(payload);
+    const res = await ConsumerService.getInstance().searchConnectoByBPN(payload);
     if (res.length) {
       const resC: IConnectorResponse[] = res;
       const connector = resC[0];

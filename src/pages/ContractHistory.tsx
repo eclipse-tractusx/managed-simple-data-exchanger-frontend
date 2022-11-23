@@ -24,7 +24,7 @@ import { Refresh } from '@mui/icons-material';
 import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { convertEpochToDate, epochToDate } from '../utils/utils';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import DftService from '../services/DftService';
+import ConsumerService from '../services/ConsumerService';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
 import { IContractAgreements } from '../models/ConsumerContractOffers';
@@ -151,7 +151,7 @@ const ContractHistory: React.FC = () => {
   const fetchContractAgreements = async () => {
     dispatch(setIsContractAgreementsLoading(true));
     try {
-      const response = await DftService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
+      const response = await ConsumerService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
       const contractAgreementsList = response.data;
       contractAgreementsList.sort((contract1: IContractAgreements, contract2: IContractAgreements) => {
         const d1 = epochToDate(contract1.dateUpdated).valueOf();

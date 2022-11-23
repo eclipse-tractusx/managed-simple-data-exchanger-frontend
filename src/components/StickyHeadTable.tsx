@@ -40,9 +40,9 @@ import { ProcessReport, CsvTypes, Status } from '../models/ProcessReport';
 import { formatDate } from '../utils/utils';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import DftService from '../services/DftService';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useAppDispatch } from '../store/store';
+import ProviderService from '../services/ProviderService';
 
 interface Column {
   id:
@@ -185,7 +185,7 @@ export default function StickyHeadTable({
   const deleteSubmodal = async (subModel: ProcessReport) => {
     try {
       const { processId, csvType } = subModel;
-      const response = await DftService.getInstance().deleteSubmodal(processId, csvType);
+      const response = await ProviderService.getInstance().deleteSubmodal(processId, csvType);
       if (response.data && response.status === 200) {
         dispatch(
           setSnackbarMessage({

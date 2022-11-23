@@ -23,7 +23,13 @@ export default function DataTable() {
           </Button>
         </Box>
         <Box>
-          <Button variant="contained" size="small" onClick={() => dispatch(deleteRows())} sx={{ mr: 2 }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => dispatch(deleteRows())}
+            sx={{ mr: 2 }}
+            disabled={!Boolean(selectedRows.length)}
+          >
             Delete row(s)
           </Button>
           <Button

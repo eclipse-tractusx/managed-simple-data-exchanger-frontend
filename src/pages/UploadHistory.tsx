@@ -25,7 +25,7 @@ import { Box, Grid } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
 import { ProcessReport } from '../models/ProcessReport';
 import StickyHeadTable from '../components/StickyHeadTable';
-import DftService from '../services/DftService';
+import ProviderService from '../services/ProviderService';
 
 export const UploadHistory: React.FC = () => {
   const [tableData, setTableData] = useState<ProcessReport[]>([]);
@@ -35,7 +35,7 @@ export const UploadHistory: React.FC = () => {
 
   const refreshTable = useCallback(async () => {
     try {
-      const response = await DftService.getInstance().getUploadHistory({ page: page, pageSize: rowsPerPage });
+      const response = await ProviderService.getInstance().getUploadHistory({ page: page, pageSize: rowsPerPage });
       setTableData(response.data.items);
       setTotalElements(response.data.totalItems);
     } catch (error) {

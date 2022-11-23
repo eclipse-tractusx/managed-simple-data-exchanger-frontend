@@ -20,53 +20,18 @@
  ********************************************************************************/
 
 import HttpService from './HttpService';
-class DftService extends HttpService {
+class ConsumerService extends HttpService {
   public constructor() {
     super({});
   }
 
-  private static classInstance?: DftService;
+  private static classInstance?: ConsumerService;
 
   public static getInstance() {
     if (!this.classInstance) {
-      this.classInstance = new DftService();
+      this.classInstance = new ConsumerService();
     }
     return this.classInstance;
-  }
-
-  public async getReportById(id: string) {
-    const res = await this.instance({
-      method: 'GET',
-      url: `/processing-report/${id}`,
-    });
-    return res;
-  }
-
-  public async getUploadHistory(params: unknown) {
-    const res = await this.instance({
-      method: 'GET',
-      url: '/processing-report',
-      params,
-    });
-    return res;
-  }
-
-  public async uploadData(url: string, data: FormData) {
-    const res = await this.instance({
-      method: 'POST',
-      url: `${url}/upload`,
-      data,
-    });
-    return res;
-  }
-
-  public async submitSubmodalData(url: string, data: unknown) {
-    const res = await this.instance({
-      method: 'POST',
-      url: `${url}/manualentry`,
-      data,
-    });
-    return res;
   }
 
   public async fetchConsumerDataOffers(providerUrl: string) {
@@ -112,14 +77,6 @@ class DftService extends HttpService {
     });
     return res;
   }
-
-  public async deleteSubmodal(processId: string, csvType: string) {
-    const res = await this.instance({
-      method: 'DELETE',
-      url: `${csvType}/delete/${processId}`,
-    });
-    return res;
-  }
 }
 
-export default DftService;
+export default ConsumerService;

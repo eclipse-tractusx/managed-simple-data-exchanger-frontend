@@ -21,7 +21,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { store } from '../store/store';
-import { HOST } from './ApiHelper';
+import { HOST } from '../helpers/ApiHelper';
 import UserService from './UserService';
 
 abstract class HttpService {
