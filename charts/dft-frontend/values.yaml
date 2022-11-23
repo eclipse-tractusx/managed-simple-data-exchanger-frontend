@@ -42,7 +42,7 @@ service:
   port: 80
 
 ingress:
-  enabled: false
+  enabled: true
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
@@ -50,7 +50,7 @@ ingress:
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/enable-cors: 'false'
-  host: dft.int.demo.catena-x.net
+  host: ""
 
 resources:
   limits:
