@@ -44,7 +44,11 @@ export const submodelSlice = createSlice({
     },
     setRows: (state, action: PayloadAction<GridValidRowModel>) => {
       const { id, field, value } = action.payload;
-      state.rows[id][field] = value;
+      if (value === '') {
+        state.rows[id][field] = null;
+      } else {
+        state.rows[id][field] = value;
+      }
     },
     setSelectionModel: (state, action: PayloadAction<GridSelectionModel>) => {
       state.selectionModel = action.payload;
@@ -84,8 +88,13 @@ export const submodelSlice = createSlice({
         type: handleColumnTypes(value),
         valueOptions: value.enum,
       }));
-      Object.keys(payload.items.properties).forEach(e => {
-        state.row[e] = '';
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Object.entries(payload.items.properties).map(([key, value]: any) => {
+        if (value.enum?.length) {
+          state.row[key] = '';
+        } else {
+          state.row[key] = null;
+        }
       });
     });
   },

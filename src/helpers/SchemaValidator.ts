@@ -19,9 +19,7 @@ export const schemaValidator = async (data: GridValidRowModel[]) => {
       result.push(true);
     } else {
       result.push(false);
-      const errors = [];
       for (const err of validate.errors as DefinedError[]) {
-        errors.push(err.message);
         store.dispatch(
           setSnackbarMessage({
             message: `Row ${index + 1}: ${err.instancePath.replace(/[^a-zA-Z ]/g, ' ')} ${err.message}`,
