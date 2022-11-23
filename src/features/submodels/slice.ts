@@ -89,7 +89,7 @@ export const submodelSlice = createSlice({
         valueOptions: value.enum,
       }));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      Object.entries(payload.items.properties).map(([key, value]: any) => {
+      Object.entries(payload.items.properties).forEach(([key, value]: any) => {
         if (value.enum?.length) {
           state.row[key] = '';
         } else {
