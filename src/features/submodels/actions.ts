@@ -10,7 +10,6 @@ const fetchSubmodelList = createAsyncThunk(`/submodel/list`, async () => {
     return res;
   } catch (error: unknown) {
     console.error('api call error:', error);
-    throw Error(`fetchSubmodelSchema error`);
   }
 });
 const fetchSubmodelDetails = createAsyncThunk(`/submodel/details`, async (params: string, { dispatch }) => {
@@ -20,15 +19,16 @@ const fetchSubmodelDetails = createAsyncThunk(`/submodel/details`, async (params
     return res;
   } catch (error: unknown) {
     console.error('api call error:', error);
-    throw Error(`fetchSubmodelSchema error`);
   } finally {
     dispatch(setPageLoading(false));
   }
 });
 const submitJsonData = createAsyncThunk('/submit/json-data', async (data: string, { dispatch }) => {
-  let json;
   try {
-    json = JSON.parse(data.trim());
+    const json = JSON.parse(data.trim());
+    if (json) {
+      schemaValidator(json);
+    }
   } catch (e) {
     dispatch(
       setSnackbarMessage({
@@ -36,9 +36,6 @@ const submitJsonData = createAsyncThunk('/submit/json-data', async (data: string
         type: 'error',
       }),
     );
-  }
-  if (json) {
-    schemaValidator(json);
   }
 });
 export { fetchSubmodelList, fetchSubmodelDetails, submitJsonData };
