@@ -22,7 +22,7 @@
 export interface ProcessReport {
   processId: string;
   referenceProcessId: string;
-  csvType: CsvTypes;
+  csvType: string;
   numberOfItems: number;
   numberOfCreatedItems: number;
   numberOfUpdatedItems: number;
@@ -40,11 +40,4 @@ export enum Status {
   completed = 'COMPLETED',
   failed = 'FAILED',
   inProgress = 'IN_PROGRESS',
-}
-
-export enum CsvTypes {
-  aspect = 'ASPECT',
-  batch = 'BATCH',
-  aspectRelationship = 'ASPECTRELATIONSHIP',
-  unknown = 'UNKNOWN',
 }

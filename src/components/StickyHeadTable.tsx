@@ -36,7 +36,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { ProcessReport, CsvTypes, Status } from '../models/ProcessReport';
+import { ProcessReport, Status } from '../models/ProcessReport';
 import { formatDate } from '../utils/utils';
 import { IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -233,12 +233,7 @@ export default function StickyHeadTable({
                     const value = row[column.id];
                     return (
                       <StyledTableCell key={column.id} align={column.align}>
-                        {column.id === 'csvType' && value === CsvTypes.aspect && <strong> ASPECT </strong>}
-                        {column.id === 'csvType' && value === CsvTypes.batch && <strong> BATCH </strong>}
-                        {column.id === 'csvType' && value === CsvTypes.aspectRelationship && (
-                          <strong> ASPECT RELATIONSHIP </strong>
-                        )}
-                        {column.id === 'csvType' && value === CsvTypes.unknown && <strong> UNKNOWN </strong>}
+                        {column.id === 'csvType' && <strong> {value} </strong>}
                         {column.id !== 'status' &&
                           column.id !== 'csvType' &&
                           column.id !== 'startDate' &&
