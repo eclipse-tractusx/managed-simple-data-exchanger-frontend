@@ -21,6 +21,8 @@
         - [Serial Part Typization](#serial-part-typization)
         - [Assembly Part Relationship](#assembly-part-relationship)
         - [Batch](#batch)
+        - [BoM As-Planned - PartAsPlanned](#bom-as-planned---partasplanned)
+        - [BoM As-Planned - SingleLevelBoMAsPlanned](#bom-as-planned---singlelevelbomasplanned)
     - [Whitebox Overall System](#whitebox-overall-system)
         - [App routing](#app-routing)
         - [Frontend folder structure](#frontend-folder-structure)
@@ -232,6 +234,35 @@ Detailed API specs available under:
 
 <br />
 
+#### **BoM As-Planned - PartAsPlanned**
+
+<br /><br /><img src="images/part_as_planned.png" height="60%" width="60%" /><br /><br />
+
+| Module                      	| Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            	| Execution order 	|
+|-----------------------------	|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|-----------------	|
+| CreatePartAsPlanned         	| Used when Part As Planned is created on the frontend using the table or submit the json request with the content.<br><br>It set the row position and process id in each item.                                                                                                                                                                                                                                                                                                                                                          	| 0               	|
+| MapToPartAsPlanned          	| Convert the string that came on the uploaded CSV file to an PartAsPlanned dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                             	| 1               	|
+| MapFromPartAsPlannedRequest 	| Convert from the PartAsPlannedRequest object to an PartAsPlanned dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                                      	| 1               	|
+| GenerateUUId                	| Check if PartAsPlanned have a non null and non blank uuid. If not it will generate one UUID with the <br>defined prefix "urn:uuid:".                                                                                                                                                                                                                                                                                                                                                                                                   	| 2               	|
+| DigitalTwinsPartAsPlanned   	| Do the interface in the Digital Twins registry.<br><br> - It will lookup for shells and if no shell is found it will create one;<br> - If a single shell exists for the given key it will use that shell;<br> - If multiple shell are found it will throw an exception;<br> - It will lookup for sub models. <br> - If no sub model is found it will create one;<br> - If a sub model is found it will set the PartAsPlanned with that sub model id;<br><br>Please note that a shell can only have two sub models at the time being. 	| 3               	|
+| EDCPartAsPlanned            	| Do the interface in the Eclipse Data Connector (EDC)<br><br> - It will lookup for a previous registry;<br> - If no registry is found it will create an asset plus a default policy and contract definition;                                                                                                                                                                                                                                                                                                                            	| 4               	|
+| StorePartAsPlanned          	| Store the PartAsPlanned in the SDE database.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	| 5               	|
+<br />
+
+#### **BoM As-Planned - SingleLevelBoMAsPlanned**
+<br /><br /><img src="images/single_level_bom_as_planned.png" height="60%" width="60%" /><br /><br />
+
+| Module                                	| Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    	| Execution order 	|
+|---------------------------------------	|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|-----------------	|
+| CreateSingleLevelBoMAsPlanned         	| Used when Single Level BoM As - Planned is created on the frontend using the table or submit the <br>json request with the content.<br>It set the row position and process id in each item.                                                                                                                                                                                                                                                                                                                                                    	| 0               	|
+| MapToSingleLevelBoMAsPlanned          	| Convert the string that came on the uploaded CSV file to an SingleLevelBoMAsPlanned dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                           	| 1               	|
+| MapFromSingleLevelBoMAsPlannedRequest 	| Convert from the SingleLevelBoMAsPlanned Request object to an SingleLevelBoMAsPlanned dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                         	| 1               	|
+| GenerateUUId                          	| Check if SingleLevelBoMAsPlanned have a non null and non blank uuid. <br><br>If not it will generate one UUID with the defined prefix "urn:uuid:".                                                                                                                                                                                                                                                                                                                                                                                             	| 2               	|
+| DigitalTwinsSingleLevelBoMAsPlanned   	| Do the interface in the Digital Twins registry.<br><br> - It will lookup for shells and if no shell is found it will create one;<br> - If a single shell exists for the given key it will use that shell;<br> - If multiple shell are found it will throw an exception;<br> - It will lookup for sub models. <br> - If no sub model is found it will create one;<br> - If a sub model is found it will set the SingleLevelBoMAsPlanned with that sub model id;<br><br>Please note that a shell can only have two sub models at the time being. 	| 3               	|
+| EDCSingleLevelBoMAsPlanned            	| Do the interface in the Eclipse Data Connector (EDC)<br><br> - It will lookup for a previous registry;<br> - If no registry is found it will create an asset plus a default policy and contract definition;                                                                                                                                                                                                                                                                                                                                    	| 4               	|
+| StoreSingleLevelBoMAsPlanned          	| Store the SingleLevelBoMAsPlanned in the SDE database.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	| 5               	|
+<br />
+
 ### **Whitebox Overall System**
 
 #### **App routing**
@@ -287,16 +318,18 @@ Detailed API specs available under:
 Structure of CSV files (SerialPartTypization and AssemblyPartRelationship)<br /><br />
 
 <img src="images/assembly-serial-json.png" height="40%" width="40%" /><br /><br />
+(Batch)<br /><br />
 <img src="images/batch-json.png" height="20%" width="20%" /><br /><br />
 
-<br />
+(PartAsPlanned and SingleLevelBoMAsPlanned)<br /><br />
+<img src="images/part_single_level_bom_json.png" height="40%" width="40%" /><br /><br />
 
 ## **Deployment View**
 
 <br />
-In deployment we are using ArgoCD and Helm. The Helm configuration can be found in folder "helm" in respective repositories.
+In deployment we are using [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Helm. The Helm configuration can be found in folder "helm" in respective repositories.
 
-We have 2 applications on [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) , one for frontend and one for backend. Both applications have auto-sync enabled.
+We have 2 applications on ArgoCD , one for frontend and one for backend. Both applications have auto-sync enabled.
 
 <img src="images/argocd-apps.png" height="60%" width="60%" /><br />
 <img src="images/argocd-sync-policy.png" height="30%" width="50%" /><br /><br />
