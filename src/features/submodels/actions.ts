@@ -8,8 +8,8 @@ const fetchSubmodelList = createAsyncThunk(`/submodel/list`, async () => {
   try {
     const res = await ProviderService.getInstance().getSubmodelList();
     return res;
-  } catch (error: unknown) {
-    console.error('api call error:', error);
+  } catch (error) {
+    console.log('api call error:', error);
   }
 });
 const fetchSubmodelDetails = createAsyncThunk(`/submodel/details`, async (params: string, { dispatch }) => {
@@ -17,8 +17,8 @@ const fetchSubmodelDetails = createAsyncThunk(`/submodel/details`, async (params
     dispatch(setPageLoading(true));
     const res = await ProviderService.getInstance().getSubmodelDetails(params);
     return res;
-  } catch (error: unknown) {
-    console.error('api call error:', error);
+  } catch (error) {
+    console.log('api call error:', error);
   } finally {
     dispatch(setPageLoading(false));
   }
