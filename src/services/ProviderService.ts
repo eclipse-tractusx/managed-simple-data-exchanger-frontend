@@ -19,7 +19,7 @@ class ProviderService extends HttpService {
       method: 'GET',
       url: '/submodels',
     });
-    return res.data;
+    return res?.data;
   }
 
   public async getSubmodelDetails(submodel: string) {
@@ -27,7 +27,7 @@ class ProviderService extends HttpService {
       method: 'GET',
       url: `/submodels/${submodel}`,
     });
-    return res.data;
+    return res?.data;
   }
 
   public async getReportById(id: string) {

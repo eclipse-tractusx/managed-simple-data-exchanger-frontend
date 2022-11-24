@@ -18,20 +18,21 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { ErrorPage } from 'cx-portal-shared-components';
-import App from './App';
-import { IUser } from './models/User';
-import { Config } from './utils/config';
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+// eslint-disable-next-line import/no-extraneous-dependencies
+import '@testing-library/jest-dom/extend-expect';
 
-export default function Root({ loggedInUser }: { loggedInUser: IUser }) {
-  const access = loggedInUser?.parsedToken?.resource_access;
-  return (
-    <>
-      {access?.hasOwnProperty(Config.REACT_APP_CLIENT_ID) ? (
-        <App />
-      ) : (
-        <ErrorPage header="This webpage is not available." title="Sorry for this inconvenience." />
-      )}
-    </>
-  );
-}
+// https://github.com/akiran/react-slick/issues/742#issuecomment-298992238
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(window as any).matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {},
+    };
+  };
