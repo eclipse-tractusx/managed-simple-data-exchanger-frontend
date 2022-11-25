@@ -57,8 +57,8 @@ export const providerSlice = createSlice({
     setUploadStatus: (state, action: PayloadAction<boolean>) => {
       state.uploadStatus = action.payload;
     },
-    setSelectedFiles: (state, action: PayloadAction<File[]>) => {
-      state.selectedFiles = action.payload;
+    setSelectedFiles: (state, action: PayloadAction<File>) => {
+      state.selectedFiles = [action.payload];
     },
     removeSelectedFiles: state => {
       state.selectedFiles = [];
