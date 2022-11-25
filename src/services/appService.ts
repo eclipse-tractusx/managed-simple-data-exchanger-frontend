@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
@@ -18,41 +19,28 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../models/User';
-interface IAppSlice {
-  pageLoading: boolean;
-  loggedInUser: IUser;
-  isUserValid: boolean;
-}
-const initialState: IAppSlice = {
-  pageLoading: false,
-  loggedInUser: {
-    userName: '',
-    name: '',
-    email: '',
-    company: '',
-    tenant: '',
-    token: '',
-    parsedToken: {},
-  },
-  isUserValid: false,
-};
-export const appSlice = createSlice({
-  name: 'appSlice',
-  initialState,
-  reducers: {
-    setPageLoading: (state, action: PayloadAction<boolean>) => {
-      state.pageLoading = action.payload;
-    },
-    setLoggedInUser: (state, action: PayloadAction<IUser>) => {
-      state.loggedInUser = action.payload;
-    },
-    setIsUserValid: (state, action: PayloadAction<boolean>) => {
-      state.isUserValid = action.payload;
-    },
-  },
-});
+import HttpService from './HttpService';
+class AppService extends HttpService {
+  public constructor() {
+    super({});
+  }
 
-export const { setPageLoading, setLoggedInUser, setIsUserValid } = appSlice.actions;
-export default appSlice.reducer;
+  private static classInstance?: AppService;
+
+  public static getInstance() {
+    if (!this.classInstance) {
+      this.classInstance = new AppService();
+    }
+    return this.classInstance;
+  }
+
+  public async getUserPermissions() {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/user/role/permissions`,
+    });
+    return res;
+  }
+}
+
+export default AppService;

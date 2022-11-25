@@ -22,7 +22,7 @@ import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-p
 import { useState, useEffect } from 'react';
 import { Status, ProcessReport } from '../../models/ProcessReport';
 import { handleDialogClose } from '../../features/policies/slice';
-import { setPageLoading } from '../../store/appSlice';
+import { setPageLoading } from '../../features/app/slice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
 import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';

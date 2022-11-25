@@ -19,9 +19,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { store } from '../store/store';
+
 export function formatDate(isoDate: string | number) {
   const date = new Date(isoDate);
-
   const day = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
   const month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
   const year = date.getFullYear();
@@ -40,6 +41,12 @@ export function epochToDate(epoch: number) {
   const epochToMilliseconds = epoch * 1000;
   return new Date(epochToMilliseconds);
 }
+
+export function checkPermissions(permissions: string[]) {
+  const valid = store.getState().appSlice.permissions.some(item => permissions.includes(item));
+  return valid;
+}
+
 // Removing console logs except local dev env
 export function clearConsoles() {
   if (process.env.NODE_ENV === 'production') {
