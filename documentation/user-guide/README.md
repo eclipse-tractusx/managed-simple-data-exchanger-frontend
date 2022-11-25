@@ -186,7 +186,7 @@ Then you need to configure Access and Usage policies by clicking on "NEXT STEP -
 
 ## Upload history
 
-<img src="images/upload-history.png" height="60%" width="60%" />
+<img src="images/upload-history-new.png" height="60%" width="60%" />
 
 In this menu you can see a table with audit trail logs of the uploaded data offers.
 
