@@ -24,8 +24,23 @@ import Dashboard from './pages/Dashboard';
 import PageNotFound from './pages/PageNotFound';
 import PageLoading from './components/PageLoading';
 import Notification from './features/notifiication';
+import { useEffect } from 'react';
+import { useAppDispatch } from './store/store';
+import { fetchUserPermissions } from './features/app/actions';
 
 function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    let isApiSubscribed = true;
+    if (isApiSubscribed) {
+      dispatch(fetchUserPermissions());
+    }
+    return () => {
+      isApiSubscribed = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <BrowserRouter>

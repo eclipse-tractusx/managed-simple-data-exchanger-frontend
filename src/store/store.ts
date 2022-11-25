@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 import providerSlice from './providerSlice';
 import consumerSlice from './consumerSlice';
-import appSlice from './appSlice';
+import appSlice from '../features/app/slice';
 import notificationSlice from '../features/notifiication/slice';
 import submodelSlice from '../features/submodels/slice';
 
