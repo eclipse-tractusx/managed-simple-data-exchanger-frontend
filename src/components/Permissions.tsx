@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
+ * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -17,12 +18,16 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-export interface File {
-  name: string;
-  lastModified: number;
-  lasModifiedDate: Date;
-  type: string;
-  webkitRelativePath: string;
-  size: number;
-  invalid: boolean;
+
+import { useAppSelector } from '../store/store';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function Permissions(props: any) {
+  const { permissions } = useAppSelector(state => state.appSlice);
+  const valid = props.values.every((item: string) => permissions.includes(item));
+  if (valid) {
+    return props.children;
+  } else {
+    return null;
+  }
 }

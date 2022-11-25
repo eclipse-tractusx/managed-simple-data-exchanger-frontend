@@ -52,8 +52,12 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: builder => {
+    builder.addCase(fetchUserPermissions.pending, state => {
+      state.pageLoading = true;
+    });
     builder.addCase(fetchUserPermissions.fulfilled, (state, action) => {
       state.permissions = action.payload;
+      state.pageLoading = false;
     });
   },
 });

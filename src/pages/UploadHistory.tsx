@@ -26,7 +26,7 @@ import { Button, Typography } from 'cx-portal-shared-components';
 import { ProcessReport } from '../models/ProcessReport';
 import StickyHeadTable from '../components/StickyHeadTable';
 import ProviderService from '../services/ProviderService';
-import { checkPermissions } from '../utils/utils';
+import { Permissions } from '../components/Permissions';
 
 export const UploadHistory: React.FC = () => {
   const [tableData, setTableData] = useState<ProcessReport[]>([]);
@@ -55,34 +55,32 @@ export const UploadHistory: React.FC = () => {
   }, [page, rowsPerPage, refreshTable]);
 
   return (
-    <>
-      {checkPermissions(['provider_view_history']) && (
-        <Box sx={{ flex: 1, p: 4 }}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6}>
-              <Typography variant="h4">Upload History</Typography>
-            </Grid>
-            <Grid item xs={6} textAlign="right">
-              <Button size="small" variant="contained" onClick={() => refreshTable()}>
-                <Refresh />
-                &nbsp; Refresh
-              </Button>
-            </Grid>
+    <Permissions values={['provider_view_history']}>
+      <Box sx={{ flex: 1, p: 4 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Typography variant="h4">Upload History</Typography>
           </Grid>
-          <Box sx={{ mt: 4 }}>
-            <StickyHeadTable
-              rows={tableData}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              totalElements={totalElements}
-              setPage={setPage}
-              setRowsPerPage={setRowsPerPage}
-              refreshTable={refreshTable}
-            />
-          </Box>
+          <Grid item xs={6} textAlign="right">
+            <Button size="small" variant="contained" onClick={() => refreshTable()}>
+              <Refresh />
+              &nbsp; Refresh
+            </Button>
+          </Grid>
+        </Grid>
+        <Box sx={{ mt: 4 }}>
+          <StickyHeadTable
+            rows={tableData}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            totalElements={totalElements}
+            setPage={setPage}
+            setRowsPerPage={setRowsPerPage}
+            refreshTable={refreshTable}
+          />
         </Box>
-      )}
-    </>
+      </Box>
+    </Permissions>
   );
 };
 
