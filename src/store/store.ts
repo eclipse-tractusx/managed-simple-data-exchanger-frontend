@@ -19,12 +19,14 @@
  ********************************************************************************/
 
 import { configureStore } from '@reduxjs/toolkit';
-import accessUsagePolicySlice from './accessUsagePolicySlice';
+import accessUsagePolicySlice from '../features/policies/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 import providerSlice from './providerSlice';
 import consumerSlice from './consumerSlice';
-import appSlice from './appSlice';
+import appSlice from '../features/app/slice';
+import notificationSlice from '../features/notifiication/slice';
+import submodelSlice from '../features/submodels/slice';
 
 export const store = configureStore({
   reducer: {
@@ -32,6 +34,8 @@ export const store = configureStore({
     accessUsagePolicySlice: accessUsagePolicySlice,
     providerSlice: providerSlice,
     consumerSlice: consumerSlice,
+    notification: notificationSlice,
+    submodelSlice: submodelSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -19,19 +19,24 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CsvTypes, ProcessReport, Status } from '../models/ProcessReport';
+import { ProcessReport, Status } from '../models/ProcessReport';
 
 interface IProviderSlice {
   currentUploadData: ProcessReport;
   uploadStatus: boolean;
   selectedFiles: File[];
+  selectedSubmodel: string;
 }
 
 const initialState: IProviderSlice = {
   currentUploadData: {
     processId: '',
-    csvType: CsvTypes.unknown,
+    referenceProcessId: '',
+    csvType: '',
     numberOfItems: 0,
+    numberOfCreatedItems: 0,
+    numberOfUpdatedItems: 0,
+    numberOfDeletedItems: 0,
     numberOfFailedItems: 0,
     numberOfSucceededItems: 0,
     status: Status.inProgress,
@@ -40,6 +45,7 @@ const initialState: IProviderSlice = {
   },
   uploadStatus: false,
   selectedFiles: [],
+  selectedSubmodel: '',
 };
 export const providerSlice = createSlice({
   name: 'providerSlice',
@@ -48,7 +54,6 @@ export const providerSlice = createSlice({
     setUploadData: (state, action: PayloadAction<ProcessReport>) => {
       state.currentUploadData = action.payload;
     },
-
     setUploadStatus: (state, action: PayloadAction<boolean>) => {
       state.uploadStatus = action.payload;
     },

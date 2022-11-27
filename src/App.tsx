@@ -22,11 +22,25 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import PageNotFound from './pages/PageNotFound';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import PageLoading from './components/PageLoading';
+import Notification from './features/notifiication';
+import { useEffect } from 'react';
+import { useAppDispatch } from './store/store';
+import { fetchUserPermissions } from './features/app/actions';
 
 function App() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    let isApiSubscribed = true;
+    if (isApiSubscribed) {
+      dispatch(fetchUserPermissions());
+    }
+    return () => {
+      isApiSubscribed = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <BrowserRouter>
@@ -41,7 +55,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer />
+      <Notification />
       <PageLoading />
     </div>
   );
