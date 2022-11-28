@@ -35,6 +35,7 @@ export interface IntMenuChildren {
   menuIcon?: keyof typeof icons;
   to?: string;
   dataId?: string;
+  permissions?: string[];
 }
 
 export interface IntMenuItem {
@@ -60,12 +61,14 @@ export const MenuItems: IntMenuItem[] = [
         menuIcon: 'AddCircleIcon',
         to: '/dashboard/create-data',
         dataId: 'uploadFileMenu',
+        permissions: ['provider_create_contract_offer'],
       },
       {
         text: 'Upload History',
         menuIcon: 'HistoryIcon',
         to: '/dashboard/history',
         dataId: 'uploadHistoryMenu',
+        permissions: ['provider_view_history'],
       },
       {
         text: 'Help',
@@ -84,12 +87,14 @@ export const MenuItems: IntMenuItem[] = [
         menuIcon: 'ManageSearchIcon',
         to: '/dashboard/consume-data',
         dataId: 'uploadFileMenu',
+        permissions: ['consumer_view_contract_offers'],
       },
       {
         text: 'Contract History',
         menuIcon: 'HistoryIcon',
         to: '/dashboard/contract-history',
         dataId: 'uploadHistoryMenu',
+        permissions: ['consumer_view_contract_agreement'],
       },
     ],
   },
