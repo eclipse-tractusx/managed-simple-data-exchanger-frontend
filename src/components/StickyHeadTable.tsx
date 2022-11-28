@@ -43,6 +43,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useAppDispatch } from '../store/store';
 import ProviderService from '../services/ProviderService';
+import Permissions from './Permissions';
 
 interface Column {
   id:
@@ -281,11 +282,13 @@ export default function StickyHeadTable({
                             <span style={{ marginLeft: 5 }}>{caclDuration(row)}</span>
                           </div>
                         )}
-                        {column.id === 'actions' && row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
-                          <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)}>
-                            <DeleteIcon color="error" fontSize="small" />
-                          </IconButton>
-                        )}
+                        <Permissions values={['provider_delete_contract_offer']}>
+                          {column.id === 'actions' && row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
+                            <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)}>
+                              <DeleteIcon color="error" fontSize="small" />
+                            </IconButton>
+                          )}
+                        </Permissions>
                       </StyledTableCell>
                     );
                   })}

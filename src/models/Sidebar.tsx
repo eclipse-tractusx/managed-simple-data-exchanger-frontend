@@ -87,7 +87,12 @@ export const MenuItems: IntMenuItem[] = [
         menuIcon: 'ManageSearchIcon',
         to: '/dashboard/consume-data',
         dataId: 'uploadFileMenu',
-        permissions: ['consumer_view_contract_offers'],
+        permissions: [
+          'consumer_search_connectors',
+          'consumer_view_contract_offers',
+          'consumer_establish_contract_agreement',
+          '',
+        ],
       },
       {
         text: 'Contract History',

@@ -32,6 +32,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Button } from 'cx-portal-shared-components';
+import Permissions from '../components/Permissions';
 
 const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
@@ -174,58 +175,60 @@ const ContractHistory: React.FC = () => {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={6} my={4}>
-          <Typography variant="h4">Contract Agreements History</Typography>
+      <Permissions values={['consumer_view_contract_agreement']}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6} my={4}>
+            <Typography variant="h4">Contract Agreements History</Typography>
+          </Grid>
+          <Grid item xs={6} my={4} textAlign={'right'}>
+            <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
+              <Refresh />
+              &nbsp; Refresh
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+              <DataGrid
+                sx={{ py: 1 }}
+                autoHeight={true}
+                getRowId={row => row.negotiationId}
+                rows={contractAgreements}
+                columns={columns}
+                loading={isContractAgreementsLoading}
+                pagination
+                pageSize={pageSize}
+                onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+                rowsPerPageOptions={[10, 25, 50, 100]}
+                components={{
+                  Toolbar: GridToolbar,
+                  LoadingOverlay: LinearProgress,
+                  NoRowsOverlay: () => (
+                    <Stack height="100%" alignItems="center" justifyContent="center">
+                      No Contract agreements!
+                    </Stack>
+                  ),
+                  NoResultsOverlay: () => (
+                    <Stack height="100%" alignItems="center" justifyContent="center">
+                      Contract agreements not found!
+                    </Stack>
+                  ),
+                }}
+                componentsProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: { debounceMs: 500 },
+                    printOptions: { disableToolbarButton: true },
+                  },
+                }}
+                disableColumnMenu
+                disableColumnSelector
+                disableDensitySelector
+                disableSelectionOnClick
+              />
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={6} my={4} textAlign={'right'}>
-          <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
-            <Refresh />
-            &nbsp; Refresh
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
-            <DataGrid
-              sx={{ py: 1 }}
-              autoHeight={true}
-              getRowId={row => row.negotiationId}
-              rows={contractAgreements}
-              columns={columns}
-              loading={isContractAgreementsLoading}
-              pagination
-              pageSize={pageSize}
-              onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-              rowsPerPageOptions={[10, 25, 50, 100]}
-              components={{
-                Toolbar: GridToolbar,
-                LoadingOverlay: LinearProgress,
-                NoRowsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    No Contract agreements!
-                  </Stack>
-                ),
-                NoResultsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    Contract agreements not found!
-                  </Stack>
-                ),
-              }}
-              componentsProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: { debounceMs: 500 },
-                  printOptions: { disableToolbarButton: true },
-                },
-              }}
-              disableColumnMenu
-              disableColumnSelector
-              disableDensitySelector
-              disableSelectionOnClick
-            />
-          </Box>
-        </Grid>
-      </Grid>
+      </Permissions>
     </Box>
   );
 };

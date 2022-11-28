@@ -34,7 +34,6 @@ const initialState: IAppSlice = {
     token: '',
     parsedToken: {},
   },
-  isUserValid: false,
   permissions: [],
 };
 export const appSlice = createSlice({
@@ -46,9 +45,6 @@ export const appSlice = createSlice({
     },
     setLoggedInUser: (state, action: PayloadAction<IUser>) => {
       state.loggedInUser = action.payload;
-    },
-    setIsUserValid: (state, action: PayloadAction<boolean>) => {
-      state.isUserValid = action.payload;
     },
   },
   extraReducers: builder => {
@@ -62,5 +58,5 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setPageLoading, setLoggedInUser, setIsUserValid } = appSlice.actions;
+export const { setPageLoading, setLoggedInUser } = appSlice.actions;
 export default appSlice.reducer;

@@ -22,9 +22,9 @@
 import { useAppSelector } from '../store/store';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function Permissions(props: any) {
+export default function Permissions(props: any) {
   const { permissions } = useAppSelector(state => state.appSlice);
-  const valid = props.values ? props.values.every((item: string) => permissions?.includes(item)) : true;
+  const valid = props.values ? props.values.some((item: string) => permissions?.includes(item)) : true;
   if (valid) {
     return props.children;
   } else {
