@@ -33,6 +33,7 @@ import {
   Box,
 } from '@mui/material';
 import { IntMenuItemProps, MenuItems, icons } from '../models/Sidebar';
+import { Permissions } from './Permissions';
 
 /**
  * Menu Item
@@ -45,23 +46,25 @@ const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
   const { menuIcon, to, text, dataId } = item;
   const Icon = icons[menuIcon];
   return (
-    <ListItem data-testid={dataId} onClick={() => navigate(to)} sx={{ p: 0 }}>
-      <ListItemButton sx={{ minHeight: '48px', display: 'flex', alignItems: 'center' }}>
-        <ListItemIcon sx={{ minWidth: 30 }}>
-          <Icon
-            fontSize="small"
-            sx={{
-              color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}`,
-            }}
+    <Permissions values={item.permissions}>
+      <ListItem data-testid={dataId} onClick={() => navigate(to)} sx={{ p: 0 }}>
+        <ListItemButton sx={{ minHeight: '48px', display: 'flex', alignItems: 'center' }}>
+          <ListItemIcon sx={{ minWidth: 30 }}>
+            <Icon
+              fontSize="small"
+              sx={{
+                color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}`,
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText
+            primaryTypographyProps={{ sx: { fontSize: '14px' } }}
+            primary={text}
+            sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }}
           />
-        </ListItemIcon>
-        <ListItemText
-          primaryTypographyProps={{ sx: { fontSize: '14px' } }}
-          primary={text}
-          sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }}
-        />
-      </ListItemButton>
-    </ListItem>
+        </ListItemButton>
+      </ListItem>
+    </Permissions>
   );
 };
 
