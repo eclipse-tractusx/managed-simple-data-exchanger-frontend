@@ -21,7 +21,6 @@
 import Keycloak from 'keycloak-js';
 import { IUser } from '../models/User';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
-import { Config } from '../utils/config';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
   url: getCentralIdp(),
