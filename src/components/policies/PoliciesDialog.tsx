@@ -18,23 +18,27 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Dialog, DialogTitle, DialogContent, Box, DialogActions, Button } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { toastProps } from '../../helpers/ToastOptions';
-import { Status, CsvTypes, ProcessReport } from '../../models/ProcessReport';
-import DftService from '../../services/DftService';
-import { handleDialogClose } from '../../store/accessUsagePolicySlice';
-import { setPageLoading } from '../../store/appSlice';
-import { setUploadData, setUploadStatus } from '../../store/providerSlice';
+import { Status, ProcessReport } from '../../models/ProcessReport';
+import { handleDialogClose } from '../../features/policies/slice';
+import { setPageLoading } from '../../features/app/slice';
+import { setSnackbarMessage } from '../../features/notifiication/slice';
+import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
 import { useAppSelector, useAppDispatch } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
+import { clearRows } from '../../features/submodels/slice';
+import ProviderService from '../../services/ProviderService';
 
 const defaultUploadData: ProcessReport = {
   processId: '',
-  csvType: CsvTypes.unknown,
+  referenceProcessId: '',
+  csvType: '',
   numberOfItems: 0,
+  numberOfCreatedItems: 0,
+  numberOfUpdatedItems: 0,
+  numberOfDeletedItems: 0,
   numberOfFailedItems: 0,
   numberOfSucceededItems: 0,
   status: Status.inProgress,
@@ -62,6 +66,7 @@ export default function PoliciesDialog() {
     customValue,
   } = useAppSelector(state => state.accessUsagePolicySlice);
   const { currentUploadData, selectedFiles } = useAppSelector(state => state.providerSlice);
+  const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
   const [showError, setshowError] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -78,6 +83,7 @@ export default function PoliciesDialog() {
     dispatch(setPageLoading(false));
     dispatch(setUploadStatus(true));
     dispatch(setPageLoading(false));
+    dispatch(clearRows());
     dispatch(handleDialogClose());
   };
 
@@ -87,7 +93,7 @@ export default function PoliciesDialog() {
       // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
       const interval = setInterval(
         () =>
-          DftService.getInstance()
+          ProviderService.getInstance()
             .getReportById(processId)
             .then(result => {
               dispatch(setUploadData(result.data));
@@ -101,19 +107,35 @@ export default function PoliciesDialog() {
     } else {
       clearUpload();
       dispatch(setUploadData(defaultUploadData));
+      dispatch(removeSelectedFiles());
       if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
-        toast.success('Upload completed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload completed!',
+            type: 'success',
+          }),
+        );
       } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
-        toast.warning('Upload completed with warnings!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload completed with warnings!',
+            type: 'warning',
+          }),
+        );
       } else {
-        toast.error('Upload failed!', toastProps());
+        dispatch(
+          setSnackbarMessage({
+            message: 'Upload failed!',
+            type: 'error',
+          }),
+        );
       }
     }
   };
 
   const processingReportFirstCall = (processId: string) => {
     setTimeout(async () => {
-      DftService.getInstance()
+      ProviderService.getInstance()
         .getReportById(processId)
         .then(response => {
           processingReport(response, processId);
@@ -133,7 +155,7 @@ export default function PoliciesDialog() {
     bpn_numbers: accessType === 'restricted' ? [companyBpn, ...bpnList] : [],
     type_of_access: accessType,
     row_data: uploadData,
-    usage_policy: [
+    usage_policies: [
       {
         type: 'DURATION',
         typeOfAccess: duration,
@@ -160,7 +182,7 @@ export default function PoliciesDialog() {
   const submitData = async () => {
     try {
       dispatch(setPageLoading(true));
-      const response = await DftService.getInstance().submitSubmodalData(uploadUrl, payload);
+      const response = await ProviderService.getInstance().submitSubmodalData(uploadUrl, payload);
       // first call
       processingReportFirstCall(response.data);
     } catch (error) {
@@ -173,10 +195,11 @@ export default function PoliciesDialog() {
     const formData = new FormData();
     formData.append('file', selectedFiles[0]);
     formData.append('meta_data', JSON.stringify(payload));
+    formData.append('submodel', selectedSubmodel);
 
     try {
       dispatch(setPageLoading(true));
-      const resp = await DftService.getInstance().uploadData(formData);
+      const resp = await ProviderService.getInstance().uploadData(selectedSubmodel, formData);
       const processId = resp.data;
       // first call
       processingReportFirstCall(processId);
@@ -201,21 +224,12 @@ export default function PoliciesDialog() {
   }
 
   return (
-    <Dialog
-      open={openDialog}
-      onClose={() => dispatch(handleDialogClose())}
-      sx={{ '&.MuiModal-root': { zIndex: 100 }, '& .MuiDialog-paper': { width: '450px' } }}
-    >
-      <DialogTitle>
-        <b>Policies</b>
-      </DialogTitle>
+    // Dialog width change is not available currently in cx-shared-components library
+    <Dialog open={openDialog}>
+      <DialogHeader closeWithIcon onCloseWithIcon={() => dispatch(handleDialogClose())} title="Policies" />
       <DialogContent>
-        <Box>
-          <AccessPolicy />
-        </Box>
-        <Box>
-          <UsagePolicy />
-        </Box>
+        <AccessPolicy />
+        <UsagePolicy />
       </DialogContent>
       <DialogActions>
         <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
