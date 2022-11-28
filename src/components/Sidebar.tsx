@@ -33,7 +33,7 @@ import {
   Box,
 } from '@mui/material';
 import { IntMenuItemProps, MenuItems, icons } from '../models/Sidebar';
-import { Permissions } from './Permissions';
+import Permissions from './Permissions';
 
 /**
  * Menu Item
