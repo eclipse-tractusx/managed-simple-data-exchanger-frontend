@@ -71,6 +71,7 @@ import {
 } from '../store/consumerSlice';
 import { useAppSelector, useAppDispatch } from '../store/store';
 import { setSnackbarMessage } from '../features/notifiication/slice';
+import Permissions from '../components/Permissions';
 
 export const ConsumeData: React.FC = () => {
   const {
@@ -497,86 +498,97 @@ export const ConsumeData: React.FC = () => {
           )}
         </Grid>
         <Grid item>
-          <Button
-            variant="contained"
-            size="medium"
-            onClick={fetchConsumerDataOffers}
-            disabled={
-              ((searchFilterByType === 'bpn' || searchFilterByType === 'company') &&
-                filterSelectedConnector.length === 0) ||
-              (searchFilterByType === 'url' && filterProviderUrl.length === 0)
-            }
-          >
-            Search
-          </Button>
+          <Permissions values={['consumer_search_connectors']}>
+            <Button
+              variant="contained"
+              size="medium"
+              onClick={fetchConsumerDataOffers}
+              disabled={
+                ((searchFilterByType === 'bpn' || searchFilterByType === 'company') &&
+                  filterSelectedConnector.length === 0) ||
+                (searchFilterByType === 'url' && filterProviderUrl.length === 0)
+              }
+            >
+              Search
+            </Button>
+          </Permissions>
         </Grid>
       </Grid>
       <Box display="flex" justifyContent="flex-end" mb={3}>
-        <Button variant="contained" size="small" onClick={checkoutSelectedOffers} disabled={!selectedOffersList.length}>
-          Subscribe to selected
-        </Button>
+        <Permissions values={['consumer_establish_contract_agreement']}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={checkoutSelectedOffers}
+            disabled={!selectedOffersList.length}
+          >
+            Subscribe to selected
+          </Button>
+        </Permissions>
       </Box>
-      <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
-        <DataGrid
-          autoHeight={true}
-          getRowId={row => row.assetId}
-          rows={contractOffers}
-          onRowClick={onRowClick}
-          columns={columns}
-          loading={offersLoading}
-          checkboxSelection
-          pagination
-          pageSize={pageSize}
-          onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-          rowsPerPageOptions={[10, 25, 50, 100]}
-          onSelectionModelChange={newSelectionModel => {
-            const selectedIDs = new Set(newSelectionModel);
-            const selectedRowData = contractOffers.filter(row => selectedIDs.has(row.assetId.toString()));
-            dispatch(setSelectedOffersList(selectedRowData));
-            setSelectionModel(newSelectionModel);
-          }}
-          selectionModel={selectionModel}
-          components={{
-            Toolbar: GridToolbar,
-            LoadingOverlay: LinearProgress,
-            NoRowsOverlay: () => (
-              <Stack height="100%" alignItems="center" justifyContent="center">
-                No Data offers!
-              </Stack>
-            ),
-            NoResultsOverlay: () => (
-              <Stack height="100%" alignItems="center" justifyContent="center">
-                Data offer not found!
-              </Stack>
-            ),
-          }}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-              printOptions: { disableToolbarButton: true },
-            },
-          }}
-          disableColumnMenu
-          disableColumnSelector
-          disableDensitySelector
-          disableSelectionOnClick
-          sx={{
-            '& .MuiDataGrid-columnHeaderTitle': {
-              textOverflow: 'clip',
-              whiteSpace: 'break-spaces',
-              lineHeight: 1.5,
-              textAlign: 'center',
-            },
-            '& .MuiDataGrid-columnHeader': {
-              padding: '0 10px',
-            },
-            '& .MuiDataGrid-columnHeaderCheckbox': {
-              height: 'auto !important',
-            },
-          }}
-        />
-      </Box>
+      <Permissions values={['consumer_view_contract_offers']}>
+        <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+          <DataGrid
+            autoHeight={true}
+            getRowId={row => row.assetId}
+            rows={contractOffers}
+            onRowClick={onRowClick}
+            columns={columns}
+            loading={offersLoading}
+            checkboxSelection
+            pagination
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+            rowsPerPageOptions={[10, 25, 50, 100]}
+            onSelectionModelChange={newSelectionModel => {
+              const selectedIDs = new Set(newSelectionModel);
+              const selectedRowData = contractOffers.filter(row => selectedIDs.has(row.assetId.toString()));
+              dispatch(setSelectedOffersList(selectedRowData));
+              setSelectionModel(newSelectionModel);
+            }}
+            selectionModel={selectionModel}
+            components={{
+              Toolbar: GridToolbar,
+              LoadingOverlay: LinearProgress,
+              NoRowsOverlay: () => (
+                <Stack height="100%" alignItems="center" justifyContent="center">
+                  No Data offers!
+                </Stack>
+              ),
+              NoResultsOverlay: () => (
+                <Stack height="100%" alignItems="center" justifyContent="center">
+                  Data offer not found!
+                </Stack>
+              ),
+            }}
+            componentsProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+                printOptions: { disableToolbarButton: true },
+              },
+            }}
+            disableColumnMenu
+            disableColumnSelector
+            disableDensitySelector
+            disableSelectionOnClick
+            sx={{
+              '& .MuiDataGrid-columnHeaderTitle': {
+                textOverflow: 'clip',
+                whiteSpace: 'break-spaces',
+                lineHeight: 1.5,
+                textAlign: 'center',
+              },
+              '& .MuiDataGrid-columnHeader': {
+                padding: '0 10px',
+              },
+              '& .MuiDataGrid-columnHeaderCheckbox': {
+                height: 'auto !important',
+              },
+            }}
+          />
+        </Box>
+      </Permissions>
       {isMultipleContractSubscription && (
         <>
           <OfferDetailsDialog

@@ -28,6 +28,7 @@ import SelectSubmodel from '../components/SelectSubmodel';
 import DataTable from '../components/DataTable';
 import { fetchSubmodelDetails } from '../features/submodels/actions';
 import JsonInput from '../components/JsonInput';
+import Permissions from '../components/Permissions';
 
 export default function CreateData() {
   const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
@@ -43,36 +44,37 @@ export default function CreateData() {
     dispatch(fetchSubmodelDetails(selectedSubmodel));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Grid container spacing={2} mb={3}>
-        <Grid item xs={3}>
-          <SelectSubmodel />
+      <Permissions values={['provider_create_contract_offer']}>
+        <Grid container spacing={2} mb={3}>
+          <Grid item xs={3}>
+            <SelectSubmodel />
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
-              <Tab label="Upload File" />
-              <Tab label="Table" />
-              <Tab label="JSON" />
-            </Tabs>
-          </Box>
-          <Box>
-            <TabPanel value={activeTab} index={0}>
-              <UploadFile />
-            </TabPanel>
-            <TabPanel value={activeTab} index={1}>
-              <DataTable />
-            </TabPanel>
-            <TabPanel value={activeTab} index={2}>
-              <JsonInput />
-            </TabPanel>
-          </Box>
+        <Grid container>
+          <Grid item xs={12}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
+                <Tab label="Upload File" />
+                <Tab label="Table" />
+                <Tab label="JSON" />
+              </Tabs>
+            </Box>
+            <Box>
+              <TabPanel value={activeTab} index={0}>
+                <UploadFile />
+              </TabPanel>
+              <TabPanel value={activeTab} index={1}>
+                <DataTable />
+              </TabPanel>
+              <TabPanel value={activeTab} index={2}>
+                <JsonInput />
+              </TabPanel>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Permissions>
     </Box>
   );
 }
