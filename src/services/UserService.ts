@@ -60,6 +60,7 @@ const getLoggedUser = () => ({
   userName: getUsername(),
   name: getName(),
   email: getEmail(),
+  roles: getRoles(),
   company: getCompany(),
   tenant: getTenant(),
   token: getToken(),

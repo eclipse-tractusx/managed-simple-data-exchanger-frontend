@@ -20,10 +20,14 @@
  ********************************************************************************/
 import { ErrorPage } from 'cx-portal-shared-components';
 import App from './App';
+import { setLoggedInUser } from './features/app/slice';
 import { IUser } from './models/User';
+import { useAppDispatch } from './store/store';
 import { Config } from './utils/config';
 
 export default function Root({ loggedInUser }: { loggedInUser: IUser }) {
+  const dispatch = useAppDispatch();
+  dispatch(setLoggedInUser(loggedInUser));
   const access = loggedInUser?.parsedToken?.resource_access;
   return (
     <>

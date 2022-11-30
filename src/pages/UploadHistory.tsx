@@ -26,7 +26,7 @@ import { Button, Typography } from 'cx-portal-shared-components';
 import { ProcessReport } from '../models/ProcessReport';
 import StickyHeadTable from '../components/StickyHeadTable';
 import ProviderService from '../services/ProviderService';
-import { Permissions } from '../components/Permissions';
+import Permissions from '../components/Permissions';
 
 export const UploadHistory: React.FC = () => {
   const [tableData, setTableData] = useState<ProcessReport[]>([]);
