@@ -50,7 +50,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: ${{ env.REGISTRY }}/catenax-ng/product-dft-frontend-mod
+          images: ${{ env.REGISTRY }}/catenax-ng/product-dft-frontend-beta
           #tags: |
           # type=semver,pattern={{version}},value=v1.5.1
           flavor: |
