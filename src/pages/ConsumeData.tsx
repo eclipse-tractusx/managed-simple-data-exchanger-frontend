@@ -117,32 +117,6 @@ export const ConsumeData: React.FC = () => {
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.created),
     },
     {
-      field: 'publisher',
-      flex: 1,
-      editable: false,
-      headerName: 'Publisher',
-      renderHeader: () => <strong>Publisher</strong>,
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.publisher.split(':')[0]),
-    },
-    {
-      field: 'typeOfAccess',
-      flex: 1,
-      editable: false,
-      headerName: 'Access type',
-      renderHeader: () => <strong>Access type</strong>,
-    },
-    {
-      field: 'bpnNumbers',
-      flex: 1,
-      editable: false,
-      headerName: 'BPN',
-      renderHeader: () => <strong>BPN</strong>,
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.bpnNumbers.length > 0
-          ? params.row.bpnNumbers.filter((bpn: string) => bpn !== 'null' || bpn !== null)
-          : '-',
-    },
-    {
       field: 'description',
       flex: 1,
       editable: false,
