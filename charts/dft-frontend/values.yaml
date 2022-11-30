@@ -17,11 +17,11 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "dft-service"
+  name: ""
   
 imagePullSecrets: []
-nameOverride: "product-dft-frontend"
-fullnameOverride: "dft-frontend"
+nameOverride: ""
+fullnameOverride: ""
 
 podAnnotations: {}
 
@@ -42,7 +42,7 @@ service:
   port: 80
 
 ingress:
-  enabled: true
+  enabled: false
   className: nginx
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
