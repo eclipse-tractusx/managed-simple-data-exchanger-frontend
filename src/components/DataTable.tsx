@@ -27,11 +27,6 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 export default function DataTable() {
   const { submodelDetails, columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
-  const handleSubmitData = () => {
-    const selectedIDs = new Set(selectionModel);
-    const tableData = rows.filter(row => selectedIDs.has(row.id));
-    schemaValidator(tableData);
-  };
 
   return (
     <Box>
@@ -40,23 +35,23 @@ export default function DataTable() {
           <Button variant="contained" size="small" onClick={() => dispatch(addRows())}>
             Add row
           </Button>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => dispatch(deleteRows())}
+            sx={{ ml: 2 }}
+            disabled={!Boolean(selectedRows.length)}
+          >
+            Delete row(s)
+          </Button>
         </Box>
         <Box>
           <Button
             variant="contained"
             size="small"
-            onClick={() => dispatch(deleteRows())}
-            sx={{ mr: 2 }}
-            disabled={!Boolean(selectedRows.length)}
-          >
-            Delete row(s)
-          </Button>
-          <Button
-            variant="contained"
-            size="small"
-            disabled={!Boolean(selectedRows.length)}
+            disabled={!Boolean(rows.length)}
             onClick={() => {
-              handleSubmitData();
+              schemaValidator(rows);
             }}
           >
             Next Step - Configure Policies

@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/catenax-ng/product-dft-frontend
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.6.0"
+  tag: "1.8.0"
   
 serviceAccount:
   # Specifies whether a service account should be created
@@ -17,11 +17,11 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "dft-service"
+  name: ""
   
 imagePullSecrets: []
-nameOverride: "product-dft-frontend"
-fullnameOverride: "dft-frontend"
+nameOverride: ""
+fullnameOverride: ""
 
 podAnnotations: {}
 
@@ -50,7 +50,7 @@ ingress:
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/enable-cors: 'false'
-  host: dft.int.demo.catena-x.net
+  host: ""
 
 resources:
   limits:
