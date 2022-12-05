@@ -304,25 +304,15 @@ Detailed API specs available under:
 | Library                    	| Description                                           	| Link                                                     	|
 |----------------------------	|-------------------------------------------------------	|----------------------------------------------------------	|
 | axios                      	| Promise based HTTP Client for the browser and node.js 	| https://www.npmjs.com/package/axios                      	|
-| react-circular-progressbar 	| Loading bar                                           	| https://www.npmjs.com/package/react-circular-progressbar 	|
-| react-timer-hook           	| Timer used in upload file (loading time)              	| https://www.npmjs.com/package/react-timer-hook           	|
-| react-toastify             	| Used to show notifications                            	| https://www.npmjs.com/package/react-toastify             	|
-| sweetalert2                	| Used to show alerts in modals                         	| https://sweetalert2.github.io/                           	|
+| cx-portal-shared-components 	| Contains the shared UI components that are used to build the Catena-X Portal Frontend | https://www.npmjs.com/package/cx-portal-shared-components	|
+| redux                      	| State management for react application                  	| https://www.npmjs.com/package/redux         	|
+| @reduxjs/toolkit             	| React toolkit for state manangement                     	| https://www.npmjs.com/package/@reduxjs/toolkit          	|
+| ajv                       	| Schema validator                                       	| https://www.npmjs.com/package/ajv                           	|
 | uuid                       	| Used to generate uuid (dynamic table)                 	| https://www.npmjs.com/package/uuid                       	|
 | @mui/material              	| Based components and based styles                     	| https://www.npmjs.com/package/@mui/material              	|
 
+
 <br />
-
-#### **Important Interfaces**
-
-Structure of CSV files (SerialPartTypization and AssemblyPartRelationship)<br /><br />
-
-<img src="images/assembly-serial-json.png" height="40%" width="40%" /><br /><br />
-(Batch)<br /><br />
-<img src="images/batch-json.png" height="20%" width="20%" /><br /><br />
-
-(PartAsPlanned and SingleLevelBoMAsPlanned)<br /><br />
-<img src="images/part_single_level_bom_json.png" height="40%" width="40%" /><br /><br />
 
 ## **Deployment View**
 
