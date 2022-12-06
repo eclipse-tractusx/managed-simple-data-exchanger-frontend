@@ -17,8 +17,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { useTheme, Grid, TextareaAutosize, Box } from '@mui/material';
-import { Typography, Button } from 'cx-portal-shared-components';
+import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
+import { Button, Typography } from 'cx-portal-shared-components';
+
 import { submitJsonData } from '../features/submodels/actions';
 import { setJsonInputData } from '../features/submodels/slice';
 import { useAppDispatch, useAppSelector } from '../store/store';

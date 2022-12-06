@@ -19,6 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { ErrorPage } from 'cx-portal-shared-components';
+
 import App from './App';
 import { setLoggedInUser } from './features/app/slice';
 import { IUser } from './models/User';

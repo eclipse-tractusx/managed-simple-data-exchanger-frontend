@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
@@ -19,16 +20,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import {
   AccessTime,
   HighlightOffOutlined,
   HourglassEmptyOutlined,
   ReportGmailerrorredOutlined,
 } from '@mui/icons-material';
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from '@mui/material';
 import Paper from '@mui/material/Paper';
+import { styled, useTheme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -36,13 +38,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { ProcessReport, Status } from '../models/ProcessReport';
-import { formatDate } from '../utils/utils';
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { ChangeEvent } from 'react';
+
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { useAppDispatch } from '../store/store';
+import { ProcessReport, Status } from '../models/ProcessReport';
 import ProviderService from '../services/ProviderService';
+import { useAppDispatch } from '../store/store';
+import { formatDate } from '../utils/utils';
 import Permissions from './Permissions';
 
 interface Column {
@@ -146,7 +148,7 @@ export default function StickyHeadTable({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };

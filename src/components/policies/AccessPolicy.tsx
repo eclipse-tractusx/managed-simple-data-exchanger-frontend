@@ -18,26 +18,27 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   Box,
   Button,
   Card,
   CardContent,
+  FormControlLabel,
   Grid,
   IconButton,
   List,
   ListItem,
   ListItemText,
+  Radio,
+  RadioGroup,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { ChangeEvent, useState } from 'react';
-import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
-import { useAppSelector, useAppDispatch } from '../../store/store';
-import { Config } from '../../utils/config';
 import { Dialog, DialogActions, DialogContent, DialogHeader, Input, Typography } from 'cx-portal-shared-components';
+import { ChangeEvent, useState } from 'react';
+
+import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { Config } from '../../utils/config';
 
 export default function AccessPolicy() {
   const { accessType, bpnList, inputBpn } = useAppSelector(state => state.accessUsagePolicySlice);

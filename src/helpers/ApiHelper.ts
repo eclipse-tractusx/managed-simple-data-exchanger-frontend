@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Config } from '../utils/config';
 import UserService from '../services/UserService';
+import { Config } from '../utils/config';
 
 export const HOST = Config.REACT_APP_API_URL;
 

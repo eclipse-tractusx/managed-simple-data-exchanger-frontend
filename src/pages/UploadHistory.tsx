@@ -19,14 +19,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React, { useCallback, useEffect, useState } from 'react';
 import { Refresh } from '@mui/icons-material';
 import { Box, Grid } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
-import { ProcessReport } from '../models/ProcessReport';
-import StickyHeadTable from '../components/StickyHeadTable';
-import ProviderService from '../services/ProviderService';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import Permissions from '../components/Permissions';
+import StickyHeadTable from '../components/StickyHeadTable';
+import { ProcessReport } from '../models/ProcessReport';
+import ProviderService from '../services/ProviderService';
 
 export const UploadHistory: React.FC = () => {
   const [tableData, setTableData] = useState<ProcessReport[]>([]);
