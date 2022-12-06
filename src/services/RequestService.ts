@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2021,2022 BMW Group AG
+ * Copyright (c) 2021,2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,17 +17,24 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import AppService from '../../services/appService';
+import UserService from './UserService';
 
-const fetchUserPermissions = createAsyncThunk('/user/permissions', async () => {
-  try {
-    const res = await AppService.getInstance().getUserPermissions();
-    return res.data;
-  } catch (error) {
-    console.log('api call error:', error);
-  }
+export const getHeaders = () => ({
+  headers: {
+    authorization: `Bearer ${UserService.getToken()}`,
+  },
 });
 
-export { fetchUserPermissions };
+export const getTextHeaders = () => ({
+  headers: {
+    authorization: `Bearer ${UserService.getToken()}`,
+    'content-type': 'text/plain',
+  },
+});
+
+const RequestService = {
+  getHeaders,
+};
+
+export default RequestService;

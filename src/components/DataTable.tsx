@@ -20,6 +20,7 @@
 import { Box } from '@mui/material';
 import { GridCellEditCommitParams, GridRowId } from '@mui/x-data-grid';
 import { Button, Table } from 'cx-portal-shared-components';
+
 import { addRows, deleteRows, setRows, setSelectionModel } from '../features/submodels/slice';
 import { schemaValidator } from '../helpers/SchemaValidator';
 import { useAppDispatch, useAppSelector } from '../store/store';

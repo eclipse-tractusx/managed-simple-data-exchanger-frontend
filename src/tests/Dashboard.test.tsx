@@ -21,8 +21,9 @@
 
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Dashboard from '../pages/Dashboard';
+
 import { handleDialogOpen } from '../features/policies/slice';
+import Dashboard from '../pages/Dashboard';
 import { store } from '../store/store';
 import { ReduxWrapper } from '../utils/testUtils';
 
@@ -37,7 +38,6 @@ describe('Dashboard', () => {
     expect(screen.getByText('Upload a file')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
   test.skip('upload history page', () => {
     render(
       <MemoryRouter initialEntries={[{ pathname: '/dashboard/history' }]}>

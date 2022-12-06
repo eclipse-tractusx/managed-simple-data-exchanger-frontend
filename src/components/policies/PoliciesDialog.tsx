@@ -18,18 +18,19 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
-import { useState, useEffect } from 'react';
-import { Status, ProcessReport } from '../../models/ProcessReport';
-import { handleDialogClose } from '../../features/policies/slice';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
+import { useEffect, useState } from 'react';
+
 import { setPageLoading } from '../../features/app/slice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
+import { handleDialogClose } from '../../features/policies/slice';
+import { clearRows } from '../../features/submodels/slice';
+import { ProcessReport, Status } from '../../models/ProcessReport';
+import ProviderService from '../../services/ProviderService';
 import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
-import { useAppSelector, useAppDispatch } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
-import { clearRows } from '../../features/submodels/slice';
-import ProviderService from '../../services/ProviderService';
 
 const defaultUploadData: ProcessReport = {
   processId: '',

@@ -19,20 +19,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
+  Box,
+  Divider,
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
   ListItemIcon,
-  Divider,
+  ListItemText,
   Typography,
   useTheme,
-  Box,
 } from '@mui/material';
-import { IntMenuItemProps, MenuItems, icons } from '../models/Sidebar';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { icons, IntMenuItemProps, MenuItems } from '../models/Sidebar';
 import Permissions from './Permissions';
 
 /**

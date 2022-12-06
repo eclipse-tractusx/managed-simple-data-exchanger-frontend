@@ -37,7 +37,7 @@ class AppService extends HttpService {
   public async getUserPermissions() {
     const res = await this.instance({
       method: 'GET',
-      url: `/user/role/permissions`,
+      url: '/user/role/permissions',
     });
     return res;
   }

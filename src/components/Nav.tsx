@@ -19,15 +19,16 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React, { useState } from 'react';
+import { Logout } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import { Logout } from '@mui/icons-material';
-import UserService from '../services/UserService';
 import { Box, Link, Paper, useTheme } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { Typography } from 'cx-portal-shared-components';
+import React, { useState } from 'react';
+
+import UserService from '../services/UserService';
 
 // eslint-disable-next-line
 const Nav = (props: any) => {
