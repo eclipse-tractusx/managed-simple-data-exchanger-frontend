@@ -1,6 +1,7 @@
+import { Box, Checkbox, CircularProgress, FormControlLabel } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
 import React, { useState } from 'react';
-import { Box, CircularProgress, Checkbox, FormControlLabel } from '@mui/material';
-import { Button, Dialog, DialogContent, DialogHeader, DialogActions } from 'cx-portal-shared-components';
+
 import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 
 interface IntConfirmOffer {

@@ -19,10 +19,11 @@
  ********************************************************************************/
 import { GridSelectionModel, GridValidRowModel } from '@mui/x-data-grid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchSubmodelList, fetchSubmodelDetails } from './actions';
-import { ISubmodelsSlice } from './types';
-import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
+
+import { fetchSubmodelDetails, fetchSubmodelList } from './actions';
+import { ISubmodelsSlice } from './types';
 
 const initialState: ISubmodelsSlice = {
   selectedSubmodel: 'aspect',

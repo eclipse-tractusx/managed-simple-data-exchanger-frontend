@@ -35,7 +35,8 @@ const ITEMS = [
     value: 'url',
   },
 ];
-import { Box, Grid, LinearProgress, Stack, Autocomplete } from '@mui/material';
+import { Autocomplete, Box, Grid, LinearProgress, Stack } from '@mui/material';
+import { DataGrid, GridSelectionModel, GridToolbar, GridValidRowModel, GridValueGetterParams } from '@mui/x-data-grid';
 import {
   Button,
   Dialog,
@@ -46,34 +47,39 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import { DataGrid, GridSelectionModel, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
-import OfferDetailsDialog from '../components/OfferDetailsDialog';
+import React, { useEffect, useState } from 'react';
+
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
+import OfferDetailsDialog from '../components/OfferDetailsDialog';
+import Permissions from '../components/Permissions';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
-import { ILegalEntityContent, IConnectorResponse, IntOption } from '../models/ConsumerContractOffers';
+import {
+  IConnectorResponse,
+  IConsumerDataOffers,
+  ILegalEntityContent,
+  IntOption,
+} from '../models/ConsumerContractOffers';
 import ConsumerService from '../services/ConsumerService';
 import {
   setContractOffers,
-  setSelectedOffer,
-  setOffersLoading,
-  setSelectedOffersList,
-  setIsMultipleContractSubscription,
-  setSearchFilterByType,
-  setFilterProviderUrl,
-  setFilterCompanyOptions,
   setFfilterCompanyOptionsLoading,
-  setSelectedFilterCompanyOption,
+  setFilterCompanyOptions,
+  setFilterConnectors,
+  setFilterProviderUrl,
   setFilterSelectedBPN,
   setFilterSelectedConnector,
-  setFilterConnectors,
+  setIsMultipleContractSubscription,
+  setOffersLoading,
+  setSearchFilterByType,
+  setSelectedFilterCompanyOption,
+  setSelectedOffer,
+  setSelectedOffersList,
 } from '../store/consumerSlice';
-import { useAppSelector, useAppDispatch } from '../store/store';
-import { setSnackbarMessage } from '../features/notifiication/slice';
-import Permissions from '../components/Permissions';
+import { useAppDispatch, useAppSelector } from '../store/store';
 
-export const ConsumeData: React.FC = () => {
+export default function ConsumeData() {
   const {
     contractOffers,
     offersLoading,
@@ -159,7 +165,7 @@ export const ConsumeData: React.FC = () => {
         const offersList: unknown[] = [];
         // multiselect or single selecte
         if (isMultipleContractSubscription) {
-          selectedOffersList.map(offer => {
+          selectedOffersList.map((offer: IConsumerDataOffers) => {
             offersList.push({
               offerId: offer.offerId || '',
               assetId: offer.assetId || '',
@@ -262,7 +268,7 @@ export const ConsumeData: React.FC = () => {
   const checkoutSelectedOffers = () => {
     let isUsagePoliciesEqual = false;
     const useCasesList: any[] = [];
-    selectedOffersList.map(offer => {
+    selectedOffersList.map((offer: IConsumerDataOffers) => {
       if (offer.usagePolicies.length > 0) {
         useCasesList.push(offer.usagePolicies);
       }
@@ -358,6 +364,13 @@ export const ConsumeData: React.FC = () => {
     }
   };
 
+  const handleSelectionModel = (newSelectionModel: GridSelectionModel) => {
+    const selectedIDs = new Set(newSelectionModel);
+    const selectedRowData = contractOffers.filter((row: GridValidRowModel) => selectedIDs.has(row.assetId.toString()));
+    dispatch(setSelectedOffersList(selectedRowData));
+    setSelectionModel(newSelectionModel);
+  };
+
   const init = () => {
     dispatch(setContractOffers([]));
     dispatch(setSelectedOffer(null));
@@ -426,7 +439,7 @@ export const ConsumeData: React.FC = () => {
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
-                    onChange={(event, value) => onCompanyOptionChange(value)}
+                    onChange={(event, value: any) => onCompanyOptionChange(value)}
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}
@@ -437,7 +450,7 @@ export const ConsumeData: React.FC = () => {
                     renderInput={params => (
                       <Input {...params} label="Select a company name" placeholder="Search company name" fullWidth />
                     )}
-                    renderOption={(props, option) => (
+                    renderOption={(props, option: any) => (
                       <Box
                         component="li"
                         key={option.bpn}
@@ -514,12 +527,7 @@ export const ConsumeData: React.FC = () => {
             pageSize={pageSize}
             onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
             rowsPerPageOptions={[10, 25, 50, 100]}
-            onSelectionModelChange={newSelectionModel => {
-              const selectedIDs = new Set(newSelectionModel);
-              const selectedRowData = contractOffers.filter(row => selectedIDs.has(row.assetId.toString()));
-              dispatch(setSelectedOffersList(selectedRowData));
-              setSelectionModel(newSelectionModel);
-            }}
+            onSelectionModelChange={newSelectionModel => handleSelectionModel(newSelectionModel)}
             selectionModel={selectionModel}
             components={{
               Toolbar: GridToolbar,
@@ -616,4 +624,4 @@ export const ConsumeData: React.FC = () => {
       </Dialog>
     </Box>
   );
-};
+}

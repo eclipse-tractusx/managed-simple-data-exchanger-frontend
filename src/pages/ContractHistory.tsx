@@ -18,21 +18,22 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React, { useEffect, useState } from 'react';
-import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
 import { Refresh } from '@mui/icons-material';
-import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import { convertEpochToDate, epochToDate } from '../utils/utils';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import ConsumerService from '../services/ConsumerService';
-import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
-import { IContractAgreements } from '../models/ConsumerContractOffers';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
+import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { Button } from 'cx-portal-shared-components';
+import React, { useEffect, useState } from 'react';
+
 import Permissions from '../components/Permissions';
+import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
+import { IContractAgreements } from '../models/ConsumerContractOffers';
+import ConsumerService from '../services/ConsumerService';
+import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { convertEpochToDate, epochToDate } from '../utils/utils';
 
 const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);

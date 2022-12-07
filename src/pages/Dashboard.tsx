@@ -19,17 +19,18 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Box } from '@mui/material';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import Nav from '../components/Nav';
+import PoliciesDialog from '../components/policies/PoliciesDialog';
 import Sidebar from '../components/Sidebar';
+import ConsumeData from './ConsumeData';
+import ContractHistory from './ContractHistory';
+import CreateData from './CreateData';
 import { Help } from './Help';
 import UploadHistory from './UploadHistory';
-import CreateData from './CreateData';
-import { ConsumeData } from './ConsumeData';
-import ContractHistory from './ContractHistory';
-import PoliciesDialog from '../components/policies/PoliciesDialog';
-import { Box } from '@mui/material';
 
 export default function Dashboard() {
   const location = useLocation();
@@ -63,7 +64,7 @@ export default function Dashboard() {
     <Box sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden', height: '100vh' }}>
       <Box>
         <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
-        <Box sx={{ display: 'flex', mt: 8, height: `calc(100vh - 64px)`, overflow: 'hidden' }}>
+        <Box sx={{ display: 'flex', mt: 8, height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
           <Sidebar isExpanded={isExpanded} />
           <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>{layout()}</Box>
         </Box>

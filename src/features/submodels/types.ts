@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { GridValidRowModel, GridSelectionModel } from '@mui/x-data-grid';
+import { GridSelectionModel, GridValidRowModel } from '@mui/x-data-grid';
 
 export interface ISubmodelList {
   id: number;

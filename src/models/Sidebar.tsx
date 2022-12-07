@@ -19,8 +19,8 @@
  ********************************************************************************/
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import HistoryIcon from '@mui/icons-material/History';
 import HelpIcon from '@mui/icons-material/Help';
+import HistoryIcon from '@mui/icons-material/History';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 export const icons = {

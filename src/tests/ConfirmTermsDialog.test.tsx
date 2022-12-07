@@ -20,6 +20,7 @@
 
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 
 const offerObj = {

@@ -17,9 +17,10 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { SyntheticEvent } from 'react';
-import Alert from '@mui/material/Alert';
+
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { toggleSnackbar } from './slice';
 

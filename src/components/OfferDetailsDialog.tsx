@@ -18,9 +18,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Divider, Grid } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
 import React, { useState } from 'react';
-import { Grid, Divider } from '@mui/material';
-import { Button, Dialog, DialogContent, DialogHeader, DialogActions, Typography } from 'cx-portal-shared-components';
+
 import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 
 interface IntDialogProps {

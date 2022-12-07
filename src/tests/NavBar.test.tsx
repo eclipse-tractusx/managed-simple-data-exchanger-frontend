@@ -21,6 +21,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+
 import Nav from '../components/Nav';
 
 test('render navbar', () => {
