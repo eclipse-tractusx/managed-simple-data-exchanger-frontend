@@ -43,7 +43,7 @@ const getParsedToken = () => KC.tokenParsed;
 
 const updateToken = (successCallback?: () => void) => KC.updateToken(5).then(successCallback).catch(doLogin);
 
-const getUsername = () => KC.tokenParsed.preferred_username;
+const getUsername = () => KC.tokenParsed?.preferred_username;
 
 const getName = () => KC.tokenParsed?.name;
 
@@ -59,6 +59,8 @@ const isLoggedIn = () => !!KC.token;
 
 const getRoles = () => KC.tokenParsed?.resource_access[keycloakConfig.clientId]?.roles;
 
+const hasValidResource = () => KC.tokenParsed?.resource_access.hasOwnProperty(keycloakConfig.clientId);
+
 const getLoggedUser = () => ({
   userName: getUsername(),
   name: getName(),
@@ -69,13 +71,6 @@ const getLoggedUser = () => ({
   token: getToken(),
   parsedToken: getParsedToken(),
 });
-
-/**
- * Initializes Keycloak instance and calls the provided
- * callback function if successfully authenticated.
- *
- * @param onAuthenticatedCallback
- */
 
 const update = () => {
   KC.updateToken(50)
@@ -124,6 +119,7 @@ const UserService = {
   hasRole,
   getLoggedUser,
   getRoles,
+  hasValidResource,
 };
 
 export default UserService;

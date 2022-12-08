@@ -33,13 +33,13 @@ import { clearConsoles } from './utils/utils';
 
 clearConsoles();
 
-UserService.initKeycloak(user => {
+UserService.initKeycloak(() => {
   ReactDOM.render(
     <React.StrictMode>
       <SharedCssBaseline />
       <Provider store={store}>
         <SharedThemeProvider>
-          <Root loggedInUser={user} />
+          <Root />
         </SharedThemeProvider>
       </Provider>
     </React.StrictMode>,
