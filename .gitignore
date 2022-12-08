@@ -14,3 +14,4 @@ yarn-error.log*
 .npm/
 /public/env-config.js
 env-config.js
+public/env-config.js
