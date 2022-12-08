@@ -18,12 +18,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { schemaValidator } from '../../helpers/SchemaValidator';
 import ProviderService from '../../services/ProviderService';
 import { setPageLoading } from '../app/slice';
 import { setSnackbarMessage } from '../notifiication/slice';
 
-const fetchSubmodelList = createAsyncThunk(`/submodel/list`, async () => {
+const fetchSubmodelList = createAsyncThunk('/submodel/list', async () => {
   try {
     const res = await ProviderService.getInstance().getSubmodelList();
     return res;
@@ -31,7 +32,7 @@ const fetchSubmodelList = createAsyncThunk(`/submodel/list`, async () => {
     console.log('api call error:', error);
   }
 });
-const fetchSubmodelDetails = createAsyncThunk(`/submodel/details`, async (params: string, { dispatch }) => {
+const fetchSubmodelDetails = createAsyncThunk('/submodel/details', async (params: string, { dispatch }) => {
   try {
     dispatch(setPageLoading(true));
     const res = await ProviderService.getInstance().getSubmodelDetails(params);
@@ -57,4 +58,4 @@ const submitJsonData = createAsyncThunk('/submit/json-data', async (data: string
     );
   }
 });
-export { fetchSubmodelList, fetchSubmodelDetails, submitJsonData };
+export { fetchSubmodelDetails, fetchSubmodelList, submitJsonData };

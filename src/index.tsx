@@ -19,15 +19,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import ReactDOM from 'react-dom';
 import './index.scss';
+
+import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+
+import Root from './Root';
 import UserService from './services/UserService';
 import { store } from './store/store';
-import { Provider } from 'react-redux';
-import React from 'react';
 import { clearConsoles } from './utils/utils';
-import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
-import Root from './Root';
 
 clearConsoles();
 

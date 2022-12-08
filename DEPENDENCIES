@@ -1159,7 +1159,7 @@ npm/npmjs/@jridgewell/sourcemap-codec/1.4.14, MIT, approved, clearlydefined
 npm/npmjs/@jridgewell/trace-mapping/0.3.17, MIT, approved, clearlydefined
 npm/npmjs/@leichtgewicht/ip-codec/2.0.4, MIT, approved, clearlydefined
 npm/npmjs/@mui/base/5.0.0-alpha.105, MIT, approved, #2992
-npm/npmjs/@mui/core-downloads-tracker/5.10.13, , restricted, clearlydefined
+npm/npmjs/@mui/core-downloads-tracker/5.10.13, MIT, approved, clearlydefined
 npm/npmjs/@mui/icons-material/5.10.9, MIT, approved, #3245
 npm/npmjs/@mui/material/5.10.13, MIT, approved, #3244
 npm/npmjs/@mui/private-theming/5.10.9, MIT, approved, #3241
@@ -1208,7 +1208,7 @@ npm/npmjs/@tootallnate/once/1.1.2, EPL-2.0, approved, iot.diafanis
 npm/npmjs/@trysound/sax/0.2.0, ISC, approved, clearlydefined
 npm/npmjs/@types/aria-query/4.2.2, MIT, approved, clearlydefined
 npm/npmjs/@types/autosuggest-highlight/3.2.0, MIT, approved, clearlydefined
-npm/npmjs/@types/babel__core/7.1.20, , restricted, clearlydefined
+npm/npmjs/@types/babel__core/7.1.20, MIT, approved, clearlydefined
 npm/npmjs/@types/babel__generator/7.6.4, MIT, approved, clearlydefined
 npm/npmjs/@types/babel__template/7.4.1, MIT, approved, clearlydefined
 npm/npmjs/@types/babel__traverse/7.18.2, MIT, approved, clearlydefined
@@ -1261,13 +1261,12 @@ npm/npmjs/@types/sockjs/0.3.33, MIT, approved, clearlydefined
 npm/npmjs/@types/stack-utils/2.0.1, MIT, approved, clearlydefined
 npm/npmjs/@types/testing-library__jest-dom/5.14.5, MIT, approved, clearlydefined
 npm/npmjs/@types/trusted-types/2.0.2, MIT, approved, clearlydefined
-npm/npmjs/@types/uuid/8.3.4, MIT, approved, clearlydefined
 npm/npmjs/@types/ws/8.5.3, MIT, approved, clearlydefined
 npm/npmjs/@types/yargs-parser/21.0.0, MIT, approved, clearlydefined
 npm/npmjs/@types/yargs/16.0.4, MIT, approved, clearlydefined
 npm/npmjs/@types/yargs/17.0.13, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/eslint-plugin/5.42.1, MIT, approved, #4718
-npm/npmjs/@typescript-eslint/experimental-utils/5.42.1, , restricted, clearlydefined
+npm/npmjs/@typescript-eslint/experimental-utils/5.42.1, MIT, approved, clearlydefined
 npm/npmjs/@typescript-eslint/parser/5.44.0, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/@typescript-eslint/scope-manager/5.42.1, MIT, approved, #4868
 npm/npmjs/@typescript-eslint/scope-manager/5.44.0, MIT, approved, clearlydefined

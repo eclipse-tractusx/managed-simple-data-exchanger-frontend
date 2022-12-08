@@ -19,9 +19,10 @@
  ********************************************************************************/
 
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { store } from '../store/store';
 import { HOST } from '../helpers/ApiHelper';
+import { store } from '../store/store';
 import UserService from './UserService';
 
 abstract class HttpService {
@@ -31,13 +32,8 @@ abstract class HttpService {
     this.instance = axios.create(requestConfig);
     this.instance.interceptors.request.use(request => {
       request.baseURL = HOST;
-      if (UserService.isLoggedIn()) {
-        const cb = () => {
-          request.headers.Authorization = `Bearer ${UserService.getToken()}`;
-          return Promise.resolve(request);
-        };
-        return UserService.updateToken(cb);
-      }
+      request.headers.Authorization = `Bearer ${UserService.getToken()}`;
+      return request;
     });
 
     this.instance.interceptors.response.use(

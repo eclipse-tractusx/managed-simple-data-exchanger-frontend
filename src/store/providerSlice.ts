@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { ProcessReport, Status } from '../models/ProcessReport';
 
 interface IProviderSlice {

@@ -22,6 +22,7 @@
 
 import { Box, Card, CardContent, Grid } from '@mui/material';
 import { Typography } from 'cx-portal-shared-components';
+
 import { SubmodelHelp } from '../components/SubmodelHelp';
 import { rulesCardStyle, rulesContentStyle, submodelHelpArr } from '../utils/helpUtils';
 

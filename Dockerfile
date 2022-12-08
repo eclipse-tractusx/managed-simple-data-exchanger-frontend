@@ -13,17 +13,20 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-#FROM ubuntu/nginx:latest 
-FROM nginx:latest
+FROM nginx:1.22.1-alpine
+
+ENV CURL_VERSION=7.83.1-r4
+
+RUN set -eux; \
+      apk add --no-cache \
+        curl="${CURL_VERSION}" \
+        libcurl="${CURL_VERSION}" \
+
 
 # Nginx config
-RUN rm -rf /etc/nginx/conf.d 
+RUN rm -rf /etc/nginx/conf.d
 
-COPY ./conf /etc/nginx 
-
-RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
-
-#RUN chmod -R 777 /var/lib/nginx && chmod -R 777 /var/log/nginx/
+COPY ./conf /etc/nginx
 
 RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
 
