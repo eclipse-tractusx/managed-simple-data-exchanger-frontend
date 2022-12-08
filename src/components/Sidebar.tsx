@@ -30,18 +30,12 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { icons, IntMenuItemProps, MenuItems } from '../models/Sidebar';
 import Permissions from './Permissions';
 
-/**
- * Menu Item
- * @param props
- * @returns ListItem
- */
-const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
+const MenuItem = ({ item, isExpanded }: IntMenuItemProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { menuIcon, to, text, dataId } = item;
@@ -69,12 +63,7 @@ const MenuItem: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
   );
 };
 
-/**
- * Menu Title
- * @param props
- * @returns Typography
- */
-const MenuItemHeading: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
+const MenuItemHeading = ({ item, isExpanded }: IntMenuItemProps) => {
   return (
     <>
       <Typography
@@ -94,7 +83,7 @@ const MenuItemHeading: React.FC<IntMenuItemProps> = ({ item, isExpanded }) => {
   );
 };
 
-const Sidebar = ({ isExpanded }: { isExpanded: boolean }) => {
+export default function Sidebar({ isExpanded }: { isExpanded: boolean }) {
   const theme = useTheme();
   return (
     <Box
@@ -117,5 +106,4 @@ const Sidebar = ({ isExpanded }: { isExpanded: boolean }) => {
       </List>
     </Box>
   );
-};
-export default Sidebar;
+}

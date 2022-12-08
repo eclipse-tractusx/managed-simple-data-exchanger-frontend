@@ -18,16 +18,38 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { Box } from '@mui/material';
 import { ErrorPage } from 'cx-portal-shared-components';
+import { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
+import Nav from './components/Nav';
+import Sidebar from './components/Sidebar';
 import UserService from './services/UserService';
 
 export default function Root() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const handleExpanded = (expanded: boolean) => {
+    setIsExpanded(expanded);
+  };
+
   return (
     <>
       {UserService.hasValidResource() ? (
-        <App />
+        <BrowserRouter>
+          <Box sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden', height: '100vh' }}>
+            <Box>
+              <Nav getIsExpanded={(expanded: boolean) => handleExpanded(expanded)} />
+              <Box sx={{ display: 'flex', mt: 8, height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
+                <Sidebar isExpanded={isExpanded} />
+                <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>
+                  <App />
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </BrowserRouter>
       ) : (
         <ErrorPage header="This webpage is not available." title="Sorry for this inconvenience." />
       )}
