@@ -13,7 +13,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.host }}
-      secretName: {{ include "helm.fullname" . }}-tls
+      secretName: {{ include "dft-frontend.fullname" . }}-tls
   rules:
     - host: {{ .Values.ingress.host }}
       http:
