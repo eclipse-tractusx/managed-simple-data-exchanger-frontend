@@ -25,7 +25,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { toggleSnackbar } from './slice';
 
 export default function Notification() {
-  const { openSnackBar, snackBarMessage, snackbarType } = useAppSelector(state => state.notification);
+  const { openSnackBar, snackBarMessage, snackbarType } = useAppSelector(state => state.notificationSlice);
   const dispatch = useAppDispatch();
 
   const handleClose = (event: SyntheticEvent | Event, reason?: string) => {

@@ -19,15 +19,18 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { ErrorPage } from 'cx-portal-shared-components';
+
 import { useAppSelector } from '../store/store';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Permissions(props: any) {
   const { permissions } = useAppSelector(state => state.appSlice);
   const valid = props.values ? props.values.some((item: string) => permissions?.includes(item)) : true;
-  if (valid) {
-    return props.children;
-  } else {
-    return null;
-  }
+  if (valid) return props.children;
+  else if (props.fullPage)
+    return (
+      <ErrorPage title="You have no permission to view this content" description="Please contact your administrator" />
+    );
+  else return null;
 }
