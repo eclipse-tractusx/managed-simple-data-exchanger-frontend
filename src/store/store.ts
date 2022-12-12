@@ -18,25 +18,28 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { configureStore } from '@reduxjs/toolkit';
-import accessUsagePolicySlice from '../features/policies/slice';
-import { useDispatch, useSelector } from 'react-redux';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
-import providerSlice from './providerSlice';
-import consumerSlice from './consumerSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 import appSlice from '../features/app/slice';
 import notificationSlice from '../features/notifiication/slice';
+import accessUsagePolicySlice from '../features/policies/slice';
 import submodelSlice from '../features/submodels/slice';
+import consumerSlice from './consumerSlice';
+import providerSlice from './providerSlice';
+
+export const reducers = {
+  appSlice: appSlice,
+  accessUsagePolicySlice: accessUsagePolicySlice,
+  providerSlice: providerSlice,
+  consumerSlice: consumerSlice,
+  notification: notificationSlice,
+  submodelSlice: submodelSlice,
+};
 
 export const store = configureStore({
-  reducer: {
-    appSlice: appSlice,
-    accessUsagePolicySlice: accessUsagePolicySlice,
-    providerSlice: providerSlice,
-    consumerSlice: consumerSlice,
-    notification: notificationSlice,
-    submodelSlice: submodelSlice,
-  },
+  reducer: combineReducers(reducers),
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,

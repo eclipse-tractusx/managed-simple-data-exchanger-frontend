@@ -19,16 +19,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { Tab, TabPanel, Tabs } from 'cx-portal-shared-components';
-import UploadFile from '../components/UploadFile';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import SelectSubmodel from '../components/SelectSubmodel';
+import { SyntheticEvent, useEffect, useState } from 'react';
+
 import DataTable from '../components/DataTable';
-import { fetchSubmodelDetails } from '../features/submodels/actions';
 import JsonInput from '../components/JsonInput';
 import Permissions from '../components/Permissions';
+import SelectSubmodel from '../components/SelectSubmodel';
+import UploadFile from '../components/UploadFile';
+import { fetchSubmodelDetails } from '../features/submodels/actions';
+import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function CreateData() {
   const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);

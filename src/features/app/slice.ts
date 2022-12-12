@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { IUser } from '../../models/User';
 import { fetchUserPermissions } from './actions';
 import { IAppSlice } from './types';

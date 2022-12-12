@@ -1,5 +1,6 @@
 import { SelectList } from 'cx-portal-shared-components';
 import { useEffect } from 'react';
+
 import { fetchSubmodelDetails, fetchSubmodelList } from '../features/submodels/actions';
 import { setSelectedSubmodel } from '../features/submodels/slice';
 import { useAppDispatch, useAppSelector } from '../store/store';

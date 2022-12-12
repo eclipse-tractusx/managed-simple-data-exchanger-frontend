@@ -18,19 +18,20 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import CloseIcon from '@mui/icons-material/Close';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Link, useTheme } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import CloseIcon from '@mui/icons-material/Close';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { handleDialogOpen } from '../features/policies/slice';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+
 import { setPageLoading } from '../features/app/slice';
 import { setSnackbarMessage } from '../features/notifiication/slice';
+import { handleDialogOpen } from '../features/policies/slice';
 import { FileSize } from '../models/FileSize';
-import { setUploadStatus, setSelectedFiles, removeSelectedFiles } from '../store/providerSlice';
+import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../store/providerSlice';
+import { useAppDispatch, useAppSelector } from '../store/store';
 import { Config } from '../utils/config';
 
 export default function UploadFile() {

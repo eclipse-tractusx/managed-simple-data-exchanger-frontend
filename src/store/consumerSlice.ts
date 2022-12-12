@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { IConsumerDataOffers, IContractAgreements } from '../models/ConsumerContractOffers';
 
 export interface IntOption {

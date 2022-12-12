@@ -17,15 +17,16 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import React from 'react';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import GetAppIcon from '@mui/icons-material/GetApp';
 import { Card, CardActions, CardContent, useTheme } from '@mui/material';
 import { Button, Table } from 'cx-portal-shared-components';
-import GetAppIcon from '@mui/icons-material/GetApp';
-import { Link } from 'react-router-dom';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { ISubmodelHelpProps } from '../models/Help';
-import { setSnackbarMessage } from '../features/notifiication/slice';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { setSnackbarMessage } from '../features/notifiication/slice';
+import { ISubmodelHelpProps } from '../models/Help';
 
 export const SubmodelHelp: React.FC<ISubmodelHelpProps> = ({
   submodelName = '',

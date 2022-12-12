@@ -19,7 +19,10 @@
  ********************************************************************************/
 
 import Keycloak from 'keycloak-js';
+
+import { setLoggedInUser } from '../features/app/slice';
 import { IUser } from '../models/User';
+import { store } from '../store/store';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
@@ -40,7 +43,7 @@ const getParsedToken = () => KC.tokenParsed;
 
 const updateToken = (successCallback?: () => void) => KC.updateToken(5).then(successCallback).catch(doLogin);
 
-const getUsername = () => KC.tokenParsed.preferred_username;
+const getUsername = () => KC.tokenParsed?.preferred_username;
 
 const getName = () => KC.tokenParsed?.name;
 
@@ -56,6 +59,8 @@ const isLoggedIn = () => !!KC.token;
 
 const getRoles = () => KC.tokenParsed?.resource_access[keycloakConfig.clientId]?.roles;
 
+const hasValidResource = () => KC.tokenParsed?.resource_access.hasOwnProperty(keycloakConfig.clientId);
+
 const getLoggedUser = () => ({
   userName: getUsername(),
   name: getName(),
@@ -67,12 +72,16 @@ const getLoggedUser = () => ({
   parsedToken: getParsedToken(),
 });
 
-/**
- * Initializes Keycloak instance and calls the provided
- * callback function if successfully authenticated.
- *
- * @param onAuthenticatedCallback
- */
+const update = () => {
+  KC.updateToken(50)
+    .then((refreshed: boolean) => {
+      if (refreshed) console.log(`${getUsername()} token refreshed ${refreshed}`);
+      store.dispatch(setLoggedInUser(getLoggedUser()));
+    })
+    .catch(() => {
+      console.log(`${getUsername()} token refresh failed`);
+    });
+};
 
 const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) => {
   KC.init({
@@ -82,12 +91,19 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
   })
     .then(authenticated => {
       if (authenticated) {
+        store.dispatch(setLoggedInUser(getLoggedUser()));
         onAuthenticatedCallback(getLoggedUser());
+        setInterval(update, 50000);
       } else {
         doLogin();
       }
     })
     .catch(console.error);
+};
+
+KC.onTokenExpired = () => {
+  console.log(`${getUsername()} token expired`);
+  update();
 };
 
 const UserService = {
@@ -103,6 +119,7 @@ const UserService = {
   hasRole,
   getLoggedUser,
   getRoles,
+  hasValidResource,
 };
 
 export default UserService;

@@ -17,13 +17,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import Ajv2019 from 'ajv/dist/2019';
-import addFormats from 'ajv-formats';
-import { DefinedError } from 'ajv/dist/core';
-import { store } from '../store/store';
-import { setSnackbarMessage } from '../features/notifiication/slice';
 import { GridValidRowModel } from '@mui/x-data-grid';
+import Ajv2019 from 'ajv/dist/2019';
+import { DefinedError } from 'ajv/dist/core';
+import addFormats from 'ajv-formats';
+
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import { handleDialogOpen } from '../features/policies/slice';
+import { store } from '../store/store';
 
 export const schemaValidator = async (data: GridValidRowModel[]) => {
   const ajv = new Ajv2019();
