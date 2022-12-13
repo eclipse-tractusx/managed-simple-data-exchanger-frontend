@@ -19,10 +19,8 @@
  ********************************************************************************/
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { schemaValidator } from '../../helpers/SchemaValidator';
 import ProviderService from '../../services/ProviderService';
 import { setPageLoading } from '../app/slice';
-import { setSnackbarMessage } from '../notifiication/slice';
 
 const fetchSubmodelList = createAsyncThunk('/submodel/list', async () => {
   try {
@@ -43,19 +41,4 @@ const fetchSubmodelDetails = createAsyncThunk('/submodel/details', async (params
     dispatch(setPageLoading(false));
   }
 });
-const submitJsonData = createAsyncThunk('/submit/json-data', async (data: string, { dispatch }) => {
-  try {
-    const json = JSON.parse(data.trim());
-    if (json) {
-      schemaValidator(json);
-    }
-  } catch (e) {
-    dispatch(
-      setSnackbarMessage({
-        message: 'Invalid data! Enter Required * fields.',
-        type: 'error',
-      }),
-    );
-  }
-});
-export { fetchSubmodelDetails, fetchSubmodelList, submitJsonData };
+export { fetchSubmodelDetails, fetchSubmodelList };

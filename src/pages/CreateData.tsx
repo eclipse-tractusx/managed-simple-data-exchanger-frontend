@@ -26,6 +26,7 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import DataTable from '../components/DataTable';
 import JsonInput from '../components/JsonInput';
 import Permissions from '../components/Permissions';
+import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
 import UploadFile from '../components/UploadFile';
 import { fetchSubmodelDetails } from '../features/submodels/actions';
@@ -76,6 +77,7 @@ export default function CreateData() {
           </Grid>
         </Grid>
       </Permissions>
+      <PoliciesDialog />
     </Box>
   );
 }

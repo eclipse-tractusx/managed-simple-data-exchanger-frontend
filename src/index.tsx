@@ -26,20 +26,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import Root from './Root';
+import App from './App';
 import UserService from './services/UserService';
 import { store } from './store/store';
 import { clearConsoles } from './utils/utils';
 
 clearConsoles();
 
-UserService.initKeycloak(() => {
+UserService.initKeycloak(user => {
   ReactDOM.render(
     <React.StrictMode>
       <SharedCssBaseline />
       <Provider store={store}>
         <SharedThemeProvider>
-          <Root />
+          <App loggedUser={user} />
         </SharedThemeProvider>
       </Provider>
     </React.StrictMode>,

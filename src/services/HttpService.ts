@@ -20,9 +20,7 @@
 
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { setSnackbarMessage } from '../features/notifiication/slice';
 import { HOST } from '../helpers/ApiHelper';
-import { store } from '../store/store';
 import UserService from './UserService';
 
 abstract class HttpService {
@@ -41,12 +39,6 @@ abstract class HttpService {
         return response;
       },
       (error: AxiosError) => {
-        store.dispatch(
-          setSnackbarMessage({
-            message: 'Something went wrong!',
-            type: 'error',
-          }),
-        );
         Promise.reject(error.response);
       },
     );

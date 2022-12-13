@@ -20,14 +20,30 @@
 import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
 
-import { submitJsonData } from '../features/submodels/actions';
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import { setJsonInputData } from '../features/submodels/slice';
+import { schemaValidator } from '../helpers/SchemaValidator';
 import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function JsonInput() {
   const theme = useTheme();
   const { submodelDetails, jsonInputData } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
+  const submitData = (data: string) => {
+    try {
+      const json = JSON.parse(data.trim());
+      if (json) {
+        schemaValidator(json);
+      }
+    } catch (e) {
+      dispatch(
+        setSnackbarMessage({
+          message: 'Invalid data! Enter Required * fields.',
+          type: 'error',
+        }),
+      );
+    }
+  };
   const textareaStyle = {
     width: '100%',
     border: `1px solid ${theme.palette.grey[500]}`,
@@ -43,7 +59,7 @@ export default function JsonInput() {
         <Button
           variant="contained"
           size="small"
-          onClick={() => dispatch(submitJsonData(jsonInputData))}
+          onClick={() => submitData(jsonInputData)}
           disabled={!Boolean(jsonInputData.length)}
         >
           Next Step - Configure Policies
