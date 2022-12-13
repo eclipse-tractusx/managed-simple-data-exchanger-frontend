@@ -30,12 +30,12 @@ import consumerSlice from './consumerSlice';
 import providerSlice from './providerSlice';
 
 export const reducers = {
-  appSlice: appSlice,
-  accessUsagePolicySlice: accessUsagePolicySlice,
-  providerSlice: providerSlice,
-  consumerSlice: consumerSlice,
-  notification: notificationSlice,
-  submodelSlice: submodelSlice,
+  appSlice,
+  accessUsagePolicySlice,
+  providerSlice,
+  consumerSlice,
+  notificationSlice,
+  submodelSlice,
 };
 
 export const store = configureStore({

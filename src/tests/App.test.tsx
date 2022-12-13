@@ -23,15 +23,17 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import { handleDialogOpen } from '../features/policies/slice';
-import Dashboard from '../pages/Dashboard';
+import CreateData from '../pages/CreateData';
+import Help from '../pages/Help';
+import UploadHistory from '../pages/UploadHistory';
 import { store } from '../store/store';
 import { ReduxWrapper } from '../utils/testUtils';
 
 describe('Dashboard', () => {
   test('upload file page', () => {
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/dashboard/create-data' }]}>
-        <Dashboard />
+      <MemoryRouter initialEntries={[{ pathname: '/create-data' }]}>
+        <CreateData />
       </MemoryRouter>,
       { wrapper: ReduxWrapper },
     );
@@ -40,8 +42,8 @@ describe('Dashboard', () => {
 
   test.skip('upload history page', () => {
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/dashboard/history' }]}>
-        <Dashboard />
+      <MemoryRouter initialEntries={[{ pathname: '/upload-history' }]}>
+        <UploadHistory />
       </MemoryRouter>,
       { wrapper: ReduxWrapper },
     );
@@ -50,8 +52,8 @@ describe('Dashboard', () => {
 
   test('help page', () => {
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/dashboard/help' }]}>
-        <Dashboard />
+      <MemoryRouter initialEntries={[{ pathname: '/help' }]}>
+        <Help />
       </MemoryRouter>,
       { wrapper: ReduxWrapper },
     );
@@ -60,8 +62,8 @@ describe('Dashboard', () => {
 
   test('Render Policies Dialog Componenet', async () => {
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/dashboard/create-data' }]}>
-        <Dashboard />
+      <MemoryRouter initialEntries={[{ pathname: '/create-data' }]}>
+        <CreateData />
       </MemoryRouter>,
       { wrapper: ReduxWrapper },
     );

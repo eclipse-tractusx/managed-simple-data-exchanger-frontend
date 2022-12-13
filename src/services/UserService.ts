@@ -20,9 +20,7 @@
 
 import Keycloak from 'keycloak-js';
 
-import { setLoggedInUser } from '../features/app/slice';
 import { IUser } from '../models/User';
-import { store } from '../store/store';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
@@ -76,7 +74,6 @@ const update = () => {
   KC.updateToken(50)
     .then((refreshed: boolean) => {
       if (refreshed) console.log(`${getUsername()} token refreshed ${refreshed}`);
-      store.dispatch(setLoggedInUser(getLoggedUser()));
     })
     .catch(() => {
       console.log(`${getUsername()} token refresh failed`);
@@ -91,7 +88,6 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
   })
     .then(authenticated => {
       if (authenticated) {
-        store.dispatch(setLoggedInUser(getLoggedUser()));
         onAuthenticatedCallback(getLoggedUser());
         setInterval(update, 50000);
       } else {

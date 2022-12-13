@@ -24,35 +24,44 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import PageLoading from './components/PageLoading';
 import { fetchUserPermissions } from './features/app/actions';
+import { setLoggedInUser } from './features/app/slice';
 import Notification from './features/notifiication';
-import Dashboard from './pages/Dashboard';
+import Main from './Main';
+import { IUser } from './models/User';
+import ConsumeData from './pages/ConsumeData';
+import ContractHistory from './pages/ContractHistory';
+import CreateData from './pages/CreateData';
+import Help from './pages/Help';
 import PageNotFound from './pages/PageNotFound';
+import UploadHistory from './pages/UploadHistory';
 import { useAppDispatch } from './store/store';
 
-function App() {
+function App({ loggedUser }: { loggedUser: IUser }) {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchUserPermissions());
+    dispatch(setLoggedInUser(loggedUser));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard/create-data" />}></Route>
-          <Route path="/dashboard" element={<Navigate to="/dashboard/create-data" />}></Route>
-          <Route key="create-data" path="/dashboard/create-data" element={<Dashboard />} />
-          <Route key="history" path="/dashboard/history" element={<Dashboard />} />
-          <Route key="help" path="/dashboard/help" element={<Dashboard />} />
-          <Route key="consume-data" path="/dashboard/consume-data" element={<Dashboard />} />
-          <Route key="contract-history" path="/dashboard/contract-history" element={<Dashboard />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="/" element={<Main />}>
+            <Route path="/" element={<Navigate to="/create-data" />}></Route>
+            <Route key="create-data" path="/create-data" element={<CreateData />} />
+            <Route key="upload-history" path="/upload-history" element={<UploadHistory />} />
+            <Route key="help" path="/help" element={<Help />} />
+            <Route key="consume-data" path="/consume-data" element={<ConsumeData />} />
+            <Route key="contract-history" path="/contract-history" element={<ContractHistory />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
         </Routes>
+        <Notification />
+        <PageLoading />
       </BrowserRouter>
-      <Notification />
-      <PageLoading />
-    </div>
+    </>
   );
 }
 
