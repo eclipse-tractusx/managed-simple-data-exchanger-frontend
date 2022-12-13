@@ -14,6 +14,12 @@ export default function SelectSubmodel() {
     dispatch(fetchSubmodelDetails(value));
   };
 
+  const defaultValue = {
+    id: 0,
+    title: 'Serial Part Typizations',
+    value: 'aspect',
+  };
+
   useEffect(() => {
     dispatch(fetchSubmodelList());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -21,14 +27,16 @@ export default function SelectSubmodel() {
 
   return (
     <SelectList
+      keyTitle="title"
       label="Select Submodel"
       fullWidth
       size="small"
-      defaultValue={submodelList[0]}
+      defaultValue={defaultValue}
       onChangeItem={e => handleTypeChange(e ? e.value : '')}
       items={submodelList}
       placeholder="Select Submodel"
       hiddenLabel
+      disableClearable={true}
     />
   );
 }
