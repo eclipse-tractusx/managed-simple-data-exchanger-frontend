@@ -31,8 +31,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       
-     - name: Add Helm repos
-       run: |
+      - name: Add Helm repos
+        run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Run chart-releaser
