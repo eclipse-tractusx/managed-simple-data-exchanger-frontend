@@ -456,8 +456,8 @@ export default function ConsumeData() {
                     renderOption={(props, option: any) => (
                       <Box
                         component="li"
-                        key={option.bpn}
                         {...props}
+                        key={option.bpn}
                         sx={{
                           display: 'flex',
                           flexDirection: 'column',
