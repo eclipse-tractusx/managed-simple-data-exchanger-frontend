@@ -55,7 +55,7 @@ export interface IntMenuItemProps {
 // menu items
 export const MenuItems: IntMenuItem[] = [
   {
-    text: 'Provider',
+    text: 'pages.provider',
     isHeading: true,
     childrens: [
       // {

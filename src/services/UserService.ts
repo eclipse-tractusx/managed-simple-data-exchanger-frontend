@@ -49,6 +49,8 @@ const getEmail = () => KC.tokenParsed?.email;
 
 const getCompany = () => KC.tokenParsed?.organisation;
 
+const getBpn = () => KC.tokenParsed?.bpn;
+
 const getTenant = () => KC.tokenParsed?.tenant;
 
 const hasRole = (roles: string[]) => roles.some((role: string) => KC.hasRealmRole(role));
@@ -65,6 +67,7 @@ const getLoggedUser = () => ({
   email: getEmail(),
   roles: getRoles(),
   company: getCompany(),
+  bpn: getBpn(),
   tenant: getTenant(),
   token: getToken(),
   parsedToken: getParsedToken(),

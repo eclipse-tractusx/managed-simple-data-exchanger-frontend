@@ -1,0 +1,94 @@
+{
+  "title": "Catena-X SDE",
+  "logo": "Simple Data Exchanger",
+  "pages": {
+    "home": "Home",
+    "provider": "Provider",
+    "createData": "Create Data",
+    "uploadHistory": "Upload History",
+    "help": "Help",
+    "consumer": "Consumer",
+    "consumeData": "Consume Data",
+    "contractHistory": "Contract History"
+  },
+  "content": {
+    "provider": {
+      "selectSubmodel": "Select Submodel",
+      "uploadFile": "Upload File",
+      "table": "Table",
+      "json": "JSON",
+      "uploadInstruction": "Upload your file by dropping it here.",
+      "choose": "Choose a file",
+      "addRow": "Add row",
+      "deleteRow": "Delete row(s)"
+    },
+    "policies": {
+      "title": "Policies",
+      "accessPolicy": "ACCESS POLICY",
+      "restricted": "Restricted",
+      "unrestricted": "Unrestricted",
+      "note": "Note: Your own organization will always be allowed to access the data",
+      "unAccess": "Unrestricted Access!",
+      "warningText": "Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you sure?",
+      "usagePolicy": "USAGE POLICY",
+      "duration": "Duration restriction",
+      "durationNote": "Usage allowed from contract start",
+      "selectDuration": "Select Duration",
+      "durationValues": {
+        "hour": "Hour",
+        "day": "Day",
+        "month": "Month",
+        "year": "Year"
+      },
+      "purpose": "Purpose restriction",
+      "purposeNote": "Usage allowed only for the purpose",
+      "role": "Role restriction",
+      "roleNote": "Usage allowed only by individuals with the following roles/characteristics",
+      "custom": "Custom restriction",
+      "customNote": "Usage must comply to the following additional conditions"
+    },
+    "uploadHistory": {
+      "title": "Upload History"
+    },
+    "help": {
+      "rules1": "The file must be a file of type CSV (.csv extension).",
+      "rules2": "Data fields must be separated by a semicolon (;).",
+      "rules3": "All data fields must be present even if empty."
+    },
+    "consumeData": {
+      "title": "Consumer View",
+      "selectType": "Select search type",
+      "selectCompany": "Select a company name",
+      "selectConnectors": "Select connectors",
+      "enterBPN": "Enter Business Partner Number",
+      "enterURL": "Enter connector URL"
+    },
+    "common": {
+      "loading": "Loading...",
+      "or": "or",
+      "noData": "No Data",
+      "sampleCsv": "Sample CSV",
+      "sampleTemplate": "CSV Template",
+      "copyHeaders": "Copy headers to clipboard",
+      "rules": "Rules",
+      "subscribe": "Subscribe to selected",
+      "enterValue": "Enter a value"
+    },
+    "button": {
+      "refresh": "Refresh",
+      "search": "Search",
+      "add": "Add",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "submit": "Submit"
+    }
+  },
+  "userRoles": {
+    "itAdmin": "IT Admin",
+    "businessAdmin": "Business Admin",
+    "cxUser": "CX User",
+    "dataSpecialist": "Data Specialist",
+    "appDeveloper": "App Developer",
+    "appAdmin": "App Administrator"
+  }
+}

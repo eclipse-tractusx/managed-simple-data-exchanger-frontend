@@ -20,6 +20,7 @@
 import { Box } from '@mui/material';
 import { ErrorPage } from 'cx-portal-shared-components';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
 import Nav from './components/Nav';
@@ -27,6 +28,7 @@ import Sidebar from './components/Sidebar';
 import UserService from './services/UserService';
 
 export default function Main() {
+  document.title = useTranslation().t('title');
   const [isExpanded, setIsExpanded] = useState(true);
   const handleExpanded = (expanded: boolean) => {
     setIsExpanded(expanded);

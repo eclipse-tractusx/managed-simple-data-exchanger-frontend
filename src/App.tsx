@@ -32,6 +32,7 @@ import ConsumeData from './pages/ConsumeData';
 import ContractHistory from './pages/ContractHistory';
 import CreateData from './pages/CreateData';
 import Help from './pages/Help';
+import Logout from './pages/Logout';
 import PageNotFound from './pages/PageNotFound';
 import UploadHistory from './pages/UploadHistory';
 import { useAppDispatch } from './store/store';
@@ -55,6 +56,7 @@ function App({ loggedUser }: { loggedUser: IUser }) {
             <Route key="help" path="/help" element={<Help />} />
             <Route key="consume-data" path="/consume-data" element={<ConsumeData />} />
             <Route key="contract-history" path="/contract-history" element={<ContractHistory />} />
+            <Route key="logout" path="/logout" element={<Logout />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

@@ -19,22 +19,25 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Logout } from '@mui/icons-material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import { Box, Link, Paper, useTheme } from '@mui/material';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { Typography } from 'cx-portal-shared-components';
-import React, { useState } from 'react';
+import { Box, Paper, useTheme } from '@mui/material';
+import { LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
+import i18next, { changeLanguage } from 'i18next';
+import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import UserService from '../services/UserService';
+import I18nService from '../services/i18nService';
+import { useAppSelector } from '../store/store';
 
 // eslint-disable-next-line
 const Nav = (props: any) => {
   const theme = useTheme();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const avatar = useRef<HTMLDivElement>(null);
+  const [lang, setlang] = useState(i18next.language);
+  const { loggedInUser } = useAppSelector(state => state.appSlice);
+  const NAV_ITEMS = [{ title: loggedInUser.company }, { title: loggedInUser.bpn }, { title: 'Logout', to: 'logout' }];
 
   const handleExpanded = () => {
     if (isExpanded) {
@@ -46,17 +49,11 @@ const Nav = (props: any) => {
     props.getIsExpanded(true);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    UserService.doLogout();
+  const openCloseMenu = () => setMenuOpen(prevVal => !prevVal);
+  const onClickAway = (e: MouseEvent | TouchEvent) => {
+    if (!avatar.current?.contains(e.target as HTMLDivElement)) {
+      setMenuOpen(false);
+    }
   };
 
   return (
@@ -83,38 +80,37 @@ const Nav = (props: any) => {
         }}
       >
         <Box display={'flex'} alignItems="center">
-          <Link onClick={handleExpanded}>
+          <Box onClick={handleExpanded}>
             <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
-          </Link>
-
+          </Box>
           <Typography variant="h4" color="white" ml={3}>
             Simple Data Exchanger
           </Typography>
         </Box>
-        <Link onClick={handleMenu}>
-          <AccountCircleIcon sx={{ color: theme.palette.common.white }} />
-        </Link>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-          }}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={logout}>
-            <span>
-              <Logout /> &nbsp; Logout
-            </span>
-          </MenuItem>
-        </Menu>
+        <div style={{ position: 'relative' }}>
+          <Box ref={avatar}>
+            <UserAvatar onClick={openCloseMenu} sx={{ bgcolor: 'white', color: 'black' }} />
+          </Box>
+          <UserMenu
+            open={menuOpen}
+            userName={loggedInUser.name}
+            top={50}
+            userRole={loggedInUser.roles.toString()}
+            onClickAway={onClickAway}
+          >
+            <UserNav component={Link} divider items={NAV_ITEMS} />
+            <LanguageSwitch
+              current={lang}
+              languages={I18nService.supportedLanguages.map(key => ({
+                key,
+              }))}
+              onChange={e => {
+                changeLanguage(e);
+                setlang(e);
+              }}
+            />
+          </UserMenu>
+        </div>
       </Box>
     </Paper>
   );

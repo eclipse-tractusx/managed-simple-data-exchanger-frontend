@@ -30,6 +30,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { icons, IntMenuItemProps, MenuItems } from '../models/Sidebar';
@@ -64,6 +65,8 @@ const MenuItem = ({ item, isExpanded }: IntMenuItemProps) => {
 };
 
 const MenuItemHeading = ({ item, isExpanded }: IntMenuItemProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Typography
@@ -76,7 +79,7 @@ const MenuItemHeading = ({ item, isExpanded }: IntMenuItemProps) => {
           py: 1,
         }}
       >
-        {isExpanded ? item.text : item.text.charAt(0)}
+        {isExpanded ? t(item.text) : t(item.text).charAt(0)}
       </Typography>
       <Divider />
     </>

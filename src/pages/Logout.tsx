@@ -1,5 +1,4 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
@@ -19,32 +18,22 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import './index.scss';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import SignOut from '../components/actions/SignOut';
 
-import App from './App';
-import I18nService from './services/i18nService';
-import UserService from './services/UserService';
-import { store } from './store/store';
-import { clearConsoles } from './utils/utils';
-
-clearConsoles();
-I18nService.init();
-
-UserService.initKeycloak(user => {
-  ReactDOM.render(
-    <React.StrictMode>
-      <SharedCssBaseline />
-      <Provider store={store}>
-        <SharedThemeProvider>
-          <App loggedUser={user} />
-        </SharedThemeProvider>
-      </Provider>
-    </React.StrictMode>,
-    document.getElementById('root'),
+export default function Logout() {
+  return (
+    <main style={{ width: '100%', height: '100%', textAlign: 'center' }}>
+      <LogoutIcon
+        sx={{
+          color: 'lightgray',
+          marginTop: '200px',
+          width: '200px',
+          height: '200px',
+        }}
+      />
+      <SignOut />
+    </main>
   );
-});
+}
