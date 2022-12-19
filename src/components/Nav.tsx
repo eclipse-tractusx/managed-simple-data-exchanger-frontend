@@ -24,6 +24,7 @@ import { Box, Paper, useTheme } from '@mui/material';
 import { LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
 import i18next, { changeLanguage } from 'i18next';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import I18nService from '../services/i18nService';
@@ -34,6 +35,7 @@ const Nav = (props: any) => {
   const theme = useTheme();
   const [isExpanded, setIsExpanded] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation();
   const avatar = useRef<HTMLDivElement>(null);
   const [lang, setlang] = useState(i18next.language);
   const { loggedInUser } = useAppSelector(state => state.appSlice);
@@ -84,7 +86,7 @@ const Nav = (props: any) => {
             <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
           </Box>
           <Typography variant="h4" color="white" ml={3}>
-            Simple Data Exchanger
+            {t('logo')}
           </Typography>
         </Box>
         <div style={{ position: 'relative' }}>

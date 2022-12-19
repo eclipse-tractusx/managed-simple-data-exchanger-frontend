@@ -22,7 +22,8 @@
 import { Refresh } from '@mui/icons-material';
 import { Box, Grid } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Permissions from '../components/Permissions';
 import StickyHeadTable from '../components/StickyHeadTable';
@@ -34,6 +35,7 @@ export default function UploadHistory() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
   const [totalElements, setTotalElements] = useState<number>(0);
+  const { t } = useTranslation();
 
   const refreshTable = useCallback(async () => {
     try {
@@ -60,12 +62,12 @@ export default function UploadHistory() {
       <Box sx={{ flex: 1, p: 4 }}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={6}>
-            <Typography variant="h4">Upload History</Typography>
+            <Typography variant="h4">{t('pages.uploadHistory')}</Typography>
           </Grid>
           <Grid item xs={6} textAlign="right">
             <Button size="small" variant="contained" onClick={() => refreshTable()}>
               <Refresh />
-              &nbsp; Refresh
+              &nbsp; {t('button.refresh')}
             </Button>
           </Grid>
         </Grid>

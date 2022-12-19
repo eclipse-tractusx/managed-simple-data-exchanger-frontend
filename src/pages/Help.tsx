@@ -22,15 +22,17 @@
 
 import { Box, Card, CardContent, Grid } from '@mui/material';
 import { Typography } from 'cx-portal-shared-components';
+import { useTranslation } from 'react-i18next';
 
 import { SubmodelHelp } from '../components/SubmodelHelp';
-import { rulesCardStyle, rulesContentStyle, submodelHelpArr } from '../utils/helpUtils';
+import { rulesContentStyle, submodelHelpArr } from '../utils/helpUtils';
 
-export const Help: React.FC = () => {
+export const Help = () => {
+  const { t } = useTranslation();
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Typography variant="h4" mb={4}>
-        Help
+        {t('pages.help')}
       </Typography>
       <Grid container spacing={2}>
         {submodelHelpArr.map((submodel: any, key: number) => (
@@ -44,13 +46,13 @@ export const Help: React.FC = () => {
           </Grid>
         ))}
         <Grid item xs={12}>
-          <Card variant="outlined" style={rulesCardStyle}>
+          <Card variant="outlined">
             <CardContent>
-              <Typography variant="h5">Rules</Typography>
+              <Typography variant="h5">{t('content.common.rules')}</Typography>
               <ul style={rulesContentStyle}>
-                <li>The file must be a file of type CSV (.csv extension).</li>
-                <li>Data fields must be separated by a semicolon (;).</li>
-                <li>All data fields must be present even if empty.</li>
+                <li> {t('content.help.rules1')}</li>
+                <li> {t('content.help.rules2')}</li>
+                <li> {t('content.help.rules3')}</li>
               </ul>
             </CardContent>
           </Card>

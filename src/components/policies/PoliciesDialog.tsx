@@ -20,6 +20,7 @@
 
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { setPageLoading } from '../../features/app/slice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
@@ -69,6 +70,7 @@ export default function PoliciesDialog() {
   const { currentUploadData, selectedFiles } = useAppSelector(state => state.providerSlice);
   const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
   const [showError, setshowError] = useState(false);
+  const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
 
@@ -112,21 +114,21 @@ export default function PoliciesDialog() {
       if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
         dispatch(
           setSnackbarMessage({
-            message: 'Upload completed!',
+            message: t('alerts.uploadSuccess'),
             type: 'success',
           }),
         );
       } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
         dispatch(
           setSnackbarMessage({
-            message: 'Upload completed with warnings!',
+            message: t('alerts.uploadWarning'),
             type: 'warning',
           }),
         );
       } else {
         dispatch(
           setSnackbarMessage({
-            message: 'Upload failed!',
+            message: t('alerts.uploadError'),
             type: 'error',
           }),
         );
@@ -148,7 +150,7 @@ export default function PoliciesDialog() {
           } else {
             dispatch(
               setSnackbarMessage({
-                message: 'Upload failed!',
+                message: t('alerts.uploadError'),
                 type: 'error',
               }),
             );
@@ -195,7 +197,7 @@ export default function PoliciesDialog() {
     } catch (error) {
       dispatch(
         setSnackbarMessage({
-          message: 'Upload failed!',
+          message: t('alerts.uploadError'),
           type: 'error',
         }),
       );
@@ -220,7 +222,7 @@ export default function PoliciesDialog() {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
       dispatch(
         setSnackbarMessage({
-          message: 'Upload failed!',
+          message: t('alerts.uploadError'),
           type: 'error',
         }),
       );
@@ -245,17 +247,17 @@ export default function PoliciesDialog() {
   return (
     // Dialog width change is not available currently in cx-shared-components library
     <Dialog open={openDialog}>
-      <DialogHeader closeWithIcon onCloseWithIcon={() => dispatch(handleDialogClose())} title="Policies" />
+      <DialogHeader closeWithIcon onCloseWithIcon={() => dispatch(handleDialogClose())} title={t('content.policies.title')} />
       <DialogContent>
         <AccessPolicy />
         <UsagePolicy />
       </DialogContent>
       <DialogActions>
         <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
-          Close
+          {t('button.close')}
         </Button>
         <Button variant="contained" onClick={handleSubmitData}>
-          Submit
+          {t('button.submit')}
         </Button>
       </DialogActions>
     </Dialog>

@@ -65,21 +65,21 @@ export const MenuItems: IntMenuItem[] = [
       //   dataId: 'homePage',
       // },
       {
-        text: 'Create Data',
+        text: 'pages.createData',
         menuIcon: 'AddCircleIcon',
         to: '/create-data',
         dataId: 'uploadFileMenu',
         permissions: ['provider_create_contract_offer'],
       },
       {
-        text: 'Upload History',
+        text: 'pages.uploadHistory',
         menuIcon: 'HistoryIcon',
         to: '/upload-history',
         dataId: 'uploadHistoryMenu',
         permissions: ['provider_view_history'],
       },
       {
-        text: 'Help',
+        text: 'pages.help',
         menuIcon: 'HelpIcon',
         to: '/help',
         dataId: 'helpMenu',
@@ -87,11 +87,11 @@ export const MenuItems: IntMenuItem[] = [
     ],
   },
   {
-    text: 'Consumer',
+    text: 'pages.consumer',
     isHeading: true,
     childrens: [
       {
-        text: 'Consume Data',
+        text: 'pages.consumeData',
         menuIcon: 'ManageSearchIcon',
         to: '/consume-data',
         dataId: 'uploadFileMenu',
@@ -103,7 +103,7 @@ export const MenuItems: IntMenuItem[] = [
         ],
       },
       {
-        text: 'Contract History',
+        text: 'pages.contractHistory',
         menuIcon: 'HistoryIcon',
         to: '/contract-history',
         dataId: 'uploadHistoryMenu',

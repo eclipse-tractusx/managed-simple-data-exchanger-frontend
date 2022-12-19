@@ -18,12 +18,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-export const rulesCardStyle = {
-  display: 'block',
-  transitionDuration: '0.3s',
-  height: '140px',
-};
-
 export const rulesContentStyle = {
   listStyleType: 'disc',
   padding: '10px 0 0 20px',

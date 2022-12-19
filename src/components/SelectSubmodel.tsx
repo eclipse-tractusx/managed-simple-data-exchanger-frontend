@@ -19,6 +19,7 @@
  ********************************************************************************/
 import { SelectList } from 'cx-portal-shared-components';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { fetchSubmodelDetails, fetchSubmodelList } from '../features/submodels/actions';
 import { setSelectedSubmodel } from '../features/submodels/slice';
@@ -28,6 +29,7 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 const SelectSubmodel = () => {
   const { submodelList, selectedSubmodel } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleTypeChange = async (item: ISubmodelList) => {
     dispatch(setSelectedSubmodel(item));
@@ -43,13 +45,13 @@ const SelectSubmodel = () => {
   return (
     <SelectList
       keyTitle="title"
-      label="Select Submodel"
+      label={t('content.provider.selectSubmodel')}
       fullWidth
       size="small"
       defaultValue={selectedSubmodel}
       onChangeItem={e => handleTypeChange(e)}
       items={submodelList}
-      placeholder="Select Submodel"
+      placeholder={t('content.provider.selectSubmodel')}
       hiddenLabel
       disableClearable={true}
     />

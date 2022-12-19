@@ -20,6 +20,7 @@
 
 import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from '@mui/material';
 import { Input, SelectList } from 'cx-portal-shared-components';
+import { useTranslation } from 'react-i18next';
 
 import { setDurationUnit } from '../../features/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -43,6 +44,8 @@ export default function UsagePolicyItem({
 }: FreeTextProps) {
   const { durationUnit } = useAppSelector(state => state.accessUsagePolicySlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
   const DURATION_UNITS = [
     {
       id: 0,
@@ -66,7 +69,7 @@ export default function UsagePolicyItem({
     },
   ];
   function checkErrors() {
-    if (constraintType === 'Duration') {
+    if (constraintType === t('content.policies.duration')) {
       const result = /^[1-9]\d*$/.test(inputFreeText);
       return !result;
     } else if (restrictionType === 'RESTRICTED' && inputFreeText === '') {
@@ -75,7 +78,7 @@ export default function UsagePolicyItem({
   }
   return (
     <Box component="form" noValidate autoComplete="off">
-      <FormLabel sx={{ mb: 2 }}>{constraintType} restriction</FormLabel>
+      <FormLabel sx={{ mb: 2 }}>{constraintType}</FormLabel>
       <RadioGroup row value={restrictionType} onChange={e => setRestrictionType(e.target.value)}>
         <FormControlLabel value="UNRESTRICTED" control={<Radio />} label="Unrestricted" />
         <FormControlLabel value="RESTRICTED" control={<Radio />} label="Restricted" />
@@ -87,10 +90,10 @@ export default function UsagePolicyItem({
             <FormLabel sx={{ my: 1, display: 'block' }}>{displayText}</FormLabel>
             <Stack direction="row" alignItems={'flex-end'} spacing={2}>
               <Input
-                label="Enter a value"
+                label={t('content.common.enterValue')}
                 placeholder="Enter a value"
                 size="small"
-                type={constraintType === 'Duration' ? 'number' : 'text'}
+                type={constraintType === t('content.policies.duration') ? 'number' : 'text'}
                 InputProps={{
                   inputProps: { min: 1 },
                 }}
@@ -101,7 +104,7 @@ export default function UsagePolicyItem({
                   setInputFreeText(e.target.value);
                 }}
               />
-              {constraintType === 'Duration' && (
+              {constraintType === t('content.policies.duration') && (
                 <FormControl sx={{ minWidth: 150 }} size="small">
                   {/* need to replace with cx-lib selectList */}
                   <SelectList
@@ -109,8 +112,8 @@ export default function UsagePolicyItem({
                     value={durationUnit}
                     defaultValue={DURATION_UNITS[0]}
                     items={DURATION_UNITS}
-                    label="Select Duraion"
-                    placeholder="Select Duraion"
+                    label={t('content.policies.selectDuration')}
+                    placeholder={t('content.policies.selectDuration')}
                     disableClearable={true}
                     onChangeItem={e => {
                       dispatch(setDurationUnit(e.value));

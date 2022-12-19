@@ -39,6 +39,7 @@ import Permissions from './Permissions';
 const MenuItem = ({ item, isExpanded }: IntMenuItemProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { menuIcon, to, text, dataId } = item;
   const Icon = icons[menuIcon];
   return (
@@ -55,7 +56,7 @@ const MenuItem = ({ item, isExpanded }: IntMenuItemProps) => {
           </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{ sx: { fontSize: '14px' } }}
-            primary={text}
+            primary={t(text)}
             sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }}
           />
         </ListItemButton>

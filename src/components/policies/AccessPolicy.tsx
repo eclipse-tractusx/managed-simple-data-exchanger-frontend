@@ -30,6 +30,7 @@ import {
   Typography,
 } from 'cx-portal-shared-components';
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
 import { ILegalEntityContent, IntOption } from '../../models/ConsumerContractOffers';
@@ -56,6 +57,7 @@ export default function AccessPolicy() {
   const [searchFilterByType, setsearchFilterByType] = useState<string>('');
   const [dialogOpen, setdialogOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const showAddDialog = () => {
     setdialogOpen(prev => !prev);
@@ -96,28 +98,33 @@ export default function AccessPolicy() {
 
   return (
     <>
-      <Typography>ACCESS POLICY</Typography>
+      <Typography>{t('content.policies.accessPolicy')}</Typography>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={accessType}
         onChange={handleAccessTypeChange}
       >
-        <FormControlLabel sx={{ mt: 2 }} value="restricted" control={<Radio />} label="Restricted access" />
+        <FormControlLabel
+          sx={{ mt: 2 }}
+          value="restricted"
+          control={<Radio />}
+          label={t('content.policies.restricted')}
+        />
         {accessType === 'restricted' && (
           <>
             <Grid container spacing={2} alignItems="end">
               <Grid item xs={5}>
                 <SelectList
                   keyTitle="title"
-                  label="Select Search Type"
+                  label={t('content.consumeData.selectType')}
                   fullWidth
                   size="small"
                   onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
                   items={ITEMS}
                   defaultValue={ITEMS[0]}
                   disableClearable={true}
-                  placeholder="Select Search Type"
+                  placeholder={t('content.consumeData.selectType')}
                   value={searchFilterByType}
                   hiddenLabel
                 />
@@ -125,8 +132,8 @@ export default function AccessPolicy() {
               <Grid item xs={5}>
                 {searchFilterByType === 'bpn' ? (
                   <Input
-                    label="Enter BPN"
-                    placeholder="Enter BPN"
+                    label={t('content.consumeData.enterBPN')}
+                    placeholder={t('content.consumeData.enterBPN')}
                     size="small"
                     value={inputBpn}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setInputBpn(e.target.value))}
@@ -146,7 +153,12 @@ export default function AccessPolicy() {
                       return typeof option === 'string' ? option : `${option.value}`;
                     }}
                     renderInput={params => (
-                      <Input {...params} label="Select a company name" placeholder="Search company name" fullWidth />
+                      <Input
+                        {...params}
+                        label={t('content.consumeData.selectCompany')}
+                        placeholder={t('content.consumeData.selectCompany')}
+                        fullWidth
+                      />
                     )}
                     renderOption={(props, option: IntOption) => (
                       <Box
@@ -169,13 +181,13 @@ export default function AccessPolicy() {
               </Grid>
               <Grid item>
                 <Button variant="contained" sx={{ marginLeft: 1 }} onClick={() => dispatch(addBpn())}>
-                  Add
+                  {t('button.add')}
                 </Button>
               </Grid>
             </Grid>
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2">
-                <i>Note: Your own organization will always be allowed to access the data</i>
+                <i> {t('content.policies.note')}</i>
               </Typography>
               <Stack direction="row" spacing={1} mt={bpnList.length ? 3 : 0} sx={{ flexWrap: 'wrap', gap: 1 }}>
                 {bpnList.map((bpnNum: string, key: number) => (
@@ -185,15 +197,17 @@ export default function AccessPolicy() {
             </Box>
           </>
         )}
-        <FormControlLabel sx={{ mt: 2 }} value="unrestricted" control={<Radio />} label="Unrestricted access" />
+        <FormControlLabel
+          sx={{ mt: 2 }}
+          value="unrestricted"
+          control={<Radio />}
+          label={t('content.policies.unrestricted')}
+        />
       </RadioGroup>
       <hr style={{ marginBottom: 50, marginTop: 30 }} />
       <Dialog open={dialogOpen}>
-        <DialogHeader title="Unrestricted Access!" />
-        <DialogContent>
-          Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you
-          sure?
-        </DialogContent>
+        <DialogHeader title={t('content.policies.unAccess')} />
+        <DialogContent>{t('content.policies.warningText')}</DialogContent>
         <DialogActions>
           <Button
             variant="outlined"
@@ -202,7 +216,7 @@ export default function AccessPolicy() {
               showAddDialog();
             }}
           >
-            Cancel
+            {t('button.cancel')}
           </Button>
           <Button
             variant="contained"
@@ -211,7 +225,7 @@ export default function AccessPolicy() {
               showAddDialog();
             }}
           >
-            Confirm
+            {t('button.confirm')}
           </Button>
         </DialogActions>
       </Dialog>

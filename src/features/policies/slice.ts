@@ -78,7 +78,7 @@ export const accessUsagePolicySlice = createSlice({
     },
     addBpn: state => {
       if (state.inputBpn) {
-        state.bpnList = [...state.bpnList, state.inputBpn];
+        state.bpnList = [...new Set([...state.bpnList, state.inputBpn])];
         state.inputBpn = '';
       }
     },

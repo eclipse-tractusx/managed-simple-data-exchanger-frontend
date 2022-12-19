@@ -20,7 +20,8 @@
 
 import { Divider, Grid } from '@mui/material';
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 
@@ -31,10 +32,10 @@ interface IntDialogProps {
   isMultiple?: boolean;
 }
 
-const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleButtonEvent, isMultiple }) => {
+const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: IntDialogProps) => {
   const [offer] = useState(offerObj);
-
   const { typeOfAccess, bpnNumbers, title, created, description, publisher, usagePolicies, fileContentType } = offer;
+  const { t } = useTranslation();
 
   const closeModal = (flag: string) => {
     handleButtonEvent(flag);
@@ -47,7 +48,7 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
 
   return (
     <Dialog open={open}>
-      <DialogHeader closeWithIcon onCloseWithIcon={() => closeModal('close')} title=" Offer Details" />
+      <DialogHeader closeWithIcon onCloseWithIcon={() => closeModal('close')} title={t('dialog.offerDetails.title')} />
       {isMultiple ? (
         <>
           <DialogContent dividers sx={{ pt: 3 }}>

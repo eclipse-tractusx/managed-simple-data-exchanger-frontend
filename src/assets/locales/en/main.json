@@ -18,12 +18,15 @@
       "table": "Table",
       "json": "JSON",
       "uploadInstruction": "Upload your file by dropping it here.",
-      "choose": "Choose a file",
+      "selectedFile": "Selected File",
+      "dropFile": "Drop it like it's hot :)",
+      "dropInstruction": "Upload your file by dropping it here.",
       "addRow": "Add row",
       "deleteRow": "Delete row(s)"
     },
     "policies": {
       "title": "Policies",
+      "configure": "Next Step - Configure Policies",
       "accessPolicy": "ACCESS POLICY",
       "restricted": "Restricted",
       "unrestricted": "Unrestricted",
@@ -47,9 +50,6 @@
       "custom": "Custom restriction",
       "customNote": "Usage must comply to the following additional conditions"
     },
-    "uploadHistory": {
-      "title": "Upload History"
-    },
     "help": {
       "rules1": "The file must be a file of type CSV (.csv extension).",
       "rules2": "Data fields must be separated by a semicolon (;).",
@@ -61,7 +61,21 @@
       "selectCompany": "Select a company name",
       "selectConnectors": "Select connectors",
       "enterBPN": "Enter Business Partner Number",
-      "enterURL": "Enter connector URL"
+      "enterURL": "Enter connector URL",
+      "selectTypeValues": {
+        "company": "Company Name",
+        "bpn": "Business Partner Number",
+        "url": "Connector URL"
+      },
+      "columns": {
+        "title": "Title",
+        "assetId": "Asset ID",
+        "created": "Created On",
+        "description": "Description"
+      }
+    },
+    "contractHistory": {
+      "title": "Contract Agreements History"
     },
     "common": {
       "loading": "Loading...",
@@ -73,15 +87,33 @@
       "rules": "Rules",
       "subscribe": "Subscribe to selected",
       "enterValue": "Enter a value"
-    },
-    "button": {
-      "refresh": "Refresh",
-      "search": "Search",
-      "add": "Add",
-      "cancel": "Cancel",
-      "confirm": "Confirm",
-      "submit": "Submit"
     }
+  },
+  "dialog": {
+    "samePolicies": {
+      "title": "Usage policies are not identical!",
+      "content": " The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy."
+    },
+    "offerDetails": {
+      "title": "Offer Details"
+    }
+  },
+  "button": {
+    "chooseFile": "CHOOSE A FILE",
+    "refresh": "Refresh",
+    "search": "Search",
+    "add": "Add",
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirm": "Confirm",
+    "submit": "Submit",
+    "okay": "Okay"
+  },
+  "alerts": {
+    "invalidFile": "File not permitted!",
+    "uploadSuccess": "Upload completed!",
+    "uploadWarning": "Upload completed with warnings!",
+    "uploadError": "Upload failed!"
   },
   "userRoles": {
     "itAdmin": "IT Admin",

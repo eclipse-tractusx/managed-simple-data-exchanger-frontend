@@ -22,6 +22,7 @@
 import { Box, Grid } from '@mui/material';
 import { Tab, TabPanel, Tabs } from 'cx-portal-shared-components';
 import { SyntheticEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import DataTable from '../components/DataTable';
 import JsonInput from '../components/JsonInput';
@@ -32,6 +33,7 @@ import UploadFile from '../components/UploadFile';
 
 export default function CreateData() {
   const [activeTab, setActiveTab] = useState(0);
+  const { t } = useTranslation();
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
@@ -49,9 +51,9 @@ export default function CreateData() {
           <Grid item xs={12}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
-                <Tab label="Upload File" />
-                <Tab label="Table" />
-                <Tab label="JSON" />
+                <Tab label={t('content.provider.uploadFile')} />
+                <Tab label={t('content.provider.table')} />
+                <Tab label={t('content.provider.json')} />
               </Tabs>
             </Box>
             <Box>
