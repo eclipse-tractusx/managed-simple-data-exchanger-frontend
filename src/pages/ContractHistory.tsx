@@ -26,6 +26,7 @@ import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/materia
 import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { Button } from 'cx-portal-shared-components';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Permissions from '../components/Permissions';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
@@ -39,6 +40,7 @@ const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
   const { contractAgreements, isContractAgreementsLoading } = useAppSelector(state => state.consumerSlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const renderContractAgreementStatus = (params: GridRenderCellParams) => {
     switch (params.value) {
@@ -179,12 +181,12 @@ const ContractHistory: React.FC = () => {
       <Permissions values={['consumer_view_contract_agreement']} fullPage={true}>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={6} my={4}>
-            <Typography variant="h4">Contract Agreements History</Typography>
+            <Typography variant="h4">{t('content.contractHistory.title')}</Typography>
           </Grid>
           <Grid item xs={6} my={4} textAlign={'right'}>
             <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
               <Refresh />
-              &nbsp; Refresh
+              &nbsp; {t('button.refresh')}
             </Button>
           </Grid>
           <Grid item xs={12}>
@@ -205,12 +207,12 @@ const ContractHistory: React.FC = () => {
                   LoadingOverlay: LinearProgress,
                   NoRowsOverlay: () => (
                     <Stack height="100%" alignItems="center" justifyContent="center">
-                      No Contract agreements!
+                      {t('content.common.noData')}
                     </Stack>
                   ),
                   NoResultsOverlay: () => (
                     <Stack height="100%" alignItems="center" justifyContent="center">
-                      Contract agreements not found!
+                      {t('content.common.noResults')}
                     </Stack>
                   ),
                 }}

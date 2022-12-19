@@ -247,7 +247,11 @@ export default function PoliciesDialog() {
   return (
     // Dialog width change is not available currently in cx-shared-components library
     <Dialog open={openDialog}>
-      <DialogHeader closeWithIcon onCloseWithIcon={() => dispatch(handleDialogClose())} title={t('content.policies.title')} />
+      <DialogHeader
+        closeWithIcon
+        onCloseWithIcon={() => dispatch(handleDialogClose())}
+        title={t('content.policies.title')}
+      />
       <DialogContent>
         <AccessPolicy />
         <UsagePolicy />
