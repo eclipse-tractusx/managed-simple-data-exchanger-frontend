@@ -549,7 +549,7 @@ export default function ConsumeData() {
               ),
               NoResultsOverlay: () => (
                 <Stack height="100%" alignItems="center" justifyContent="center">
-                   {t('content.common.noResults')}
+                  {t('content.common.noResults')}
                 </Stack>
               ),
             }}

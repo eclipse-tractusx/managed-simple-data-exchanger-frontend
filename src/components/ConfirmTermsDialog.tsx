@@ -80,7 +80,7 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
                   '-.'
                 )}
               </p>
-              <p>{t('dialog.offerDetails.cofirmHeading')}</p>
+              <p>{t('dialog.offerDetails.confirmHeading')}</p>
             </Box>
             <p>(1) {t('dialog.offerDetails.point1')}</p>
             <p>(2) {t('dialog.offerDetails.point2')}</p>
