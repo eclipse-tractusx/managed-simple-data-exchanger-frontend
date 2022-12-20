@@ -1,4 +1,4 @@
-name: "KICS-int"
+name: "KICS"
 
 on:
   push:
