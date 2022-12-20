@@ -18,7 +18,7 @@ name: rel-Itr
 on:
   push:
     branches:
-      - 'release3/DST_PIP7_ITR1'
+      - 'Release3.1/DST_PIP7_ITR1'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
