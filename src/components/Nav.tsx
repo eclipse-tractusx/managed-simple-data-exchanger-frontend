@@ -68,7 +68,7 @@ const Nav = (props: any) => {
         left: 0,
         width: '100%',
         borderRadius: 0,
-        zIndex: 1,
+        zIndex: 10,
       }}
     >
       <Box
@@ -89,7 +89,7 @@ const Nav = (props: any) => {
             {t('logo')}
           </Typography>
         </Box>
-        <div style={{ position: 'relative' }}>
+        <Box sx={{ position: 'relative', zIndex: 10 }}>
           <Box ref={avatar}>
             <UserAvatar onClick={openCloseMenu} sx={{ bgcolor: 'white', color: 'black' }} />
           </Box>
@@ -112,7 +112,7 @@ const Nav = (props: any) => {
               }}
             />
           </UserMenu>
-        </div>
+        </Box>
       </Box>
     </Paper>
   );

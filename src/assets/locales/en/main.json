@@ -27,13 +27,13 @@
     "policies": {
       "title": "Policies",
       "configure": "Next Step - Configure Policies",
-      "accessPolicy": "ACCESS POLICY",
+      "accessPolicy": "Access Policy",
       "restricted": "Restricted",
       "unrestricted": "Unrestricted",
       "note": "Note: Your own organization will always be allowed to access the data",
       "unAccess": "Unrestricted Access!",
       "warningText": "Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you sure?",
-      "usagePolicy": "USAGE POLICY",
+      "usagePolicy": "Usage Policy",
       "duration": "Duration restriction",
       "durationNote": "Usage allowed from contract start",
       "selectDuration": "Select Duration",
@@ -56,7 +56,6 @@
       "rules3": "All data fields must be present even if empty."
     },
     "consumeData": {
-      "title": "Consumer View",
       "selectType": "Select search type",
       "selectCompany": "Select a company name",
       "selectConnectors": "Select connectors",
@@ -80,13 +79,14 @@
     "common": {
       "loading": "Loading...",
       "or": "or",
-      "noData": "No Data",
+      "noData": "No data available!",
+      "noResults": "No results found!",
       "sampleCsv": "Sample CSV",
       "sampleTemplate": "CSV Template",
       "copyHeaders": "Copy headers to clipboard",
       "rules": "Rules",
-      "subscribe": "Subscribe to selected",
-      "enterValue": "Enter a value"
+      "enterValue": "Enter a value",
+      "agree": "I agree"
     }
   },
   "dialog": {
@@ -95,7 +95,23 @@
       "content": " The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy."
     },
     "offerDetails": {
-      "title": "Offer Details"
+      "title": "Offer Details",
+      "type": "Type",
+      "value": "Value",
+      "titleText": "Title",
+      "created": "Created on",
+      "dataFormat": "Data format",
+      "description": "Description",
+      "publisher": "Publisher",
+      "publisherUrl": "Publisher URL",
+      "accessType": "Access Type",
+      "bpnNumbers": "BPN Numbers",
+      "confirmTermsTitle": "{{ count }} contract offers will be affected by this operation.",
+      "cofirmTermsSubtitle": "You are about to enter a legally binding contract agreement for this Contract Offer with provider",
+      "confirmHeading": "Please confirm that:",
+      "point1": "You are entitled to represent your organization.",
+      "point2": "You have read and understood the access/usage policy.",
+      "point3": "Your organization will be responsible to adhere by the rules stated in the access/usage policy."
     }
   },
   "button": {
@@ -107,20 +123,17 @@
     "close": "Close",
     "confirm": "Confirm",
     "submit": "Submit",
-    "okay": "Okay"
+    "okay": "Okay",
+    "subscribeSelected": "Subscribe to selected",
+    "subscribe": "Subscribe"
   },
   "alerts": {
     "invalidFile": "File not permitted!",
     "uploadSuccess": "Upload completed!",
     "uploadWarning": "Upload completed with warnings!",
-    "uploadError": "Upload failed!"
-  },
-  "userRoles": {
-    "itAdmin": "IT Admin",
-    "businessAdmin": "Business Admin",
-    "cxUser": "CX User",
-    "dataSpecialist": "Data Specialist",
-    "appDeveloper": "App Developer",
-    "appAdmin": "App Administrator"
+    "uploadError": "Upload failed!",
+    "subscriptionSuccess": "Contract offers subscription successfully initiated!",
+    "subscriptionError": "Contract offers subscription failed!",
+    "noConnector": "Connector not available!"
   }
 }

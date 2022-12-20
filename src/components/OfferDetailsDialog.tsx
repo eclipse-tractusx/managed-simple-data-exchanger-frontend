@@ -55,7 +55,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
-                  Usage Policy
+                  {t('content.policies.usagePolicy')}
                 </Typography>
               </Grid>
               {usagePolicies.map((item, index) => {
@@ -65,15 +65,13 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
                       {item.type.toLowerCase()}
                     </Typography>
                     <Typography variant="body2">
-                      Type:
-                      <strong>{item.typeOfAccess}</strong>
+                      {t('dialog.offerDetails.type')}:<strong>{item.typeOfAccess}</strong>
                     </Typography>
 
                     {item.typeOfAccess.toLowerCase() !== 'unrestricted' && (
                       <>
                         <Typography variant="body2">
-                          Value:
-                          <strong>{item.value || '-'}</strong>
+                          {t('dialog.offerDetails.value')}:<strong>{item.value || '-'}</strong>
                         </Typography>
                       </>
                     )}
@@ -88,37 +86,37 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
           <DialogContent dividers>
             <Grid container mt={3}>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Title</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.titleText')}</Typography>
                 <Typography variant="body2">
                   <strong>{title || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Creation Date</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.created')}</Typography>
                 <Typography variant="body2">
                   <strong>{created || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Data Format</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.dataFormat')}</Typography>
                 <Typography variant="body2">
                   <strong>{fileContentType || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Description</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.description')}</Typography>
                 <Typography variant="body2">
                   <strong>{description || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Publisher</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.publisher')}</Typography>
                 <Typography variant="body2">
                   <strong>{splitWithFirstOcc(publisher)[0] || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Publisher URL</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.publisherUrl')}</Typography>
                 <Typography variant="body2">
                   <strong>{splitWithFirstOcc(publisher)[1] || '-'}</strong>
                 </Typography>
@@ -129,11 +127,11 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
-                  Access Type
+                  {t('dialog.offerDetails.accessType')}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="body2">Type</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.type')}</Typography>
                 <Typography variant="body2">
                   <strong>{typeOfAccess}</strong>
                 </Typography>
@@ -141,7 +139,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
               <Grid item xs={6}>
                 {typeOfAccess.toLowerCase() !== 'unrestricted' && (
                   <>
-                    <Typography variant="body2">BPN Numbers</Typography>
+                    <Typography variant="body2">{t('dialog.offerDetails.bpnNumbers')}</Typography>
                     <Typography variant="body2" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                       {bpnNumbers.map((i, k) => {
                         return (
@@ -160,7 +158,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
-                  Usage Policy
+                  {t('content.policies.usagePolicy')}
                 </Typography>
               </Grid>
               {usagePolicies.map((item, index) => {
@@ -170,14 +168,13 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
                       {item.type.toLowerCase()}
                     </Typography>
                     <Typography variant="body2">
-                      Type:
-                      <strong>{item.typeOfAccess}</strong>
+                      {t('dialog.offerDetails.type')}:<strong>{item.typeOfAccess}</strong>
                     </Typography>
 
                     {item.typeOfAccess.toLowerCase() !== 'unrestricted' && (
                       <>
                         <Typography variant="body2">
-                          Value:
+                          {t('dialog.offerDetails.value')}:
                           <strong>
                             {item.type.toLowerCase() === 'duration'
                               ? `${item.value} ${item.durationUnit}` || '-'
@@ -195,10 +192,10 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
       )}
       <DialogActions>
         <Button variant="outlined" onClick={() => closeModal('close')}>
-          Close
+          {t('button.close')}
         </Button>
         <Button variant="contained" onClick={() => closeModal('subscribe')}>
-          Subscribe
+          {t('button.subscribe')}
         </Button>
       </DialogActions>
     </Dialog>
