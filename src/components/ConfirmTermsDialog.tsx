@@ -1,15 +1,7 @@
+import { Box, Checkbox, CircularProgress, FormControlLabel } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
 import React, { useState } from 'react';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Box,
-  CircularProgress,
-  Checkbox,
-  FormControlLabel,
-} from '@mui/material';
+
 import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 
 interface IntConfirmOffer {
@@ -45,8 +37,8 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
   }
 
   return (
-    <Dialog fullWidth={true} maxWidth="xs" open={open} onClose={() => handleButton('close')}>
-      <DialogTitle>{title}</DialogTitle>
+    <Dialog open={open}>
+      <DialogHeader closeWithIcon onCloseWithIcon={() => handleButton('close')} title={title} />
       <DialogContent dividers sx={{ py: 3 }}>
         {children ? (
           children
@@ -66,10 +58,10 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
                   '-.'
                 )}
               </p>
-              <p>Please confirm that</p>
+              <p>Please confirm that:</p>
             </Box>
-            <p>(1) You are entitled to represent your organization</p>
-            <p>(2) You have read and understood the access/usage policy</p>
+            <p>(1) You are entitled to represent your organization.</p>
+            <p>(2) You have read and understood the access/usage policy.</p>
             <p>(3) Your organization will be responsible to adhere by the rules stated in the access/usage policy.</p>
             <FormControlLabel
               control={<Checkbox checked={isAgreed} onChange={() => setIsAgreed(!isAgreed)} name="gilad" />}

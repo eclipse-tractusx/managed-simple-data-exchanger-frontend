@@ -18,19 +18,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Box } from '@mui/material';
+import { ErrorPage } from 'cx-portal-shared-components';
+import { useNavigate } from 'react-router-dom';
 
 export default function PageNotFound() {
-  return (
-    <Box
-      sx={{ display: 'flex', flexDirection: 'column', height: '100vh', alignItems: 'center', justifyContent: 'center' }}
-    >
-      <Box>Page Not Found</Box>
-      <Box>
-        <a href="/" style={{ color: 'blue', fontSize: 13, textDecoration: 'underline' }}>
-          Go home
-        </a>
-      </Box>
-    </Box>
-  );
+  const navigate = useNavigate();
+  return <ErrorPage header="Page not found" homeButtonTitle="Go Home" onHomeClick={() => navigate('/create-data')} />;
 }

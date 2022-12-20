@@ -18,22 +18,22 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React, { useEffect, useState } from 'react';
-import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
-import Button, { ButtonProps } from '@mui/material/Button';
 import { Refresh } from '@mui/icons-material';
-import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import { convertEpochToDate, epochToDate } from '../utils/utils';
-import { styled } from '@mui/material/styles';
-import styles from '../styles.module.scss';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import DftService from '../services/DftService';
-import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
-import { IContractAgreements } from '../models/ConsumerContractOffers';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
+import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
+import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
+import { Button } from 'cx-portal-shared-components';
+import React, { useEffect, useState } from 'react';
+
+import Permissions from '../components/Permissions';
+import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
+import { IContractAgreements } from '../models/ConsumerContractOffers';
+import ConsumerService from '../services/ConsumerService';
+import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { convertEpochToDate, epochToDate } from '../utils/utils';
 
 const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
@@ -79,7 +79,7 @@ const ContractHistory: React.FC = () => {
   const columns = [
     {
       field: 'contractAgreementId',
-      width: 230,
+      flex: 1,
       editable: false,
       headerName: 'Contract Agreement ID',
       renderHeader: () => <strong>Contract Agreement ID</strong>,
@@ -87,7 +87,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.assetId',
-      width: 230,
+      flex: 1,
       editable: false,
       headerName: 'Asset ID',
       renderHeader: () => <strong>Asset ID</strong>,
@@ -96,7 +96,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'counterPartyAddress',
-      width: 350,
+      flex: 1,
       editable: false,
       headerName: 'Counter Party Address',
       renderHeader: () => <strong>Counter Party Address</strong>,
@@ -104,7 +104,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'title',
-      width: 100,
+      flex: 1,
       editable: false,
       headerName: 'Title',
       renderHeader: () => <strong>Title</strong>,
@@ -112,7 +112,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'organizationName',
-      width: 120,
+      flex: 1,
       editable: false,
       headerName: 'Organization',
       renderHeader: () => <strong>Organization</strong>,
@@ -120,7 +120,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.contractSigningDate',
-      width: 160,
+      flex: 1,
       editable: false,
       headerName: 'Signing Date',
       renderHeader: () => <strong>Signing Date</strong>,
@@ -131,7 +131,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'contractAgreementInfo.contractEndDate',
-      width: 160,
+      flex: 1,
       editable: false,
       headerName: 'End Date',
       renderHeader: () => <strong>End Date</strong>,
@@ -142,7 +142,7 @@ const ContractHistory: React.FC = () => {
     },
     {
       field: 'state',
-      width: 150,
+      flex: 1,
       editable: false,
       headerName: 'Status',
       renderHeader: () => <strong>Status</strong>,
@@ -153,7 +153,7 @@ const ContractHistory: React.FC = () => {
   const fetchContractAgreements = async () => {
     dispatch(setIsContractAgreementsLoading(true));
     try {
-      const response = await DftService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
+      const response = await ConsumerService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
       const contractAgreementsList = response.data;
       contractAgreementsList.sort((contract1: IContractAgreements, contract2: IContractAgreements) => {
         const d1 = epochToDate(contract1.dateUpdated).valueOf();
@@ -168,15 +168,6 @@ const ContractHistory: React.FC = () => {
     }
   };
 
-  const ColorButton = styled(Button)<ButtonProps>(() => ({
-    color: styles.white,
-    backgroundColor: styles.blue,
-    '&:hover': {
-      backgroundColor: styles.white,
-      color: styles.blue,
-    },
-  }));
-
   useEffect(() => {
     dispatch(setContractAgreements([]));
     fetchContractAgreements();
@@ -184,62 +175,62 @@ const ContractHistory: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex-1 py-6 px-10">
-      <Grid container spacing={2}>
-        <Grid item xs={6} my={4}>
-          <Typography variant="h4">Contract Agreements History</Typography>
-        </Grid>
-        <Grid item xs={6} my={4} className="text-right">
-          <ColorButton variant="contained" onClick={() => fetchContractAgreements()}>
-            <span>
+    <Box sx={{ flex: 1, p: 4 }}>
+      <Permissions values={['consumer_view_contract_agreement']}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6} my={4}>
+            <Typography variant="h4">Contract Agreements History</Typography>
+          </Grid>
+          <Grid item xs={6} my={4} textAlign={'right'}>
+            <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
               <Refresh />
-              <span style={{ marginLeft: 5 }}>Refresh</span>
-            </span>
-          </ColorButton>
+              &nbsp; Refresh
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+              <DataGrid
+                sx={{ py: 1 }}
+                autoHeight={true}
+                getRowId={row => row.negotiationId}
+                rows={contractAgreements}
+                columns={columns}
+                loading={isContractAgreementsLoading}
+                pagination
+                pageSize={pageSize}
+                onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+                rowsPerPageOptions={[10, 25, 50, 100]}
+                components={{
+                  Toolbar: GridToolbar,
+                  LoadingOverlay: LinearProgress,
+                  NoRowsOverlay: () => (
+                    <Stack height="100%" alignItems="center" justifyContent="center">
+                      No Contract agreements!
+                    </Stack>
+                  ),
+                  NoResultsOverlay: () => (
+                    <Stack height="100%" alignItems="center" justifyContent="center">
+                      Contract agreements not found!
+                    </Stack>
+                  ),
+                }}
+                componentsProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: { debounceMs: 500 },
+                    printOptions: { disableToolbarButton: true },
+                  },
+                }}
+                disableColumnMenu
+                disableColumnSelector
+                disableDensitySelector
+                disableSelectionOnClick
+              />
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
-            <DataGrid
-              sx={{ py: 1 }}
-              autoHeight={true}
-              getRowId={row => row.negotiationId}
-              rows={contractAgreements}
-              columns={columns}
-              loading={isContractAgreementsLoading}
-              pagination
-              pageSize={pageSize}
-              onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-              rowsPerPageOptions={[10, 25, 50, 100]}
-              components={{
-                Toolbar: GridToolbar,
-                LoadingOverlay: LinearProgress,
-                NoRowsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    No Contract agreements!
-                  </Stack>
-                ),
-                NoResultsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    Contract agreements not found!
-                  </Stack>
-                ),
-              }}
-              componentsProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: { debounceMs: 500 },
-                  printOptions: { disableToolbarButton: true },
-                },
-              }}
-              disableColumnMenu
-              disableColumnSelector
-              disableDensitySelector
-              disableSelectionOnClick
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    </div>
+      </Permissions>
+    </Box>
   );
 };
 

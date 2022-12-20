@@ -19,15 +19,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import React, { useCallback, useEffect, useState } from 'react';
 import { Refresh } from '@mui/icons-material';
-import { Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Button, { ButtonProps } from '@mui/material/Button';
-import { ProcessReport } from '../models/ProcessReport';
+import { Box, Grid } from '@mui/material';
+import { Button, Typography } from 'cx-portal-shared-components';
+import React, { useCallback, useEffect, useState } from 'react';
+
+import Permissions from '../components/Permissions';
 import StickyHeadTable from '../components/StickyHeadTable';
-import styles from '../styles.module.scss';
-import DftService from '../services/DftService';
+import { ProcessReport } from '../models/ProcessReport';
+import ProviderService from '../services/ProviderService';
 
 export const UploadHistory: React.FC = () => {
   const [tableData, setTableData] = useState<ProcessReport[]>([]);
@@ -37,7 +37,7 @@ export const UploadHistory: React.FC = () => {
 
   const refreshTable = useCallback(async () => {
     try {
-      const response = await DftService.getInstance().getUploadHistory({ page: page, pageSize: rowsPerPage });
+      const response = await ProviderService.getInstance().getUploadHistory({ page: page, pageSize: rowsPerPage });
       setTableData(response.data.items);
       setTotalElements(response.data.totalItems);
     } catch (error) {
@@ -55,41 +55,33 @@ export const UploadHistory: React.FC = () => {
     };
   }, [page, rowsPerPage, refreshTable]);
 
-  const ColorButton = styled(Button)<ButtonProps>(() => ({
-    color: styles.white,
-    backgroundColor: styles.blue,
-    '&:hover': {
-      backgroundColor: styles.white,
-      color: styles.blue,
-    },
-  }));
-
   return (
-    <div className="flex-1 py-6 px-20">
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <h1 className="flex flex-row text-bold text-3xl">Upload History</h1>
-        </Grid>
-        <Grid item xs={6} className="text-right">
-          <ColorButton variant="contained" onClick={() => refreshTable()}>
-            <span>
+    <Permissions values={['provider_view_history']}>
+      <Box sx={{ flex: 1, p: 4 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <Typography variant="h4">Upload History</Typography>
+          </Grid>
+          <Grid item xs={6} textAlign="right">
+            <Button size="small" variant="contained" onClick={() => refreshTable()}>
               <Refresh />
               &nbsp; Refresh
-            </span>
-          </ColorButton>
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-      <div className="mt-8">
-        <StickyHeadTable
-          rows={tableData}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          totalElements={totalElements}
-          setPage={setPage}
-          setRowsPerPage={setRowsPerPage}
-        />
-      </div>
-    </div>
+        <Box sx={{ mt: 4 }}>
+          <StickyHeadTable
+            rows={tableData}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            totalElements={totalElements}
+            setPage={setPage}
+            setRowsPerPage={setRowsPerPage}
+            refreshTable={refreshTable}
+          />
+        </Box>
+      </Box>
+    </Permissions>
   );
 };
 
