@@ -41,6 +41,14 @@ class AppService extends HttpService {
     });
     return res;
   }
+
+  public async downloadCSV(submodel: string, type: string) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/submodels/csvfile/${submodel}?type=${type}`,
+    });
+    return res;
+  }
 }
 
 export default AppService;

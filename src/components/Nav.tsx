@@ -20,7 +20,7 @@
  ********************************************************************************/
 
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import { Box, Paper, useTheme } from '@mui/material';
+import { Box, Divider, Paper, useTheme } from '@mui/material';
 import { LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
 import i18next, { changeLanguage } from 'i18next';
 import { useRef, useState } from 'react';
@@ -100,7 +100,8 @@ const Nav = (props: any) => {
             userRole={loggedInUser.roles.toString()}
             onClickAway={onClickAway}
           >
-            <UserNav component={Link} divider items={NAV_ITEMS} />
+            <UserNav sx={{ my: 1 }} component={Link} items={NAV_ITEMS} />
+            <Divider />
             <LanguageSwitch
               current={lang}
               languages={I18nService.supportedLanguages.map(key => ({

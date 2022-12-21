@@ -25,6 +25,7 @@ import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DataTable from '../components/DataTable';
+import DownloadCSV from '../components/DownloadCSV';
 import JsonInput from '../components/JsonInput';
 import Permissions from '../components/Permissions';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
@@ -45,6 +46,9 @@ export default function CreateData() {
         <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
           <Grid item xs={3}>
             <SelectSubmodel />
+          </Grid>
+          <Grid item xs={6}>
+            <DownloadCSV />
           </Grid>
         </Grid>
         <Grid container>
