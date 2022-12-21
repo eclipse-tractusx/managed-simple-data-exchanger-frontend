@@ -32,7 +32,7 @@ jobs:
           
       - name: Add Helm repos
         run: |
-          cd charts/dft-backend
+          cd charts/dft-frontend
           helm repo add bitnami https://charts.bitnami.com/bitnami
           
       - name: Run chart-releaser
