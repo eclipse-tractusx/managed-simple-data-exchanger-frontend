@@ -2,14 +2,18 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { Stack } from '@mui/material';
 import { LoadingButton } from 'cx-portal-shared-components';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { setSnackbarMessage } from '../features/notifiication/slice';
 import AppService from '../services/appService';
-import { useAppSelector } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function DownloadCSV() {
   const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
   const [downloadingSample, setdownloadingSample] = useState(false);
   const [downloadingTemplate, setdownloadingTemplate] = useState(false);
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   async function download(type: string) {
     try {
@@ -18,17 +22,28 @@ export default function DownloadCSV() {
       } else {
         setdownloadingTemplate(true);
       }
-      const response = await AppService.getInstance().downloadCSV(selectedSubmodel.value, type);
-      if (response) {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
+      const { data } = await AppService.getInstance().downloadCSV(selectedSubmodel.value, type);
+      if (data) {
+        const url = window.URL.createObjectURL(new Blob([data]));
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', `${type}-${selectedSubmodel.value}.csv`);
         document.body.appendChild(link);
         link.click();
+        dispatch(
+          setSnackbarMessage({
+            message: t('alerts.downloadSuccess'),
+            type: 'success',
+          }),
+        );
       }
     } catch (error) {
-      console.log('Error downloading file', error);
+      dispatch(
+        setSnackbarMessage({
+          message: t('alerts.downloadError'),
+          type: 'error',
+        }),
+      );
     } finally {
       setdownloadingSample(false);
       setdownloadingTemplate(false);

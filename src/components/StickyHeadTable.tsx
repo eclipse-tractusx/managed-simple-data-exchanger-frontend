@@ -28,6 +28,7 @@ import {
 } from '@mui/icons-material';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
 import { IconButton } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { styled, useTheme } from '@mui/material/styles';
@@ -38,10 +39,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { Tooltips } from 'cx-portal-shared-components';
 import { ChangeEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { ProcessReport, Status } from '../models/ProcessReport';
+import AppService from '../services/appService';
 import ProviderService from '../services/ProviderService';
 import { useAppDispatch } from '../store/store';
 import { formatDate } from '../utils/utils';
@@ -143,6 +147,7 @@ export default function StickyHeadTable({
   },
 }) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -192,15 +197,8 @@ export default function StickyHeadTable({
       if (response.data && response.status === 200) {
         dispatch(
           setSnackbarMessage({
-            message: 'Submodel deleted successfully',
+            message: t('alerts.submodelDeleteSuccess'),
             type: 'success',
-          }),
-        );
-      } else {
-        dispatch(
-          setSnackbarMessage({
-            message: 'Failed to delete Submodel!',
-            type: 'error',
           }),
         );
       }
@@ -208,12 +206,40 @@ export default function StickyHeadTable({
     } catch (error) {
       dispatch(
         setSnackbarMessage({
-          message: 'Failed to delete Submodel!',
+          message: t('alerts.submodelDeleteError'),
           type: 'error',
         }),
       );
     }
   };
+
+  async function download(subModel: ProcessReport) {
+    try {
+      const { csvType, processId } = subModel;
+      const response = await AppService.getInstance().downloadHistory(csvType, processId);
+      if (response) {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `${csvType}-${processId}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        dispatch(
+          setSnackbarMessage({
+            message: t('alerts.downloadSuccess'),
+            type: 'success',
+          }),
+        );
+      }
+    } catch (error) {
+      dispatch(
+        setSnackbarMessage({
+          message: t('alerts.downloadError'),
+          type: 'error',
+        }),
+      );
+    }
+  }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -286,9 +312,29 @@ export default function StickyHeadTable({
                         )}
                         <Permissions values={['provider_delete_contract_offer']}>
                           {column.id === 'actions' && row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
-                            <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)}>
-                              <DeleteIcon color="error" fontSize="small" />
-                            </IconButton>
+                            <Tooltips tooltipPlacement="bottom" tooltipText="Delete">
+                              <span>
+                                <IconButton
+                                  aria-label="delete"
+                                  size="small"
+                                  onClick={() => deleteSubmodal(row)}
+                                  sx={{ mr: 2 }}
+                                >
+                                  <DeleteIcon color="error" fontSize="small" />
+                                </IconButton>
+                              </span>
+                            </Tooltips>
+                          )}
+                        </Permissions>
+                        <Permissions values={['provider_download_own_data']}>
+                          {column.id === 'actions' && row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
+                            <Tooltips tooltipPlacement="bottom" tooltipText="Download">
+                              <span>
+                                <IconButton aria-label="delete" size="small" onClick={() => download(row)}>
+                                  <DownloadIcon color="primary" fontSize="small" />
+                                </IconButton>
+                              </span>
+                            </Tooltips>
                           )}
                         </Permissions>
                       </StyledTableCell>

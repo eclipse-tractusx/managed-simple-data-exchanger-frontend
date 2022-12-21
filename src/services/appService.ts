@@ -49,6 +49,14 @@ class AppService extends HttpService {
     });
     return res;
   }
+
+  public async downloadHistory(submodel: string, processId: string) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/${submodel}/download/${processId}/csv`,
+    });
+    return res;
+  }
 }
 
 export default AppService;

@@ -134,6 +134,10 @@
     "uploadError": "Upload failed!",
     "subscriptionSuccess": "Contract offers subscription successfully initiated!",
     "subscriptionError": "Contract offers subscription failed!",
-    "noConnector": "Connector not available!"
+    "noConnector": "Connector not available!",
+    "submodelDeleteSuccess": "Submodel deleted successfully!",
+    "submodelDeleteError": "Failed to delete Submodel!",
+    "downloadSuccess": "File downloaded successfully!",
+    "downloadError": "File not downloaded!"
   }
 }
