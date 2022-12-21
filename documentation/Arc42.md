@@ -286,12 +286,12 @@ Detailed API specs available under:
 | Route                       	| Description                                                      	| Type 	|
 |-----------------------------	|------------------------------------------------------------------	|------	|
 | /login                      	| Keycloak Authentication                                          	| Main 	|
-| /dashboard                  	| Home page (redirect by default to "/dashboard/create-data")      	| Main 	|
-| /dashboard/create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
-| /dashboard/history          	| Upload history table                                             	| Sub  	|
-| /dashboard/help             	| Help guide, CSV rules and samples                                	| Sub  	|
-| /dashboard/consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
-| /dashboard/contract-history 	| Contract history table                                           	| Sub  	|
+| /                  	| Home page (redirect by default to "/create-data")      	| Main 	|
+| /create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
+| /history          	| Upload history table                                             	| Sub  	|
+| /help             	| Help guide, CSV rules and samples                                	| Sub  	|
+| /consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
+| /contract-history 	| Contract history table                                           	| Sub  	|
 
 <br />
 
