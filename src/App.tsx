@@ -19,12 +19,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import PageLoading from './components/PageLoading';
-import { fetchUserPermissions } from './features/app/actions';
-import { setLoggedInUser } from './features/app/slice';
 import Notification from './features/notifiication';
 import Main from './Main';
 import { IUser } from './models/User';
@@ -35,21 +32,13 @@ import Help from './pages/Help';
 import Logout from './pages/Logout';
 import PageNotFound from './pages/PageNotFound';
 import UploadHistory from './pages/UploadHistory';
-import { useAppDispatch } from './store/store';
 
 function App({ loggedUser }: { loggedUser: IUser }) {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchUserPermissions());
-    dispatch(setLoggedInUser(loggedUser));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Main />}>
+          <Route path="/" element={<Main loggedUser={loggedUser} />}>
             <Route path="/" element={<Navigate to="/create-data" />}></Route>
             <Route key="create-data" path="/create-data" element={<CreateData />} />
             <Route key="upload-history" path="/upload-history" element={<UploadHistory />} />
