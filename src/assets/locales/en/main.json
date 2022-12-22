@@ -50,6 +50,19 @@
       "custom": "Custom restriction",
       "customNote": "Usage must comply to the following additional conditions"
     },
+    "uploadHistory": {
+      "columns": {
+        "processId": "Process Id",
+        "numberOfSucceededItems": "Number of Created Items",
+        "numberOfUpdatedItems": "Number of Updated Items",
+        "numberOfDeletedItems": "Number of Deleted Items",
+        "numberOfFailedItems": "Number of Failed Items",
+        "status": "Status",
+        "startDate": "Start Date",
+        "duration": "Duration",
+        "actions": ""
+      }
+    },
     "help": {
       "rules1": "The file must be a file of type CSV (.csv extension).",
       "rules2": "Data fields must be separated by a semicolon (;).",
@@ -74,10 +87,21 @@
       }
     },
     "contractHistory": {
-      "title": "Contract Agreements History"
+      "title": "Contract Agreements History",
+      "columns": {
+        "contractAgreementId": "Contract Agreement ID",
+        "assetId": "Asset ID",
+        "counterPartyAddress": "Counter Party Address On",
+        "title": "Title",
+        "organizationName": "Organization",
+        "contractSigningDate": "Signing Date",
+        "contractEndDate": "End Date",
+        "state": "Status"
+      }
     },
     "common": {
       "loading": "Loading...",
+      "downloading": "Downloading...",
       "or": "or",
       "noData": "No data available!",
       "noResults": "No results found!",

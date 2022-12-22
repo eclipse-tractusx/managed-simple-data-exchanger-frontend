@@ -54,8 +54,8 @@ export default function DownloadCSV() {
     <Stack direction={'row'} spacing={1}>
       <LoadingButton
         endIcon={<FileDownloadIcon />}
-        label="Sample CSV"
-        loadIndicator="Downloading ..."
+        label={t('content.common.sampleCsv')}
+        loadIndicator={t('content.common.downloading')}
         loading={downloadingSample}
         onButtonClick={() => download('sample')}
         size="small"
@@ -63,8 +63,8 @@ export default function DownloadCSV() {
       />
       <LoadingButton
         endIcon={<FileDownloadIcon />}
-        label="CSV Template"
-        loadIndicator="Downloading ..."
+        label={t('content.common.sampleTemplate')}
+        loadIndicator={t('content.common.downloading')}
         loading={downloadingTemplate}
         onButtonClick={() => download('template')}
         size="small"

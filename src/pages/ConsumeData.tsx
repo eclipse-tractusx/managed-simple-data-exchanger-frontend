@@ -107,29 +107,24 @@ export default function ConsumeData() {
     {
       field: 'title',
       flex: 1,
-      headerName: 'Title',
-      renderHeader: () => <strong>Title</strong>,
+      headerName: t('content.consumeData.columns.title'),
     },
     {
       field: 'assetId',
       flex: 1,
-      headerName: 'Asset ID',
-      renderHeader: () => <strong>Asset ID</strong>,
+      headerName: t('content.consumeData.columns.assetId'),
     },
     {
       field: 'created',
       flex: 1,
-      editable: false,
-      headerName: 'Created on',
-      renderHeader: () => <strong>Created on</strong>,
+      headerName: t('content.consumeData.columns.created'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.created),
     },
     {
       field: 'description',
       flex: 1,
       editable: false,
-      headerName: 'Description',
-      renderHeader: () => <strong>Description</strong>,
+      headerName: t('content.consumeData.columns.description'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.description),
     },
   ];

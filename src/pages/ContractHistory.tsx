@@ -82,50 +82,38 @@ const ContractHistory: React.FC = () => {
     {
       field: 'contractAgreementId',
       flex: 1,
-      editable: false,
-      headerName: 'Contract Agreement ID',
-      renderHeader: () => <strong>Contract Agreement ID</strong>,
+      headerName: t('content.contractHistory.columns.contractAgreementId'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.contractAgreementId),
     },
     {
       field: 'contractAgreementInfo.assetId',
       flex: 1,
-      editable: false,
-      headerName: 'Asset ID',
-      renderHeader: () => <strong>Asset ID</strong>,
+      headerName: t('content.contractHistory.columns.assetId'),
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo ? params.row.contractAgreementInfo?.assetId : '-',
     },
     {
       field: 'counterPartyAddress',
       flex: 1,
-      editable: false,
-      headerName: 'Counter Party Address',
-      renderHeader: () => <strong>Counter Party Address</strong>,
+      headerName: t('content.contractHistory.columns.counterPartyAddress'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.counterPartyAddress),
     },
     {
       field: 'title',
       flex: 1,
-      editable: false,
-      headerName: 'Title',
-      renderHeader: () => <strong>Title</strong>,
+      headerName: t('content.contractHistory.columns.title'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.title),
     },
     {
       field: 'organizationName',
       flex: 1,
-      editable: false,
-      headerName: 'Organization',
-      renderHeader: () => <strong>Organization</strong>,
+      headerName: t('content.contractHistory.columns.organizationName'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.organizationName),
     },
     {
       field: 'contractAgreementInfo.contractSigningDate',
       flex: 1,
-      editable: false,
-      headerName: 'Signing Date',
-      renderHeader: () => <strong>Signing Date</strong>,
+      headerName: t('content.contractHistory.columns.contractSigningDate'),
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractSigningDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractSigningDate)
@@ -134,9 +122,7 @@ const ContractHistory: React.FC = () => {
     {
       field: 'contractAgreementInfo.contractEndDate',
       flex: 1,
-      editable: false,
-      headerName: 'End Date',
-      renderHeader: () => <strong>End Date</strong>,
+      headerName: t('content.contractHistory.columns.contractEndDate'),
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractEndDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractEndDate)
@@ -145,9 +131,7 @@ const ContractHistory: React.FC = () => {
     {
       field: 'state',
       flex: 1,
-      editable: false,
-      headerName: 'Status',
-      renderHeader: () => <strong>Status</strong>,
+      headerName: t('content.contractHistory.columns.state'),
       renderCell: renderContractAgreementStatus,
     },
   ];

@@ -249,7 +249,7 @@ export default function StickyHeadTable({
             <TableRow>
               {columns.map(column => (
                 <StyledTableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
-                  {column.label}
+                  {t(`content.uploadHistory.columns.${column.id}`)}
                 </StyledTableCell>
               ))}
             </TableRow>
