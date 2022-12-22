@@ -57,6 +57,14 @@ class AppService extends HttpService {
     });
     return res;
   }
+
+  public async getUseCases() {
+    const res = await this.instance({
+      method: 'GET',
+      url: '/usecases',
+    });
+    return res;
+  }
 }
 
 export default AppService;

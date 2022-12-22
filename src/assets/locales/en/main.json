@@ -12,6 +12,9 @@
     "contractHistory": "Contract History"
   },
   "content": {
+    "home": {
+      "selectUsecases": "Select yours use cases"
+    },
     "provider": {
       "selectSubmodel": "Select Submodel",
       "uploadFile": "Upload File",

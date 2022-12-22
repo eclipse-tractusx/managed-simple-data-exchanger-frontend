@@ -17,6 +17,36 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+
+import { FormControl, FormControlLabel, FormGroup, FormLabel } from '@mui/material';
+import { Checkbox } from 'cx-portal-shared-components';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { fetchUseCases } from '../features/app/actions';
+import { IUseCase } from '../features/app/types';
+import { useAppDispatch, useAppSelector } from '../store/store';
+
 export default function Home() {
-  return <div>Home</div>;
+  const { useCases } = useAppSelector(state => state.appSlice);
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  useEffect(() => {
+    dispatch(fetchUseCases());
+  }, [dispatch]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.name);
+  };
+
+  return (
+    <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
+      <FormLabel component="legend">{t('content.home.selectUsecases')}</FormLabel>
+      <FormGroup>
+        {useCases.map((item: IUseCase) => (
+          <FormControlLabel control={<Checkbox onChange={handleChange} name={item.title} />} label={item.title} />
+        ))}
+      </FormGroup>
+    </FormControl>
+  );
 }

@@ -21,7 +21,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IUser } from '../../models/User';
-import { fetchUserPermissions } from './actions';
+import { fetchUseCases, fetchUserPermissions } from './actions';
 import { IAppSlice } from './types';
 
 const initialState: IAppSlice = {
@@ -38,6 +38,8 @@ const initialState: IAppSlice = {
     parsedToken: {},
   },
   permissions: [],
+  useCases: [],
+  selectedUseCases: [],
 };
 export const appSlice = createSlice({
   name: 'appSlice',
@@ -49,6 +51,9 @@ export const appSlice = createSlice({
     setLoggedInUser: (state, action: PayloadAction<IUser>) => {
       state.loggedInUser = action.payload;
     },
+    setUseCases: (state, action: PayloadAction<string[]>) => {
+      state.selectedUseCases = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(fetchUserPermissions.pending, state => {
@@ -56,6 +61,13 @@ export const appSlice = createSlice({
     });
     builder.addCase(fetchUserPermissions.fulfilled, (state, action) => {
       state.permissions = action.payload;
+      state.pageLoading = false;
+    });
+    builder.addCase(fetchUseCases.pending, state => {
+      state.pageLoading = true;
+    });
+    builder.addCase(fetchUseCases.fulfilled, (state, action) => {
+      state.useCases = action.payload;
       state.pageLoading = false;
     });
   },

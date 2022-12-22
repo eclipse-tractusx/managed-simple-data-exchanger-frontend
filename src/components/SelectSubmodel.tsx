@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { SelectList } from 'cx-portal-shared-components';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { fetchSubmodelDetails, fetchSubmodelList } from '../features/submodels/actions';
@@ -28,19 +28,21 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 
 const SelectSubmodel = () => {
   const { submodelList, selectedSubmodel } = useAppSelector(state => state.submodelSlice);
+  const { selectedUseCases } = useAppSelector(state => state.appSlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const handleTypeChange = async (item: ISubmodelList) => {
-    dispatch(setSelectedSubmodel(item));
-    dispatch(fetchSubmodelDetails(item.value));
-  };
+  const handleTypeChange = useCallback(
+    async (item: ISubmodelList) => {
+      dispatch(setSelectedSubmodel(item));
+      dispatch(fetchSubmodelDetails(item.value));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
-    dispatch(fetchSubmodelList());
-    dispatch(fetchSubmodelDetails(selectedSubmodel.value));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(fetchSubmodelList(selectedUseCases));
+  }, [dispatch]);
 
   return (
     <SelectList
@@ -52,7 +54,6 @@ const SelectSubmodel = () => {
       onChangeItem={e => handleTypeChange(e)}
       items={submodelList}
       placeholder={t('content.provider.selectSubmodel')}
-      hiddenLabel
       disableClearable={true}
     />
   );

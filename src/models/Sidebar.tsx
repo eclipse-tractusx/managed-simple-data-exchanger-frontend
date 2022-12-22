@@ -58,18 +58,18 @@ export const MenuItems: IntMenuItem[] = [
     text: 'pages.provider',
     isHeading: true,
     childrens: [
-      // {
-      //   text: 'Home',
-      //   menuIcon: 'HomeIcon',
-      //   to: '/',
-      //   dataId: 'homePage',
-      // },
+      {
+        text: 'pages.home',
+        menuIcon: 'HomeIcon',
+        to: '/',
+        dataId: 'homePage',
+      },
       {
         text: 'pages.createData',
         menuIcon: 'AddCircleIcon',
         to: '/create-data',
         dataId: 'uploadFileMenu',
-        permissions: ['provider_create_contract_offer'],
+        permissions: ['provider_view_history'],
       },
       {
         text: 'pages.uploadHistory',
