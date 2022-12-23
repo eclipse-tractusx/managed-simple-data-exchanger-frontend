@@ -123,6 +123,7 @@ const columns: readonly Column[] = [
   {
     id: 'actions',
     label: '',
+    minWidth: 100,
   },
 ];
 
