@@ -42,7 +42,6 @@ export default function Home() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch(setSelectedUseCases([]));
     dispatch(fetchUseCases());
   }, [dispatch]);
 
@@ -78,7 +77,7 @@ export default function Home() {
               {useCases.map((item: IUseCase) => (
                 <>
                   <div className="usecase-tile" key={item.id}>
-                    <input type="checkbox" name={item.title} value={item.id} id={item.id} onChange={handleUseCaseChange} />
+                    <input type="checkbox" name={item.title} value={item.id} id={item.id} onChange={handleUseCaseChange} checked={selectedUseCases.includes(item.id)} />
                     <label className="usecase-tile-content" htmlFor={item.id}>
                       <Stack className="usecase-tile-content-wrapper" spacing={2}>
                         <Avatar

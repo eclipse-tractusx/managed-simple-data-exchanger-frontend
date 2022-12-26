@@ -36,40 +36,45 @@ export const DataExchangeStepper: React.FC<IDataExchangeStepper> = ({ data }) =>
     <>
       <Box sx={{ flex: 1 }}>
         <Grid container spacing={2} alignItems="center">
-            {data.map((step) => {
-              const StepIcon = step?.stepLink?.icon;
-              return (
-                <Grid item xs="auto" key={step.stepNum}>
-                  <Box p={2} sx={{
+          {data.map(step => {
+            const StepIcon = step?.stepLink?.icon;
+            return (
+              <Grid item xs="auto" key={step.stepNum}>
+                <Box
+                  p={2}
+                  sx={{
                     width: 200,
                     height: 160,
-                  }}>
-                    <Typography variant="h5">{step.stepNum}</Typography>
-                    <Divider sx={{ background: '#0F71CB' }} />
-                    <Typography variant="subtitle1" mt={2}>{t(step.stepTitle)}</Typography>
-                    {step?.stepLink && 
-                      <Button
-                        variant="text"
-                        size="medium"
-                        onClick={() => navigate(step.stepLink.routeUrl)}
-                        startIcon={<StepIcon />}
-                        sx={{
-                          p: 0,
-                          mt: 2,
-                          '&:hover': {
-                            backgroundColor: 'transparent', 
-                            textDecoration: 'underline',
-                          },
-                        }}
-                      >
-                        {t(step.stepLink.text)}
-                      </Button>
-                    }
-                  </Box>
-                </Grid>
-              );  
-            })}
-          </Grid>
+                  }}
+                >
+                  <Typography variant="h5">{step.stepNum}</Typography>
+                  <Divider sx={{ background: '#0F71CB' }} />
+                  <Typography variant="subtitle1" mt={2}>
+                    {t(step.stepTitle)}
+                  </Typography>
+                  {step?.stepLink && (
+                    <Button
+                      variant="text"
+                      size="medium"
+                      onClick={() => navigate(step.stepLink.routeUrl)}
+                      startIcon={<StepIcon />}
+                      sx={{
+                        p: 0,
+                        mt: 2,
+                        '&:hover': {
+                          backgroundColor: 'transparent',
+                          textDecoration: 'underline',
+                        },
+                      }}
+                    >
+                      {t(step.stepLink.text)}
+                    </Button>
+                  )}
+                </Box>
+              </Grid>
+            );
+          })}
+        </Grid>
       </Box>
     </>
   );
