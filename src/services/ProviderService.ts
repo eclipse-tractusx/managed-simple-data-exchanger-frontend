@@ -34,9 +34,10 @@ class ProviderService extends HttpService {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async getSubmodelList(params?: any) {
+    const usecaseParam = params.length ? `?usecases=${params}` : '';
     const res = await this.instance({
       method: 'GET',
-      url: `/submodels?usecases=${params}`,
+      url: `/submodels${usecaseParam}`,
     });
     return res?.data;
   }
