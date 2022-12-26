@@ -75,20 +75,18 @@ export default function Home() {
           <FormControl component="fieldset" variant="standard">
             <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
               {useCases.map((item: IUseCase) => (
-                <>
-                  <div className="usecase-tile" key={item.id}>
-                    <input type="checkbox" name={item.title} value={item.id} id={item.id} onChange={handleUseCaseChange} checked={selectedUseCases.includes(item.id)} />
-                    <label className="usecase-tile-content" htmlFor={item.id}>
-                      <Stack className="usecase-tile-content-wrapper" spacing={2}>
-                        <Avatar
-                          src={`images/${item.id}.png`}
-                          sx={{ width: 60, height: 60 }}
-                        />
-                        <Typography variant="subtitle1">{item.title}</Typography>
-                      </Stack>
-                    </label>
-                  </div>
-                </>
+                <div className="usecase-tile" key={item.id}>
+                  <input type="checkbox" name={item.title} value={item.id} id={item.id} onChange={handleUseCaseChange} checked={selectedUseCases.includes(item.id)} />
+                  <label className="usecase-tile-content" htmlFor={item.id}>
+                    <Stack className="usecase-tile-content-wrapper" spacing={2}>
+                      <Avatar
+                        src={`images/${item.id}.png`}
+                        sx={{ width: 60, height: 60 }}
+                      />
+                      <Typography variant="subtitle1">{item.title}</Typography>
+                    </Stack>
+                  </label>
+                </div>
               ))}
             </Stack>
           </FormControl>
