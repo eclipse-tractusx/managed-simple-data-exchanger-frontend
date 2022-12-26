@@ -42,6 +42,7 @@ const SelectSubmodel = () => {
 
   useEffect(() => {
     dispatch(fetchSubmodelList(selectedUseCases));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (

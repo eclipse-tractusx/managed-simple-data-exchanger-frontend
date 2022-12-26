@@ -42,6 +42,8 @@ export interface IntMenuChildren {
 
 export interface IntMenuItem {
   text: string;
+  to?: string;
+  dataId?: string;
   isHeading?: boolean;
   isExpanded?: boolean;
   childrens?: IntMenuChildren[];
@@ -55,8 +57,7 @@ export interface IntMenuItemProps {
 // menu items
 export const MenuItems: IntMenuItem[] = [
   {
-    text: 'pages.provider',
-    isHeading: true,
+    text: '',
     childrens: [
       {
         text: 'pages.home',
@@ -64,6 +65,12 @@ export const MenuItems: IntMenuItem[] = [
         to: '/',
         dataId: 'homePage',
       },
+    ],
+  },
+  {
+    text: 'pages.provider',
+    isHeading: true,
+    childrens: [
       {
         text: 'pages.createData',
         menuIcon: 'AddCircleIcon',

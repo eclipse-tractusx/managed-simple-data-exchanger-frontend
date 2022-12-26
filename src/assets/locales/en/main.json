@@ -13,7 +13,25 @@
   },
   "content": {
     "home": {
-      "selectUsecases": "Select yours use cases"
+      "header": "Home",
+      "selectUsecasesHeader": "Select your use cases",
+      "selectUsecasesSubheader": "You may select one or more use cases that interest you",
+      "exchangeDataHeader": "Exchange your data",
+      "provideDataTab": "Provide data",
+      "consumeDataTab": "Consume data",
+      "provideDataStep": {
+        "downloadTemplate": "Download relevant file template",
+        "fillTemplate": "Fill template with your data",
+        "createDataText": "Create data and set policies",
+        "manageUploadContract": "Manage your uploads or contact agreements"
+      },
+      "consumeDataSteps": {
+        "discoverCatalog": "Discover catalog of business partner",
+        "subscribeDataOffer": "Subscribe to data contract offer",
+        "manageContracts": "View & manage contracts"
+      },
+      "sdeDescription": "Simple Data Exchanger is your easy way to publish data in the Catena-X network. It makes your automotive data available to other participants respecting your individual access and usage rules. It allows you to discover data of other participants and to establish data contracts, so that you can access their data within the use cases that interest you.",
+      "learnSde": "Learn how it works"
     },
     "provider": {
       "selectSubmodel": "Select Submodel",
