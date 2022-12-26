@@ -112,8 +112,9 @@ export default function Home() {
           </Box>
         </Grid>
         <Grid item xs={12} mt={5}>
-          <Box mt={4}>
+          <Box mt={4} className='video-wrapper'>
             <img src="images/sde.png" width={700} />
+            <img src="images/play.png" className="playIcon" />
           </Box>
         </Grid>
         <Grid item xs={5} pt={0}>

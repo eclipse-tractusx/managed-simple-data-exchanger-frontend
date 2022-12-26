@@ -26,3 +26,20 @@
     border: 3px solid #0F71CB;
   }
 }
+.video-wrapper {
+  display: inline-block;
+  position: relative;
+  
+  & img {
+    max-width: 100%;
+  }
+  & .playIcon {
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+  }
+}
