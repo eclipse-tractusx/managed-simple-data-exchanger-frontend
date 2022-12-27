@@ -26,11 +26,7 @@ import { fetchSubmodelDetails, fetchSubmodelList } from './actions';
 import { ISubmodelList, ISubmodelsSlice } from './types';
 
 const initialState: ISubmodelsSlice = {
-  selectedSubmodel: {
-    id: 0,
-    title: 'Serial Part Typizations',
-    value: 'aspect',
-  },
+  selectedSubmodel: {} as ISubmodelList,
   submodelList: [],
   submodelDetails: {},
   columns: [],

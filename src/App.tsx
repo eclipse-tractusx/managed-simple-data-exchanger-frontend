@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import PageLoading from './components/PageLoading';
 import Notification from './features/notifiication';
@@ -29,6 +29,7 @@ import ConsumeData from './pages/ConsumeData';
 import ContractHistory from './pages/ContractHistory';
 import CreateData from './pages/CreateData';
 import Help from './pages/Help';
+import Home from './pages/Home';
 import Logout from './pages/Logout';
 import PageNotFound from './pages/PageNotFound';
 import UploadHistory from './pages/UploadHistory';
@@ -39,7 +40,7 @@ function App({ loggedUser }: { loggedUser: IUser }) {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main loggedUser={loggedUser} />}>
-            <Route path="/" element={<Navigate to="/create-data" />}></Route>
+            <Route key="home" path="/" element={<Home />}></Route>
             <Route key="create-data" path="/create-data" element={<CreateData />} />
             <Route key="upload-history" path="/upload-history" element={<UploadHistory />} />
             <Route key="help" path="/help" element={<Help />} />

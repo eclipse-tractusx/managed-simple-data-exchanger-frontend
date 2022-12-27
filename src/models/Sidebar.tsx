@@ -42,6 +42,8 @@ export interface IntMenuChildren {
 
 export interface IntMenuItem {
   text: string;
+  to?: string;
+  dataId?: string;
   isHeading?: boolean;
   isExpanded?: boolean;
   childrens?: IntMenuChildren[];
@@ -55,21 +57,26 @@ export interface IntMenuItemProps {
 // menu items
 export const MenuItems: IntMenuItem[] = [
   {
+    text: '',
+    childrens: [
+      {
+        text: 'pages.home',
+        menuIcon: 'HomeIcon',
+        to: '/',
+        dataId: 'homePage',
+      },
+    ],
+  },
+  {
     text: 'pages.provider',
     isHeading: true,
     childrens: [
-      // {
-      //   text: 'Home',
-      //   menuIcon: 'HomeIcon',
-      //   to: '/',
-      //   dataId: 'homePage',
-      // },
       {
         text: 'pages.createData',
         menuIcon: 'AddCircleIcon',
         to: '/create-data',
         dataId: 'uploadFileMenu',
-        permissions: ['provider_create_contract_offer'],
+        permissions: ['provider_view_history'],
       },
       {
         text: 'pages.uploadHistory',
