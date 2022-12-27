@@ -52,7 +52,7 @@ export const appSlice = createSlice({
     setLoggedInUser: (state, action: PayloadAction<IUser>) => {
       state.loggedInUser = action.payload;
     },
-    setSidebarExpanded: (state) => {
+    setSidebarExpanded: state => {
       state.sidebarExpanded = !state.sidebarExpanded;
     },
     setSelectedUseCases: (state, action: PayloadAction<string[]>) => {

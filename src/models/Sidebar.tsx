@@ -63,7 +63,7 @@ export const MenuItems: IntMenu[] = [
         menuIcon: 'AddCircleIcon',
         to: '/create-data',
         dataId: 'uploadFileMenu',
-        permissions: ['provider_view_history'],
+        permissions: ['provider_create_contract_offer'],
       },
       {
         text: 'pages.uploadHistory',
