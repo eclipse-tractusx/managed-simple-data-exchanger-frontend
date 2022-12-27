@@ -32,40 +32,27 @@ export const icons = {
   HomeIcon,
 };
 
-export interface IntMenuChildren {
-  text: string;
-  menuIcon?: keyof typeof icons;
-  to?: string;
-  dataId?: string;
-  permissions?: string[];
-}
-
 export interface IntMenuItem {
   text: string;
   to?: string;
+  menuIcon?: keyof typeof icons;
   dataId?: string;
   isHeading?: boolean;
-  isExpanded?: boolean;
-  childrens?: IntMenuChildren[];
+  permissions?: string[];
 }
 
-export interface IntMenuItemProps {
-  item: IntMenuChildren;
-  isExpanded: boolean;
+export interface IntMenu extends IntMenuItem {
+  childrens?: IntMenuItem[];
 }
 
 // menu items
-export const MenuItems: IntMenuItem[] = [
+export const MenuItems: IntMenu[] = [
   {
-    text: '',
-    childrens: [
-      {
-        text: 'pages.home',
-        menuIcon: 'HomeIcon',
-        to: '/',
-        dataId: 'homePage',
-      },
-    ],
+    text: 'pages.home',
+    menuIcon: 'HomeIcon',
+    to: '/',
+    dataId: 'homePage',
+    isHeading: false,
   },
   {
     text: 'pages.provider',
@@ -76,7 +63,7 @@ export const MenuItems: IntMenuItem[] = [
         menuIcon: 'AddCircleIcon',
         to: '/create-data',
         dataId: 'uploadFileMenu',
-        permissions: ['provider_view_history'],
+        permissions: ['provider_create_contract_offer'],
       },
       {
         text: 'pages.uploadHistory',

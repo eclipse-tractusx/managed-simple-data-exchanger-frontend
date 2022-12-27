@@ -33,11 +33,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { icons, IntMenuItemProps, MenuItems } from '../models/Sidebar';
+import { icons, IntMenuItem, MenuItems } from '../models/Sidebar';
+import { useAppSelector } from '../store/store';
 import Permissions from './Permissions';
 
-const MenuItem = ({ item, isExpanded }: IntMenuItemProps) => {
+const MenuItem = ({ item }: { item: IntMenuItem }) => {
   const theme = useTheme();
+  const { sidebarExpanded } = useAppSelector(state => state.appSlice);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { menuIcon, to, text, dataId } = item;
@@ -57,7 +59,7 @@ const MenuItem = ({ item, isExpanded }: IntMenuItemProps) => {
           <ListItemText
             primaryTypographyProps={{ sx: { fontSize: '14px' } }}
             primary={t(text)}
-            sx={{ opacity: open ? 1 : 0, display: !isExpanded ? 'none' : 'flex' }}
+            sx={{ opacity: open ? 1 : 0, display: !sidebarExpanded ? 'none' : 'flex' }}
           />
         </ListItemButton>
       </ListItem>
@@ -65,34 +67,36 @@ const MenuItem = ({ item, isExpanded }: IntMenuItemProps) => {
   );
 };
 
-const MenuItemHeading = ({ item, isExpanded }: IntMenuItemProps) => {
+const MenuItemHeading = ({ text }: { text: string }) => {
   const { t } = useTranslation();
-
+  const { sidebarExpanded } = useAppSelector(state => state.appSlice);
   return (
     <>
+      <Divider />
       <Typography
         variant="body1"
         sx={{
-          display: !isExpanded ? 'hidden' : 'flex',
+          display: !sidebarExpanded ? 'hidden' : 'flex',
           justifyContent: 'space-between',
           textAlign: 'center',
           px: 2.4,
           py: 1,
         }}
       >
-        {isExpanded ? t(item.text) : t(item.text).charAt(0)}
+        {sidebarExpanded ? t(text) : t(text).charAt(0)}
       </Typography>
       <Divider />
     </>
   );
 };
 
-export default function Sidebar({ isExpanded }: { isExpanded: boolean }) {
+export default function Sidebar() {
   const theme = useTheme();
+  const { sidebarExpanded } = useAppSelector(state => state.appSlice);
   return (
     <Box
       sx={{
-        width: isExpanded ? 200 : 56,
+        width: sidebarExpanded ? 200 : 56,
         height: '100vh',
         overflow: 'hidden',
         borderRight: `1px solid ${theme.palette.grey[300]}`,
@@ -101,10 +105,12 @@ export default function Sidebar({ isExpanded }: { isExpanded: boolean }) {
       <List sx={{ p: 0 }}>
         {MenuItems.map((menuItem, index) => (
           <div key={index}>
-            <MenuItemHeading item={menuItem} isExpanded={isExpanded} />
-            {menuItem.childrens.map((children, k) => {
-              return <MenuItem key={k} item={children} isExpanded={isExpanded} />;
-            })}
+            {/* Menu heading */}
+            {menuItem.isHeading ? <MenuItemHeading text={menuItem.text} /> : <MenuItem key={index} item={menuItem} />}
+            {/* Menu children */}
+            {menuItem.childrens?.map((children, k) => (
+              <MenuItem key={k} item={children} />
+            ))}
           </div>
         ))}
       </List>

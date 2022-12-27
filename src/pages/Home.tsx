@@ -46,7 +46,7 @@ export default function Home() {
   }, [dispatch]);
 
   const handleUseCaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = event.target; 
+    const { value, checked } = event.target;
     if (checked) {
       dispatch(setSelectedUseCases([...selectedUseCases, value]));
     } else {
@@ -67,7 +67,9 @@ export default function Home() {
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h3">{t('content.home.header')}</Typography>
-          <Typography variant="subtitle1" mt={2}>{loggedInUser.company}</Typography>
+          <Typography variant="subtitle1" mt={2}>
+            {loggedInUser.company}
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4">{t('content.home.selectUsecasesHeader')}</Typography>
@@ -76,13 +78,17 @@ export default function Home() {
             <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
               {useCases.map((item: IUseCase) => (
                 <div className="usecase-tile" key={item.id}>
-                  <input type="checkbox" name={item.title} value={item.id} id={item.id} onChange={handleUseCaseChange} checked={selectedUseCases.includes(item.id)} />
+                  <input
+                    type="checkbox"
+                    name={item.title}
+                    value={item.id}
+                    id={item.id}
+                    onChange={handleUseCaseChange}
+                    checked={selectedUseCases.includes(item.id)}
+                  />
                   <label className="usecase-tile-content" htmlFor={item.id}>
                     <Stack className="usecase-tile-content-wrapper" spacing={2}>
-                      <Avatar
-                        src={`images/${item.id}.png`}
-                        sx={{ width: 60, height: 60 }}
-                      />
+                      <Avatar src={`images/${item.id}.png`} sx={{ width: 60, height: 60 }} />
                       <Typography variant="subtitle1">{item.title}</Typography>
                     </Stack>
                   </label>
@@ -109,7 +115,7 @@ export default function Home() {
           </Box>
         </Grid>
         <Grid item xs={12} mt={5}>
-          <Box mt={4} className='video-wrapper'>
+          <Box mt={4} className="video-wrapper">
             <img src="images/sde.png" width={700} />
             <img src="images/play.png" className="playIcon" />
           </Box>
@@ -120,13 +126,13 @@ export default function Home() {
             <Button
               variant="text"
               size="medium"
-              onClick={() => openInNewTab(userGuideUrl) }
+              onClick={() => openInNewTab(userGuideUrl)}
               endIcon={<ArrowForwardIcon />}
               sx={{
                 p: 0,
                 mt: 2,
                 '&:hover': {
-                  backgroundColor: 'transparent', 
+                  backgroundColor: 'transparent',
                   textDecoration: 'underline',
                 },
               }}

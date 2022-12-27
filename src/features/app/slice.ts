@@ -39,6 +39,7 @@ const initialState: IAppSlice = {
   },
   permissions: [],
   useCases: [],
+  sidebarExpanded: true,
   selectedUseCases: [],
 };
 export const appSlice = createSlice({
@@ -50,6 +51,9 @@ export const appSlice = createSlice({
     },
     setLoggedInUser: (state, action: PayloadAction<IUser>) => {
       state.loggedInUser = action.payload;
+    },
+    setSidebarExpanded: state => {
+      state.sidebarExpanded = !state.sidebarExpanded;
     },
     setSelectedUseCases: (state, action: PayloadAction<string[]>) => {
       state.selectedUseCases = action.payload;
@@ -73,5 +77,5 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setPageLoading, setLoggedInUser, setSelectedUseCases } = appSlice.actions;
+export const { setPageLoading, setLoggedInUser, setSelectedUseCases, setSidebarExpanded } = appSlice.actions;
 export default appSlice.reducer;

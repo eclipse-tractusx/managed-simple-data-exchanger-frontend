@@ -25,6 +25,7 @@ export interface IAppSlice {
   permissions: string[];
   useCases: IUseCase[];
   selectedUseCases: string[];
+  sidebarExpanded: boolean;
 }
 
 export interface IUseCase {
