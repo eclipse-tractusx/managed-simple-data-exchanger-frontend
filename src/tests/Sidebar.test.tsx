@@ -27,7 +27,7 @@ import Sidebar from '../components/Sidebar';
 test('expanded sidebar', () => {
   render(
     <MemoryRouter>
-      <Sidebar isExpanded={true} />
+      <Sidebar />
     </MemoryRouter>,
   );
 
@@ -50,7 +50,7 @@ test('expanded sidebar', () => {
 test('collapsed sidebar', () => {
   render(
     <MemoryRouter>
-      <Sidebar isExpanded={false} />
+      <Sidebar />
     </MemoryRouter>,
   );
   // check upload file menu

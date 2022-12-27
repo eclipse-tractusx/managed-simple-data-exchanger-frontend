@@ -27,7 +27,7 @@ import Nav from '../components/Nav';
 test('render navbar', () => {
   render(
     <MemoryRouter>
-      <Nav getIsExpanded={true} />
+      <Nav />
     </MemoryRouter>,
   );
   const text = screen.getByText('Simple Data Exchanger');

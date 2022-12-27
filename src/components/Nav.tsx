@@ -27,29 +27,20 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { setSidebarExpanded } from '../features/app/slice';
 import I18nService from '../services/i18nService';
-import { useAppSelector } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
 
 // eslint-disable-next-line
-const Nav = (props: any) => {
+const Nav = () => {
   const theme = useTheme();
-  const [isExpanded, setIsExpanded] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();
   const avatar = useRef<HTMLDivElement>(null);
   const [lang, setlang] = useState(i18next.language);
   const { loggedInUser } = useAppSelector(state => state.appSlice);
   const NAV_ITEMS = [{ title: loggedInUser.company }, { title: loggedInUser.bpn }, { title: 'Logout', to: 'logout' }];
-
-  const handleExpanded = () => {
-    if (isExpanded) {
-      setIsExpanded(false);
-      props.getIsExpanded(false);
-      return;
-    }
-    setIsExpanded(true);
-    props.getIsExpanded(true);
-  };
+  const dispatch = useAppDispatch();
 
   const openCloseMenu = () => setMenuOpen(prevVal => !prevVal);
   const onClickAway = (e: MouseEvent | TouchEvent) => {
@@ -82,7 +73,7 @@ const Nav = (props: any) => {
         }}
       >
         <Box display={'flex'} alignItems="center">
-          <Box onClick={handleExpanded}>
+          <Box onClick={() => dispatch(setSidebarExpanded())}>
             <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
           </Box>
           <Typography variant="h4" color="white" ml={3}>
