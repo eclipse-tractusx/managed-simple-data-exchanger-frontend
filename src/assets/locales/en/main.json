@@ -74,6 +74,7 @@
     "uploadHistory": {
       "columns": {
         "processId": "Process Id",
+        "csvType": "CSV Type",
         "numberOfSucceededItems": "Number of Created Items",
         "numberOfUpdatedItems": "Number of Updated Items",
         "numberOfDeletedItems": "Number of Deleted Items",
