@@ -24,6 +24,9 @@
   }
   & input[type=checkbox]:checked + .usecase-tile-content{
     border: 3px solid #0F71CB;
+    & h6 {
+      color: #0F71CB;
+    }
   }
 }
 .video-wrapper {
@@ -41,5 +44,18 @@
     width: 120px;
     height: 120px;
     cursor: pointer;
+  }
+}
+
+.exchange-data-wrapper {
+  & .MuiTabs-root {
+    & .MuiTabs-scroller.MuiTabs-fixed {
+      margin-bottom: -1px !important;
+    }
+  }
+  & .MuiButtonBase-root.MuiTab-root {
+    &.Mui-selected {
+      background: #F3F3F3;
+    }
   }
 }
