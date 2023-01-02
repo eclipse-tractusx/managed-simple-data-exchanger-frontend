@@ -283,10 +283,10 @@ Detailed API specs available under:
 
 <img src="images/app-routing.png" height="60%" width="60%" /><br /><br />
 
-| Route                       	| Description                                                      	| Type 	|
-|-----------------------------	|------------------------------------------------------------------	|------	|
-| /login                      	| Keycloak Authentication                                          	| Main 	|
-| /                  	| Home page (redirect by default to "/create-data")      	| Main 	|
+| Route               	| Description                                                      	| Type 	|
+|--------------------	|------------------------------------------------------------------	|------	|
+| /login                | Keycloak Authentication                                          	| Main 	|
+| /                  	| Home page for use case selection and app overview                 | Main 	|
 | /create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
 | /history          	| Upload history table                                             	| Sub  	|
 | /help             	| Help guide, CSV rules and samples                                	| Sub  	|
@@ -301,13 +301,13 @@ Detailed API specs available under:
 | Folder name 	| Description                                            	|
 |-------------	|--------------------------------------------------------	|
 | components  	| React components                                       	|
+| features  	| business logics of a particular feature with its store, service classes, actions and html	|
 | helpers     	| Constants and configurations                           	|
 | models      	| Interfaces                                             	|
 | modules     	| Custom hooks and routing configuration                 	|
 | pages       	| App pages                                              	|
 | services    	| Frontend service classes (ex: SDEService, UserService) 	|
 | store       	| Redux store to manage global state                     	|
-| styles      	| Scss files                                             	|
 | tests       	| Unit tests                                             	|
 | utils       	| Auxiliary functions (ex: formatDate)                   	|
 
