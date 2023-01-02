@@ -10,7 +10,7 @@
   cursor: pointer;
 
   &:hover{
-    box-shadow: -1px 10px 29px 0px rgba(0,0,0,0.8);
+    box-shadow: -1px 10px 30px 0px #aaa;
   }
 }
 .usecase-tile-content-wrapper {
@@ -47,15 +47,3 @@
   }
 }
 
-.exchange-data-wrapper {
-  & .MuiTabs-root {
-    & .MuiTabs-scroller.MuiTabs-fixed {
-      margin-bottom: -1px !important;
-    }
-  }
-  & .MuiButtonBase-root.MuiTab-root {
-    &.Mui-selected {
-      background: #F3F3F3;
-    }
-  }
-}
