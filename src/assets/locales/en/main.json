@@ -74,6 +74,7 @@
     "uploadHistory": {
       "columns": {
         "processId": "Process Id",
+        "csvType": "CSV Type",
         "numberOfSucceededItems": "Number of Created Items",
         "numberOfUpdatedItems": "Number of Updated Items",
         "numberOfDeletedItems": "Number of Deleted Items",
@@ -127,7 +128,7 @@
       "noData": "No data available!",
       "noResults": "No results found!",
       "sampleCsv": "Sample CSV",
-      "sampleTemplate": "CSV Template",
+      "sampleTemplate": "Template CSV",
       "copyHeaders": "Copy headers to clipboard",
       "rules": "Rules",
       "enterValue": "Enter a value",
