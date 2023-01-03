@@ -21,25 +21,23 @@
 
 export interface ProcessReport {
   processId: string;
-  csvType: CsvTypes;
+  referenceProcessId: string;
+  csvType: string;
   numberOfItems: number;
+  numberOfCreatedItems: number;
+  numberOfUpdatedItems: number;
+  numberOfDeletedItems: number;
   numberOfFailedItems: number;
   numberOfSucceededItems: number;
   status: Status;
   startDate: string;
   endDate?: string;
   duration?: string;
+  actions?: unknown;
 }
 
 export enum Status {
   completed = 'COMPLETED',
   failed = 'FAILED',
   inProgress = 'IN_PROGRESS',
-}
-
-export enum CsvTypes {
-  aspect = 'ASPECT',
-  batch = 'BATCH',
-  aspectRelationship = 'ASPECT_RELATIONSHIP',
-  unknown = 'UNKNOWN',
 }

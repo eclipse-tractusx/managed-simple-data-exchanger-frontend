@@ -18,8 +18,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Divider, Grid } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
 import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Grid, Divider } from '@mui/material';
+
 import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 
 interface IntDialogProps {
@@ -44,11 +46,11 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
   }
 
   return (
-    <Dialog fullWidth={true} maxWidth="sm" open={open} onClose={() => closeModal('close')}>
-      <DialogTitle>Offer Details</DialogTitle>
+    <Dialog open={open}>
+      <DialogHeader closeWithIcon onCloseWithIcon={() => closeModal('close')} title=" Offer Details" />
       {isMultiple ? (
         <>
-          <DialogContent dividers>
+          <DialogContent dividers sx={{ pt: 3 }}>
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
@@ -83,7 +85,7 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
       ) : (
         <>
           <DialogContent dividers>
-            <Grid container>
+            <Grid container mt={3}>
               <Grid item xs={6} sx={{ mb: 1 }}>
                 <Typography variant="body2">Title</Typography>
                 <Typography variant="body2">

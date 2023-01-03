@@ -19,21 +19,28 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import './index.scss';
+
+import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
+
 import App from './App';
 import UserService from './services/UserService';
 import { store } from './store/store';
-import { Provider } from 'react-redux';
-import React from 'react';
 import { clearConsoles } from './utils/utils';
+
 clearConsoles();
 
-UserService.initKeycloak(() => {
+UserService.initKeycloak(user => {
   ReactDOM.render(
     <React.StrictMode>
+      <SharedCssBaseline />
       <Provider store={store}>
-        <App />
+        <SharedThemeProvider>
+          <App loggedUser={user} />
+        </SharedThemeProvider>
       </Provider>
     </React.StrictMode>,
     document.getElementById('root'),

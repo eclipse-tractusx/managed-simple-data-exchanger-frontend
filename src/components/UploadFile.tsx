@@ -18,34 +18,65 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-
-// components
-import UploadForm from '../components/UploadForm';
-
-// icons
-import { HighlightOffOutlined, ReportGmailerrorredOutlined } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { Box, Link, useTheme } from '@mui/material';
+import { Button, Typography } from 'cx-portal-shared-components';
+import { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 
-// models
-import { Status } from '../models/ProcessReport';
-
-// styles
-import styles from '../styles.module.scss';
-import { Box, Button } from '@mui/material';
+import { setPageLoading } from '../features/app/slice';
+import { setSnackbarMessage } from '../features/notifiication/slice';
+import { handleDialogOpen } from '../features/policies/slice';
+import { FileSize } from '../models/FileSize';
+import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { handleDialogOpen } from '../store/accessUsagePolicySlice';
-import { setUploadStatus } from '../store/providerSlice';
+import { Config } from '../utils/config';
 
-export default function UploadFile({
-  handleFiles,
-  selectedTabIndex = 0,
-}: {
-  handleFiles: (file: File) => void;
-  selectedTabIndex: number;
-}) {
-  const { selectedFiles, currentUploadData, uploadStatus } = useAppSelector(state => state.providerSlice);
+export default function UploadFile() {
+  const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
   const dispatch = useAppDispatch();
+  const theme = useTheme();
+
+  const handleFiles = (file: File) => {
+    dispatch(setUploadStatus(false));
+    dispatch(setPageLoading(false));
+    const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
+    if (file.size < maxFileSize) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      dispatch(setSelectedFiles(file));
+    } else {
+      dispatch(
+        setSnackbarMessage({
+          message: 'File not permitted!',
+          type: 'error',
+        }),
+      );
+    }
+  };
+
+  const onDrop = useCallback(acceptedFiles => {
+    handleFiles(acceptedFiles[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    maxFiles: 1,
+    accept: {
+      'text/csv': ['.csv'],
+    },
+  });
+
+  const fileSize = (size: number) => {
+    if (size === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes: string[] = Object.keys(FileSize);
+    const i = Math.floor(Math.log(size) / Math.log(k));
+    return `${parseFloat((size / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+  };
+
   return (
     <>
       <Box
@@ -55,10 +86,12 @@ export default function UploadFile({
           justifyContent: 'flex-end',
           alignItems: 'flex-end',
           width: '100%',
+          height: '100%',
         }}
       >
         <Button
-          disabled={selectedFiles.length === 0 && !uploadStatus}
+          disabled={!Boolean(selectedFiles.length)}
+          size="small"
           variant="contained"
           onClick={() => dispatch(handleDialogOpen({ type: 'file' }))}
         >
@@ -66,54 +99,91 @@ export default function UploadFile({
         </Button>
       </Box>
       <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div>
-          <UploadForm getSelectedFiles={(files: File) => handleFiles(files)} />
-          {uploadStatus && currentUploadData.status === Status.failed && (
-            <div className={'flex justify-between bg-red-100 p-4 w-full mt-4'}>
-              <div className="flex items-center gap-x-2">
-                <span title="Failed">
-                  <HighlightOffOutlined sx={{ color: styles.danger }} />
-                </span>
-                <p className="text-md">{selectedFiles[0].name}</p>
-              </div>
-              <span className="cursor-pointer" onClick={() => dispatch(setUploadStatus(false))}>
-                <CloseIcon />
-              </span>
-            </div>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h4" marginBottom={3} textAlign="center">
+            Upload a file
+          </Typography>
+          <Box
+            sx={{
+              border: '1px dashed lightgrey',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              p: 3,
+              position: 'relative',
+            }}
+            {...getRootProps()}
+          >
+            <input {...getInputProps()} />
+            <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
+            <Typography variant="body1" my={3} textAlign="center">
+              Upload your file by dropping it here.
+            </Typography>
+            <Typography variant="body1" mb={3} textAlign="center">
+              or
+            </Typography>
+            <Button variant="outlined" size="small">
+              CHOOSE A FILE
+            </Button>
+
+            {isDragActive ? (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  background: theme.palette.primary.main,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Box sx={{ textAlign: 'center' }}>
+                  <CloudUploadIcon style={{ fontSize: 40 }} sx={{ color: theme.palette.common.white }} />
+                  <Typography color="white" variant="h4">
+                    Drop it like it's hot :)
+                  </Typography>
+                  <Typography color="white" variant="body1">
+                    Upload your file by dropping it here.
+                  </Typography>
+                </Box>
+              </Box>
+            ) : (
+              ''
+            )}
+          </Box>
+          &nbsp;
+          <Box>
+            <Typography variant="subtitle1" mb={1} fontWeight={'bold'}>
+              The upload must be performed in the following order:
+            </Typography>
+            <Typography variant="body1">1 - serialPartTypization.csv</Typography>
+            <Typography variant="body1">2 - batch.csv</Typography>
+            <Typography variant="body1">3 - assemblyPartRelationship.csv</Typography>
+          </Box>
+          {selectedFiles.length && !uploadStatus ? (
+            <Box sx={{ display: 'flex', mt: 2, flexDirection: 'column' }}>
+              <Typography variant="subtitle1" mb={2} fontWeight={'bold'}>
+                Selected file
+              </Typography>
+
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 1.5, px: 2, background: 'lightgrey' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
+                  <UploadFileIcon />
+                  <Typography fontSize={16}>
+                    {selectedFiles[0].name} ({fileSize(selectedFiles[0].size)})
+                  </Typography>
+                </Box>
+                <Link sx={{ color: 'black' }} onClick={() => dispatch(removeSelectedFiles())}>
+                  <CloseIcon />
+                </Link>
+              </Box>
+            </Box>
+          ) : (
+            ''
           )}
-          {selectedTabIndex === 0 &&
-            uploadStatus &&
-            currentUploadData.status === Status.completed &&
-            currentUploadData.numberOfFailedItems === 0 && (
-              <div className={'flex justify-between bg-lime-200 p-4 w-full mt-4'}>
-                <div className="flex items-center gap-x-2">
-                  <span title="Completed">
-                    <CheckCircleOutlineOutlinedIcon sx={{ color: styles.success }} />
-                  </span>
-                  <p className="text-md">{selectedFiles[0]?.name}</p>
-                </div>
-                <span className="cursor-pointer" onClick={() => dispatch(setUploadStatus(false))}>
-                  <CloseIcon />
-                </span>
-              </div>
-            )}
-          {selectedTabIndex === 0 &&
-            uploadStatus &&
-            currentUploadData.status === Status.completed &&
-            currentUploadData.numberOfFailedItems > 0 && (
-              <div className={'flex justify-between bg-orange-100 p-4 w-full mt-4'}>
-                <div className="flex items-center gap-x-2">
-                  <span title="Completed with warnings">
-                    <ReportGmailerrorredOutlined sx={{ color: styles.warning }} />
-                  </span>
-                  <p className="text-md">{selectedFiles[0]?.name}</p>
-                </div>
-                <span className="cursor-pointer" onClick={() => dispatch(setUploadStatus(false))}>
-                  <CloseIcon />
-                </span>
-              </div>
-            )}
-        </div>
+        </Box>
       </Box>
     </>
   );

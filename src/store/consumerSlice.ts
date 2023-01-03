@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { IConsumerDataOffers, IContractAgreements } from '../models/ConsumerContractOffers';
 
 export interface IntOption {
@@ -30,6 +31,7 @@ export interface IntOption {
 export interface IntConnectorItem {
   id: number;
   value: string;
+  title: string;
 }
 
 interface IConsumerSlice {
@@ -57,7 +59,7 @@ const initialState: IConsumerSlice = {
   selectedOffer: null,
   isMultipleContractSubscription: false,
   // search filter
-  searchFilterByType: 'company',
+  searchFilterByType: '',
   filterProviderUrl: '',
   filterCompanyOptions: [],
   filterCompanyOptionsLoading: false,

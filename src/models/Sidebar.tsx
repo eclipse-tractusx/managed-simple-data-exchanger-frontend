@@ -19,8 +19,9 @@
  ********************************************************************************/
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import HistoryIcon from '@mui/icons-material/History';
 import HelpIcon from '@mui/icons-material/Help';
+import HistoryIcon from '@mui/icons-material/History';
+import HomeIcon from '@mui/icons-material/Home';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 export const icons = {
@@ -28,6 +29,7 @@ export const icons = {
   HistoryIcon,
   HelpIcon,
   ManageSearchIcon,
+  HomeIcon,
 };
 
 export interface IntMenuChildren {
@@ -35,6 +37,7 @@ export interface IntMenuChildren {
   menuIcon?: keyof typeof icons;
   to?: string;
   dataId?: string;
+  permissions?: string[];
 }
 
 export interface IntMenuItem {
@@ -55,22 +58,30 @@ export const MenuItems: IntMenuItem[] = [
     text: 'Provider',
     isHeading: true,
     childrens: [
+      // {
+      //   text: 'Home',
+      //   menuIcon: 'HomeIcon',
+      //   to: '/',
+      //   dataId: 'homePage',
+      // },
       {
         text: 'Create Data',
         menuIcon: 'AddCircleIcon',
-        to: '/dashboard/create-data',
+        to: '/create-data',
         dataId: 'uploadFileMenu',
+        permissions: ['provider_create_contract_offer'],
       },
       {
         text: 'Upload History',
         menuIcon: 'HistoryIcon',
-        to: '/dashboard/history',
+        to: '/upload-history',
         dataId: 'uploadHistoryMenu',
+        permissions: ['provider_view_history'],
       },
       {
         text: 'Help',
         menuIcon: 'HelpIcon',
-        to: '/dashboard/help',
+        to: '/help',
         dataId: 'helpMenu',
       },
     ],
@@ -82,14 +93,21 @@ export const MenuItems: IntMenuItem[] = [
       {
         text: 'Consume Data',
         menuIcon: 'ManageSearchIcon',
-        to: '/dashboard/consume-data',
+        to: '/consume-data',
         dataId: 'uploadFileMenu',
+        permissions: [
+          'consumer_search_connectors',
+          'consumer_view_contract_offers',
+          'consumer_establish_contract_agreement',
+          '',
+        ],
       },
       {
         text: 'Contract History',
         menuIcon: 'HistoryIcon',
-        to: '/dashboard/contract-history',
+        to: '/contract-history',
         dataId: 'uploadHistoryMenu',
+        permissions: ['consumer_view_contract_agreement'],
       },
     ],
   },

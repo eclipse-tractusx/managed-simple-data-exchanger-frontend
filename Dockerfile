@@ -15,7 +15,7 @@ RUN npm install && npm run build
 
 FROM nginx:1.22.1-alpine
 
-ENV CURL_VERSION=7.83.1-r4
+ENV CURL_VERSION=7.87.0
 
 RUN set -eux; \
       apk add --no-cache \
@@ -50,3 +50,4 @@ EXPOSE 8080
 #EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
+#CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
