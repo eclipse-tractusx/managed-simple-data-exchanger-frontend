@@ -22,6 +22,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { apiSlice } from '../features/app/apiSlice';
 import appSlice from '../features/app/slice';
 import notificationSlice from '../features/notifiication/slice';
 import accessUsagePolicySlice from '../features/policies/slice';
@@ -46,11 +47,12 @@ export const store = configureStore({
     consumerSlice: consumerSlice,
     notificationSlice: notificationSlice,
     submodelSlice: submodelSlice,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(apiSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

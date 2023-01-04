@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /*********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
@@ -20,46 +19,127 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import InfoIcon from '@mui/icons-material/Info';
 import { Box, Card, CardContent, Grid } from '@mui/material';
-import { Typography } from 'cx-portal-shared-components';
+import { GridColDef } from '@mui/x-data-grid';
+import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import { SubmodelHelp } from '../components/SubmodelHelp';
-import { rulesContentStyle, submodelHelpArr } from '../utils/helpUtils';
+import DownloadCSV from '../components/DownloadCSV';
+import { useGetHelpDataQuery } from '../features/submodels/apiSlice';
 
-export const Help = () => {
+interface PageData {
+  name: string;
+  id: string;
+  rows: {
+    name: string;
+    mandatory: string;
+    order: number;
+    description: string;
+  }[];
+}
+
+const columns: GridColDef[] = [
+  { field: 'name', headerName: 'Name', flex: 1, sortable: false, align: 'left', disableColumnMenu: true },
+  {
+    field: 'mandatory',
+    headerName: 'Mandatory',
+    flex: 1,
+    sortable: false,
+    headerAlign: 'center',
+    align: 'center',
+    disableColumnMenu: true,
+  },
+  {
+    field: 'order',
+    headerName: 'Order',
+    flex: 1,
+    sortable: false,
+    headerAlign: 'center',
+    align: 'center',
+    disableColumnMenu: true,
+  },
+  {
+    field: 'description',
+    headerName: 'Description',
+    flex: 1,
+    sortable: false,
+    headerAlign: 'center',
+    align: 'center',
+    disableColumnMenu: true,
+    renderCell: ({ row }) => (
+      <Tooltips tooltipPlacement="top" tooltipText={row.description}>
+        <span>
+          <InfoIcon color="primary" />
+        </span>
+      </Tooltips>
+    ),
+  },
+];
+
+const Help = () => {
   const { t } = useTranslation();
-  return (
-    <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h4" mb={4}>
-        {t('pages.help')}
-      </Typography>
-      <Grid container spacing={2}>
-        {submodelHelpArr.map((submodel: any, key: number) => (
-          <Grid key={key} item xs={6}>
-            <SubmodelHelp
-              submodelName={submodel.name}
-              rows={submodel.rows}
-              onCopyHeaders={submodel.onCopyHeader}
-              downloadUrl={submodel.downloadUrl}
-            />
+  const { isSuccess, data } = useGetHelpDataQuery();
+
+  if (isSuccess) {
+    const pageData = data.map(submodel => {
+      return {
+        name: submodel.title,
+        id: submodel.id,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        rows: Object.entries(submodel.items.properties).map(([key, value]: any, index) => ({
+          id: index,
+          name: key,
+          mandatory: _.indexOf(submodel.items.required, key) > -1 ? 'true' : 'false',
+          order: index + 1,
+          description: value.title,
+        })),
+      };
+    });
+    return (
+      <Box sx={{ flex: 1, p: 4 }}>
+        <Typography variant="h4" mb={4}>
+          {t('pages.help')}
+        </Typography>
+        {pageData.map((table: PageData) => (
+          <Grid key={table.name} container spacing={2} display={'flex'} alignItems={'center'}>
+            <Grid item xs={8} mb={4}>
+              <Table
+                title={table.name}
+                getRowId={row => row.id}
+                autoHeight
+                hideFooter={true}
+                columns={columns}
+                rows={table.rows}
+                sx={{
+                  '& .MuiDataGrid-cellCheckbox': {
+                    padding: '0 30px',
+                  },
+                  '& h5.MuiTypography-root.MuiTypography-h5 span': {
+                    display: 'none',
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={4} display={'flex'} justifyContent={'center'}>
+              <DownloadCSV submodel={table.id} />
+            </Grid>
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <Card variant="outlined">
-            <CardContent>
-              <Typography variant="h5">{t('content.common.rules')}</Typography>
-              <ul style={rulesContentStyle}>
-                <li> {t('content.help.rules1')}</li>
-                <li> {t('content.help.rules2')}</li>
-                <li> {t('content.help.rules3')}</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </Box>
-  );
+        <Card variant="outlined">
+          <CardContent>
+            <Typography variant="h5">{t('content.common.rules')}</Typography>
+            <ul>
+              <li> {t('content.help.rules1')}</li>
+              <li> {t('content.help.rules2')}</li>
+              <li> {t('content.help.rules3')}</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </Box>
+    );
+  } else return null;
 };
 
 export default Help;
