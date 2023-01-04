@@ -20,7 +20,7 @@
 
 import Keycloak from 'keycloak-js';
 
-import { IUser } from '../models/User';
+import { IUser } from '../features/app/types';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {

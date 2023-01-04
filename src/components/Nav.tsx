@@ -28,10 +28,9 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { setSidebarExpanded } from '../features/app/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import I18nService from '../services/i18nService';
-import { useAppDispatch, useAppSelector } from '../store/store';
 
-// eslint-disable-next-line
 const Nav = () => {
   const theme = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);

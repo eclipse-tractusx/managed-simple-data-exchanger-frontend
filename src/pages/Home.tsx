@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import './Home.scss';
+import '../Home.scss';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Avatar, Box, FormControl, Grid, Stack } from '@mui/material';
@@ -30,8 +30,8 @@ import { DataExchangeStepper } from '../components/DataExchangeStepper';
 import { fetchUseCases } from '../features/app/actions';
 import { setSelectedUseCases } from '../features/app/slice';
 import { IUseCase } from '../features/app/types';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
-import { useAppDispatch, useAppSelector } from '../store/store';
 
 const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/documentation/user-guide';
 

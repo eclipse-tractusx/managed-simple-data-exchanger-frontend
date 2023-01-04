@@ -18,23 +18,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-const ITEMS = [
-  {
-    id: 1,
-    title: 'Company Name',
-    value: 'company',
-  },
-  {
-    id: 2,
-    title: 'Business Partner Number',
-    value: 'bpn',
-  },
-  {
-    id: 3,
-    title: 'Connector URL',
-    value: 'url',
-  },
-];
 import { Autocomplete, Box, Grid, LinearProgress, Stack } from '@mui/material';
 import { DataGrid, GridSelectionModel, GridToolbar, GridValidRowModel, GridValueGetterParams } from '@mui/x-data-grid';
 import {
@@ -54,15 +37,6 @@ import { useTranslation } from 'react-i18next';
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
 import Permissions from '../components/Permissions';
-import { setSnackbarMessage } from '../features/notifiication/slice';
-import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
-import {
-  IConnectorResponse,
-  IConsumerDataOffers,
-  ILegalEntityContent,
-  IntOption,
-} from '../models/ConsumerContractOffers';
-import ConsumerService from '../services/ConsumerService';
 import {
   setContractOffers,
   setFfilterCompanyOptionsLoading,
@@ -77,8 +51,30 @@ import {
   setSelectedFilterCompanyOption,
   setSelectedOffer,
   setSelectedOffersList,
-} from '../store/consumerSlice';
-import { useAppDispatch, useAppSelector } from '../store/store';
+} from '../features/consumer/slice';
+import { IConnectorResponse, IConsumerDataOffers, ILegalEntityContent, IntOption } from '../features/consumer/types';
+import { setSnackbarMessage } from '../features/notifiication/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
+import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
+import ConsumerService from '../services/ConsumerService';
+
+const ITEMS = [
+  {
+    id: 1,
+    title: 'Company Name',
+    value: 'company',
+  },
+  {
+    id: 2,
+    title: 'Business Partner Number',
+    value: 'bpn',
+  },
+  {
+    id: 3,
+    title: 'Connector URL',
+    value: 'url',
+  },
+];
 
 export default function ConsumeData() {
   const {

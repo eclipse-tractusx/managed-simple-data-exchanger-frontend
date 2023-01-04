@@ -22,9 +22,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import PageLoading from './components/PageLoading';
+import { IUser } from './features/app/types';
 import Notification from './features/notifiication';
 import Main from './Main';
-import { IUser } from './models/User';
 import ConsumeData from './pages/ConsumeData';
 import ContractHistory from './pages/ContractHistory';
 import CreateData from './pages/CreateData';

@@ -21,9 +21,9 @@ import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { setJsonInputData } from '../features/submodels/slice';
+import { setJsonInputData } from '../features/provider/submodels/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { schemaValidator } from '../helpers/SchemaValidator';
-import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function JsonInput() {
   const theme = useTheme();

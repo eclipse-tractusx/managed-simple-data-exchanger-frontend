@@ -19,8 +19,8 @@
  ********************************************************************************/
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import ProviderService from '../../services/ProviderService';
-import { setPageLoading } from '../app/slice';
+import ProviderService from '../../../services/ProviderService';
+import { setPageLoading } from '../../app/slice';
 
 const fetchSubmodelList = createAsyncThunk('/submodel/list', async (params: unknown, { dispatch }) => {
   try {

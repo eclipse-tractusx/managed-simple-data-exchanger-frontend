@@ -27,7 +27,7 @@ import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import DownloadCSV from '../components/DownloadCSV';
-import { useGetHelpDataQuery } from '../features/submodels/apiSlice';
+import { useGetHelpDataQuery } from '../features/provider/submodels/apiSlice';
 
 interface PageData {
   name: string;

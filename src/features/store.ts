@@ -22,18 +22,18 @@ import { configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { apiSlice } from '../features/app/apiSlice';
-import appSlice from '../features/app/slice';
-import notificationSlice from '../features/notifiication/slice';
-import accessUsagePolicySlice from '../features/policies/slice';
-import submodelSlice from '../features/submodels/slice';
-import consumerSlice from './consumerSlice';
-import providerSlice from './providerSlice';
+import { apiSlice } from './app/apiSlice';
+import appSlice from './app/slice';
+import consumerSlice from './consumer/slice';
+import notificationSlice from './notifiication/slice';
+import accessUsagePolicySlice from './provider/policies/slice';
+import submodelSlice from './provider/submodels/slice';
+import uploadFileSlice from './provider/upload/slice';
 
 export const reducers = {
   appSlice: appSlice,
   accessUsagePolicySlice: accessUsagePolicySlice,
-  providerSlice: providerSlice,
+  uploadFileSlice: uploadFileSlice,
   consumerSlice: consumerSlice,
   notificationSlice: notificationSlice,
   submodelSlice: submodelSlice,
@@ -43,7 +43,7 @@ export const store = configureStore({
   reducer: {
     appSlice: appSlice,
     accessUsagePolicySlice: accessUsagePolicySlice,
-    providerSlice: providerSlice,
+    uploadFileSlice: uploadFileSlice,
     consumerSlice: consumerSlice,
     notificationSlice: notificationSlice,
     submodelSlice: submodelSlice,

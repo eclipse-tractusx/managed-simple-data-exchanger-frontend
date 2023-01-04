@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
+import { useAppDispatch } from '../features/store';
 import AppService from '../services/appService';
-import { useAppDispatch } from '../store/store';
 
 export default function DownloadCSV({ submodel }: { submodel: string }) {
   const [downloadingSample, setdownloadingSample] = useState(false);

@@ -23,8 +23,8 @@ import { DefinedError } from 'ajv/dist/core';
 import addFormats from 'ajv-formats';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { handleDialogOpen } from '../features/policies/slice';
-import { store } from '../store/store';
+import { handleDialogOpen } from '../features/provider/policies/slice';
+import { store } from '../features/store';
 
 export const schemaValidator = async (data: GridValidRowModel[]) => {
   const ajv = new Ajv2019();
