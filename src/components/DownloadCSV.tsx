@@ -6,10 +6,9 @@ import { useTranslation } from 'react-i18next';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import AppService from '../services/appService';
-import { useAppDispatch, useAppSelector } from '../store/store';
+import { useAppDispatch } from '../store/store';
 
-export default function DownloadCSV() {
-  const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
+export default function DownloadCSV({ submodel }: { submodel: string }) {
   const [downloadingSample, setdownloadingSample] = useState(false);
   const [downloadingTemplate, setdownloadingTemplate] = useState(false);
   const dispatch = useAppDispatch();
@@ -22,12 +21,12 @@ export default function DownloadCSV() {
       } else {
         setdownloadingTemplate(true);
       }
-      const { data } = await AppService.getInstance().downloadCSV(selectedSubmodel.value, type);
+      const { data } = await AppService.getInstance().downloadCSV(submodel, type);
       if (data) {
         const url = window.URL.createObjectURL(new Blob([data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', `${type}-${selectedSubmodel.value}.csv`);
+        link.setAttribute('download', `${type}-${submodel}.csv`);
         document.body.appendChild(link);
         link.click();
         dispatch(

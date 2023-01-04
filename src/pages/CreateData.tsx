@@ -45,13 +45,16 @@ export default function CreateData() {
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Permissions values={['provider_create_contract_offer']} fullPage={true}>
+        <Typography variant="h4" mb={4}>
+          {t('pages.createData')}
+        </Typography>
         <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
           <Grid item xs={3}>
             <SelectSubmodel />
           </Grid>
           {Object.keys(selectedSubmodel).length ? (
             <Grid item xs={6}>
-              <DownloadCSV />
+              <DownloadCSV submodel={selectedSubmodel.value} />
             </Grid>
           ) : null}
         </Grid>
