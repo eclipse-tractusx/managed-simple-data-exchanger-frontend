@@ -25,7 +25,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/catenax-ng/tx-dft-frontend-qa
+  IMAGE_NAME: ghcr.io/catenax-ng/tx-dft-frontend-release
 
 jobs:
   build-and-push-image:
