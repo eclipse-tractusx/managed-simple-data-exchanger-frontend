@@ -10,6 +10,7 @@
         - [Header](#header)
         - [Main navigation](#left-side-menu)
 - [Features](#features)
+    - [Home](#home)
     - [Provider](#provider)
         - [Create Data](#create-data)
             - [Upload File](#upload-file)
@@ -91,26 +92,30 @@ On the left side menu, it is possible to navigate the Simple Data Exchanger appl
 
 # Features
 
+# **Home**
+
+<img src="images/sde-home.png" height="60%" width="60%" />
+
+After successful login, user will be redirected to this page by default in the Simple Data Exchanger application. This page contains the overview of the application and use cases selection. 
+
+Submodels in the Create Data page will be filtered out based on the usecase selection by user.
+
 # **Provider**
 
 ## Create Data
 
-<img src="images/dashboard-create-data.png" height="60%" width="60%" />
-
-After successful login, user will be redirected to this page by default in the Simple Data Exchanger application.
-
-On loading of this page, list of available submodels will be fetched dynamically and we can select any submodel to generate the table or json of that selected submodel based on the schema provided by backend API. 
+In this page, list of available submodels will be fetched dynamically and we can select any submodel to generate the table or json of that selected submodel based on the schema provided by backend API. 
 
 This dynamic UI implementation allows the flexibillity to support and manage multiple submodels in single SDE application and also eliminates the need of hard coded react components for the individual submodels.
 
 There are 3 data providing options in SDE i.e. CSV Upload, Tabular Upload and JSON upload.
-The top level Select submodel dropdown will be common for all of 3 tabs i.e. Upload File, Table, JSON.
+The top level Select submodel dropdown will be common for all of 3 tabs i.e. Upload File, Table, JSON. Based on the selected submodel user can download the respective CSV sample and template.
 
 This Create Data page combines all the Data provider options like 
 
 - ### Upload File
 
-<img src="images/sde-upload-file.png" height="60%" width="60%" />
+<img src="images/sde-create-data.png" height="60%" width="60%" />
 
 You can upload CSV files of various supported Submodels.
 
