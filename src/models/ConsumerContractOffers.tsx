@@ -24,6 +24,7 @@ export interface IUsageControl {
   durationUnit?: string | Record<string, never>;
 }
 export interface IConsumerDataOffers {
+  id?: number;
   // connectorOfferid same assetId
   connectorOfferid?: string;
   assetId?: string;

@@ -23,18 +23,17 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
-import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { Button } from 'cx-portal-shared-components';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Permissions from '../components/Permissions';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { IContractAgreements } from '../models/ConsumerContractOffers';
 import ConsumerService from '../services/ConsumerService';
 import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { convertEpochToDate, epochToDate } from '../utils/utils';
+import { convertEpochToDate } from '../utils/utils';
 
 const ContractHistory: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
@@ -78,7 +77,7 @@ const ContractHistory: React.FC = () => {
         return <Chip color="default" title={params.value} label={params.value} variant="outlined" />;
     }
   };
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: 'contractAgreementId',
       flex: 1,
@@ -114,6 +113,9 @@ const ContractHistory: React.FC = () => {
       field: 'contractAgreementInfo.contractSigningDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractSigningDate'),
+      sortingOrder: ['desc', 'asc'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sortComparator: (v1, v2, param1: any, param2: any) => param1.id - param2.id,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractSigningDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractSigningDate)
@@ -123,6 +125,9 @@ const ContractHistory: React.FC = () => {
       field: 'contractAgreementInfo.contractEndDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractEndDate'),
+      sortingOrder: ['desc', 'asc'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sortComparator: (v1, v2, param1: any, param2: any) => param1.id - param2.id,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractEndDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractEndDate)
@@ -141,11 +146,6 @@ const ContractHistory: React.FC = () => {
     try {
       const response = await ConsumerService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
       const contractAgreementsList = response.data;
-      contractAgreementsList.sort((contract1: IContractAgreements, contract2: IContractAgreements) => {
-        const d1 = epochToDate(contract1.dateUpdated).valueOf();
-        const d2 = epochToDate(contract2.dateUpdated).valueOf();
-        return d2 - d1;
-      });
       dispatch(setContractAgreements(contractAgreementsList));
       dispatch(setIsContractAgreementsLoading(false));
     } catch (error) {
@@ -178,7 +178,7 @@ const ContractHistory: React.FC = () => {
               <DataGrid
                 sx={{ py: 1 }}
                 autoHeight={true}
-                getRowId={row => row.negotiationId}
+                getRowId={row => row.id}
                 rows={contractAgreements}
                 columns={columns}
                 loading={isContractAgreementsLoading}

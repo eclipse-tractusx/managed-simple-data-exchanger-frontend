@@ -33,10 +33,11 @@ class ConsumerService extends HttpService {
     return this.classInstance;
   }
 
-  public async fetchConsumerDataOffers(providerUrl: string) {
+  public async fetchConsumerDataOffers(params: unknown) {
     const res = await this.instance({
       method: 'GET',
-      url: `/query-data-offers?providerUrl=${providerUrl}`,
+      url: '/query-data-offers',
+      params,
     });
     return res;
   }

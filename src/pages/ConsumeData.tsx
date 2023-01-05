@@ -36,7 +36,14 @@ const ITEMS = [
   },
 ];
 import { Autocomplete, Box, Grid, LinearProgress, Stack } from '@mui/material';
-import { DataGrid, GridSelectionModel, GridToolbar, GridValidRowModel, GridValueGetterParams } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridSelectionModel,
+  GridToolbar,
+  GridValidRowModel,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import {
   Button,
   Dialog,
@@ -103,7 +110,7 @@ export default function ConsumeData() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: 'title',
       flex: 1,
@@ -118,6 +125,8 @@ export default function ConsumeData() {
       field: 'created',
       flex: 1,
       headerName: t('content.consumeData.columns.created'),
+      sortingOrder: ['asc', 'desc'],
+      sortComparator: (_v1: any, _v2: any, param1: any, param2: any) => param1.id - param2.id,
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.created),
     },
     {
@@ -242,7 +251,7 @@ export default function ConsumeData() {
         return true;
       }
       dispatch(setOffersLoading(true));
-      const response = await ConsumerService.getInstance().fetchConsumerDataOffers(providerUrl);
+      const response = await ConsumerService.getInstance().fetchConsumerDataOffers({ providerUrl: providerUrl });
       dispatch(setContractOffers(response.data));
       dispatch(setOffersLoading(false));
     } catch (error) {
@@ -522,7 +531,7 @@ export default function ConsumeData() {
         <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
           <DataGrid
             autoHeight={true}
-            getRowId={row => row.assetId}
+            getRowId={row => row.id}
             rows={contractOffers}
             onRowClick={onRowClick}
             columns={columns}
