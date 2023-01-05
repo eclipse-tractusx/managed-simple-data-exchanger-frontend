@@ -92,6 +92,7 @@ const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) =
     .then(authenticated => {
       if (authenticated) {
         onAuthenticatedCallback(getLoggedUser());
+        setInterval(update, 50000);
       } else {
         doLogin();
       }

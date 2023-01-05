@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import { apiSlice } from '../../app/apiSlice';
 import { setPageLoading } from '../../app/slice';
 import { setSnackbarMessage } from '../../notifiication/slice';
@@ -5,18 +7,33 @@ import { setSnackbarMessage } from '../../notifiication/slice';
 export const helpApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getHelpData: builder.query<any[], void>({
+    getHelpPageData: builder.query<any, void>({
       query: () => '/submodels/schema-details',
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        // `onStart` side-effect
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      transformResponse: (response: any[]) => {
+        const pageData = response.map(submodel => {
+          return {
+            name: submodel.title,
+            id: submodel.id,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            rows: Object.entries(submodel.items.properties).map(([key, value]: any, index) => ({
+              id: index,
+              name: key,
+              mandatory: _.indexOf(submodel.items.required, key) > -1 ? 'true' : 'false',
+              order: index + 1,
+              description: value.title,
+            })),
+          };
+        });
+        return pageData;
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
         dispatch(setPageLoading(true));
         try {
           await queryFulfilled;
-          // `onSuccess` side-effect
         } catch (err) {
-          // `onError` side-effect
           dispatch(setSnackbarMessage({ type: 'error', message: 'Something went wrong!' }));
-        } finally { 
+        } finally {
           dispatch(setPageLoading(false));
         }
       },
@@ -24,4 +41,4 @@ export const helpApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetHelpDataQuery } = helpApiSlice;
+export const {  useGetHelpPageDataQuery } = helpApiSlice;

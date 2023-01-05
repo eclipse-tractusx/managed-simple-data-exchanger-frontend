@@ -23,22 +23,11 @@ import InfoIcon from '@mui/icons-material/Info';
 import { Box, Card, CardContent, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import DownloadCSV from '../components/DownloadCSV';
-import { useGetHelpDataQuery } from '../features/provider/submodels/apiSlice';
-
-interface PageData {
-  name: string;
-  id: string;
-  rows: {
-    name: string;
-    mandatory: string;
-    order: number;
-    description: string;
-  }[];
-}
+import { useGetHelpPageDataQuery } from '../features/provider/submodels/apiSlice';
+import { HelpPageData } from '../features/provider/submodels/types';
 
 const columns: GridColDef[] = [
   { field: 'name', headerName: 'Name', flex: 1, sortable: false, align: 'left', disableColumnMenu: true },
@@ -78,32 +67,18 @@ const columns: GridColDef[] = [
   },
 ];
 
-const Help = () => {
+export default function Help() {
   const { t } = useTranslation();
-  const { isSuccess, data } = useGetHelpDataQuery();
+  const { isSuccess, data } = useGetHelpPageDataQuery();
 
   if (isSuccess) {
-    const pageData = data.map(submodel => {
-      return {
-        name: submodel.title,
-        id: submodel.id,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        rows: Object.entries(submodel.items.properties).map(([key, value]: any, index) => ({
-          id: index,
-          name: key,
-          mandatory: _.indexOf(submodel.items.required, key) > -1 ? 'true' : 'false',
-          order: index + 1,
-          description: value.title,
-        })),
-      };
-    });
     return (
       <Box sx={{ flex: 1, p: 4 }}>
         <Typography variant="h4" mb={4}>
           {t('pages.help')}
         </Typography>
-        {pageData.map((table: PageData) => (
-          <Grid key={table.name} container spacing={2} display={'flex'} alignItems={'center'}>
+        {data.map((table: HelpPageData) => (
+          <Grid key={table.id} container spacing={2} display={'flex'} alignItems={'center'}>
             <Grid item xs={8} mb={4}>
               <Table
                 title={table.name}
@@ -140,6 +115,4 @@ const Help = () => {
       </Box>
     );
   } else return null;
-};
-
-export default Help;
+}
