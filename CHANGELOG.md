@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - i18n with english and german.
 - Download csv sample and template.
 - Search and select BPN by company name in access policy section.
+- Home page with usecase selection and app overview.
 
 ## [1.8.0] - 2022-12-012
 
