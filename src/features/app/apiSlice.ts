@@ -6,5 +6,5 @@ export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery(apiBaseQuery()),
   endpoints: () => ({}),
-  tagTypes:['UploadHistory'],
+  tagTypes: ['UploadHistory'],
 });

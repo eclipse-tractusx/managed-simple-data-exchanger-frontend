@@ -50,7 +50,7 @@ export default function Home() {
     if (checked) {
       dispatch(setSelectedUseCases([...selectedUseCases, value]));
     } else {
-      dispatch(setSelectedUseCases(selectedUseCases.filter(e => e !== value)));
+      dispatch(setSelectedUseCases(selectedUseCases.filter((e: string) => e !== value)));
     }
   };
 

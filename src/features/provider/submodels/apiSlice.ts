@@ -41,4 +41,4 @@ export const helpApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const {  useGetHelpPageDataQuery } = helpApiSlice;
+export const { useGetHelpPageDataQuery } = helpApiSlice;
