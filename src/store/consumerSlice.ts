@@ -81,10 +81,14 @@ export const consumerSlice = createSlice({
     },
     setContractOffers: (state, action: PayloadAction<IConsumerDataOffers[]>) => {
       const modifiedData = action.payload
-        .sort((contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) => new Date(contract2.created).getDate() - new Date(contract1.created).getDate())
+        .sort(
+          (contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) =>
+            new Date(contract2.created).getDate() - new Date(contract1.created).getDate(),
+        )
         .map((item: IConsumerDataOffers, index: number) => {
           return { ...item, ...{ id: index } };
-        }).sort((contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) => contract2.id - contract1.id);
+        })
+        .sort((contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) => contract2.id - contract1.id);
       state.contractOffers = modifiedData;
     },
     setSelectedOffersList: (state, action: PayloadAction<IConsumerDataOffers[]>) => {
@@ -122,8 +126,9 @@ export const consumerSlice = createSlice({
     },
     setContractAgreements: (state, action: PayloadAction<IContractAgreements[]>) => {
       const modifiedData = action.payload
-        .sort((contract1: IContractAgreements, contract2: IContractAgreements) => 
-          epochToDate(contract2.dateUpdated).valueOf() - epochToDate(contract1.dateUpdated).valueOf(),
+        .sort(
+          (contract1: IContractAgreements, contract2: IContractAgreements) =>
+            epochToDate(contract2.dateUpdated).valueOf() - epochToDate(contract1.dateUpdated).valueOf(),
         )
         .map((item: IContractAgreements, index: number) => {
           return { ...item, ...{ id: index } };

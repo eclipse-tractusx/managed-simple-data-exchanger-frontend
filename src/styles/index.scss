@@ -1,5 +1,4 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
@@ -19,32 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import './styles/index.scss';
+@import './fonts';
+@import './colors';
 
-import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+body {
+  margin: 0;
+  font-family: 'LibreFranklin', 'Libre Franklin', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+  color: color(text-primary) !important;
+  font-weight: 300 !important;
+}
 
-import App from './App';
-import I18nService from './services/i18nService';
-import UserService from './services/UserService';
-import { store } from './store/store';
-import { clearConsoles } from './utils/utils';
-
-clearConsoles();
-I18nService.init();
-
-UserService.initKeycloak(user => {
-  ReactDOM.render(
-    <React.StrictMode>
-      <SharedCssBaseline />
-      <Provider store={store}>
-        <SharedThemeProvider>
-          <App loggedUser={user} />
-        </SharedThemeProvider>
-      </Provider>
-    </React.StrictMode>,
-    document.getElementById('root'),
-  );
-});
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import './Home.scss';
+import '../styles/home.scss';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Avatar, Box, FormControl, Grid, Stack } from '@mui/material';

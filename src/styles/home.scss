@@ -1,5 +1,4 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
@@ -19,32 +18,51 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import './styles/index.scss';
+.usecase-tile-content {
+  background-color: #f3f3f3;
+  display: flex;
+  width: 250px;
+  height: 180px;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  transition: all 250ms ease-out;
+  cursor: pointer;
 
-import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+  &:hover {
+    box-shadow: -1px 10px 30px 0px #aaa;
+  }
+}
+.usecase-tile-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.usecase-tile {
+  & input[type='checkbox'] {
+    display: none;
+  }
+  & input[type='checkbox']:checked + .usecase-tile-content {
+    border: 3px solid #0f71cb;
+    & h6 {
+      color: #0f71cb;
+    }
+  }
+}
+.video-wrapper {
+  display: inline-block;
+  position: relative;
 
-import App from './App';
-import I18nService from './services/i18nService';
-import UserService from './services/UserService';
-import { store } from './store/store';
-import { clearConsoles } from './utils/utils';
-
-clearConsoles();
-I18nService.init();
-
-UserService.initKeycloak(user => {
-  ReactDOM.render(
-    <React.StrictMode>
-      <SharedCssBaseline />
-      <Provider store={store}>
-        <SharedThemeProvider>
-          <App loggedUser={user} />
-        </SharedThemeProvider>
-      </Provider>
-    </React.StrictMode>,
-    document.getElementById('root'),
-  );
-});
+  & img {
+    max-width: 100%;
+  }
+  & .playIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+  }
+}
