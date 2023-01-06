@@ -79,6 +79,8 @@ SDE navigation is based on a header and a left-side menu.
 
 On the left side menu, it is possible to navigate the Simple Data Exchanger application by choosing each the following options / features:
 
+- Home
+
 **Provider**
 - Create Data
 - Upload History
