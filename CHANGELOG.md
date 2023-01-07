@@ -5,8 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
+
 - i18n with english and german.
 - Download csv sample and template.
+- Download uploaded submodel data from upload history.
 - Search and select BPN by company name in access policy section.
 - Home page with usecase selection and app overview.
 
