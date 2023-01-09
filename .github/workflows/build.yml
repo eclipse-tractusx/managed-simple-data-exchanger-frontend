@@ -13,12 +13,15 @@
 # limitations under the License.
 
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: build-dev
+name: build
 
 on:
   push:
     branches:
-      - 'dev_env'
+      - 'main'
+    tags:
+      - 'v*.*.*'
+      - 'v*.*.*-*'
 
 env:
   REGISTRY: ghcr.io
@@ -48,13 +51,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract Metadata (tags, labels) for Docker
+      - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/catenax-ng/product-dft-frontend-dev
-          #tags: |
-            #type=semver,pattern={{version}},value=v1.6.0
+          images: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}
+            type=semver,pattern={{major}}.{{minor}}
           flavor: |
               latest=true
 
