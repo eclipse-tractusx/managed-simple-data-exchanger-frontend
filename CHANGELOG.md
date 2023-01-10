@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - CX components and styleguide implementation.
 - Uploaded submodel data update/delete.
 - Some pages and sections will be visible based on the permissions user have.
+- Components will be rendered based on the permissions user have.
 
 ### Fixed
 

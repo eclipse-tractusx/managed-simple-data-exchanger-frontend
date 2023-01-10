@@ -170,6 +170,7 @@ npm/npmjs/-/cssom/0.4.4, MIT, approved, clearlydefined
 npm/npmjs/-/cssstyle/2.3.0, MIT, approved, clearlydefined
 npm/npmjs/-/csstype/3.1.1, MIT, approved, clearlydefined
 npm/npmjs/-/cx-portal-shared-components/0.9.0, Apache-2.0, restricted, clearlydefined
+npm/npmjs/-/cx-portal-shared-components/0.7.0, Apache-2.0, approved, clearlydefined
 npm/npmjs/-/damerau-levenshtein/1.0.8, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/-/data-urls/2.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/date-fns/2.29.3, MIT, approved, clearlydefined
@@ -547,6 +548,7 @@ npm/npmjs/-/mini-css-extract-plugin/2.6.1, MIT, approved, clearlydefined
 npm/npmjs/-/minimalistic-assert/1.0.1, ISC, approved, clearlydefined
 npm/npmjs/-/minimatch/3.1.2, ISC, approved, clearlydefined
 npm/npmjs/-/minimatch/5.1.0, ISC, approved, #5952
+npm/npmjs/-/minimatch/5.1.0, ISC, approved, clearlydefined
 npm/npmjs/-/minimist/1.2.7, MIT, approved, #5886
 npm/npmjs/-/mkdirp/0.5.6, MIT, approved, clearlydefined
 npm/npmjs/-/ms/2.0.0, MIT, approved, clearlydefined
@@ -1228,6 +1230,7 @@ npm/npmjs/@types/estree/0.0.39, MIT, approved, clearlydefined
 npm/npmjs/@types/estree/0.0.51, MIT, approved, clearlydefined
 npm/npmjs/@types/estree/1.0.0, MIT, approved, clearlydefined
 npm/npmjs/@types/express-serve-static-core/4.17.31, MIT, approved, #6020
+npm/npmjs/@types/express-serve-static-core/4.17.31, MIT, approved, clearlydefined
 npm/npmjs/@types/express/4.17.14, MIT, approved, #5760
 npm/npmjs/@types/graceful-fs/4.1.5, MIT, approved, clearlydefined
 npm/npmjs/@types/history/4.7.11, MIT, approved, clearlydefined
