@@ -25,7 +25,6 @@ import { Button, Typography } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Permissions from '../components/Permissions';
 import StickyHeadTable from '../components/StickyHeadTable';
 import { useGetHistoryQuery } from '../features/provider/history/apiSlice';
 
@@ -40,31 +39,29 @@ export default function UploadHistory() {
   return (
     <>
       {isSuccess ? (
-        <Permissions values={['provider_view_history']} fullPage={true}>
-          <Box sx={{ flex: 1, p: 4 }}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={6}>
-                <Typography variant="h4">{t('pages.uploadHistory')}</Typography>
-              </Grid>
-              <Grid item xs={6} textAlign="right">
-                <Button size="small" variant="contained" onClick={refetch}>
-                  <Refresh />
-                  &nbsp; {t('button.refresh')}
-                </Button>
-              </Grid>
+        <Box sx={{ flex: 1, p: 4 }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={6}>
+              <Typography variant="h4">{t('pages.uploadHistory')}</Typography>
             </Grid>
-            <Box sx={{ mt: 4 }}>
-              <StickyHeadTable
-                rows={data.items}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                totalElements={data.totalItems}
-                setPage={setPage}
-                setRowsPerPage={setRowsPerPage}
-              />
-            </Box>
+            <Grid item xs={6} textAlign="right">
+              <Button size="small" variant="contained" onClick={refetch}>
+                <Refresh />
+                &nbsp; {t('button.refresh')}
+              </Button>
+            </Grid>
+          </Grid>
+          <Box sx={{ mt: 4 }}>
+            <StickyHeadTable
+              rows={data.items}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              totalElements={data.totalItems}
+              setPage={setPage}
+              setRowsPerPage={setRowsPerPage}
+            />
           </Box>
-        </Permissions>
+        </Box>
       ) : null}
     </>
   );

@@ -1,7 +1,7 @@
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
-import { icons } from '../models/Sidebar';
+import { icons } from '../helpers/SidebarHelper';
 
 export interface IStepLink {
   text: string;

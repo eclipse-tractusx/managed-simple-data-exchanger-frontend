@@ -27,7 +27,6 @@ import { useTranslation } from 'react-i18next';
 import DataTable from '../components/DataTable';
 import DownloadCSV from '../components/DownloadCSV';
 import JsonInput from '../components/JsonInput';
-import Permissions from '../components/Permissions';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
 import UploadFile from '../components/UploadFile';
@@ -44,49 +43,47 @@ export default function CreateData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Permissions values={['provider_create_contract_offer']} fullPage={true}>
-        <Typography variant="h4" mb={4}>
-          {t('pages.createData')}
-        </Typography>
-        <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
-          <Grid item xs={3}>
-            <SelectSubmodel />
-          </Grid>
-          {Object.keys(selectedSubmodel).length ? (
-            <Grid item xs={6}>
-              <DownloadCSV submodel={selectedSubmodel.value} />
-            </Grid>
-          ) : null}
+      <Typography variant="h4" mb={4}>
+        {t('pages.createData')}
+      </Typography>
+      <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
+        <Grid item xs={3}>
+          <SelectSubmodel />
         </Grid>
         {Object.keys(selectedSubmodel).length ? (
-          <Grid container>
-            <Grid item xs={12}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
-                  <Tab label={t('content.provider.uploadFile')} />
-                  <Tab label={t('content.provider.table')} />
-                  <Tab label={t('content.provider.json')} />
-                </Tabs>
-              </Box>
-              <Box>
-                <TabPanel value={activeTab} index={0}>
-                  <UploadFile />
-                </TabPanel>
-                <TabPanel value={activeTab} index={1}>
-                  <DataTable />
-                </TabPanel>
-                <TabPanel value={activeTab} index={2}>
-                  <JsonInput />
-                </TabPanel>
-              </Box>
-            </Grid>
+          <Grid item xs={6}>
+            <DownloadCSV submodel={selectedSubmodel.value} />
           </Grid>
-        ) : (
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
-            <Typography>Select a submodel</Typography>
-          </Box>
-        )}
-      </Permissions>
+        ) : null}
+      </Grid>
+      {Object.keys(selectedSubmodel).length ? (
+        <Grid container>
+          <Grid item xs={12}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
+                <Tab label={t('content.provider.uploadFile')} />
+                <Tab label={t('content.provider.table')} />
+                <Tab label={t('content.provider.json')} />
+              </Tabs>
+            </Box>
+            <Box>
+              <TabPanel value={activeTab} index={0}>
+                <UploadFile />
+              </TabPanel>
+              <TabPanel value={activeTab} index={1}>
+                <DataTable />
+              </TabPanel>
+              <TabPanel value={activeTab} index={2}>
+                <JsonInput />
+              </TabPanel>
+            </Box>
+          </Grid>
+        </Grid>
+      ) : (
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
+          <Typography>Select a submodel</Typography>
+        </Box>
+      )}
       <PoliciesDialog />
     </Box>
   );

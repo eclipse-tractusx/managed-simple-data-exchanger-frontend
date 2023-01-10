@@ -28,7 +28,6 @@ import { Button } from 'cx-portal-shared-components';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Permissions from '../components/Permissions';
 import { setContractAgreements, setIsContractAgreementsLoading } from '../features/consumer/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
@@ -162,60 +161,58 @@ const ContractHistory: React.FC = () => {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Permissions values={['consumer_view_contract_agreement']} fullPage={true}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6} my={4}>
-            <Typography variant="h4">{t('content.contractHistory.title')}</Typography>
-          </Grid>
-          <Grid item xs={6} my={4} textAlign={'right'}>
-            <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
-              <Refresh />
-              &nbsp; {t('button.refresh')}
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
-              <DataGrid
-                sx={{ py: 1 }}
-                autoHeight={true}
-                getRowId={row => row.id}
-                rows={contractAgreements}
-                columns={columns}
-                loading={isContractAgreementsLoading}
-                pagination
-                pageSize={pageSize}
-                onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-                rowsPerPageOptions={[10, 25, 50, 100]}
-                components={{
-                  Toolbar: GridToolbar,
-                  LoadingOverlay: LinearProgress,
-                  NoRowsOverlay: () => (
-                    <Stack height="100%" alignItems="center" justifyContent="center">
-                      {t('content.common.noData')}
-                    </Stack>
-                  ),
-                  NoResultsOverlay: () => (
-                    <Stack height="100%" alignItems="center" justifyContent="center">
-                      {t('content.common.noResults')}
-                    </Stack>
-                  ),
-                }}
-                componentsProps={{
-                  toolbar: {
-                    showQuickFilter: true,
-                    quickFilterProps: { debounceMs: 500 },
-                    printOptions: { disableToolbarButton: true },
-                  },
-                }}
-                disableColumnMenu
-                disableColumnSelector
-                disableDensitySelector
-                disableSelectionOnClick
-              />
-            </Box>
-          </Grid>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={6} my={4}>
+          <Typography variant="h4">{t('content.contractHistory.title')}</Typography>
         </Grid>
-      </Permissions>
+        <Grid item xs={6} my={4} textAlign={'right'}>
+          <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
+            <Refresh />
+            &nbsp; {t('button.refresh')}
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+            <DataGrid
+              sx={{ py: 1 }}
+              autoHeight={true}
+              getRowId={row => row.id}
+              rows={contractAgreements}
+              columns={columns}
+              loading={isContractAgreementsLoading}
+              pagination
+              pageSize={pageSize}
+              onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+              rowsPerPageOptions={[10, 25, 50, 100]}
+              components={{
+                Toolbar: GridToolbar,
+                LoadingOverlay: LinearProgress,
+                NoRowsOverlay: () => (
+                  <Stack height="100%" alignItems="center" justifyContent="center">
+                    {t('content.common.noData')}
+                  </Stack>
+                ),
+                NoResultsOverlay: () => (
+                  <Stack height="100%" alignItems="center" justifyContent="center">
+                    {t('content.common.noResults')}
+                  </Stack>
+                ),
+              }}
+              componentsProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                  printOptions: { disableToolbarButton: true },
+                },
+              }}
+              disableColumnMenu
+              disableColumnSelector
+              disableDensitySelector
+              disableSelectionOnClick
+            />
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

@@ -34,7 +34,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../features/store';
-import { icons, IntMenuItem, MenuItems } from '../models/Sidebar';
+import { icons, IntMenuItem, MenuItems } from '../helpers/SidebarHelper';
 import Permissions from './Permissions';
 
 const MenuItem = ({ item }: { item: IntMenuItem }) => {
