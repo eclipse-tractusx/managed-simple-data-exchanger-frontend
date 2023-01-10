@@ -6,16 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
-### Added
-
-- i18n setup with english.
-- Download csv sample and template.
-- Search and select BPN by company name in access policy section.
-- Home page with usecase selection and app overview.
-
 ### Fixed
 
 - Bug fixes and enhancements
+
+## [1.8.1]
+
+- Home page with usecase selection and app overview.
+- Search and select BPN by company name in access policy section.
+- Download csv sample and template in create data page.
+- Download uploaded submodel data from upload history.
+- i18n setup with english.
 
 ## [1.8.0] - 2022-12-12
 
