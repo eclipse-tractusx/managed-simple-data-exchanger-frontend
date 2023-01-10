@@ -1,0 +1,189 @@
+{
+  "title": "Catena-X SDE",
+  "logo": "Simple Data Exchanger",
+  "pages": {
+    "home": "Home",
+    "provider": "Provider",
+    "createData": "Create Data",
+    "uploadHistory": "Upload History",
+    "help": "Help",
+    "consumer": "Consumer",
+    "consumeData": "Consume Data",
+    "contractHistory": "Contract History"
+  },
+  "content": {
+    "home": {
+      "header": "Home",
+      "selectUsecasesHeader": "Select your use cases",
+      "selectUsecasesSubheader": "You may select one or more use cases that interest you",
+      "exchangeDataHeader": "Exchange your data",
+      "provideDataTab": "Provide data",
+      "consumeDataTab": "Consume data",
+      "provideDataStep": {
+        "downloadTemplate": "Download relevant file template",
+        "fillTemplate": "Fill template with your data",
+        "createDataText": "Create data and set policies",
+        "manageUploadContract": "Manage your uploads or contact agreements"
+      },
+      "consumeDataSteps": {
+        "discoverCatalog": "Discover catalog of business partner",
+        "subscribeDataOffer": "Subscribe to data contract offer",
+        "manageContracts": "View & manage contracts"
+      },
+      "sdeDescription": "Simple Data Exchanger is your easy way to publish data in the Catena-X network. It makes your automotive data available to other participants respecting your individual access and usage rules. It allows you to discover data of other participants and to establish data contracts, so that you can access their data within the use cases that interest you.",
+      "learnSde": "Learn how it works"
+    },
+    "provider": {
+      "selectSubmodel": "Select Submodel",
+      "uploadFile": "Upload File",
+      "table": "Table",
+      "json": "JSON",
+      "uploadInstruction": "Upload your file by dropping it here.",
+      "selectedFile": "Selected File",
+      "dropFile": "Drop it like it's hot :)",
+      "dropInstruction": "Upload your file by dropping it here.",
+      "addRow": "Add row",
+      "deleteRow": "Delete row(s)"
+    },
+    "policies": {
+      "title": "Policies",
+      "configure": "Next Step - Configure Policies",
+      "accessPolicy": "Access Policy",
+      "restricted": "Restricted",
+      "unrestricted": "Unrestricted",
+      "note": "Note: Your own organization will always be allowed to access the data",
+      "unAccess": "Unrestricted Access!",
+      "warningText": "Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you sure?",
+      "usagePolicy": "Usage Policy",
+      "duration": "Duration restriction",
+      "durationNote": "Usage allowed from contract start",
+      "selectDuration": "Select Duration",
+      "durationValues": {
+        "hour": "Hour",
+        "day": "Day",
+        "month": "Month",
+        "year": "Year"
+      },
+      "purpose": "Purpose restriction",
+      "purposeNote": "Usage allowed only for the purpose",
+      "role": "Role restriction",
+      "roleNote": "Usage allowed only by individuals with the following roles/characteristics",
+      "custom": "Custom restriction",
+      "customNote": "Usage must comply to the following additional conditions"
+    },
+    "uploadHistory": {
+      "columns": {
+        "processId": "Process Id",
+        "csvType": "CSV Type",
+        "numberOfSucceededItems": "Number of Created Items",
+        "numberOfUpdatedItems": "Number of Updated Items",
+        "numberOfDeletedItems": "Number of Deleted Items",
+        "numberOfFailedItems": "Number of Failed Items",
+        "status": "Status",
+        "startDate": "Start Date",
+        "duration": "Duration",
+        "actions": ""
+      }
+    },
+    "help": {
+      "rules1": "The file must be a file of type CSV (.csv extension).",
+      "rules2": "Data fields must be separated by a semicolon (;).",
+      "rules3": "All data fields must be present even if empty."
+    },
+    "consumeData": {
+      "selectType": "Select search type",
+      "selectCompany": "Select a company name",
+      "selectConnectors": "Select connectors",
+      "enterBPN": "Enter Business Partner Number",
+      "enterURL": "Enter connector URL",
+      "selectTypeValues": {
+        "company": "Company Name",
+        "bpn": "Business Partner Number",
+        "url": "Connector URL"
+      },
+      "columns": {
+        "title": "Title",
+        "assetId": "Asset ID",
+        "created": "Created On",
+        "description": "Description"
+      }
+    },
+    "contractHistory": {
+      "title": "Contract Agreements History",
+      "columns": {
+        "contractAgreementId": "Contract Agreement ID",
+        "assetId": "Asset ID",
+        "counterPartyAddress": "Counter Party Address On",
+        "title": "Title",
+        "organizationName": "Organization",
+        "contractSigningDate": "Signing Date",
+        "contractEndDate": "End Date",
+        "state": "Status"
+      }
+    },
+    "common": {
+      "loading": "Loading...",
+      "downloading": "Downloading...",
+      "or": "or",
+      "noData": "No data available!",
+      "noResults": "No results found!",
+      "sampleCsv": "Sample CSV",
+      "sampleTemplate": "Template CSV",
+      "copyHeaders": "Copy headers to clipboard",
+      "rules": "Rules",
+      "enterValue": "Enter a value",
+      "agree": "I agree"
+    }
+  },
+  "dialog": {
+    "samePolicies": {
+      "title": "Usage policies are not identical!",
+      "content": " The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy."
+    },
+    "offerDetails": {
+      "title": "Offer Details",
+      "type": "Type",
+      "value": "Value",
+      "titleText": "Title",
+      "created": "Created on",
+      "dataFormat": "Data format",
+      "description": "Description",
+      "publisher": "Publisher",
+      "publisherUrl": "Publisher URL",
+      "accessType": "Access Type",
+      "bpnNumbers": "BPN Numbers",
+      "confirmTermsTitle": "{{ count }} contract offers will be affected by this operation.",
+      "cofirmTermsSubtitle": "You are about to enter a legally binding contract agreement for this Contract Offer with provider",
+      "confirmHeading": "Please confirm that:",
+      "point1": "You are entitled to represent your organization.",
+      "point2": "You have read and understood the access/usage policy.",
+      "point3": "Your organization will be responsible to adhere by the rules stated in the access/usage policy."
+    }
+  },
+  "button": {
+    "chooseFile": "CHOOSE A FILE",
+    "refresh": "Refresh",
+    "search": "Search",
+    "add": "Add",
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirm": "Confirm",
+    "submit": "Submit",
+    "okay": "Okay",
+    "subscribeSelected": "Subscribe to selected",
+    "subscribe": "Subscribe"
+  },
+  "alerts": {
+    "invalidFile": "File not permitted!",
+    "uploadSuccess": "Upload completed!",
+    "uploadWarning": "Upload completed with warnings!",
+    "uploadError": "Upload failed!",
+    "subscriptionSuccess": "Contract offers subscription successfully initiated!",
+    "subscriptionError": "Contract offers subscription failed!",
+    "noConnector": "Connector not available!",
+    "submodelDeleteSuccess": "Submodel deleted successfully!",
+    "submodelDeleteError": "Failed to delete Submodel!",
+    "downloadSuccess": "File downloaded successfully!",
+    "downloadError": "File not downloaded!"
+  }
+}

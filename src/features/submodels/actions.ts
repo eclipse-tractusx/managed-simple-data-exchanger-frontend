@@ -22,9 +22,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import ProviderService from '../../services/ProviderService';
 import { setPageLoading } from '../app/slice';
 
-const fetchSubmodelList = createAsyncThunk('/submodel/list', async () => {
+const fetchSubmodelList = createAsyncThunk('/submodel/list', async (params: unknown) => {
   try {
-    const res = await ProviderService.getInstance().getSubmodelList();
+    const res = await ProviderService.getInstance().getSubmodelList(params);
     return res;
   } catch (error) {
     console.log('api call error:', error);

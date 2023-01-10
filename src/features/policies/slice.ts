@@ -70,9 +70,6 @@ export const accessUsagePolicySlice = createSlice({
   name: 'accessUsagePolicySlice',
   initialState,
   reducers: {
-    setUploadType: (state, action: PayloadAction<string>) => {
-      state.uploadUrl = action.payload;
-    },
     setAccessType: (state, action: PayloadAction<string>) => {
       state.accessType = action.payload;
     },
@@ -81,7 +78,7 @@ export const accessUsagePolicySlice = createSlice({
     },
     addBpn: state => {
       if (state.inputBpn) {
-        state.bpnList = [...state.bpnList, state.inputBpn];
+        state.bpnList = [...new Set([...state.bpnList, state.inputBpn])];
         state.inputBpn = '';
       }
     },

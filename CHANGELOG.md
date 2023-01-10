@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+## [1.8.1] - 2022-12-26
+
+- Home page with usecase selection and app overview.
+- Search and select BPN by company name in access policy section.
+- Download csv sample and template in create data page.
+- Download uploaded submodel data from upload history.
+- i18n setup with english.
+
 ## [1.8.0] - 2022-12-012
 
 ### Added
@@ -14,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - New submodels added: BoMAsPlanned and PartSiteInformationAsPlanned.
 - CX components and styleguide implementation.
 - Uploaded submodel data update/delete.
+- Some pages and sections will be visible based on the permissions user have.
 - Components will be rendered based on the permissions user have.
 
 ### Fixed

@@ -20,6 +20,7 @@
 
 import { Box } from '@mui/material';
 import { Typography } from 'cx-portal-shared-components';
+import { useTranslation } from 'react-i18next';
 
 import {
   setCustom,
@@ -39,16 +40,17 @@ export default function UsagePolicy() {
     state => state.accessUsagePolicySlice,
   );
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   return (
     <>
-      <Typography>USAGE POLICY</Typography>
+      <Typography>{t('content.policies.usagePolicy')}</Typography>
       <Box sx={{ mt: 2 }}>
         <UsagePolicyItem
           restrictionType={duration}
           setRestrictionType={e => dispatch(setDuration(e))}
-          constraintType="Duration"
-          displayText="Usage allowed from contract start  "
+          constraintType={t('content.policies.duration')}
+          displayText={t('content.policies.durationNote')}
           inputFreeText={durationValue}
           setInputFreeText={e => dispatch(setDurationValue(e))}
         />
@@ -57,8 +59,8 @@ export default function UsagePolicy() {
         <UsagePolicyItem
           restrictionType={purpose}
           setRestrictionType={e => dispatch(setPurpose(e))}
-          constraintType="Purpose"
-          displayText="Usage allowed only for the purpose "
+          constraintType={t('content.policies.purpose')}
+          displayText={t('content.policies.purposeNote')}
           inputFreeText={purposeValue}
           setInputFreeText={e => dispatch(setPurposeValue(e))}
         />
@@ -67,8 +69,8 @@ export default function UsagePolicy() {
         <UsagePolicyItem
           restrictionType={role}
           setRestrictionType={e => dispatch(setRole(e))}
-          constraintType="Role"
-          displayText="Usage allowed only by individuals with the following roles/characteristics "
+          constraintType={t('content.policies.role')}
+          displayText={t('content.policies.roleNote')}
           inputFreeText={roleValue}
           setInputFreeText={e => dispatch(setRoleValue(e))}
         />
@@ -77,8 +79,8 @@ export default function UsagePolicy() {
         <UsagePolicyItem
           restrictionType={custom}
           setRestrictionType={e => dispatch(setCustom(e))}
-          constraintType="Custom"
-          displayText="Usage must comply to the following additional conditions "
+          constraintType={t('content.policies.custom')}
+          displayText={t('content.policies.customNote')}
           inputFreeText={customValue}
           setInputFreeText={e => dispatch(setCustomValue(e))}
         />
