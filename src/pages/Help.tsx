@@ -78,7 +78,7 @@ export default function Help() {
           {t('pages.help')}
         </Typography>
         {data.map((table: HelpPageData) => (
-          <Grid key={table.id} container spacing={2} display={'flex'} alignItems={'center'}>
+          <Grid key={table.id} container spacing={4} display={'flex'} alignItems={'center'}>
             <Grid item xs={8} mb={4}>
               <Table
                 title={table.name}
@@ -97,7 +97,10 @@ export default function Help() {
                 }}
               />
             </Grid>
-            <Grid item xs={4} display={'flex'} justifyContent={'center'}>
+            <Grid item xs={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+              <Typography variant="body1" mb={4}>
+                {table.description}
+              </Typography>
               <DownloadCSV submodel={table.id} />
             </Grid>
           </Grid>

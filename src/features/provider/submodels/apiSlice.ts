@@ -14,6 +14,7 @@ export const helpApiSlice = apiSlice.injectEndpoints({
         const pageData = response.map(submodel => {
           return {
             name: submodel.title,
+            description: submodel.description,
             id: submodel.id,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             rows: Object.entries(submodel.items.properties).map(([key, value]: any, index) => ({
@@ -21,7 +22,7 @@ export const helpApiSlice = apiSlice.injectEndpoints({
               name: key,
               mandatory: _.indexOf(submodel.items.required, key) > -1 ? 'true' : 'false',
               order: index + 1,
-              description: value.title,
+              description: value.description,
             })),
           };
         });

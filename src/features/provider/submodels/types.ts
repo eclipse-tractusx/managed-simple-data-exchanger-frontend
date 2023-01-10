@@ -55,6 +55,7 @@ export interface DynamicTableColumn {
 
 export interface HelpPageData {
   name: string;
+  description: string;
   id: string;
   rows: {
     name: string;
