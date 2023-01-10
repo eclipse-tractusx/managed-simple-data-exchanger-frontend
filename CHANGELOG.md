@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [1.8.1]
 
+### Added
+
 - Home page with usecase selection and app overview.
 - Search and select BPN by company name in access policy section.
 - Download csv sample and template in create data page.

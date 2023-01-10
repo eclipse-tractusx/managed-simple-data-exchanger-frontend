@@ -27,7 +27,7 @@ import { ISubmodelList } from '../features/provider/submodels/types';
 import { useAppDispatch, useAppSelector } from '../features/store';
 
 const SelectSubmodel = () => {
-  const { submodelList, selectedSubmodel } = useAppSelector(state => state.submodelSlice);
+  const { submodelList } = useAppSelector(state => state.submodelSlice);
   const { selectedUseCases } = useAppSelector(state => state.appSlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -51,7 +51,6 @@ const SelectSubmodel = () => {
       label={t('content.provider.selectSubmodel')}
       fullWidth
       size="small"
-      defaultValue={selectedSubmodel}
       onChangeItem={e => handleTypeChange(e)}
       items={submodelList}
       placeholder={t('content.provider.selectSubmodel')}
