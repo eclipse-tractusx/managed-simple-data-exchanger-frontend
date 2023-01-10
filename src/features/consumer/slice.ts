@@ -20,38 +20,8 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IConsumerDataOffers, IContractAgreements } from '../models/ConsumerContractOffers';
-import { epochToDate } from '../utils/utils';
-
-export interface IntOption {
-  _id: number | string;
-  bpn: string;
-  value: string;
-}
-
-export interface IntConnectorItem {
-  id: number;
-  value: string;
-  title: string;
-}
-
-interface IConsumerSlice {
-  offersLoading: boolean;
-  contractOffers: IConsumerDataOffers[];
-  selectedOffersList: IConsumerDataOffers[];
-  selectedOffer: IConsumerDataOffers;
-  isMultipleContractSubscription: boolean;
-  searchFilterByType: string;
-  filterProviderUrl: string;
-  filterCompanyOptions: IntOption[];
-  filterCompanyOptionsLoading: boolean;
-  filterSelectedCompanyOption: IntOption | null;
-  filterSelectedBPN: string | null;
-  filterConnectors: IntConnectorItem[];
-  filterSelectedConnector: string;
-  contractAgreements: IContractAgreements[];
-  isContractAgreementsLoading: boolean;
-}
+import { epochToDate } from '../../utils/utils';
+import { IConsumerDataOffers, IConsumerSlice, IContractAgreements, IntConnectorItem, IntOption } from './types';
 
 const initialState: IConsumerSlice = {
   offersLoading: false,

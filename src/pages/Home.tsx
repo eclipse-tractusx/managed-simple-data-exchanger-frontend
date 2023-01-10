@@ -30,8 +30,8 @@ import { DataExchangeStepper } from '../components/DataExchangeStepper';
 import { fetchUseCases } from '../features/app/actions';
 import { setSelectedUseCases } from '../features/app/slice';
 import { IUseCase } from '../features/app/types';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
-import { useAppDispatch, useAppSelector } from '../store/store';
 
 const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/documentation/user-guide';
 
@@ -50,7 +50,7 @@ export default function Home() {
     if (checked) {
       dispatch(setSelectedUseCases([...selectedUseCases, value]));
     } else {
-      dispatch(setSelectedUseCases(selectedUseCases.filter(e => e !== value)));
+      dispatch(setSelectedUseCases(selectedUseCases.filter((e: string) => e !== value)));
     }
   };
 

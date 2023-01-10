@@ -31,7 +31,7 @@ import Permissions from '../components/Permissions';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
 import UploadFile from '../components/UploadFile';
-import { useAppSelector } from '../store/store';
+import { useAppSelector } from '../features/store';
 
 export default function CreateData() {
   const [activeTab, setActiveTab] = useState(0);

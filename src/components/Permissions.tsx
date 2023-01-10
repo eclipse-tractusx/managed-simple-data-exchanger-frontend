@@ -20,7 +20,7 @@
 
 import { ErrorPage } from 'cx-portal-shared-components';
 
-import { useAppSelector } from '../store/store';
+import { useAppSelector } from '../features/store';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Permissions(props: any) {

@@ -18,16 +18,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { KeycloakTokenParsed } from 'keycloak-js';
+import { ProcessReport } from '../../../models/ProcessReport';
 
-export interface IUser {
-  userName: string;
-  name: string;
-  email: string;
-  company: string;
-  roles: string[];
-  bpn: string;
-  tenant: string;
-  token: string;
-  parsedToken: KeycloakTokenParsed;
+export interface IUploadFileSlice {
+  currentUploadData: ProcessReport;
+  uploadStatus: boolean;
+  selectedFiles: File[];
 }

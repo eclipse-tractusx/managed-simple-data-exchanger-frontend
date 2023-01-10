@@ -23,7 +23,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
+import { IConsumerDataOffers } from '../features/consumer/types';
 
 interface IntDialogProps {
   open: boolean;

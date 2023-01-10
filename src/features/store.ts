@@ -18,39 +18,34 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 
-import appSlice from '../features/app/slice';
-import notificationSlice from '../features/notifiication/slice';
-import accessUsagePolicySlice from '../features/policies/slice';
-import submodelSlice from '../features/submodels/slice';
-import consumerSlice from './consumerSlice';
-import providerSlice from './providerSlice';
+import { apiSlice } from './app/apiSlice';
+import appSlice from './app/slice';
+import consumerSlice from './consumer/slice';
+import notificationSlice from './notifiication/slice';
+import accessUsagePolicySlice from './provider/policies/slice';
+import submodelSlice from './provider/submodels/slice';
+import uploadFileSlice from './provider/upload/slice';
 
 export const reducers = {
   appSlice: appSlice,
   accessUsagePolicySlice: accessUsagePolicySlice,
-  providerSlice: providerSlice,
+  uploadFileSlice: uploadFileSlice,
   consumerSlice: consumerSlice,
   notificationSlice: notificationSlice,
   submodelSlice: submodelSlice,
+  [apiSlice.reducerPath]: apiSlice.reducer,
 };
 
 export const store = configureStore({
-  reducer: {
-    appSlice: appSlice,
-    accessUsagePolicySlice: accessUsagePolicySlice,
-    providerSlice: providerSlice,
-    consumerSlice: consumerSlice,
-    notificationSlice: notificationSlice,
-    submodelSlice: submodelSlice,
-  },
+  reducer: combineReducers(reducers),
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(apiSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

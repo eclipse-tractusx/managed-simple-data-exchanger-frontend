@@ -17,6 +17,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+
 export interface IUsageControl {
   type: string;
   typeOfAccess: string;
@@ -101,4 +102,34 @@ export interface IContractAgreements {
   contractAgreementInfo?: IContractAgreementInfo;
   dateCreated: number;
   dateUpdated: number;
+}
+
+export interface IntOption {
+  _id: number | string;
+  bpn: string;
+  value: string;
+}
+
+export interface IntConnectorItem {
+  id: number;
+  value: string;
+  title: string;
+}
+
+export interface IConsumerSlice {
+  offersLoading: boolean;
+  contractOffers: IConsumerDataOffers[];
+  selectedOffersList: IConsumerDataOffers[];
+  selectedOffer: IConsumerDataOffers;
+  isMultipleContractSubscription: boolean;
+  searchFilterByType: string;
+  filterProviderUrl: string;
+  filterCompanyOptions: IntOption[];
+  filterCompanyOptionsLoading: boolean;
+  filterSelectedCompanyOption: IntOption | null;
+  filterSelectedBPN: string | null;
+  filterConnectors: IntConnectorItem[];
+  filterSelectedConnector: string;
+  contractAgreements: IContractAgreements[];
+  isContractAgreementsLoading: boolean;
 }

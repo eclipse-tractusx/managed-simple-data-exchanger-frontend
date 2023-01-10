@@ -20,15 +20,10 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ProcessReport, Status } from '../models/ProcessReport';
+import { ProcessReport, Status } from '../../../models/ProcessReport';
+import { IUploadFileSlice } from './types';
 
-interface IProviderSlice {
-  currentUploadData: ProcessReport;
-  uploadStatus: boolean;
-  selectedFiles: File[];
-}
-
-const initialState: IProviderSlice = {
+const initialState: IUploadFileSlice = {
   currentUploadData: {
     processId: '',
     referenceProcessId: '',
@@ -46,7 +41,7 @@ const initialState: IProviderSlice = {
   uploadStatus: false,
   selectedFiles: [],
 };
-export const providerSlice = createSlice({
+export const uploadFileSlice = createSlice({
   name: 'providerSlice',
   initialState,
   reducers: {
@@ -66,5 +61,5 @@ export const providerSlice = createSlice({
   },
 });
 
-export const { setUploadData, setSelectedFiles, setUploadStatus, removeSelectedFiles } = providerSlice.actions;
-export default providerSlice.reducer;
+export const { setUploadData, setSelectedFiles, setUploadStatus, removeSelectedFiles } = uploadFileSlice.actions;
+export default uploadFileSlice.reducer;

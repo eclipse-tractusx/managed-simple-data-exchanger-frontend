@@ -20,31 +20,9 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Config } from '../../utils/config';
+import { Config } from '../../../utils/config';
+import { IAccessPolicyState } from './types';
 
-// Define a type for the slice state
-interface IAccessPolicyState {
-  uploadUrl: string;
-  uploadData: unknown;
-  uploadType: string;
-  openDialog: boolean;
-  accessType: string;
-  bpnList: Array<string>;
-  inputBpn: string;
-  companyBpn: string;
-  duration: string;
-  purpose: string;
-  role: string;
-  custom: string;
-  durationValue: string;
-  purposeValue: string;
-  roleValue: string;
-  customValue: string;
-  durationUnit: string;
-  showValidationError: boolean;
-}
-
-// Define the initial state using that type
 const initialState: IAccessPolicyState = {
   uploadUrl: '',
   uploadData: '',

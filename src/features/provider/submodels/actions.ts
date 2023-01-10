@@ -19,15 +19,18 @@
  ********************************************************************************/
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import ProviderService from '../../services/ProviderService';
-import { setPageLoading } from '../app/slice';
+import ProviderService from '../../../services/ProviderService';
+import { setPageLoading } from '../../app/slice';
 
-const fetchSubmodelList = createAsyncThunk('/submodel/list', async (params: unknown) => {
+const fetchSubmodelList = createAsyncThunk('/submodel/list', async (params: unknown, { dispatch }) => {
   try {
+    dispatch(setPageLoading(true));
     const res = await ProviderService.getInstance().getSubmodelList(params);
     return res;
   } catch (error) {
     console.log('api call error:', error);
+  } finally {
+    dispatch(setPageLoading(false));
   }
 });
 const fetchSubmodelDetails = createAsyncThunk('/submodel/details', async (params: string, { dispatch }) => {
@@ -41,4 +44,15 @@ const fetchSubmodelDetails = createAsyncThunk('/submodel/details', async (params
     dispatch(setPageLoading(false));
   }
 });
-export { fetchSubmodelDetails, fetchSubmodelList };
+const fetchAllSubmodels = createAsyncThunk('/submodel/all', async (_, { dispatch }) => {
+  try {
+    dispatch(setPageLoading(true));
+    const res = await ProviderService.getInstance().getAllSchemas();
+    return res;
+  } catch (error) {
+    console.log('api call error:', error);
+  } finally {
+    dispatch(setPageLoading(false));
+  }
+});
+export { fetchAllSubmodels, fetchSubmodelDetails, fetchSubmodelList };

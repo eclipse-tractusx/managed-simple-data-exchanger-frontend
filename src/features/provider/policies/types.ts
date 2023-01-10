@@ -18,9 +18,23 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Provider } from 'react-redux';
-
-import { store } from '../features/store';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const ReduxWrapper = ({ children }: any) => <Provider store={store}>{children}</Provider>;
+export interface IAccessPolicyState {
+  uploadUrl: string;
+  uploadData: unknown;
+  uploadType: string;
+  openDialog: boolean;
+  accessType: string;
+  bpnList: Array<string>;
+  inputBpn: string;
+  companyBpn: string;
+  duration: string;
+  purpose: string;
+  role: string;
+  custom: string;
+  durationValue: string;
+  purposeValue: string;
+  roleValue: string;
+  customValue: string;
+  durationUnit: string;
+  showValidationError: boolean;
+}

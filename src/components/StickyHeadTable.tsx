@@ -29,25 +29,28 @@ import {
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import { IconButton } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import { styled, useTheme } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { Tooltips } from 'cx-portal-shared-components';
+import {
+  Paper,
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  tableCellClasses,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  useTheme,
+} from '@mui/material';
+import { IconButton, Tooltips } from 'cx-portal-shared-components';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
+import { useDeleteHistoryMutation } from '../features/provider/history/apiSlice';
+import { useAppDispatch } from '../features/store';
 import { ProcessReport, Status } from '../models/ProcessReport';
 import AppService from '../services/appService';
-import ProviderService from '../services/ProviderService';
-import { useAppDispatch } from '../store/store';
 import { formatDate } from '../utils/utils';
 import Permissions from './Permissions';
 
@@ -142,10 +145,6 @@ export default function StickyHeadTable({
   setRowsPerPage = (_r: number) => {
     /* This is itentional */
   },
-  // eslint-disable-next-line
-  refreshTable = () => {
-    /* This is itentional */
-  },
 }) {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -191,26 +190,12 @@ export default function StickyHeadTable({
     return '-';
   };
 
+  const [deleteHistory] = useDeleteHistoryMutation();
   const deleteSubmodal = async (subModel: ProcessReport) => {
     try {
-      const { processId, csvType } = subModel;
-      const response = await ProviderService.getInstance().deleteSubmodal(processId, csvType);
-      if (response.data && response.status === 200) {
-        dispatch(
-          setSnackbarMessage({
-            message: t('alerts.submodelDeleteSuccess'),
-            type: 'success',
-          }),
-        );
-      }
-      refreshTable();
+      await deleteHistory(subModel);
     } catch (error) {
-      dispatch(
-        setSnackbarMessage({
-          message: t('alerts.submodelDeleteError'),
-          type: 'error',
-        }),
-      );
+      console.log(error);
     }
   };
 

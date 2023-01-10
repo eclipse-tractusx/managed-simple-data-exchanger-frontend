@@ -20,9 +20,8 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUser } from '../../models/User';
 import { fetchUseCases, fetchUserPermissions } from './actions';
-import { IAppSlice } from './types';
+import { IAppSlice, IUser } from './types';
 
 const initialState: IAppSlice = {
   pageLoading: false,

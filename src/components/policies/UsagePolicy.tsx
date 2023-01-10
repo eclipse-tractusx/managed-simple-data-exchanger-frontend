@@ -31,8 +31,8 @@ import {
   setPurposeValue,
   setRole,
   setRoleValue,
-} from '../../features/policies/slice';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+} from '../../features/provider/policies/slice';
+import { useAppDispatch, useAppSelector } from '../../features/store';
 import UsagePolicyItem from './UsagePolicyItem';
 
 export default function UsagePolicy() {

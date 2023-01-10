@@ -21,7 +21,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { SyntheticEvent } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../store';
 import { toggleSnackbar } from './slice';
 
 export default function Notification() {

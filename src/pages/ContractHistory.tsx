@@ -29,10 +29,10 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Permissions from '../components/Permissions';
+import { setContractAgreements, setIsContractAgreementsLoading } from '../features/consumer/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import ConsumerService from '../services/ConsumerService';
-import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
-import { useAppDispatch, useAppSelector } from '../store/store';
 import { convertEpochToDate } from '../utils/utils';
 
 const ContractHistory: React.FC = () => {

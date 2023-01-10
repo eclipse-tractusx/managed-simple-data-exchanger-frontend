@@ -27,9 +27,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './App';
+import { store } from './features/store';
 import I18nService from './services/i18nService';
 import UserService from './services/UserService';
-import { store } from './store/store';
 import { clearConsoles } from './utils/utils';
 
 clearConsoles();
