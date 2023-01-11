@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+- Dynamic help page with all available submodel details and download CSV sample and template options.
+
 ### Fixed
 
 - Bug fixes and enhancements

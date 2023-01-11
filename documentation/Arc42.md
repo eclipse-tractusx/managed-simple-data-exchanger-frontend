@@ -281,22 +281,19 @@ Detailed API specs available under:
 
 #### **App routing**
 
-<img src="images/app-routing.png" height="60%" width="60%" /><br /><br />
-
 | Route               	| Description                                                      	| Type 	|
 |--------------------	|------------------------------------------------------------------	|------	|
 | /login                | Keycloak Authentication                                          	| Main 	|
 | /                  	| Home page for use case selection and app overview                 | Main 	|
-| /create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
-| /history          	| Upload history table                                             	| Sub  	|
-| /help             	| Help guide, CSV rules and samples                                	| Sub  	|
-| /consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
+| /provider/create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
+| /provider/history          	| Upload history table                                             	| Sub  	|
+| /provider/help             	| Help guide, CSV rules and samples                                	| Sub  	|
+| /consumer/consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
 | /contract-history 	| Contract history table                                           	| Sub  	|
 
 <br />
 
 #### **Frontend folder structure**
-<img src="images/frontend-folder-structure.png" height="40%" width="50%" /><br /><br />
 
 | Folder name 	| Description                                            	|
 |-------------	|--------------------------------------------------------	|
