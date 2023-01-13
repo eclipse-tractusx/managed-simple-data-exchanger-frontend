@@ -54,9 +54,9 @@ export default function Home() {
     }
   };
 
-  function handleTabChange(_event: SyntheticEvent, newValue: number) {
+  const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
-  }
+  };
 
   const openInNewTab = (url: string) => {
     window.open(url, '_blank');
@@ -100,7 +100,12 @@ export default function Home() {
         <Grid item xs={12} mt={5}>
           <Typography variant="h4">{t('content.home.exchangeDataHeader')}</Typography>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
-            <Tabs value={activeTab} onChange={handleTabChange} aria-label="Connector views: tabs" sx={{ pt: 0 }}>
+            <Tabs
+              value={activeTab}
+              onChange={(_event: SyntheticEvent, newValue: number) => handleTabChange(_event, newValue)}
+              aria-label="Connector views: tabs"
+              sx={{ pt: 0 }}
+            >
               <Tab label={t('content.home.provideDataTab')} />
               <Tab label={t('content.home.consumeDataTab')} />
             </Tabs>
