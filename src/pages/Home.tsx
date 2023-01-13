@@ -100,9 +100,9 @@ export default function Home() {
         <Grid item xs={12} mt={5}>
           <Typography variant="h4">{t('content.home.exchangeDataHeader')}</Typography>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
-            <Tabs 
+            <Tabs
               value={activeTab}
-              onChange={handleTabChange}
+              onChange={(_event: SyntheticEvent, newValue: number) => handleTabChange(_event, newValue)}
               aria-label="Connector views: tabs"
               sx={{ pt: 0 }}
             >
