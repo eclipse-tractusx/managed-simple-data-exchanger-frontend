@@ -23,21 +23,24 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+  GridValidRowModel,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import { Button } from 'cx-portal-shared-components';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { setContractAgreements, setIsContractAgreementsLoading } from '../features/consumer/slice';
-import { useAppDispatch, useAppSelector } from '../features/store';
+import { useGetContractsQuery } from '../features/provider/history/contracts/apiSlice';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import ConsumerService from '../services/ConsumerService';
 import { convertEpochToDate } from '../utils/utils';
 
-const ContractHistory: React.FC = () => {
+const ContractsTable = ({ type }: { type: string }) => {
   const [pageSize, setPageSize] = useState<number>(10);
-  const { contractAgreements, isContractAgreementsLoading } = useAppSelector(state => state.consumerSlice);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const renderContractAgreementStatus = (params: GridRenderCellParams) => {
@@ -97,18 +100,6 @@ const ContractHistory: React.FC = () => {
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.counterPartyAddress),
     },
     {
-      field: 'title',
-      flex: 1,
-      headerName: t('content.contractHistory.columns.title'),
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.title),
-    },
-    {
-      field: 'organizationName',
-      flex: 1,
-      headerName: t('content.contractHistory.columns.organizationName'),
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.organizationName),
-    },
-    {
       field: 'contractAgreementInfo.contractSigningDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractSigningDate'),
@@ -140,81 +131,81 @@ const ContractHistory: React.FC = () => {
     },
   ];
 
-  const fetchContractAgreements = async () => {
-    dispatch(setIsContractAgreementsLoading(true));
-    try {
-      const response = await ConsumerService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
-      const contractAgreementsList = response.data;
-      dispatch(setContractAgreements(contractAgreementsList));
-      dispatch(setIsContractAgreementsLoading(false));
-    } catch (error) {
-      dispatch(setContractAgreements([]));
-      dispatch(setIsContractAgreementsLoading(false));
+  const handleTitle = () => {
+    if (type === 'PROVIDER') {
+      return t('content.providerContracts.title');
+    } else {
+      return t('content.consumerContracts.title');
     }
   };
 
-  useEffect(() => {
-    dispatch(setContractAgreements([]));
-    fetchContractAgreements();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data, isLoading, isSuccess, refetch } = useGetContractsQuery({
+    type: type,
+    offset: 0,
+    maxLimit: MAX_CONTRACTS_AGREEMENTS,
+  });
 
-  return (
-    <Box sx={{ flex: 1, p: 4 }}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={6} my={4}>
-          <Typography variant="h4">{t('content.contractHistory.title')}</Typography>
+  if (isSuccess) {
+    return (
+      <Box sx={{ flex: 1, p: 4 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6} my={4}>
+            <Typography variant="h3">{handleTitle()}</Typography>
+            <Typography variant="body1">
+              {t('content.common.ownConnector')} {data.connector}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} my={4} textAlign={'right'}>
+            <Button size="small" variant="contained" onClick={refetch}>
+              <Refresh />
+              &nbsp; {t('button.refresh')}
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+              <DataGrid
+                sx={{ py: 1 }}
+                autoHeight={true}
+                getRowId={row => row.contractAgreementId}
+                rows={data?.contracts as GridValidRowModel[]}
+                columns={columns}
+                loading={isLoading}
+                pagination
+                pageSize={pageSize}
+                onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+                rowsPerPageOptions={[10, 25, 50, 100]}
+                components={{
+                  Toolbar: GridToolbar,
+                  LoadingOverlay: LinearProgress,
+                  NoRowsOverlay: () => (
+                    <Stack height="100%" alignItems="center" justifyContent="center">
+                      {t('content.common.noData')}
+                    </Stack>
+                  ),
+                  NoResultsOverlay: () => (
+                    <Stack height="100%" alignItems="center" justifyContent="center">
+                      {t('content.common.noResults')}
+                    </Stack>
+                  ),
+                }}
+                componentsProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: { debounceMs: 500 },
+                    printOptions: { disableToolbarButton: true },
+                  },
+                }}
+                disableColumnMenu
+                disableColumnSelector
+                disableDensitySelector
+                disableSelectionOnClick
+              />
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={6} my={4} textAlign={'right'}>
-          <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
-            <Refresh />
-            &nbsp; {t('button.refresh')}
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
-            <DataGrid
-              sx={{ py: 1 }}
-              autoHeight={true}
-              getRowId={row => row.id}
-              rows={contractAgreements}
-              columns={columns}
-              loading={isContractAgreementsLoading}
-              pagination
-              pageSize={pageSize}
-              onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
-              rowsPerPageOptions={[10, 25, 50, 100]}
-              components={{
-                Toolbar: GridToolbar,
-                LoadingOverlay: LinearProgress,
-                NoRowsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    {t('content.common.noData')}
-                  </Stack>
-                ),
-                NoResultsOverlay: () => (
-                  <Stack height="100%" alignItems="center" justifyContent="center">
-                    {t('content.common.noResults')}
-                  </Stack>
-                ),
-              }}
-              componentsProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: { debounceMs: 500 },
-                  printOptions: { disableToolbarButton: true },
-                },
-              }}
-              disableColumnMenu
-              disableColumnSelector
-              disableDensitySelector
-              disableSelectionOnClick
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
-  );
+      </Box>
+    );
+  } else return null;
 };
 
-export default ContractHistory;
+export default ContractsTable;

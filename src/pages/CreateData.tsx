@@ -43,7 +43,7 @@ export default function CreateData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h4" mb={4}>
+      <Typography variant="h3" mb={4}>
         {t('pages.createData')}
       </Typography>
       <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>

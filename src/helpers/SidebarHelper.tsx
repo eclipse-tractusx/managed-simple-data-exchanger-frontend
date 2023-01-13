@@ -73,6 +73,12 @@ export const MenuItems: IntMenu[] = [
         permissions: ['provider_view_history'],
       },
       {
+        text: 'pages.contracts',
+        menuIcon: 'HelpIcon',
+        to: '/provider/contracts',
+        dataId: 'pContracts',
+      },
+      {
         text: 'pages.help',
         menuIcon: 'HelpIcon',
         to: '/provider/help',
@@ -96,9 +102,9 @@ export const MenuItems: IntMenu[] = [
         ],
       },
       {
-        text: 'pages.contractHistory',
+        text: 'pages.contracts',
         menuIcon: 'HistoryIcon',
-        to: '/consumer/contract-history',
+        to: '/consumer/contracts',
         dataId: 'uploadHistoryMenu',
         permissions: ['consumer_view_contract_agreement'],
       },

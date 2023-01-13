@@ -286,10 +286,11 @@ Detailed API specs available under:
 | /login                | Keycloak Authentication                                          	| Main 	|
 | /                  	| Home page for use case selection and app overview                 | Main 	|
 | /provider/create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
-| /provider/history          	| Upload history table                                             	| Sub  	|
+| /provider/upload-history          	| Upload history table                                             	| Sub  	|
+| /provider/contracts          	| Data provider contracts                                             	| Sub  	|
 | /provider/help             	| Help guide, CSV rules and samples                                	| Sub  	|
 | /consumer/consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
-| /contract-history 	| Contract history table                                           	| Sub  	|
+| /consumer/contracts 	| Data consumer contracts                                           	| Sub  	|
 
 <br />
 

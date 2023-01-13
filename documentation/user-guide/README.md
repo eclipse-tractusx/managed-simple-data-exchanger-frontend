@@ -88,12 +88,13 @@ On the left side menu, it is possible to navigate the Simple Data Exchanger appl
 
 - Create Data
 - Upload History
+- Contracts
 - Help
 
 **Consumer**
 
 - Consume Data
-- Contract History
+- Contracts
 
 [-- end of 'navigation' section --]: #
 

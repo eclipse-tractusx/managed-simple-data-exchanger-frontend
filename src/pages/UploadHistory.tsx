@@ -42,7 +42,7 @@ export default function UploadHistory() {
         <Box sx={{ flex: 1, p: 4 }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={6}>
-              <Typography variant="h4">{t('pages.uploadHistory')}</Typography>
+              <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
             </Grid>
             <Grid item xs={6} textAlign="right">
               <Button size="small" variant="contained" onClick={refetch}>

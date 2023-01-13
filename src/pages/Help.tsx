@@ -74,7 +74,7 @@ export default function Help() {
   if (isSuccess) {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
-        <Typography variant="h4" mb={4}>
+        <Typography variant="h3" mb={4}>
           {t('pages.help')}
         </Typography>
         {data.map((table: HelpPageData) => (

@@ -9,7 +9,7 @@
     "help": "Help",
     "consumer": "Consumer",
     "consumeData": "Consume Data",
-    "contractHistory": "Contract History"
+    "contracts": "Contracts"
   },
   "content": {
     "home": {
@@ -85,6 +85,9 @@
         "actions": ""
       }
     },
+    "providerContracts": {
+      "title": "Data provider contracts"
+    },
     "help": {
       "rules1": "The file must be a file of type CSV (.csv extension).",
       "rules2": "Data fields must be separated by a semicolon (;).",
@@ -121,6 +124,9 @@
         "state": "Status"
       }
     },
+    "consumerContracts": {
+      "title": "Data consumer contracts"
+    },
     "common": {
       "loading": "Loading...",
       "downloading": "Downloading...",
@@ -132,7 +138,8 @@
       "copyHeaders": "Copy headers to clipboard",
       "rules": "Rules",
       "enterValue": "Enter a value",
-      "agree": "I agree"
+      "agree": "I agree",
+      "ownConnector": "Connector of own organization:"
     }
   },
   "dialog": {

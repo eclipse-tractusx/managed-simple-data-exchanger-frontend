@@ -20,7 +20,7 @@
 import { ReactElement } from 'react';
 
 import ConsumeData from '../pages/ConsumeData';
-import ContractHistory from '../pages/ContractHistory';
+import ContractsTable from '../pages/ContractsTable';
 import CreateData from '../pages/CreateData';
 import Help from '../pages/Help';
 import Home from '../pages/Home';
@@ -60,6 +60,10 @@ export const ROUTES: IRoutes[] = [
     permissions: ['provider_view_history'],
   },
   {
+    path: '/provider/contracts',
+    element: <ContractsTable type="PROVIDER" />,
+  },
+  {
     path: '/provider/help',
     element: <Help />,
   },
@@ -74,8 +78,8 @@ export const ROUTES: IRoutes[] = [
     ],
   },
   {
-    path: '/consumer/contract-history',
-    element: <ContractHistory />,
+    path: '/consumer/contracts',
+    element: <ContractsTable type="CONSUMER" />,
     permissions: ['consumer_view_contract_agreement'],
   },
 ];
