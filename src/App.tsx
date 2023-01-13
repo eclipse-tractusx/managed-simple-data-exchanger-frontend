@@ -37,7 +37,11 @@ export default function App({ loggedUser }: { loggedUser: IUser }) {
             <Route
               key={route.path}
               path={route.path}
-              element={<Permissions values={route.permissions}>{route.element}</Permissions>}
+              element={
+                <Permissions values={route.permissions} fullPage={true}>
+                  {route.element}
+                </Permissions>
+              }
             ></Route>
           ))}
         </Route>
