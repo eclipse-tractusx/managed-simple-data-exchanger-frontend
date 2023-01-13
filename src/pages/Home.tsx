@@ -54,9 +54,9 @@ export default function Home() {
     }
   };
 
-  const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
+  function handleTabChange(_event: SyntheticEvent, newValue: number) {
     setActiveTab(newValue);
-  };
+  }
 
   const openInNewTab = (url: string) => {
     window.open(url, '_blank');
