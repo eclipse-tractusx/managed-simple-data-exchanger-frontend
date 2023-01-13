@@ -62,6 +62,7 @@ export const ROUTES: IRoutes[] = [
   {
     path: '/provider/contracts',
     element: <ContractsTable type="PROVIDER" />,
+    permissions: ['provider_view_contract_agreement'],
   },
   {
     path: '/provider/help',

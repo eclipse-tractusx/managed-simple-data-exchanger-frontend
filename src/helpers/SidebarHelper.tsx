@@ -77,6 +77,7 @@ export const MenuItems: IntMenu[] = [
         menuIcon: 'HelpIcon',
         to: '/provider/contracts',
         dataId: 'pContracts',
+        permissions: ['provider_view_contract_agreement'],
       },
       {
         text: 'pages.help',

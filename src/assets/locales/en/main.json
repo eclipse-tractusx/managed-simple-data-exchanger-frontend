@@ -116,7 +116,7 @@
       "columns": {
         "contractAgreementId": "Contract Agreement ID",
         "assetId": "Asset ID",
-        "counterPartyAddress": "Counter Party Address On",
+        "counterPartyAddress": "Counter Party Address",
         "title": "Title",
         "organizationName": "Organization",
         "contractSigningDate": "Signing Date",
