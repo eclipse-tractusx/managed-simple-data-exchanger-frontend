@@ -18,18 +18,20 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import HelpIcon from '@mui/icons-material/Help';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import HistoryIcon from '@mui/icons-material/History';
-import HomeIcon from '@mui/icons-material/Home';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 export const icons = {
-  AddCircleIcon,
+  AddCircleOutlineIcon,
   HistoryIcon,
-  HelpIcon,
+  HelpOutlineIcon,
   ManageSearchIcon,
-  HomeIcon,
+  HomeOutlinedIcon,
+  FormatListBulletedIcon,
 };
 
 export interface IntMenuItem {
@@ -49,7 +51,7 @@ export interface IntMenu extends IntMenuItem {
 export const MenuItems: IntMenu[] = [
   {
     text: 'pages.home',
-    menuIcon: 'HomeIcon',
+    menuIcon: 'HomeOutlinedIcon',
     to: '/',
     dataId: 'homePage',
     isHeading: false,
@@ -60,7 +62,7 @@ export const MenuItems: IntMenu[] = [
     childrens: [
       {
         text: 'pages.createData',
-        menuIcon: 'AddCircleIcon',
+        menuIcon: 'AddCircleOutlineIcon',
         to: '/provider/create-data',
         dataId: 'uploadFileMenu',
         permissions: ['provider_create_contract_offer'],
@@ -74,14 +76,14 @@ export const MenuItems: IntMenu[] = [
       },
       {
         text: 'pages.contracts',
-        menuIcon: 'HelpIcon',
+        menuIcon: 'FormatListBulletedIcon',
         to: '/provider/contracts',
         dataId: 'pContracts',
         permissions: ['provider_view_contract_agreement'],
       },
       {
         text: 'pages.help',
-        menuIcon: 'HelpIcon',
+        menuIcon: 'HelpOutlineIcon',
         to: '/provider/help',
         dataId: 'helpMenu',
       },
@@ -104,7 +106,7 @@ export const MenuItems: IntMenu[] = [
       },
       {
         text: 'pages.contracts',
-        menuIcon: 'HistoryIcon',
+        menuIcon: 'FormatListBulletedIcon',
         to: '/consumer/contracts',
         dataId: 'uploadHistoryMenu',
         permissions: ['consumer_view_contract_agreement'],

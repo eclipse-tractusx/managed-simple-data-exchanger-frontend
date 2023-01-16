@@ -72,7 +72,7 @@ const Nav = () => {
         }}
       >
         <Box display={'flex'} alignItems="center">
-          <Box onClick={() => dispatch(setSidebarExpanded())}>
+          <Box onClick={() => dispatch(setSidebarExpanded())} sx={{ cursor: 'pointer' }}>
             <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
           </Box>
           <Typography variant="h4" color="white" ml={3}>

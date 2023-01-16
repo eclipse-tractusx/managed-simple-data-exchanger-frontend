@@ -22,7 +22,7 @@ export const provideDataSteps: IDataSteps[] = [
     stepLink: {
       text: 'pages.help',
       routeUrl: '/help',
-      icon: icons.HelpIcon,
+      icon: icons.HelpOutlineIcon,
     },
   },
   {
@@ -35,7 +35,7 @@ export const provideDataSteps: IDataSteps[] = [
     stepLink: {
       text: 'pages.createData',
       routeUrl: '/create-data',
-      icon: icons.AddCircleIcon,
+      icon: icons.AddCircleOutlineIcon,
     },
   },
   {
