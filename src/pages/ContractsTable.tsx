@@ -42,9 +42,9 @@ import { convertEpochToDate } from '../utils/utils';
 const ContractsTable = ({ type }: { type: string }) => {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
-  const TYPE_MAPPING: { [key: string]: string } = {
-    PROVIDER: 'provider',
-    CONSUMER: 'consumer',
+  const HEADER_MAPPING: { [key: string]: string } = {
+    PROVIDER: 'consumer',
+    CONSUMER: 'provider',
   };
   const renderContractAgreementStatus = (params: GridRenderCellParams) => {
     switch (params.value) {
@@ -100,7 +100,7 @@ const ContractsTable = ({ type }: { type: string }) => {
       field: 'counterPartyAddress',
       flex: 1,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      headerName: `${t(`pages.${TYPE_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
+      headerName: `${t(`pages.${HEADER_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.counterPartyAddress),
     },
     {
