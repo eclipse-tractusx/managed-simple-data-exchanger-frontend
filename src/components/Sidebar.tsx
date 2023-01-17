@@ -48,7 +48,11 @@ const MenuItem = ({ item }: { item: IntMenuItem }) => {
     <Permissions values={item.permissions}>
       <ListItem data-testid={dataId} onClick={() => navigate(to)} sx={{ p: 0 }}>
         <ListItemButton sx={{ minHeight: '48px', display: 'flex', alignItems: 'center' }}>
-          <ListItemIcon sx={{ minWidth: 30 }}>
+          <ListItemIcon
+            sx={{
+              minWidth: 30,
+            }}
+          >
             <Icon
               fontSize="small"
               sx={{
@@ -57,7 +61,12 @@ const MenuItem = ({ item }: { item: IntMenuItem }) => {
             />
           </ListItemIcon>
           <ListItemText
-            primaryTypographyProps={{ sx: { fontSize: '14px' } }}
+            primaryTypographyProps={{
+              sx: {
+                fontSize: '14px',
+                color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}`,
+              },
+            }}
             primary={t(text)}
             sx={{ opacity: open ? 1 : 0, display: !sidebarExpanded ? 'none' : 'flex' }}
           />

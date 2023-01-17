@@ -21,7 +21,7 @@ export const provideDataSteps: IDataSteps[] = [
     stepTitle: 'content.home.provideDataStep.downloadTemplate',
     stepLink: {
       text: 'pages.help',
-      routeUrl: '/help',
+      routeUrl: '/provider/help',
       icon: icons.HelpOutlineIcon,
     },
   },
@@ -34,7 +34,7 @@ export const provideDataSteps: IDataSteps[] = [
     stepTitle: 'content.home.provideDataStep.createDataText',
     stepLink: {
       text: 'pages.createData',
-      routeUrl: '/create-data',
+      routeUrl: '/provider/create-data',
       icon: icons.AddCircleOutlineIcon,
     },
   },
@@ -43,8 +43,17 @@ export const provideDataSteps: IDataSteps[] = [
     stepTitle: 'content.home.provideDataStep.manageUploadContract',
     stepLink: {
       text: 'pages.uploadHistory',
-      routeUrl: '/upload-history',
+      routeUrl: '/provider/upload-history',
       icon: icons.HistoryIcon,
+    },
+  },
+  {
+    stepNum: 5,
+    stepTitle: 'content.home.consumeDataSteps.manageContracts',
+    stepLink: {
+      text: 'pages.contracts',
+      routeUrl: '/provider/contracts',
+      icon: icons.FormatListBulletedIcon,
     },
   },
 ];
@@ -55,7 +64,7 @@ export const consumeDataSteps: IDataSteps[] = [
     stepTitle: 'content.home.consumeDataSteps.discoverCatalog',
     stepLink: {
       text: 'pages.consumeData',
-      routeUrl: '/consume-data',
+      routeUrl: '/consumer/consume-data',
       icon: icons.ManageSearchIcon,
     },
   },
@@ -67,9 +76,9 @@ export const consumeDataSteps: IDataSteps[] = [
     stepNum: 3,
     stepTitle: 'content.home.consumeDataSteps.manageContracts',
     stepLink: {
-      text: 'pages.contractHistory',
-      routeUrl: '/contract-history',
-      icon: icons.HistoryIcon,
+      text: 'pages.contracts',
+      routeUrl: '/consumer/contracts',
+      icon: icons.FormatListBulletedIcon,
     },
   },
 ];
