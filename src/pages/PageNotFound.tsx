@@ -23,5 +23,5 @@ import { useNavigate } from 'react-router-dom';
 
 export default function PageNotFound() {
   const navigate = useNavigate();
-  return <ErrorPage header="Page not found" homeButtonTitle="Go Home" onHomeClick={() => navigate('/create-data')} />;
+  return <ErrorPage header="Page not found" homeButtonTitle="Go Home" onHomeClick={() => navigate('/')} />;
 }
