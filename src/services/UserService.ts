@@ -59,7 +59,7 @@ const isLoggedIn = () => !!KC.token;
 
 const getRoles = () => KC.tokenParsed?.resource_access[keycloakConfig.clientId]?.roles;
 
-const hasValidResource = () => KC.tokenParsed?.resource_access.hasOwnProperty(keycloakConfig.clientId);
+const hasValidResource = () => KC.tokenParsed?.resource_access?.hasOwnProperty(keycloakConfig.clientId);
 
 const getLoggedUser = () => ({
   userName: getUsername(),
