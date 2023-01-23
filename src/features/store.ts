@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -41,7 +41,7 @@ export const reducers = {
 };
 
 export const store = configureStore({
-  reducer: combineReducers(reducers),
+  reducer: reducers,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,

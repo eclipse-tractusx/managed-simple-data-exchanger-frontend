@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next';
 import DownloadCSV from '../components/DownloadCSV';
 import { useGetHelpPageDataQuery } from '../features/provider/submodels/apiSlice';
 import { HelpPageData } from '../features/provider/submodels/types';
+import { useAppSelector } from '../features/store';
 
 const columns: GridColDef[] = [
   { field: 'name', headerName: 'Name', flex: 1, sortable: false, align: 'left', disableColumnMenu: true },
@@ -69,7 +70,8 @@ const columns: GridColDef[] = [
 
 export default function Help() {
   const { t } = useTranslation();
-  const { isSuccess, data } = useGetHelpPageDataQuery();
+  const { selectedUseCases } = useAppSelector(state => state.appSlice);
+  const { isSuccess, data } = useGetHelpPageDataQuery({ usecases: selectedUseCases });
 
   if (isSuccess) {
     return (

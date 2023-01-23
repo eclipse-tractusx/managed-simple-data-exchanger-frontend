@@ -7,8 +7,13 @@ import { setSnackbarMessage } from '../../notifiication/slice';
 export const helpApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getHelpPageData: builder.query<any, void>({
-      query: () => '/submodels/schema-details',
+    getHelpPageData: builder.query({
+      query: params => {
+        return {
+          url: '/submodels/schema-details',
+          params,
+        };
+      },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       transformResponse: (response: any[]) => {
         const pageData = response.map(submodel => {
