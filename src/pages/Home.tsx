@@ -30,7 +30,10 @@ import { DataExchangeStepper } from '../components/DataExchangeStepper';
 import { fetchUseCases } from '../features/app/actions';
 import { setSelectedUseCases } from '../features/app/slice';
 import { IUseCase } from '../features/app/types';
+import { clearRows, setSelectedSubmodel } from '../features/submodels/slice';
+import { ISubmodelList } from '../features/submodels/types';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
+import { removeSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
 
 const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/documentation/user-guide';
@@ -46,6 +49,12 @@ export default function Home() {
   }, [dispatch]);
 
   const handleUseCaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Clearing all the ongoing uploads
+    dispatch(setSelectedSubmodel({} as ISubmodelList));
+    dispatch(setUploadStatus(true));
+    dispatch(clearRows());
+    dispatch(removeSelectedFiles());
+
     const { value, checked } = event.target;
     if (checked) {
       dispatch(setSelectedUseCases([...selectedUseCases, value]));

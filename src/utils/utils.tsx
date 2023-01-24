@@ -47,3 +47,7 @@ export function clearConsoles() {
     console.debug = () => {};
   }
 }
+
+export function trimText(string: string, length: number) {
+  return string.length > length ? string.substring(0, length) + '...' : string;
+}
