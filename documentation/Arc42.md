@@ -282,16 +282,16 @@ Backend API Swagger-ui : (https://dft-api.int.demo.catena-x.net/api/swagger-ui/i
 
 #### **App routing**
 
-| Route               	| Description                                                      	| Type 	|
-|--------------------	|------------------------------------------------------------------	|------	|
-| /login                | Keycloak Authentication                                          	| Main 	|
-| /logout                | Keycloak logout                                          	| Main 	|
-| /                  	| Home page for use case selection and app overview                 | Main 	|
-| /create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
-| /upload-history          	| Upload history table                                             	| Sub  	|
-| /help             	| Help guide, CSV rules and samples                                	| Sub  	|
-| /consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
-| /contract-history 	| Contract history table                                           	| Sub  	|
+| Route               	| Description                                                      	        | Type 	|
+|--------------------	|-------------------------------------------------------------------------	|------	|
+| /login                | Keycloak Authentication                                          	        | Main 	|
+| /logout               | Keycloak logout                                          			        | Main 	|
+| /                  	| Home page for use case selection and app overview                         | Main 	|
+| /create-data      	| Create data using a CSV file, table or submit JSON data directly 	        | Sub  	|
+| /upload-history       | Upload history table                                          		    | Sub  	|
+| /help           	  	| Help guide, CSV rules and samples                             		    | Sub  	|
+| /consume-data	     	| Get list of data offer by selected providers                  		    | Sub  	|
+| /contract-history 	| Contract history table                                        		    | Sub  	|
 
 <br />
 

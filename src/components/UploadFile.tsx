@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -34,6 +34,7 @@ import { FileSize } from '../models/FileSize';
 import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { Config } from '../utils/config';
+import { trimText } from '../utils/utils';
 
 export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
@@ -166,7 +167,7 @@ export default function UploadFile() {
                 <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
                   <UploadFileIcon />
                   <Typography fontSize={16}>
-                    {selectedFiles[0].name} ({fileSize(selectedFiles[0].size)})
+                    {trimText(selectedFiles[0].name, 20)} ({fileSize(selectedFiles[0].size)})
                   </Typography>
                 </Box>
                 <Link sx={{ color: 'black' }} onClick={() => dispatch(removeSelectedFiles())}>
