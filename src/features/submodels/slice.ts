@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,10 +23,10 @@ import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { fetchSubmodelDetails, fetchSubmodelList } from './actions';
-import { ISubmodelsSlice } from './types';
+import { ISubmodelList, ISubmodelsSlice } from './types';
 
 const initialState: ISubmodelsSlice = {
-  selectedSubmodel: 'aspect',
+  selectedSubmodel: {} as ISubmodelList,
   submodelList: [],
   submodelDetails: {},
   columns: [],
@@ -52,7 +52,7 @@ export const submodelSlice = createSlice({
   name: 'submodelSlice',
   initialState,
   reducers: {
-    setSelectedSubmodel: (state, action: PayloadAction<string>) => {
+    setSelectedSubmodel: (state, action: PayloadAction<ISubmodelList>) => {
       state.selectedSubmodel = action.payload;
     },
     addRows: state => {

@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
- *
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * 
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,33 +18,46 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Autocomplete, Box, Button, debounce, FormControlLabel, Grid, Radio, RadioGroup, Stack } from '@mui/material';
 import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  FormControlLabel,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Radio,
-  RadioGroup,
-} from '@mui/material';
-import { Dialog, DialogActions, DialogContent, DialogHeader, Input, Typography } from 'cx-portal-shared-components';
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  Input,
+  SelectList,
+  Typography,
+} from 'cx-portal-shared-components';
 import { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
+import { ILegalEntityContent, IntOption } from '../../models/ConsumerContractOffers';
+import ConsumerService from '../../services/ConsumerService';
+import { setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../store/consumerSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { Config } from '../../utils/config';
+
+const ITEMS = [
+  {
+    id: 1,
+    title: 'Company Name',
+    value: 'company',
+  },
+  {
+    id: 2,
+    title: 'Business Partner Number',
+    value: 'bpn',
+  },
+];
 
 export default function AccessPolicy() {
   const { accessType, bpnList, inputBpn } = useAppSelector(state => state.accessUsagePolicySlice);
-  const dispatch = useAppDispatch();
-  const defaultCompanyBPN = Config.REACT_APP_DEFAULT_COMPANY_BPN;
+  const { filterCompanyOptions, filterCompanyOptionsLoading } = useAppSelector(state => state.consumerSlice);
+  const [searchFilterByType, setsearchFilterByType] = useState<string>('');
   const [dialogOpen, setdialogOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const showAddDialog = () => {
     setdialogOpen(prev => !prev);
@@ -56,77 +69,145 @@ export default function AccessPolicy() {
     if (newAccessType === 'unrestricted') showAddDialog();
   };
 
+  // get company name on input change
+  const onChangeSearchInputValue = async (params: string) => {
+    const searchStr = params.toLowerCase();
+    if (searchStr.length > 2) {
+      dispatch(setFilterCompanyOptions([]));
+      dispatch(setFfilterCompanyOptionsLoading(true));
+      const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
+      dispatch(setFfilterCompanyOptionsLoading(false));
+      if (res.length > 0) {
+        const filterContent = res.map((item: ILegalEntityContent, index) => {
+          return {
+            _id: index,
+            bpn: item.bpn,
+            value: item.name,
+          };
+        });
+        dispatch(setFilterCompanyOptions(filterContent));
+      }
+    } else {
+      dispatch(setFilterCompanyOptions([]));
+    }
+  };
+
+  const handleSearchTypeChange = (value: string) => {
+    setsearchFilterByType(value);
+  };
+
   return (
     <>
-      <Typography>ACCESS POLICY</Typography>
+      <Typography>{t('content.policies.accessPolicy')}</Typography>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={accessType}
         onChange={handleAccessTypeChange}
       >
-        <FormControlLabel sx={{ mt: 2 }} value="restricted" control={<Radio />} label="Restricted access" />
+        <FormControlLabel
+          sx={{ mt: 2 }}
+          value="restricted"
+          control={<Radio />}
+          label={t('content.policies.restricted')}
+        />
         {accessType === 'restricted' && (
-          <Box>
-            <Grid container alignItems={'flex-end'}>
+          <>
+            <Grid container spacing={2} alignItems="end">
               <Grid item xs={5}>
-                <Input
-                  label="Enter BPN"
-                  placeholder="Enter BPN"
+                <SelectList
+                  keyTitle="title"
+                  label={t('content.consumeData.selectType')}
+                  fullWidth
                   size="small"
-                  value={inputBpn}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setInputBpn(e.target.value))}
+                  onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
+                  items={ITEMS}
+                  defaultValue={ITEMS[0]}
+                  disableClearable={true}
+                  placeholder={t('content.consumeData.selectType')}
+                  value={searchFilterByType}
+                  hiddenLabel
                 />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={5}>
+                {searchFilterByType === 'bpn' ? (
+                  <Input
+                    label={t('content.consumeData.enterBPN')}
+                    placeholder={t('content.consumeData.enterBPN')}
+                    size="small"
+                    value={inputBpn}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setInputBpn(e.target.value))}
+                  />
+                ) : (
+                  <Autocomplete
+                    options={filterCompanyOptions}
+                    includeInputInList
+                    loading={filterCompanyOptionsLoading}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    onChange={(e, value: any) => dispatch(setInputBpn(value.bpn))}
+                    onInputChange={debounce((event, newInputValue) => {
+                      onChangeSearchInputValue(newInputValue);
+                    }, 1000)}
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
+                    getOptionLabel={option => {
+                      return typeof option === 'string' ? option : `${option.value}`;
+                    }}
+                    renderInput={params => (
+                      <Input
+                        {...params}
+                        label={t('content.consumeData.selectCompany')}
+                        placeholder={t('content.consumeData.selectCompany')}
+                        fullWidth
+                      />
+                    )}
+                    renderOption={(props, option: IntOption) => (
+                      <Box
+                        component="li"
+                        {...props}
+                        key={option.bpn}
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'initial!important',
+                          justifyContent: 'initial',
+                        }}
+                      >
+                        <Typography variant="subtitle1">{option.value}</Typography>
+                        <Typography variant="subtitle2">{option.bpn}</Typography>
+                      </Box>
+                    )}
+                  />
+                )}
+              </Grid>
+              <Grid item>
                 <Button variant="contained" sx={{ marginLeft: 1 }} onClick={() => dispatch(addBpn())}>
-                  Add
+                  {t('button.add')}
                 </Button>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Card sx={{ maxWidth: 260, marginTop: 1 }}>
-                <CardContent>
-                  <List style={{ maxHeight: 200, overflow: 'auto' }} dense>
-                    <ListItem divider disablePadding>
-                      {defaultCompanyBPN}
-                    </ListItem>
-                    {bpnList.map((bpnNum: string, key: number) => (
-                      <ListItem
-                        divider
-                        disablePadding
-                        key={key}
-                        secondaryAction={
-                          bpnNum !== defaultCompanyBPN && (
-                            <IconButton
-                              onClick={() => dispatch(deleteBpn(bpnNum))}
-                              edge="end"
-                              aria-label="delete"
-                              color="error"
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          )
-                        }
-                      >
-                        <ListItemText primary={bpnNum} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Box>
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="body2">
+                <i> {t('content.policies.note')}</i>
+              </Typography>
+              <Stack direction="row" spacing={1} mt={bpnList.length ? 3 : 0} sx={{ flexWrap: 'wrap', gap: 1 }}>
+                {bpnList.map((bpnNum: string, key: number) => (
+                  <Chip color="secondary" label={bpnNum} key={key} onClick={() => dispatch(deleteBpn(bpnNum))} />
+                ))}
+              </Stack>
+            </Box>
+          </>
         )}
-        <FormControlLabel sx={{ mt: 2 }} value="unrestricted" control={<Radio />} label="Unrestricted access" />
+        <FormControlLabel
+          sx={{ mt: 2 }}
+          value="unrestricted"
+          control={<Radio />}
+          label={t('content.policies.unrestricted')}
+        />
       </RadioGroup>
-      <hr style={{ marginBottom: 50 }} />
+      <hr style={{ marginBottom: 50, marginTop: 30 }} />
       <Dialog open={dialogOpen}>
-        <DialogHeader title="Unrestricted Access!" />
-        <DialogContent>
-          Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you
-          sure?
-        </DialogContent>
+        <DialogHeader title={t('content.policies.unAccess')} />
+        <DialogContent>{t('content.policies.warningText')}</DialogContent>
         <DialogActions>
           <Button
             variant="outlined"
@@ -135,7 +216,7 @@ export default function AccessPolicy() {
               showAddDialog();
             }}
           >
-            Cancel
+            {t('button.cancel')}
           </Button>
           <Button
             variant="contained"
@@ -144,7 +225,7 @@ export default function AccessPolicy() {
               showAddDialog();
             }}
           >
-            Confirm
+            {t('button.confirm')}
           </Button>
         </DialogActions>
       </Dialog>

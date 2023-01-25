@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -46,4 +46,8 @@ export function clearConsoles() {
     console.error = () => {};
     console.debug = () => {};
   }
+}
+
+export function trimText(string: string, length: number) {
+  return string.length > length ? string.substring(0, length) + '...' : string;
 }

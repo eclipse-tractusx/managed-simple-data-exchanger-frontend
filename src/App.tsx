@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,12 +19,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { useEffect } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import PageLoading from './components/PageLoading';
-import { fetchUserPermissions } from './features/app/actions';
-import { setLoggedInUser } from './features/app/slice';
 import Notification from './features/notifiication';
 import Main from './Main';
 import { IUser } from './models/User';
@@ -32,29 +29,24 @@ import ConsumeData from './pages/ConsumeData';
 import ContractHistory from './pages/ContractHistory';
 import CreateData from './pages/CreateData';
 import Help from './pages/Help';
+import Home from './pages/Home';
+import Logout from './pages/Logout';
 import PageNotFound from './pages/PageNotFound';
 import UploadHistory from './pages/UploadHistory';
-import { useAppDispatch } from './store/store';
 
 function App({ loggedUser }: { loggedUser: IUser }) {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchUserPermissions());
-    dispatch(setLoggedInUser(loggedUser));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Main />}>
-            <Route path="/" element={<Navigate to="/create-data" />}></Route>
+          <Route path="/" element={<Main loggedUser={loggedUser} />}>
+            <Route key="home" path="/" element={<Home />}></Route>
             <Route key="create-data" path="/create-data" element={<CreateData />} />
             <Route key="upload-history" path="/upload-history" element={<UploadHistory />} />
             <Route key="help" path="/help" element={<Help />} />
             <Route key="consume-data" path="/consume-data" element={<ConsumeData />} />
             <Route key="contract-history" path="/contract-history" element={<ContractHistory />} />
+            <Route key="logout" path="/logout" element={<Logout />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

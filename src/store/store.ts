@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,16 +30,23 @@ import consumerSlice from './consumerSlice';
 import providerSlice from './providerSlice';
 
 export const reducers = {
-  appSlice,
-  accessUsagePolicySlice,
-  providerSlice,
-  consumerSlice,
-  notificationSlice,
-  submodelSlice,
+  appSlice: appSlice,
+  accessUsagePolicySlice: accessUsagePolicySlice,
+  providerSlice: providerSlice,
+  consumerSlice: consumerSlice,
+  notificationSlice: notificationSlice,
+  submodelSlice: submodelSlice,
 };
 
 export const store = configureStore({
-  reducer: combineReducers(reducers),
+  reducer: {
+    appSlice: appSlice,
+    accessUsagePolicySlice: accessUsagePolicySlice,
+    providerSlice: providerSlice,
+    consumerSlice: consumerSlice,
+    notificationSlice: notificationSlice,
+    submodelSlice: submodelSlice,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,

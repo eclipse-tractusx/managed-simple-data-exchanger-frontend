@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -20,62 +20,69 @@
  ********************************************************************************/
 
 import { Box, Grid } from '@mui/material';
-import { Tab, TabPanel, Tabs } from 'cx-portal-shared-components';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
+import { SyntheticEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import DataTable from '../components/DataTable';
+import DownloadCSV from '../components/DownloadCSV';
 import JsonInput from '../components/JsonInput';
 import Permissions from '../components/Permissions';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
 import UploadFile from '../components/UploadFile';
-import { fetchSubmodelDetails } from '../features/submodels/actions';
-import { useAppDispatch, useAppSelector } from '../store/store';
+import { useAppSelector } from '../store/store';
 
 export default function CreateData() {
-  const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
-
-  const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState(0);
+  const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
+  const { t } = useTranslation();
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
-  useEffect(() => {
-    dispatch(fetchSubmodelDetails(selectedSubmodel));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Permissions values={['provider_create_contract_offer']}>
-        <Grid container spacing={2} mb={3}>
+      <Permissions values={['provider_create_contract_offer']} fullPage={true}>
+        <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
           <Grid item xs={3}>
             <SelectSubmodel />
           </Grid>
+          {Object.keys(selectedSubmodel).length ? (
+            <Grid item xs={6}>
+              <DownloadCSV />
+            </Grid>
+          ) : null}
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
-                <Tab label="Upload File" />
-                <Tab label="Table" />
-                <Tab label="JSON" />
-              </Tabs>
-            </Box>
-            <Box>
-              <TabPanel value={activeTab} index={0}>
-                <UploadFile />
-              </TabPanel>
-              <TabPanel value={activeTab} index={1}>
-                <DataTable />
-              </TabPanel>
-              <TabPanel value={activeTab} index={2}>
-                <JsonInput />
-              </TabPanel>
-            </Box>
+        {Object.keys(selectedSubmodel).length ? (
+          <Grid container>
+            <Grid item xs={12}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
+                  <Tab label={t('content.provider.uploadFile')} />
+                  <Tab label={t('content.provider.table')} />
+                  <Tab label={t('content.provider.json')} />
+                </Tabs>
+              </Box>
+              <Box>
+                <TabPanel value={activeTab} index={0}>
+                  <UploadFile />
+                </TabPanel>
+                <TabPanel value={activeTab} index={1}>
+                  <DataTable />
+                </TabPanel>
+                <TabPanel value={activeTab} index={2}>
+                  <JsonInput />
+                </TabPanel>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        ) : (
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
+            <Typography>Select a submodel</Typography>
+          </Box>
+        )}
       </Permissions>
       <PoliciesDialog />
     </Box>

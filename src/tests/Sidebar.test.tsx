@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -27,7 +27,7 @@ import Sidebar from '../components/Sidebar';
 test('expanded sidebar', () => {
   render(
     <MemoryRouter>
-      <Sidebar isExpanded={true} />
+      <Sidebar />
     </MemoryRouter>,
   );
 
@@ -50,7 +50,7 @@ test('expanded sidebar', () => {
 test('collapsed sidebar', () => {
   render(
     <MemoryRouter>
-      <Sidebar isExpanded={false} />
+      <Sidebar />
     </MemoryRouter>,
   );
   // check upload file menu

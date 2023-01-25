@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,4 +23,12 @@ export interface IAppSlice {
   pageLoading: boolean;
   loggedInUser: IUser;
   permissions: string[];
+  useCases: IUseCase[];
+  selectedUseCases: string[];
+  sidebarExpanded: boolean;
+}
+
+export interface IUseCase {
+  id: string;
+  title: string;
 }

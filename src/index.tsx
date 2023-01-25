@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -27,11 +27,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './App';
+import I18nService from './services/i18nService';
 import UserService from './services/UserService';
 import { store } from './store/store';
 import { clearConsoles } from './utils/utils';
 
 clearConsoles();
+I18nService.init();
 
 UserService.initKeycloak(user => {
   ReactDOM.render(

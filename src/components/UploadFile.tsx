@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -25,6 +25,7 @@ import { Box, Link, useTheme } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 import { setPageLoading } from '../features/app/slice';
 import { setSnackbarMessage } from '../features/notifiication/slice';
@@ -33,10 +34,13 @@ import { FileSize } from '../models/FileSize';
 import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../store/providerSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { Config } from '../utils/config';
+import { trimText } from '../utils/utils';
 
 export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
   const theme = useTheme();
 
   const handleFiles = (file: File) => {
@@ -49,7 +53,7 @@ export default function UploadFile() {
     } else {
       dispatch(
         setSnackbarMessage({
-          message: 'File not permitted!',
+          message: t('alerts.invalidFile'),
           type: 'error',
         }),
       );
@@ -95,13 +99,13 @@ export default function UploadFile() {
           variant="contained"
           onClick={() => dispatch(handleDialogOpen({ type: 'file' }))}
         >
-          Next Step - Configure Policies
+          {t('content.policies.configure')}
         </Button>
       </Box>
       <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h4" marginBottom={3} textAlign="center">
-            Upload a file
+            {t('content.provider.uploadFile')}
           </Typography>
           <Box
             sx={{
@@ -118,13 +122,13 @@ export default function UploadFile() {
             <input {...getInputProps()} />
             <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
             <Typography variant="body1" my={3} textAlign="center">
-              Upload your file by dropping it here.
+              {t('content.provider.uploadInstruction')}
             </Typography>
             <Typography variant="body1" mb={3} textAlign="center">
-              or
+              {t('content.common.or')}
             </Typography>
             <Button variant="outlined" size="small">
-              CHOOSE A FILE
+              {t('button.chooseFile')}
             </Button>
 
             {isDragActive ? (
@@ -142,10 +146,10 @@ export default function UploadFile() {
                 <Box sx={{ textAlign: 'center' }}>
                   <CloudUploadIcon style={{ fontSize: 40 }} sx={{ color: theme.palette.common.white }} />
                   <Typography color="white" variant="h4">
-                    Drop it like it's hot :)
+                    {t('content.provider.dropFile')}
                   </Typography>
                   <Typography color="white" variant="body1">
-                    Upload your file by dropping it here.
+                    {t('content.provider.dropInstruction')}
                   </Typography>
                 </Box>
               </Box>
@@ -153,26 +157,17 @@ export default function UploadFile() {
               ''
             )}
           </Box>
-          &nbsp;
-          <Box>
-            <Typography variant="subtitle1" mb={1} fontWeight={'bold'}>
-              The upload must be performed in the following order:
-            </Typography>
-            <Typography variant="body1">1 - serialPartTypization.csv</Typography>
-            <Typography variant="body1">2 - batch.csv</Typography>
-            <Typography variant="body1">3 - assemblyPartRelationship.csv</Typography>
-          </Box>
           {selectedFiles.length && !uploadStatus ? (
             <Box sx={{ display: 'flex', mt: 2, flexDirection: 'column' }}>
               <Typography variant="subtitle1" mb={2} fontWeight={'bold'}>
-                Selected file
+                {t('content.provider.selectedFile')}
               </Typography>
 
               <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 1.5, px: 2, background: 'lightgrey' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
                   <UploadFileIcon />
                   <Typography fontSize={16}>
-                    {selectedFiles[0].name} ({fileSize(selectedFiles[0].size)})
+                    {trimText(selectedFiles[0].name, 20)} ({fileSize(selectedFiles[0].size)})
                   </Typography>
                 </Box>
                 <Link sx={{ color: 'black' }} onClick={() => dispatch(removeSelectedFiles())}>

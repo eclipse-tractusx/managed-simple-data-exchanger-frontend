@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,11 +22,11 @@ import { GridSelectionModel, GridValidRowModel } from '@mui/x-data-grid';
 
 export interface ISubmodelList {
   id: number;
-  name: string;
+  title: string;
   value: string;
 }
 export interface ISubmodelsSlice {
-  selectedSubmodel: string;
+  selectedSubmodel: ISubmodelList;
   submodelList: ISubmodelList[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   submodelDetails: any;

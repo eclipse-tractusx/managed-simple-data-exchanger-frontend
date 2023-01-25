@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -20,7 +20,8 @@
 
 import { Divider, Grid } from '@mui/material';
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
 
@@ -31,10 +32,10 @@ interface IntDialogProps {
   isMultiple?: boolean;
 }
 
-const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleButtonEvent, isMultiple }) => {
+const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: IntDialogProps) => {
   const [offer] = useState(offerObj);
-
   const { typeOfAccess, bpnNumbers, title, created, description, publisher, usagePolicies, fileContentType } = offer;
+  const { t } = useTranslation();
 
   const closeModal = (flag: string) => {
     handleButtonEvent(flag);
@@ -47,14 +48,14 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
 
   return (
     <Dialog open={open}>
-      <DialogHeader closeWithIcon onCloseWithIcon={() => closeModal('close')} title=" Offer Details" />
+      <DialogHeader closeWithIcon onCloseWithIcon={() => closeModal('close')} title={t('dialog.offerDetails.title')} />
       {isMultiple ? (
         <>
           <DialogContent dividers sx={{ pt: 3 }}>
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
-                  Usage Policy
+                  {t('content.policies.usagePolicy')}
                 </Typography>
               </Grid>
               {usagePolicies.map((item, index) => {
@@ -64,15 +65,13 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
                       {item.type.toLowerCase()}
                     </Typography>
                     <Typography variant="body2">
-                      Type:
-                      <strong>{item.typeOfAccess}</strong>
+                      {t('dialog.offerDetails.type')}:<strong>{item.typeOfAccess}</strong>
                     </Typography>
 
                     {item.typeOfAccess.toLowerCase() !== 'unrestricted' && (
                       <>
                         <Typography variant="body2">
-                          Value:
-                          <strong>{item.value || '-'}</strong>
+                          {t('dialog.offerDetails.value')}:<strong>{item.value || '-'}</strong>
                         </Typography>
                       </>
                     )}
@@ -87,37 +86,37 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
           <DialogContent dividers>
             <Grid container mt={3}>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Title</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.titleText')}</Typography>
                 <Typography variant="body2">
                   <strong>{title || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Creation Date</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.created')}</Typography>
                 <Typography variant="body2">
                   <strong>{created || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Data Format</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.dataFormat')}</Typography>
                 <Typography variant="body2">
                   <strong>{fileContentType || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Description</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.description')}</Typography>
                 <Typography variant="body2">
                   <strong>{description || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Publisher</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.publisher')}</Typography>
                 <Typography variant="body2">
                   <strong>{splitWithFirstOcc(publisher)[0] || '-'}</strong>
                 </Typography>
               </Grid>
               <Grid item xs={6} sx={{ mb: 1 }}>
-                <Typography variant="body2">Publisher URL</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.publisherUrl')}</Typography>
                 <Typography variant="body2">
                   <strong>{splitWithFirstOcc(publisher)[1] || '-'}</strong>
                 </Typography>
@@ -128,11 +127,11 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
-                  Access Type
+                  {t('dialog.offerDetails.accessType')}
                 </Typography>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="body2">Type</Typography>
+                <Typography variant="body2">{t('dialog.offerDetails.type')}</Typography>
                 <Typography variant="body2">
                   <strong>{typeOfAccess}</strong>
                 </Typography>
@@ -140,7 +139,7 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
               <Grid item xs={6}>
                 {typeOfAccess.toLowerCase() !== 'unrestricted' && (
                   <>
-                    <Typography variant="body2">BPN Numbers</Typography>
+                    <Typography variant="body2">{t('dialog.offerDetails.bpnNumbers')}</Typography>
                     <Typography variant="body2" sx={{ display: 'flex', flexWrap: 'wrap' }}>
                       {bpnNumbers.map((i, k) => {
                         return (
@@ -159,7 +158,7 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
-                  Usage Policy
+                  {t('content.policies.usagePolicy')}
                 </Typography>
               </Grid>
               {usagePolicies.map((item, index) => {
@@ -169,14 +168,13 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
                       {item.type.toLowerCase()}
                     </Typography>
                     <Typography variant="body2">
-                      Type:
-                      <strong>{item.typeOfAccess}</strong>
+                      {t('dialog.offerDetails.type')}:<strong>{item.typeOfAccess}</strong>
                     </Typography>
 
                     {item.typeOfAccess.toLowerCase() !== 'unrestricted' && (
                       <>
                         <Typography variant="body2">
-                          Value:
+                          {t('dialog.offerDetails.value')}:
                           <strong>
                             {item.type.toLowerCase() === 'duration'
                               ? `${item.value} ${item.durationUnit}` || '-'
@@ -194,10 +192,10 @@ const OfferDetailsDialog: React.FC<IntDialogProps> = ({ open, offerObj, handleBu
       )}
       <DialogActions>
         <Button variant="outlined" onClick={() => closeModal('close')}>
-          Close
+          {t('button.close')}
         </Button>
         <Button variant="contained" onClick={() => closeModal('subscribe')}>
-          Subscribe
+          {t('button.subscribe')}
         </Button>
       </DialogActions>
     </Dialog>

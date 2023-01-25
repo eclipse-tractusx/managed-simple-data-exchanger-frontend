@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -38,6 +38,30 @@ class AppService extends HttpService {
     const res = await this.instance({
       method: 'GET',
       url: '/user/role/permissions',
+    });
+    return res;
+  }
+
+  public async downloadCSV(submodel: string, type: string) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/submodels/csvfile/${submodel}?type=${type}`,
+    });
+    return res;
+  }
+
+  public async downloadHistory(submodel: string, processId: string) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/${submodel}/download/${processId}/csv`,
+    });
+    return res;
+  }
+
+  public async getUseCases() {
+    const res = await this.instance({
+      method: 'GET',
+      url: '/usecases',
     });
     return res;
   }

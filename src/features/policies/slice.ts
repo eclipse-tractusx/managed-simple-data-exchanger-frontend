@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -70,9 +70,6 @@ export const accessUsagePolicySlice = createSlice({
   name: 'accessUsagePolicySlice',
   initialState,
   reducers: {
-    setUploadType: (state, action: PayloadAction<string>) => {
-      state.uploadUrl = action.payload;
-    },
     setAccessType: (state, action: PayloadAction<string>) => {
       state.accessType = action.payload;
     },
@@ -81,7 +78,7 @@ export const accessUsagePolicySlice = createSlice({
     },
     addBpn: state => {
       if (state.inputBpn) {
-        state.bpnList = [...state.bpnList, state.inputBpn];
+        state.bpnList = [...new Set([...state.bpnList, state.inputBpn])];
         state.inputBpn = '';
       }
     },

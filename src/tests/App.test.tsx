@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,6 +22,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
+import UploadFile from '../components/UploadFile';
 import { handleDialogOpen } from '../features/policies/slice';
 import CreateData from '../pages/CreateData';
 import Help from '../pages/Help';
@@ -31,23 +32,14 @@ import { ReduxWrapper } from '../utils/testUtils';
 
 describe('Dashboard', () => {
   test('upload file page', () => {
-    render(
-      <MemoryRouter initialEntries={[{ pathname: '/create-data' }]}>
-        <CreateData />
-      </MemoryRouter>,
-      { wrapper: ReduxWrapper },
-    );
+    render(<UploadFile />, { wrapper: ReduxWrapper });
     expect(screen.getByText('Upload a file')).toBeInTheDocument();
   });
 
-  test.skip('upload history page', () => {
-    render(
-      <MemoryRouter initialEntries={[{ pathname: '/upload-history' }]}>
-        <UploadHistory />
-      </MemoryRouter>,
-      { wrapper: ReduxWrapper },
-    );
-    expect(screen.getByText('Upload History')).toBeInTheDocument();
+  test('upload history page', () => {
+    const { container } = render(<UploadHistory />, { wrapper: ReduxWrapper });
+    container.querySelector('.upload-title');
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   test('help page', () => {

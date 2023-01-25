@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -49,6 +49,7 @@ import {
 } from 'cx-portal-shared-components';
 import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
@@ -100,34 +101,30 @@ export default function ConsumeData() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const columns = [
     {
       field: 'title',
       flex: 1,
-      headerName: 'Title',
-      renderHeader: () => <strong>Title</strong>,
+      headerName: t('content.consumeData.columns.title'),
     },
     {
       field: 'assetId',
       flex: 1,
-      headerName: 'Asset ID',
-      renderHeader: () => <strong>Asset ID</strong>,
+      headerName: t('content.consumeData.columns.assetId'),
     },
     {
       field: 'created',
       flex: 1,
-      editable: false,
-      headerName: 'Created on',
-      renderHeader: () => <strong>Created on</strong>,
+      headerName: t('content.consumeData.columns.created'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.created),
     },
     {
       field: 'description',
       flex: 1,
       editable: false,
-      headerName: 'Description',
-      renderHeader: () => <strong>Description</strong>,
+      headerName: t('content.consumeData.columns.description'),
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.description),
     },
   ];
@@ -204,7 +201,7 @@ export default function ConsumeData() {
         if (response.status == 200) {
           dispatch(
             setSnackbarMessage({
-              message: 'Contract offers subscription successfully initiated',
+              message: t('alerts.subscriptionSuccess'),
               type: 'success',
             }),
           );
@@ -219,7 +216,7 @@ export default function ConsumeData() {
         setIsOfferSubLoading(false);
         dispatch(
           setSnackbarMessage({
-            message: 'Contract offers subscription failed!',
+            message: t('alerts.subscriptionError'),
             type: 'error',
           }),
         );
@@ -340,7 +337,7 @@ export default function ConsumeData() {
     } else {
       dispatch(
         setSnackbarMessage({
-          message: 'Connector not available!',
+          message: t('alerts.noConnector'),
           type: 'warning',
         }),
       );
@@ -393,17 +390,20 @@ export default function ConsumeData() {
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Typography variant="h4" py={4}>
-        Consumer View
+        {t('pages.consumeData')}
       </Typography>
       <Grid container spacing={2} alignItems="end">
         <Grid item xs={3}>
           <SelectList
-            label="Select Search Type"
+            keyTitle="title"
+            label={t('content.consumeData.selectType')}
             fullWidth
             size="small"
             onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
             items={ITEMS}
-            placeholder="Select Search Type"
+            defaultValue={ITEMS[0]}
+            disableClearable={true}
+            placeholder={t('content.consumeData.selectType')}
             value={searchFilterByType}
             hiddenLabel
           />
@@ -417,8 +417,8 @@ export default function ConsumeData() {
               onKeyPress={handleKeypress}
               fullWidth
               size="small"
-              label="Enter connector URL"
-              placeholder="Enter connector URL"
+              label={t('content.consumeData.enterURL')}
+              placeholder={t('content.consumeData.enterURL')}
             />
           ) : (
             <Grid container spacing={1} alignItems="flex-end">
@@ -431,8 +431,8 @@ export default function ConsumeData() {
                     onBlur={() => onBlurBPN()}
                     fullWidth
                     size="small"
-                    label="Enter Business Partner Number"
-                    placeholder="Enter Business Partner Number"
+                    label={t('content.consumeData.enterBPN')}
+                    placeholder={t('content.consumeData.enterBPN')}
                   />
                 ) : (
                   <Autocomplete
@@ -448,13 +448,18 @@ export default function ConsumeData() {
                       return typeof option === 'string' ? option : `${option.value}`;
                     }}
                     renderInput={params => (
-                      <Input {...params} label="Select a company name" placeholder="Search company name" fullWidth />
+                      <Input
+                        {...params}
+                        label={t('content.consumeData.selectCompany')}
+                        placeholder={t('content.consumeData.selectCompany')}
+                        fullWidth
+                      />
                     )}
                     renderOption={(props, option: any) => (
                       <Box
                         component="li"
-                        key={option.bpn}
                         {...props}
+                        key={option.bpn}
                         sx={{
                           display: 'flex',
                           flexDirection: 'column',
@@ -471,14 +476,14 @@ export default function ConsumeData() {
               </Grid>
               <Grid item xs={5}>
                 <SelectList
-                  label="Select connectors"
-                  placeholder="Select connectors"
+                  keyTitle="title"
+                  label={t('content.consumeData.selectConnectors')}
+                  placeholder={t('content.consumeData.selectConnectors')}
                   fullWidth
                   size="small"
                   value={filterSelectedConnector}
                   onChangeItem={e => dispatch(setFilterSelectedConnector(e.value))}
                   items={filterConnectors}
-                  noOptionsText="No connector available"
                 />
               </Grid>
             </Grid>
@@ -496,7 +501,7 @@ export default function ConsumeData() {
                 (searchFilterByType === 'url' && filterProviderUrl.length === 0)
               }
             >
-              Search
+              {t('button.search')}
             </Button>
           </Permissions>
         </Grid>
@@ -509,7 +514,7 @@ export default function ConsumeData() {
             onClick={checkoutSelectedOffers}
             disabled={!selectedOffersList.length}
           >
-            Subscribe to selected
+            {t('button.subscribeSelected')}
           </Button>
         </Permissions>
       </Box>
@@ -534,12 +539,12 @@ export default function ConsumeData() {
               LoadingOverlay: LinearProgress,
               NoRowsOverlay: () => (
                 <Stack height="100%" alignItems="center" justifyContent="center">
-                  No Data offers!
+                  {t('content.common.noData')}
                 </Stack>
               ),
               NoResultsOverlay: () => (
                 <Stack height="100%" alignItems="center" justifyContent="center">
-                  Data offer not found!
+                  {t('content.common.noResults')}
                 </Stack>
               ),
             }}

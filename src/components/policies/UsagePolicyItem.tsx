@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,18 +18,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import {
-  Box,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  Stack,
-} from '@mui/material';
-import { Input } from 'cx-portal-shared-components';
+import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from '@mui/material';
+import { Input, SelectList } from 'cx-portal-shared-components';
+import { useTranslation } from 'react-i18next';
 
 import { setDurationUnit } from '../../features/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
@@ -53,26 +44,32 @@ export default function UsagePolicyItem({
 }: FreeTextProps) {
   const { durationUnit } = useAppSelector(state => state.accessUsagePolicySlice);
   const dispatch = useAppDispatch();
-  const durationUnits = [
+  const { t } = useTranslation();
+
+  const DURATION_UNITS = [
     {
-      label: 'Hour',
+      id: 0,
+      title: 'Hour',
       value: 'HOUR',
     },
     {
-      label: 'Day',
+      id: 1,
+      title: 'Day',
       value: 'DAY',
     },
     {
-      label: 'Month',
+      id: 2,
+      title: 'Month',
       value: 'MONTH',
     },
     {
-      label: 'Year',
+      id: 3,
+      title: 'Year',
       value: 'YEAR',
     },
   ];
   function checkErrors() {
-    if (constraintType === 'Duration') {
+    if (constraintType === t('content.policies.duration')) {
       const result = /^[1-9]\d*$/.test(inputFreeText);
       return !result;
     } else if (restrictionType === 'RESTRICTED' && inputFreeText === '') {
@@ -81,7 +78,7 @@ export default function UsagePolicyItem({
   }
   return (
     <Box component="form" noValidate autoComplete="off">
-      <FormLabel sx={{ mb: 2 }}>{constraintType} restriction</FormLabel>
+      <FormLabel sx={{ mb: 2 }}>{constraintType}</FormLabel>
       <RadioGroup row value={restrictionType} onChange={e => setRestrictionType(e.target.value)}>
         <FormControlLabel value="UNRESTRICTED" control={<Radio />} label="Unrestricted" />
         <FormControlLabel value="RESTRICTED" control={<Radio />} label="Restricted" />
@@ -93,10 +90,10 @@ export default function UsagePolicyItem({
             <FormLabel sx={{ my: 1, display: 'block' }}>{displayText}</FormLabel>
             <Stack direction="row" alignItems={'flex-end'} spacing={2}>
               <Input
-                label="Enter a value"
+                label={t('content.common.enterValue')}
                 placeholder="Enter a value"
                 size="small"
-                type={constraintType === 'Duration' ? 'number' : 'text'}
+                type={constraintType === t('content.policies.duration') ? 'number' : 'text'}
                 InputProps={{
                   inputProps: { min: 1 },
                 }}
@@ -107,21 +104,21 @@ export default function UsagePolicyItem({
                   setInputFreeText(e.target.value);
                 }}
               />
-              {constraintType === 'Duration' && (
-                <FormControl sx={{ minWidth: 80 }} size="small">
+              {constraintType === t('content.policies.duration') && (
+                <FormControl sx={{ minWidth: 150 }} size="small">
                   {/* need to replace with cx-lib selectList */}
-                  <Select
+                  <SelectList
+                    keyTitle="title"
                     value={durationUnit}
-                    onChange={e => {
-                      dispatch(setDurationUnit(e.target.value));
+                    defaultValue={DURATION_UNITS[0]}
+                    items={DURATION_UNITS}
+                    label={t('content.policies.selectDuration')}
+                    placeholder={t('content.policies.selectDuration')}
+                    disableClearable={true}
+                    onChangeItem={e => {
+                      dispatch(setDurationUnit(e.value));
                     }}
-                  >
-                    {durationUnits.map(item => (
-                      <MenuItem key={item.label} value={item.value}>
-                        {item.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  />
                 </FormControl>
               )}
             </Stack>

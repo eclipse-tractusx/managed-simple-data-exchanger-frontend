@@ -179,10 +179,11 @@ There is a web interface between frontend and backend.<br /><br />
 
 Detailed API specs available under:
 
-[https://github.com/catenax-ng/product-dft-backend/blob/Tractus-X_Eclipse_Repo_Changes_0.4/src/main/resources/open-api/sde-backend-openapi.yaml](https://github.com/catenax-ng/product-dft-backend/blob/Tractus-X_Eclipse_Repo_Changes_0.4/src/main/resources/open-api/sde-backend-openapi.yaml)
+[https://github.com/catenax-ng/tx-dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml](https://github.com/catenax-ng/tx-dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml)
 
-[https://github.com/catenax-ng/product-dft-backend/tree/Tractus-X_Eclipse_Repo_Changes_0.4#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/product-dft-backend/tree/Tractus-X_Eclipse_Repo_Changes_0.4#restful-apis-of-dft-simple-data-exchanger)
+[https://github.com/catenax-ng/tx-dft-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/tx-dft-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
 
+Backend API Swagger-ui : (https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
 <br />
 
 ### **Data processing pipelines**
@@ -281,33 +282,31 @@ Detailed API specs available under:
 
 #### **App routing**
 
-<img src="images/app-routing.png" height="60%" width="60%" /><br /><br />
-
-| Route                       	| Description                                                      	| Type 	|
-|-----------------------------	|------------------------------------------------------------------	|------	|
-| /login                      	| Keycloak Authentication                                          	| Main 	|
-| /dashboard                  	| Home page (redirect by default to "/dashboard/create-data")      	| Main 	|
-| /dashboard/create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
-| /dashboard/history          	| Upload history table                                             	| Sub  	|
-| /dashboard/help             	| Help guide, CSV rules and samples                                	| Sub  	|
-| /dashboard/consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
-| /dashboard/contract-history 	| Contract history table                                           	| Sub  	|
+| Route               	| Description                                                      	        | Type 	|
+|--------------------	|-------------------------------------------------------------------------	|------	|
+| /login                | Keycloak Authentication                                          	        | Main 	|
+| /logout               | Keycloak logout                                          			        | Main 	|
+| /                  	| Home page for use case selection and app overview                         | Main 	|
+| /create-data      	| Create data using a CSV file, table or submit JSON data directly 	        | Sub  	|
+| /upload-history       | Upload history table                                          		    | Sub  	|
+| /help           	  	| Help guide, CSV rules and samples                             		    | Sub  	|
+| /consume-data	     	| Get list of data offer by selected providers                  		    | Sub  	|
+| /contract-history 	| Contract history table                                        		    | Sub  	|
 
 <br />
 
 #### **Frontend folder structure**
-<img src="images/frontend-folder-structure.png" height="40%" width="50%" /><br /><br />
 
 | Folder name 	| Description                                            	|
 |-------------	|--------------------------------------------------------	|
 | components  	| React components                                       	|
+| features  	| business logics of a particular feature with its store, service classes, actions and html	|
 | helpers     	| Constants and configurations                           	|
 | models      	| Interfaces                                             	|
 | modules     	| Custom hooks and routing configuration                 	|
 | pages       	| App pages                                              	|
 | services    	| Frontend service classes (ex: SDEService, UserService) 	|
 | store       	| Redux store to manage global state                     	|
-| styles      	| Scss files                                             	|
 | tests       	| Unit tests                                             	|
 | utils       	| Auxiliary functions (ex: formatDate)                   	|
 

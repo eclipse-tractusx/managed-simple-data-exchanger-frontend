@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -30,4 +30,13 @@ const fetchUserPermissions = createAsyncThunk('/user/permissions', async () => {
   }
 });
 
-export { fetchUserPermissions };
+const fetchUseCases = createAsyncThunk('/usecases', async () => {
+  try {
+    const res = await AppService.getInstance().getUseCases();
+    return res.data;
+  } catch (error) {
+    console.log('api call error:', error);
+  }
+});
+
+export { fetchUseCases, fetchUserPermissions };
