@@ -81,7 +81,7 @@ export default function CreateData() {
         </Grid>
       ) : (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
-          <Typography>Select a submodel</Typography>
+          <Typography>{t('content.provider.selectSubmodel')}</Typography>
         </Box>
       )}
       <PoliciesDialog />

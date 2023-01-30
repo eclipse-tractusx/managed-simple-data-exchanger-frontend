@@ -21,19 +21,19 @@ import i18n, { changeLanguage } from 'i18next';
 // import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
-// import mainDE from '../assets/locales/de/main.json';
+import mainDE from '../assets/locales/de/main.json';
 import mainEN from '../assets/locales/en/main.json';
 
 const resources = {
-  // de: {
-  //   translation: mainDE,
-  // },
   en: {
     translation: mainEN,
   },
+  de: {
+    translation: mainDE,
+  },
 };
 
-const supportedLanguages = Object.keys(resources).sort();
+const supportedLanguages = Object.keys(resources);
 
 const init = (): void => {
   i18n
@@ -42,7 +42,7 @@ const init = (): void => {
     .init({
       resources,
       fallbackLng: 'en',
-      supportedLngs: ['de', 'en'],
+      supportedLngs: ['en', 'de'],
       interpolation: {
         escapeValue: false,
       },
