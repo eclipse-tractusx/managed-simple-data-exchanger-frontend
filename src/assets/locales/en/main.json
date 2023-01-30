@@ -191,6 +191,7 @@
     "submodelDeleteSuccess": "Submodel deleted successfully!",
     "submodelDeleteError": "Failed to delete Submodel!",
     "downloadSuccess": "File downloaded successfully!",
-    "downloadError": "File not downloaded!"
+    "downloadError": "File not downloaded!",
+    "invalidData": "Invalid data! Enter required fields."
   }
 }

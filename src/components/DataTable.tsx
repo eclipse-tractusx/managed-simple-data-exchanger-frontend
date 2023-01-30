@@ -57,7 +57,7 @@ export default function DataTable() {
               schemaValidator(rows);
             }}
           >
-            Next Step - Configure Policies
+            {t('content.policies.configure')}
           </Button>
         </Box>
       </Box>
