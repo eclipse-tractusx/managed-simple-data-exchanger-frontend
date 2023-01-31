@@ -44,11 +44,12 @@ import {
   DialogContent,
   DialogHeader,
   Input,
+  LoadingButton,
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
 import { debounce } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
@@ -100,6 +101,7 @@ export default function ConsumeData() {
   const [isOfferSubLoading, setIsOfferSubLoading] = useState<boolean>(false);
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
+  const [searchOpen, setSearchOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -288,6 +290,7 @@ export default function ConsumeData() {
   const onChangeSearchInputValue = async (params: string) => {
     const searchStr = params.toLowerCase();
     if (searchStr.length > 2) {
+      if (open) setSearchOpen(true);
       dispatch(setFilterCompanyOptions([]));
       dispatch(setFfilterCompanyOptionsLoading(true));
       const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
@@ -303,6 +306,7 @@ export default function ConsumeData() {
         dispatch(setFilterCompanyOptions(filterContent));
       }
     } else {
+      setSearchOpen(false);
       dispatch(setFilterCompanyOptions([]));
     }
   };
@@ -338,7 +342,7 @@ export default function ConsumeData() {
       dispatch(
         setSnackbarMessage({
           message: t('alerts.noConnector'),
-          type: 'warning',
+          type: 'error', //warning
         }),
       );
     }
@@ -389,7 +393,7 @@ export default function ConsumeData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h4" py={4}>
+      <Typography variant="h4" pb={4}>
         {t('pages.consumeData')}
       </Typography>
       <Grid container spacing={2} alignItems="end">
@@ -408,7 +412,7 @@ export default function ConsumeData() {
             hiddenLabel
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           {searchFilterByType === 'url' ? (
             <Input
               value={filterProviderUrl}
@@ -427,15 +431,22 @@ export default function ConsumeData() {
                   <Input
                     value={filterSelectedBPN}
                     type="text"
-                    onChange={e => dispatch(setFilterSelectedBPN(e.target.value))}
                     onBlur={() => onBlurBPN()}
                     fullWidth
                     size="small"
                     label={t('content.consumeData.enterBPN')}
                     placeholder={t('content.consumeData.enterBPN')}
+                    inputProps={{ maxLength: 16 }}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const regex = /[a-zA-Z0-9]$/;
+                      if (e.target.value !== '' && regex.test(e.target.value)) {
+                        dispatch(setFilterSelectedBPN(e.target.value));
+                      }
+                    }}
                   />
                 ) : (
                   <Autocomplete
+                    open={searchOpen}
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
@@ -443,15 +454,17 @@ export default function ConsumeData() {
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}
+                    onClose={() => setSearchOpen(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     getOptionLabel={option => {
                       return typeof option === 'string' ? option : `${option.value}`;
                     }}
+                    noOptionsText={t('content.consumeData.noCompany')}
                     renderInput={params => (
                       <Input
                         {...params}
-                        label={t('content.consumeData.selectCompany')}
-                        placeholder={t('content.consumeData.selectCompany')}
+                        label={t('content.consumeData.searchCompany')}
+                        placeholder={t('content.consumeData.searchPlaceholder')}
                         fullWidth
                       />
                     )}
@@ -471,14 +484,22 @@ export default function ConsumeData() {
                         <Typography variant="subtitle2">{option.bpn}</Typography>
                       </Box>
                     )}
+                    sx={{
+                      '& .MuiFilledInput-root': {
+                        pt: '0px!important',
+                        minHeight: '55px',
+                      },
+                    }}
                   />
                 )}
               </Grid>
               <Grid item xs={5}>
                 <SelectList
+                  disabled={!Boolean(filterCompanyOptions.length)}
                   keyTitle="title"
                   label={t('content.consumeData.selectConnectors')}
                   placeholder={t('content.consumeData.selectConnectors')}
+                  noOptionsText={t('content.consumeData.noConnectors')}
                   fullWidth
                   size="small"
                   value={filterSelectedConnector}
@@ -491,22 +512,24 @@ export default function ConsumeData() {
         </Grid>
         <Grid item>
           <Permissions values={['consumer_search_connectors']}>
-            <Button
+            <LoadingButton
+              color="primary"
               variant="contained"
-              size="medium"
-              onClick={fetchConsumerDataOffers}
               disabled={
                 ((searchFilterByType === 'bpn' || searchFilterByType === 'company') &&
                   filterSelectedConnector.length === 0) ||
                 (searchFilterByType === 'url' && filterProviderUrl.length === 0)
               }
-            >
-              {t('button.search')}
-            </Button>
+              label={t('button.search')}
+              loadIndicator={t('content.common.loading')}
+              onButtonClick={fetchConsumerDataOffers}
+              loading={offersLoading}
+              sx={{ ml: 3 }}
+            />
           </Permissions>
         </Grid>
       </Grid>
-      <Box display="flex" justifyContent="flex-end" mb={3}>
+      <Box display="flex" justifyContent="flex-end" my={3}>
         <Permissions values={['consumer_establish_contract_agreement']}>
           <Button
             variant="contained"
@@ -565,9 +588,6 @@ export default function ConsumeData() {
                 whiteSpace: 'break-spaces',
                 lineHeight: 1.5,
                 textAlign: 'center',
-              },
-              '& .MuiDataGrid-columnHeader': {
-                padding: '0 10px',
               },
               '& .MuiDataGrid-columnHeaderCheckbox': {
                 height: 'auto !important',

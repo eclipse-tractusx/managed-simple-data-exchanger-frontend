@@ -24,7 +24,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
 import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import { Button } from 'cx-portal-shared-components';
+import { LoadingButton } from 'cx-portal-shared-components';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -163,20 +163,25 @@ const ContractHistory: React.FC = () => {
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Permissions values={['consumer_view_contract_agreement']} fullPage={true}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6} my={4}>
+        <Grid container alignItems="center">
+          <Grid item xs={6}>
             <Typography variant="h4">{t('content.contractHistory.title')}</Typography>
           </Grid>
-          <Grid item xs={6} my={4} textAlign={'right'}>
-            <Button size="small" variant="contained" onClick={() => fetchContractAgreements()}>
-              <Refresh />
-              &nbsp; {t('button.refresh')}
-            </Button>
+          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+            <LoadingButton
+              size="small"
+              variant="contained"
+              label={t('button.refresh')}
+              onButtonClick={() => fetchContractAgreements()}
+              startIcon={<Refresh />}
+              loadIndicator={t('content.common.loading')}
+              loading={isContractAgreementsLoading}
+            />
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
               <DataGrid
-                sx={{ py: 1 }}
+                sx={{ mt: 4 }}
                 autoHeight={true}
                 getRowId={row => row.negotiationId}
                 rows={contractAgreements}

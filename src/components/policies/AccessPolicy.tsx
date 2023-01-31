@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2022 Contributors to the Eclipse Foundation
- * 
+ *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -56,6 +56,7 @@ export default function AccessPolicy() {
   const { filterCompanyOptions, filterCompanyOptionsLoading } = useAppSelector(state => state.consumerSlice);
   const [searchFilterByType, setsearchFilterByType] = useState<string>('');
   const [dialogOpen, setdialogOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -73,6 +74,7 @@ export default function AccessPolicy() {
   const onChangeSearchInputValue = async (params: string) => {
     const searchStr = params.toLowerCase();
     if (searchStr.length > 2) {
+      setSearchOpen(true);
       dispatch(setFilterCompanyOptions([]));
       dispatch(setFfilterCompanyOptionsLoading(true));
       const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
@@ -88,6 +90,7 @@ export default function AccessPolicy() {
         dispatch(setFilterCompanyOptions(filterContent));
       }
     } else {
+      setSearchOpen(false);
       dispatch(setFilterCompanyOptions([]));
     }
   };
@@ -136,10 +139,17 @@ export default function AccessPolicy() {
                     placeholder={t('content.consumeData.enterBPN')}
                     size="small"
                     value={inputBpn}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setInputBpn(e.target.value))}
+                    inputProps={{ maxLength: 16 }}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const regex = /[a-zA-Z0-9]$/;
+                      if (e.target.value !== '' && regex.test(e.target.value)) {
+                        dispatch(setInputBpn(e.target.value));
+                      }
+                    }}
                   />
                 ) : (
                   <Autocomplete
+                    open={searchOpen}
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
@@ -148,15 +158,17 @@ export default function AccessPolicy() {
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}
+                    onClose={() => setSearchOpen(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     getOptionLabel={option => {
                       return typeof option === 'string' ? option : `${option.value}`;
                     }}
+                    noOptionsText={t('content.consumeData.noCompany')}
                     renderInput={params => (
                       <Input
                         {...params}
-                        label={t('content.consumeData.selectCompany')}
-                        placeholder={t('content.consumeData.selectCompany')}
+                        label={t('content.consumeData.searchCompany')}
+                        placeholder={t('content.consumeData.searchPlaceholder')}
                         fullWidth
                       />
                     )}

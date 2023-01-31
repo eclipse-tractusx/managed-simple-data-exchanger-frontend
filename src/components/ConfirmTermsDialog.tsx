@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Box, Checkbox, CircularProgress, FormControlLabel } from '@mui/material';
-import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
+import { Box, Checkbox, FormControlLabel } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader, LoadingButton } from 'cx-portal-shared-components';
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -96,21 +96,16 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
         <Button variant="outlined" disabled={isProgress} onClick={() => handleButton('close')}>
           {t('button.cancel')}
         </Button>
-        <Button variant="contained" disabled={isProgress || !isAgreed} onClick={() => handleButton('confirm')}>
-          {isProgress ? 'Loading..' : 'Confirm'}
-          {isProgress && (
-            <CircularProgress
-              size={24}
-              sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                marginTop: '-12px',
-                marginLeft: '-12px',
-              }}
-            />
-          )}
-        </Button>
+        <LoadingButton
+          color="primary"
+          variant="contained"
+          disabled={isProgress || !isAgreed}
+          label={t('button.confirm')}
+          loadIndicator={t('content.common.loading')}
+          onButtonClick={() => handleButton('confirm')}
+          loading={isProgress}
+          sx={{ ml: 3 }}
+        />
       </DialogActions>
     </Dialog>
   );

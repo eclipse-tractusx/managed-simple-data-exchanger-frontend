@@ -92,8 +92,11 @@
     },
     "consumeData": {
       "selectType": "Select search type",
-      "selectCompany": "Select a company name",
+      "searchCompany": "Search company name",
+      "searchPlaceholder": "Enter min. 3 letters",
+      "noCompany": "No company found",
       "selectConnectors": "Select connectors",
+      "noConnectors": "No connectors found",
       "enterBPN": "Enter Business Partner Number",
       "enterURL": "Enter connector URL",
       "selectTypeValues": {

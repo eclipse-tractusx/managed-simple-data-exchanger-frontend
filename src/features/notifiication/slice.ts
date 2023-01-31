@@ -21,16 +21,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IActionPayload, INotificationSlice } from './types';
 
+const initialState: INotificationSlice = {
+  openSnackBar: false,
+  snackBarMessage: '',
+  snackbarType: 'success',
+};
+
 export const notificationSlice = createSlice({
   name: 'notificationSlice',
-  initialState: {
-    openSnackBar: false,
-    snackBarMessage: '',
-    snackbarType: 'success',
-  } as INotificationSlice,
+  initialState,
   reducers: {
     toggleSnackbar: state => {
-      state.openSnackBar = !state.openSnackBar;
+      state.openSnackBar = false;
     },
     setSnackbarMessage: (state, action: PayloadAction<IActionPayload>) => {
       state.snackbarType = action.payload.type;
