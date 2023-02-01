@@ -47,7 +47,7 @@ interface IConsumerSlice {
   filterSelectedCompanyOption: IntOption | null;
   filterSelectedBPN: string | null;
   filterConnectors: IntConnectorItem[];
-  filterSelectedConnector: string;
+  filterSelectedConnector: Partial<IntConnectorItem>;
   contractAgreements: IContractAgreements[];
   isContractAgreementsLoading: boolean;
 }
@@ -66,7 +66,7 @@ const initialState: IConsumerSlice = {
   filterSelectedCompanyOption: null,
   filterSelectedBPN: '',
   filterConnectors: [],
-  filterSelectedConnector: '',
+  filterSelectedConnector: {},
   contractAgreements: [],
   isContractAgreementsLoading: false,
 };
@@ -111,7 +111,7 @@ export const consumerSlice = createSlice({
     setFilterConnectors: (state, action: PayloadAction<IntConnectorItem[]>) => {
       state.filterConnectors = action.payload;
     },
-    setFilterSelectedConnector: (state, action: PayloadAction<string>) => {
+    setFilterSelectedConnector: (state, action: PayloadAction<IntConnectorItem>) => {
       state.filterSelectedConnector = action.payload;
     },
     setContractAgreements: (state, action: PayloadAction<IContractAgreements[]>) => {

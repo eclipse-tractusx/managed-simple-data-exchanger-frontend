@@ -25,7 +25,7 @@ export interface IUser {
   name: string;
   email: string;
   company: string;
-  roles: string[];
+  roles?: string[];
   bpn: string;
   tenant: string;
   token: string;
