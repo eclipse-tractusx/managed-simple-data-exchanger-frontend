@@ -56,7 +56,7 @@ export default function AccessPolicy() {
   const { filterCompanyOptions, filterCompanyOptionsLoading } = useAppSelector(state => state.consumerSlice);
   const [searchFilterByType, setsearchFilterByType] = useState<string>('');
   const [dialogOpen, setdialogOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchPopup, setsearchPopup] = useState(false);
   const [bpnError, setbpnError] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -76,7 +76,7 @@ export default function AccessPolicy() {
   const onChangeSearchInputValue = async (params: string) => {
     const searchStr = params.toLowerCase();
     if (searchStr.length > 2) {
-      setSearchOpen(true);
+      setsearchPopup(true);
       dispatch(setFilterCompanyOptions([]));
       dispatch(setFfilterCompanyOptionsLoading(true));
       const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
@@ -92,7 +92,7 @@ export default function AccessPolicy() {
         dispatch(setFilterCompanyOptions(filterContent));
       }
     } else {
-      setSearchOpen(false);
+      setsearchPopup(false);
       dispatch(setFilterCompanyOptions([]));
     }
   };
@@ -101,8 +101,8 @@ export default function AccessPolicy() {
     setsearchFilterByType(value);
   };
   const handleAddBpn = () => {
-    setbpnError(true);
     if (inputBpn.length != 16) {
+      setbpnError(true);
     } else {
       setbpnError(false);
       dispatch(addBpn());
@@ -165,7 +165,7 @@ export default function AccessPolicy() {
                   />
                 ) : (
                   <Autocomplete
-                    open={searchOpen}
+                    open={searchPopup}
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
@@ -174,7 +174,7 @@ export default function AccessPolicy() {
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}
-                    onClose={() => setSearchOpen(false)}
+                    onClose={() => setsearchPopup(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     getOptionLabel={option => {
                       return typeof option === 'string' ? option : `${option.value}`;
@@ -218,8 +218,8 @@ export default function AccessPolicy() {
                 <i> {t('content.policies.note')}</i>
               </Typography>
               <Stack direction="row" spacing={1} mt={bpnList.length ? 3 : 0} sx={{ flexWrap: 'wrap', gap: 1 }}>
-                {bpnList.map((bpnNum: string, key: number) => (
-                  <Chip color="secondary" label={bpnNum} key={key} onClick={() => dispatch(deleteBpn(bpnNum))} />
+                {bpnList.map((bpnNum: string) => (
+                  <Chip color="secondary" label={bpnNum} key={bpnNum + 1} onClick={() => dispatch(deleteBpn(bpnNum))} />
                 ))}
               </Stack>
             </Box>
