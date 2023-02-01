@@ -17,14 +17,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { AlertColor } from '@mui/material/Alert';
 
+export type IAlertColors = 'success' | 'error';
 export interface INotificationSlice {
   openSnackBar: boolean;
   snackBarMessage: string;
-  snackbarType: AlertColor;
+  snackbarType: IAlertColors;
 }
 export interface IActionPayload {
   message: string;
-  type: AlertColor;
+  type: IAlertColors;
 }

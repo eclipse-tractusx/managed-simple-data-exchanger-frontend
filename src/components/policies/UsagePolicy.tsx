@@ -51,6 +51,7 @@ export default function UsagePolicy() {
           setRestrictionType={e => dispatch(setDuration(e))}
           constraintType={t('content.policies.duration')}
           displayText={t('content.policies.durationNote')}
+          labelText={t('content.common.enterValue')}
           inputFreeText={durationValue}
           setInputFreeText={e => dispatch(setDurationValue(e))}
         />
@@ -61,6 +62,7 @@ export default function UsagePolicy() {
           setRestrictionType={e => dispatch(setPurpose(e))}
           constraintType={t('content.policies.purpose')}
           displayText={t('content.policies.purposeNote')}
+          labelText={t('content.policies.purposeLabel')}
           inputFreeText={purposeValue}
           setInputFreeText={e => dispatch(setPurposeValue(e))}
         />
@@ -71,6 +73,7 @@ export default function UsagePolicy() {
           setRestrictionType={e => dispatch(setRole(e))}
           constraintType={t('content.policies.role')}
           displayText={t('content.policies.roleNote')}
+          labelText={t('content.policies.roleLabel')}
           inputFreeText={roleValue}
           setInputFreeText={e => dispatch(setRoleValue(e))}
         />
@@ -81,6 +84,7 @@ export default function UsagePolicy() {
           setRestrictionType={e => dispatch(setCustom(e))}
           constraintType={t('content.policies.custom')}
           displayText={t('content.policies.customNote')}
+          labelText={t('content.policies.customLabel')}
           inputFreeText={customValue}
           setInputFreeText={e => dispatch(setCustomValue(e))}
         />

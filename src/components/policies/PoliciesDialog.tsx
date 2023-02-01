@@ -85,7 +85,6 @@ export default function PoliciesDialog() {
   const clearUpload = () => {
     dispatch(setPageLoading(false));
     dispatch(setUploadStatus(true));
-    dispatch(setPageLoading(false));
     dispatch(clearRows());
     dispatch(handleDialogClose());
     dispatch(removeSelectedFiles());
@@ -122,7 +121,7 @@ export default function PoliciesDialog() {
         dispatch(
           setSnackbarMessage({
             message: t('alerts.uploadWarning'),
-            type: 'warning',
+            type: 'error', //warning
           }),
         );
       } else {
@@ -260,7 +259,7 @@ export default function PoliciesDialog() {
         <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
           {t('button.close')}
         </Button>
-        <Button variant="contained" onClick={handleSubmitData}>
+        <Button variant="contained" onClick={handleSubmitData} disabled={showError}>
           {t('button.submit')}
         </Button>
       </DialogActions>

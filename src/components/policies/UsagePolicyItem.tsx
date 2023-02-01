@@ -31,6 +31,7 @@ interface FreeTextProps {
   constraintType: string;
   displayText: string;
   inputFreeText: string;
+  labelText: string;
   setInputFreeText: (freeText: string) => void;
 }
 
@@ -40,6 +41,7 @@ export default function UsagePolicyItem({
   constraintType,
   displayText,
   inputFreeText,
+  labelText,
   setInputFreeText,
 }: FreeTextProps) {
   const { durationUnit } = useAppSelector(state => state.accessUsagePolicySlice);
@@ -90,8 +92,8 @@ export default function UsagePolicyItem({
             <FormLabel sx={{ my: 1, display: 'block' }}>{displayText}</FormLabel>
             <Stack direction="row" alignItems={'flex-end'} spacing={2}>
               <Input
-                label={t('content.common.enterValue')}
-                placeholder="Enter a value"
+                label={labelText}
+                placeholder={labelText}
                 size="small"
                 type={constraintType === t('content.policies.duration') ? 'number' : 'text'}
                 InputProps={{
@@ -103,6 +105,7 @@ export default function UsagePolicyItem({
                 onChange={e => {
                   setInputFreeText(e.target.value);
                 }}
+                sx={{ minWidth: 250 }}
               />
               {constraintType === t('content.policies.duration') && (
                 <FormControl sx={{ minWidth: 150 }} size="small">

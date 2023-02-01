@@ -21,25 +21,21 @@
 
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Box, Divider, Paper, useTheme } from '@mui/material';
-import { LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
-import i18next, { changeLanguage } from 'i18next';
+import { Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { setSidebarExpanded } from '../features/app/slice';
-import I18nService from '../services/i18nService';
 import { useAppDispatch, useAppSelector } from '../store/store';
 
-// eslint-disable-next-line
 const Nav = () => {
   const theme = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const { t } = useTranslation();
   const avatar = useRef<HTMLDivElement>(null);
-  const [lang, setlang] = useState(i18next.language);
   const { loggedInUser } = useAppSelector(state => state.appSlice);
-  const NAV_ITEMS = [{ title: loggedInUser.company }, { title: loggedInUser.bpn }, { title: 'Logout', to: 'logout' }];
+  const NAV_ITEMS = [{ title: 'Logout', to: 'logout' }];
   const dispatch = useAppDispatch();
 
   const openCloseMenu = () => setMenuOpen(prevVal => !prevVal);
@@ -88,21 +84,11 @@ const Nav = () => {
             open={menuOpen}
             userName={loggedInUser.name}
             top={50}
-            userRole={loggedInUser.roles.toString()}
+            userRole={loggedInUser.company}
             onClickAway={onClickAway}
           >
             <UserNav sx={{ my: 1 }} component={Link} items={NAV_ITEMS} />
             <Divider />
-            <LanguageSwitch
-              current={lang}
-              languages={I18nService.supportedLanguages.map(key => ({
-                key,
-              }))}
-              onChange={e => {
-                changeLanguage(e);
-                setlang(e);
-              }}
-            />
           </UserMenu>
         </Box>
       </Box>
