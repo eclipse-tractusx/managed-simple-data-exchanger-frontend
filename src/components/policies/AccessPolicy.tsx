@@ -29,7 +29,7 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
@@ -57,6 +57,8 @@ export default function AccessPolicy() {
   const [searchFilterByType, setsearchFilterByType] = useState<string>('');
   const [dialogOpen, setdialogOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [bpnError, setbpnError] = useState(false);
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -98,6 +100,18 @@ export default function AccessPolicy() {
   const handleSearchTypeChange = (value: string) => {
     setsearchFilterByType(value);
   };
+  const handleAddBpn = () => {
+    setbpnError(true);
+    if (inputBpn.length != 16) {
+    } else {
+      setbpnError(false);
+      dispatch(addBpn());
+    }
+  };
+
+  useEffect(() => {
+    if (inputBpn.length == 16) setbpnError(false);
+  }, [inputBpn]);
 
   return (
     <>
@@ -142,10 +156,12 @@ export default function AccessPolicy() {
                     inputProps={{ maxLength: 16 }}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       const regex = /[a-zA-Z0-9]$/;
-                      if (e.target.value !== '' && regex.test(e.target.value)) {
+                      if (e.target.value === '' || regex.test(e.target.value)) {
                         dispatch(setInputBpn(e.target.value));
                       }
                     }}
+                    error={bpnError}
+                    helperText="Incorrect BPN"
                   />
                 ) : (
                   <Autocomplete
@@ -192,7 +208,7 @@ export default function AccessPolicy() {
                 )}
               </Grid>
               <Grid item>
-                <Button variant="contained" sx={{ marginLeft: 1 }} onClick={() => dispatch(addBpn())}>
+                <Button variant="contained" sx={{ marginLeft: 1 }} onClick={handleAddBpn}>
                   {t('button.add')}
                 </Button>
               </Grid>

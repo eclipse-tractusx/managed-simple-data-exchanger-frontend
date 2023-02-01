@@ -18,34 +18,37 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-@font-face {
-  font-family: 'LibreFranklin-SemiBold';
-  font-display: block;
-  src: url('https://portal.dev.demo.catena-x.net/assets/fonts/LibreFranklin-VariableFont_wght.ttf') format('truetype');
-  font-weight: 600;
+@mixin use-font(
+  $font-family,
+  $filename,
+  $font-weight: normal,
+  $font-display: fallback
+    //to load font asyncronously, https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display
+) {
+  @font-face {
+    font-family: '#{$font-family}';
+    font-display: $font-display;
+    src:
+      // url('#{$filename}.eot') format('eot'),
+      // url('#{$filename}.woff2') format('woff2'),
+      // url('#{$filename}.woff') format('woff'),
+      // url('#{$filename}.svg') format('svg'),
+      url('#{$filename}.ttf') format('truetype');
+    font-weight: $font-weight;
+  }
 }
-@font-face {
-  font-family: 'LibreFranklin-Medium';
-  font-display: block;
-  src: url('https://portal.dev.demo.catena-x.net/assets/fonts/LibreFranklin-VariableFont_wght.ttf') format('truetype');
-  font-weight: 500;
-}
-@font-face {
-  font-family: 'LibreFranklin';
-  font-display: block;
-  src: url('https://portal.dev.demo.catena-x.net/assets/fonts/LibreFranklin-VariableFont_wght.ttf') format('truetype');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'LibreFranklin-Light';
-  font-display: block;
-  src: url('https://portal.dev.demo.catena-x.net/assets/fonts/LibreFranklin-VariableFont_wght.ttf') format('truetype');
-  font-weight: 300;
-}
+
+@include use-font('LibreFranklin-SemiBold', './assets/fonts/LibreFranklin-VariableFont_wght', 600);
+
+@include use-font('LibreFranklin-Medium', './assets/fonts/LibreFranklin-VariableFont_wght', 500);
+
+@include use-font('LibreFranklin', './assets/fonts/LibreFranklin-VariableFont_wght', 400);
+
+@include use-font('LibreFranklin-Light', './assets/fonts/LibreFranklin-VariableFont_wght', 300);
 
 body {
   margin: 0;
-  font-family: 'LibreFranklin', 'Libre Franklin', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'LibreFranklin', 'Libre Franklin', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
   color: black;
   font-weight: 300;
 }

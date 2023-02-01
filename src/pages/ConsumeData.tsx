@@ -439,7 +439,7 @@ export default function ConsumeData() {
                     inputProps={{ maxLength: 16 }}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       const regex = /[a-zA-Z0-9]$/;
-                      if (e.target.value !== '' && regex.test(e.target.value)) {
+                      if (e.target.value === '' || regex.test(e.target.value)) {
                         dispatch(setFilterSelectedBPN(e.target.value));
                       }
                     }}
