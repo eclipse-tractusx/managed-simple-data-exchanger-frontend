@@ -102,6 +102,7 @@ export default function ConsumeData() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -236,7 +237,7 @@ export default function ConsumeData() {
     try {
       let providerUrl = '';
       if (searchFilterByType === 'company' || searchFilterByType === 'bpn') {
-        providerUrl = filterSelectedConnector;
+        providerUrl = filterSelectedConnector.value;
       } else {
         providerUrl = filterProviderUrl;
       }
@@ -292,6 +293,7 @@ export default function ConsumeData() {
     if (searchStr.length > 2) {
       if (open) setSearchOpen(true);
       dispatch(setFilterCompanyOptions([]));
+      dispatch(setFilterSelectedConnector(null));
       dispatch(setFfilterCompanyOptionsLoading(true));
       const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
       dispatch(setFfilterCompanyOptionsLoading(false));
@@ -318,13 +320,13 @@ export default function ConsumeData() {
     dispatch(setFilterProviderUrl(''));
     dispatch(setFilterSelectedBPN(''));
     dispatch(setFilterConnectors([]));
-    dispatch(setFilterSelectedConnector(''));
+    dispatch(setFilterSelectedConnector(null));
   };
 
   const getConnectorByBPN = async (bpn: string) => {
     const payload = [];
     payload.push(bpn);
-    dispatch(setFilterSelectedConnector(''));
+    dispatch(setFilterSelectedConnector(null));
     dispatch(setFilterConnectors([]));
     const res = await ConsumerService.getInstance().searchConnectoByBPN(payload);
     if (res.length) {
@@ -383,7 +385,7 @@ export default function ConsumeData() {
     dispatch(setFilterProviderUrl(''));
     dispatch(setFilterSelectedBPN(''));
     dispatch(setFilterConnectors([]));
-    dispatch(setFilterSelectedConnector(''));
+    dispatch(setFilterSelectedConnector(null));
   };
 
   useEffect(() => {
@@ -454,6 +456,7 @@ export default function ConsumeData() {
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}
+                    onBlur={() => setSearchOpen(false)}
                     onClose={() => setSearchOpen(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     getOptionLabel={option => {
@@ -495,15 +498,14 @@ export default function ConsumeData() {
               </Grid>
               <Grid item xs={5}>
                 <SelectList
-                  disabled={!Boolean(filterCompanyOptions.length)}
+                  disabled={!Boolean(filterConnectors.length)}
                   keyTitle="title"
                   label={t('content.consumeData.selectConnectors')}
                   placeholder={t('content.consumeData.selectConnectors')}
                   noOptionsText={t('content.consumeData.noConnectors')}
                   fullWidth
                   size="small"
-                  value={filterSelectedConnector}
-                  onChangeItem={e => dispatch(setFilterSelectedConnector(e.value))}
+                  onChangeItem={e => dispatch(setFilterSelectedConnector(e))}
                   items={filterConnectors}
                 />
               </Grid>
@@ -516,9 +518,7 @@ export default function ConsumeData() {
               color="primary"
               variant="contained"
               disabled={
-                ((searchFilterByType === 'bpn' || searchFilterByType === 'company') &&
-                  filterSelectedConnector.length === 0) ||
-                (searchFilterByType === 'url' && filterProviderUrl.length === 0)
+                filterSelectedConnector ? filterSelectedConnector.value === '' : false || filterProviderUrl.length === 0
               }
               label={t('button.search')}
               loadIndicator={t('content.common.loading')}
