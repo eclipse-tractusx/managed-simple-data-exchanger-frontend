@@ -164,7 +164,7 @@ export default function ConsumeData() {
         const offersList: unknown[] = [];
         // multiselect or single selecte
         if (isMultipleContractSubscription) {
-          selectedOffersList.map((offer: IConsumerDataOffers) => {
+          selectedOffersList.forEach((offer: IConsumerDataOffers) => {
             offersList.push({
               offerId: offer.offerId || '',
               assetId: offer.assetId || '',
@@ -267,7 +267,7 @@ export default function ConsumeData() {
   const checkoutSelectedOffers = () => {
     let isUsagePoliciesEqual = false;
     const useCasesList: any[] = [];
-    selectedOffersList.map((offer: IConsumerDataOffers) => {
+    selectedOffersList.forEach((offer: IConsumerDataOffers) => {
       if (offer.usagePolicies.length > 0) {
         useCasesList.push(offer.usagePolicies);
       }
