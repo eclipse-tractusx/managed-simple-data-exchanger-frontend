@@ -176,7 +176,7 @@ export default function ConsumeData() {
             connectorId: selectedOffersList[0].connectorId,
             providerUrl:
               searchFilterByType === 'company' || searchFilterByType === 'bpn'
-                ? filterSelectedConnector
+                ? filterSelectedConnector.value
                 : filterProviderUrl,
             offers: offersList,
             policies: selectedOffersList[0].usagePolicies,
@@ -192,7 +192,7 @@ export default function ConsumeData() {
             connectorId: connectorId,
             providerUrl:
               searchFilterByType === 'company' || searchFilterByType === 'bpn'
-                ? filterSelectedConnector
+                ? filterSelectedConnector.value
                 : filterProviderUrl,
             offers: offersList,
             policies: usagePolicies,
@@ -453,7 +453,10 @@ export default function ConsumeData() {
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
-                    onChange={(event, value: any) => onCompanyOptionChange(value)}
+                    onChange={(event, value: any) => {
+                      onCompanyOptionChange(value);
+                      setConKey(Math.random());
+                    }}
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}

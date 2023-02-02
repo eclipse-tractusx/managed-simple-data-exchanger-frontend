@@ -29,6 +29,7 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
+import _ from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -103,9 +104,10 @@ export default function AccessPolicy() {
 
   const handleSearchTypeChange = (value: IntConnectorItem) => {
     setsearchFilterByType(value);
+    dispatch(setInputBpn(''));
   };
   const handleAddBpn = () => {
-    if (inputBpn.length != 16) {
+    if (_.inRange(inputBpn.length, 1, 16)) {
       setbpnError(true);
     } else {
       setbpnError(false);
@@ -114,7 +116,7 @@ export default function AccessPolicy() {
   };
 
   useEffect(() => {
-    if (inputBpn.length == 16) setbpnError(false);
+    if (inputBpn.length == 16 || inputBpn.length == 0) setbpnError(false);
   }, [inputBpn]);
 
   return (
@@ -179,6 +181,7 @@ export default function AccessPolicy() {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}
                     onClose={() => setsearchPopup(false)}
+                    onBlur={() => setsearchPopup(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     getOptionLabel={option => {
                       return typeof option === 'string' ? option : `${option.value}`;
