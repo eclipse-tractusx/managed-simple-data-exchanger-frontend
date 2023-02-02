@@ -35,7 +35,7 @@ import { useTranslation } from 'react-i18next';
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
 import { ILegalEntityContent, IntOption } from '../../models/ConsumerContractOffers';
 import ConsumerService from '../../services/ConsumerService';
-import { setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../store/consumerSlice';
+import { IntConnectorItem, setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../store/consumerSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const ITEMS = [
@@ -54,7 +54,11 @@ const ITEMS = [
 export default function AccessPolicy() {
   const { accessType, bpnList, inputBpn } = useAppSelector(state => state.accessUsagePolicySlice);
   const { filterCompanyOptions, filterCompanyOptionsLoading } = useAppSelector(state => state.consumerSlice);
-  const [searchFilterByType, setsearchFilterByType] = useState<string>('');
+  const [searchFilterByType, setsearchFilterByType] = useState<IntConnectorItem>({
+    id: 1,
+    title: 'Company Name',
+    value: 'company',
+  });
   const [dialogOpen, setdialogOpen] = useState(false);
   const [searchPopup, setsearchPopup] = useState(false);
   const [bpnError, setbpnError] = useState(false);
@@ -97,7 +101,7 @@ export default function AccessPolicy() {
     }
   };
 
-  const handleSearchTypeChange = (value: string) => {
+  const handleSearchTypeChange = (value: IntConnectorItem) => {
     setsearchFilterByType(value);
   };
   const handleAddBpn = () => {
@@ -137,17 +141,17 @@ export default function AccessPolicy() {
                   label={t('content.consumeData.selectType')}
                   fullWidth
                   size="small"
-                  onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
+                  onChangeItem={e => handleSearchTypeChange(e)}
                   items={ITEMS}
-                  defaultValue={ITEMS[0]}
+                  value={searchFilterByType}
+                  defaultValue={searchFilterByType}
                   disableClearable={true}
                   placeholder={t('content.consumeData.selectType')}
-                  value={searchFilterByType}
                   hiddenLabel
                 />
               </Grid>
               <Grid item xs={5}>
-                {searchFilterByType === 'bpn' ? (
+                {searchFilterByType.value === 'bpn' ? (
                   <Input
                     label={t('content.consumeData.enterBPN')}
                     placeholder={t('content.consumeData.enterBPN')}

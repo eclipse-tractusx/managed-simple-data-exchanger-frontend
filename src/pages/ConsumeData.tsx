@@ -102,7 +102,7 @@ export default function ConsumeData() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
-
+  const [conKey, setConKey] = useState(Math.random());
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -321,6 +321,7 @@ export default function ConsumeData() {
     dispatch(setFilterSelectedBPN(''));
     dispatch(setFilterConnectors([]));
     dispatch(setFilterSelectedConnector(null));
+    setConKey(Math.random());
   };
 
   const getConnectorByBPN = async (bpn: string) => {
@@ -498,6 +499,7 @@ export default function ConsumeData() {
               </Grid>
               <Grid item xs={5}>
                 <SelectList
+                  key={conKey}
                   disabled={!Boolean(filterConnectors.length)}
                   keyTitle="title"
                   label={t('content.consumeData.selectConnectors')}

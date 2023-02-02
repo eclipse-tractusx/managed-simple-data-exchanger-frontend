@@ -78,9 +78,10 @@ export default function PoliciesDialog() {
     const durationCheck = duration === 'RESTRICTED' && durationValue === '';
     const purposeCheck = purpose === 'RESTRICTED' && purposeValue === '';
     const roleCheck = role === 'RESTRICTED' && roleValue === '';
-    setshowError(() => durationCheck || purposeCheck || roleCheck);
+    const customCheck = custom === 'RESTRICTED' && customValue === '';
+    setshowError(() => durationCheck || purposeCheck || roleCheck || customCheck);
     return () => {};
-  }, [duration, durationValue, purpose, purposeValue, role, roleValue]);
+  }, [duration, durationValue, purpose, purposeValue, role, roleValue, custom, customValue]);
 
   const clearUpload = () => {
     dispatch(setPageLoading(false));
