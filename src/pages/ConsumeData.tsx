@@ -368,7 +368,7 @@ export default function ConsumeData() {
 
   const handleSelectionModel = (newSelectionModel: GridSelectionModel) => {
     const selectedIDs = new Set(newSelectionModel);
-    const selectedRowData = contractOffers.filter((row: GridValidRowModel) => selectedIDs.has(row.assetId.toString()));
+    const selectedRowData = contractOffers.filter((row: GridValidRowModel) => selectedIDs.has(row.id));
     dispatch(setSelectedOffersList(selectedRowData));
     setSelectionModel(newSelectionModel);
   };

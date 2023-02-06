@@ -3,14 +3,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Grid, LinearProgress, Stack } from '@mui/material';
-import {
-  DataGrid,
-  GridColDef,
-  GridRenderCellParams,
-  GridToolbar,
-  GridValidRowModel,
-  GridValueGetterParams,
-} from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { Button, Chip, Typography } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -87,9 +80,9 @@ function ContractsTable({ type }: { type: string }) {
       field: 'contractAgreementInfo.contractSigningDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractSigningDate'),
-      sortingOrder: ['desc', 'asc'],
+      sortingOrder: ['asc', 'desc'],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sortComparator: (v1, v2, param1: any, param2: any) => param1.id - param2.id,
+      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractSigningDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractSigningDate)
@@ -99,9 +92,9 @@ function ContractsTable({ type }: { type: string }) {
       field: 'contractAgreementInfo.contractEndDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractEndDate'),
-      sortingOrder: ['desc', 'asc'],
+      sortingOrder: ['asc', 'desc'],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sortComparator: (v1, v2, param1: any, param2: any) => param1.id - param2.id,
+      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractEndDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractEndDate)
@@ -150,8 +143,8 @@ function ContractsTable({ type }: { type: string }) {
               <DataGrid
                 sx={{ py: 1 }}
                 autoHeight={true}
-                getRowId={row => row.negotiationId}
-                rows={data?.contracts as GridValidRowModel[]}
+                getRowId={row => row.id}
+                rows={data.contracts}
                 columns={columns}
                 loading={isLoading}
                 pagination

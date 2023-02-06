@@ -1,5 +1,6 @@
 import { apiSlice } from '../../../app/apiSlice';
 import { setPageLoading } from '../../../app/slice';
+import { IContractAgreements } from '../../../consumer/types';
 import { setSnackbarMessage } from '../../../notifiication/slice';
 
 export const contractsSlice = apiSlice.injectEndpoints({
@@ -10,6 +11,17 @@ export const contractsSlice = apiSlice.injectEndpoints({
           url: '/contract-agreements',
           params,
         };
+      },
+      transformResponse: async ({ connector, contracts }) => { 
+        const modifieldData = contracts
+          .sort(
+            (contract1: IContractAgreements, contract2: IContractAgreements) =>
+              contract2.dateCreated - contract1.dateCreated,
+          )
+          .map((item: IContractAgreements, index: number) => {
+            return { ...{ id: index, ...item  } };
+          });
+        return { connector, contracts: modifieldData };
       },
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         // `onStart` side-effect

@@ -86,9 +86,9 @@ export interface IConnectorResponse {
   connectorEndpoint: string[];
 }
 export interface IContractAgreementInfo {
-  contractSigningDate: number | Date;
-  contractStartDate: number | Date;
-  contractEndDate: number | Date;
+  contractSigningDate: number;
+  contractStartDate: number;
+  contractEndDate: number;
   assetId: string;
   policies: IUsageControl[];
 }

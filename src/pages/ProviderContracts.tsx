@@ -20,6 +20,6 @@
 
 import ContractsTable from '../components/ContractsTable';
 
-const ProviderContracts = () => <ContractsTable type='PROVIDER' />;
+const ProviderContracts = () => <ContractsTable type="PROVIDER" />;
 
 export default ProviderContracts;
