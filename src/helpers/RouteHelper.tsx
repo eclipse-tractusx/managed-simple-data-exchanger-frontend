@@ -20,12 +20,13 @@
 import { ReactElement } from 'react';
 
 import ConsumeData from '../pages/ConsumeData';
-import ContractsTable from '../pages/ContractsTable';
+import ConsumerContracts from '../pages/ConsumerContracts';
 import CreateData from '../pages/CreateData';
 import Help from '../pages/Help';
 import Home from '../pages/Home';
 import Logout from '../pages/Logout';
 import PageNotFound from '../pages/PageNotFound';
+import ProviderContracts from '../pages/ProviderContracts';
 import UploadHistory from '../pages/UploadHistory';
 
 export interface IRoutes {
@@ -61,7 +62,7 @@ export const ROUTES: IRoutes[] = [
   },
   {
     path: '/provider/contracts',
-    element: <ContractsTable type="PROVIDER" />,
+    element: <ProviderContracts />,
     permissions: ['provider_view_contract_agreement'],
   },
   {
@@ -80,7 +81,7 @@ export const ROUTES: IRoutes[] = [
   },
   {
     path: '/consumer/contracts',
-    element: <ContractsTable type="CONSUMER" />,
+    element: <ConsumerContracts />,
     permissions: ['consumer_view_contract_agreement'],
   },
 ];
