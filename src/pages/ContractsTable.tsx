@@ -22,7 +22,7 @@ import { Refresh } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
+import { Box, Chip, Grid, Typography } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -35,7 +35,7 @@ import { Button } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGetContractsQuery } from '../features/provider/history/contracts/apiSlice';
+import { useGetContractsQuery } from '../features/provider/contracts/apiSlice';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { convertEpochToDate } from '../utils/utils';
 
@@ -180,23 +180,11 @@ const ContractsTable = ({ type }: { type: string }) => {
                 rowsPerPageOptions={[10, 25, 50, 100]}
                 components={{
                   Toolbar: GridToolbar,
-                  LoadingOverlay: LinearProgress,
-                  NoRowsOverlay: () => (
-                    <Stack height="100%" alignItems="center" justifyContent="center">
-                      {t('content.common.noData')}
-                    </Stack>
-                  ),
-                  NoResultsOverlay: () => (
-                    <Stack height="100%" alignItems="center" justifyContent="center">
-                      {t('content.common.noResults')}
-                    </Stack>
-                  ),
                 }}
                 componentsProps={{
                   toolbar: {
                     showQuickFilter: true,
                     quickFilterProps: { debounceMs: 500 },
-                    printOptions: { disableToolbarButton: true },
                   },
                 }}
                 disableColumnMenu
