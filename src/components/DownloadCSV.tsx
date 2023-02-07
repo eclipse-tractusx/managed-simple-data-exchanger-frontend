@@ -31,7 +31,7 @@ export default function DownloadCSV({ submodel }: { submodel: string }) {
         link.click();
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.downloadSuccess'),
+            message: 'alerts.downloadSuccess',
             type: 'success',
           }),
         );
@@ -39,7 +39,7 @@ export default function DownloadCSV({ submodel }: { submodel: string }) {
     } catch (error) {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.downloadError'),
+          message: 'alerts.downloadError',
           type: 'error',
         }),
       );

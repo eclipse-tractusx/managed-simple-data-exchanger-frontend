@@ -206,7 +206,7 @@ export default function ConsumeData() {
         if (response.status == 200) {
           dispatch(
             setSnackbarMessage({
-              message: t('alerts.subscriptionSuccess'),
+              message: 'alerts.subscriptionSuccess',
               type: 'success',
             }),
           );
@@ -221,7 +221,7 @@ export default function ConsumeData() {
         setIsOfferSubLoading(false);
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.subscriptionError'),
+            message: 'alerts.subscriptionError',
             type: 'error',
           }),
         );
@@ -342,7 +342,7 @@ export default function ConsumeData() {
     } else {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.noConnector'),
+          message: 'alerts.noConnector',
           type: 'warning',
         }),
       );

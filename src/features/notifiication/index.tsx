@@ -20,6 +20,7 @@
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { SyntheticEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useAppDispatch, useAppSelector } from '../store';
 import { toggleSnackbar } from './slice';
@@ -27,6 +28,7 @@ import { toggleSnackbar } from './slice';
 export default function Notification() {
   const { openSnackBar, snackBarMessage, snackbarType } = useAppSelector(state => state.notificationSlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -44,7 +46,7 @@ export default function Notification() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert onClose={handleClose} severity={snackbarType} sx={{ width: '100%' }}>
-          {snackBarMessage}
+          {t(snackBarMessage)}
         </Alert>
       </Snackbar>
     </div>

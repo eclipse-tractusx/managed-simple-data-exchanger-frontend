@@ -41,7 +41,7 @@ export default function JsonInput() {
     } catch (e) {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.invalidData'),
+          message: 'alerts.invalidData',
           type: 'error',
         }),
       );

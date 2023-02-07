@@ -114,21 +114,21 @@ export default function PoliciesDialog() {
       if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.uploadSuccess'),
+            message: 'alerts.uploadSuccess',
             type: 'success',
           }),
         );
       } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.uploadWarning'),
+            message: 'alerts.uploadWarning',
             type: 'warning',
           }),
         );
       } else {
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.uploadError'),
+            message: 'alerts.uploadError',
             type: 'error',
           }),
         );
@@ -150,7 +150,7 @@ export default function PoliciesDialog() {
           } else {
             dispatch(
               setSnackbarMessage({
-                message: t('alerts.uploadError'),
+                message: 'alerts.uploadError',
                 type: 'error',
               }),
             );
@@ -197,7 +197,7 @@ export default function PoliciesDialog() {
     } catch (error) {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.uploadError'),
+          message: 'alerts.uploadError',
           type: 'error',
         }),
       );
@@ -222,7 +222,7 @@ export default function PoliciesDialog() {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.uploadError'),
+          message: 'alerts.uploadError',
           type: 'error',
         }),
       );

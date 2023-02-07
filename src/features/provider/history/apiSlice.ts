@@ -12,19 +12,6 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
         };
       },
       providesTags: ['UploadHistory'],
-      async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        // `onStart` side-effect
-        dispatch(setPageLoading(true));
-        try {
-          await queryFulfilled;
-          // `onSuccess` side-effect
-        } catch (err) {
-          // `onError` side-effect
-          dispatch(setSnackbarMessage({ type: 'error', message: 'Something went wrong!' }));
-        } finally {
-          dispatch(setPageLoading(false));
-        }
-      },
     }),
     deleteHistory: builder.mutation({
       query: ({ processId, csvType }) => ({
@@ -36,9 +23,9 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
         dispatch(setPageLoading(true));
         try {
           await queryFulfilled;
-          dispatch(setSnackbarMessage({ type: 'success', message: 'Deleted successfully!' }));
+          dispatch(setSnackbarMessage({ type: 'success', message: 'alerts.deleteSuccess' }));
         } catch (err) {
-          dispatch(setSnackbarMessage({ type: 'error', message: 'Something went wrong!' }));
+          dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.somethingWrong' }));
         } finally {
           dispatch(setPageLoading(false));
         }

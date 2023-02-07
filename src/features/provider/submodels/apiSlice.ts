@@ -38,7 +38,7 @@ export const helpApiSlice = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
         } catch (err) {
-          dispatch(setSnackbarMessage({ type: 'error', message: 'Something went wrong!' }));
+          dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.somethingWrong' }));
         } finally {
           dispatch(setPageLoading(false));
         }

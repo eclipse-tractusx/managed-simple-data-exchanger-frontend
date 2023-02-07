@@ -192,6 +192,8 @@
     "submodelDeleteError": "Submodel konnte nicht gelöscht werden!",
     "downloadSuccess": "Datei erfolgreich heruntergeladen!",
     "downloadError": "Datei nicht heruntergeladen!",
-    "invalidData": "Ungültige Daten! Geben Sie erforderliche Felder ein."
+    "invalidData": "Ungültige Eingabe, Bitte die Pflichtfelder ausfüllen!",
+    "deleteSuccess": "Erfolgreich gelöscht!",
+    "somethingWrong": "Fehler, Es ist etwas schief gegangen!"
   }
 }
