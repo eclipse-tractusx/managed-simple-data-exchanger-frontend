@@ -162,13 +162,13 @@ function ContractsTable({ type }: { type: string }) {
               <DataGrid
                 sx={{ py: 1 }}
                 autoHeight={true}
-                getRowId={row => row.id}
+                getRowId={row => row.negotiationId}
                 rows={data.contracts}
                 columns={columns}
                 loading={isLoading}
                 pagination
                 pageSize={pageSize}
-                onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+                onPageSizeChange={setPageSize}
                 rowsPerPageOptions={[10, 25, 50, 100]}
                 components={{
                   Toolbar: GridToolbar,
