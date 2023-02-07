@@ -27,7 +27,6 @@ import { useTranslation } from 'react-i18next';
 
 import StickyHeadTable from '../components/StickyHeadTable';
 import { useGetHistoryQuery } from '../features/provider/history/apiSlice';
-import UploadHistoryNew from './UploadHistoryNew';
 
 export default function UploadHistory() {
   const { t } = useTranslation();
@@ -61,7 +60,6 @@ export default function UploadHistory() {
               setPage={setPage}
               setRowsPerPage={setRowsPerPage}
             />
-            <UploadHistoryNew />
           </Box>
         </Box>
       ) : null}

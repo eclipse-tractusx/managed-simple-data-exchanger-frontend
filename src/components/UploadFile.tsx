@@ -52,7 +52,7 @@ export default function UploadFile() {
     } else {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.invalidFile'),
+          message: 'alerts.invalidFile',
           type: 'error',
         }),
       );
