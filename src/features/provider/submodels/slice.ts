@@ -63,8 +63,8 @@ export const submodelSlice = createSlice({
       state.rows = state.rows.filter(x => !selectedIDs.has(x.id));
     },
     setRows: (state, action: PayloadAction<GridValidRowModel>) => {
-      const { id, field, value } = action.payload;
-      if (value === '') {
+      const { id, field, value, isEditable } = action.payload;
+      if (value === '' && isEditable) {
         state.rows[id][field] = null;
       } else {
         state.rows[id][field] = value;
