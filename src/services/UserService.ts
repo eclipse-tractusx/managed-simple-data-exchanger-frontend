@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -57,15 +57,13 @@ const hasRole = (roles: string[]) => roles.some((role: string) => KC.hasRealmRol
 
 const isLoggedIn = () => !!KC.token;
 
-const getRoles = () => KC.tokenParsed?.resource_access[keycloakConfig.clientId]?.roles;
-
-const hasValidResource = () => KC.tokenParsed?.resource_access.hasOwnProperty(keycloakConfig.clientId);
+const hasValidResource = () =>
+  KC.tokenParsed?.resource_access?.hasOwnProperty(keycloakConfig.clientId);
 
 const getLoggedUser = () => ({
   userName: getUsername(),
   name: getName(),
   email: getEmail(),
-  roles: getRoles(),
   company: getCompany(),
   bpn: getBpn(),
   tenant: getTenant(),
@@ -117,7 +115,6 @@ const UserService = {
   getEmail,
   hasRole,
   getLoggedUser,
-  getRoles,
   hasValidResource,
 };
 

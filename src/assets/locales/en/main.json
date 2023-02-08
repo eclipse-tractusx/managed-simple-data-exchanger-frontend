@@ -15,7 +15,7 @@
     "home": {
       "header": "Home",
       "selectUsecasesHeader": "Select your use cases",
-      "selectUsecasesSubheader": "You may select one or more use cases that interest you",
+      "selectUsecasesSubheader": "You may select one or more use cases that interest you. Only those submodels will be displayed in successive steps that are relevant for the selected use cases. When you don’t make a selection, all submodels will be displayed.",
       "exchangeDataHeader": "Exchange your data",
       "provideDataTab": "Provide data",
       "consumeDataTab": "Consume data",
@@ -69,7 +69,10 @@
       "role": "Role restriction",
       "roleNote": "Usage allowed only by individuals with the following roles/characteristics",
       "custom": "Custom restriction",
-      "customNote": "Usage must comply to the following additional conditions"
+      "customNote": "Usage must comply to the following additional conditions",
+      "purposeLabel": "Describe the purpose",
+      "roleLabel": "Enter a role/characteristic",
+      "customLabel": "Enter your custom conditions"
     },
     "uploadHistory": {
       "columns": {
@@ -92,8 +95,11 @@
     },
     "consumeData": {
       "selectType": "Select search type",
-      "selectCompany": "Select a company name",
+      "searchCompany": "Search company name",
+      "searchPlaceholder": "Enter min. 3 characters",
+      "noCompany": "No company found",
       "selectConnectors": "Select connectors",
+      "noConnectors": "No connectors found",
       "enterBPN": "Enter Business Partner Number",
       "enterURL": "Enter connector URL",
       "selectTypeValues": {

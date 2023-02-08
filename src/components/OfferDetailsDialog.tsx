@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -34,7 +34,8 @@ interface IntDialogProps {
 
 const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: IntDialogProps) => {
   const [offer] = useState(offerObj);
-  const { typeOfAccess, bpnNumbers, title, created, description, publisher, usagePolicies, fileContentType } = offer;
+  // const { typeOfAccess, bpnNumbers, title, created, description, publisher, usagePolicies, fileContentType } = offer;
+  const { title, created, description, publisher, usagePolicies, fileContentType } = offer;
   const { t } = useTranslation();
 
   const closeModal = (flag: string) => {
@@ -123,7 +124,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
               </Grid>
             </Grid>
 
-            <Divider sx={{ m: 1 }} />
+            {/* <Divider sx={{ m: 1 }} />
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="body1" sx={{ mb: 1, display: 'block' }}>
@@ -152,7 +153,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
                   </>
                 )}
               </Grid>
-            </Grid>
+            </Grid> */}
 
             <Divider sx={{ m: 1 }} />
             <Grid container>

@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -29,13 +29,14 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import { ChangeEvent, useState } from 'react';
+import _ from 'lodash';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
 import { ILegalEntityContent, IntOption } from '../../models/ConsumerContractOffers';
 import ConsumerService from '../../services/ConsumerService';
-import { setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../store/consumerSlice';
+import { IntConnectorItem, setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../store/consumerSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const ITEMS = [
@@ -54,8 +55,15 @@ const ITEMS = [
 export default function AccessPolicy() {
   const { accessType, bpnList, inputBpn } = useAppSelector(state => state.accessUsagePolicySlice);
   const { filterCompanyOptions, filterCompanyOptionsLoading } = useAppSelector(state => state.consumerSlice);
-  const [searchFilterByType, setsearchFilterByType] = useState<string>('');
+  const [searchFilterByType, setsearchFilterByType] = useState<IntConnectorItem>({
+    id: 1,
+    title: 'Company Name',
+    value: 'company',
+  });
   const [dialogOpen, setdialogOpen] = useState(false);
+  const [searchPopup, setsearchPopup] = useState(false);
+  const [bpnError, setbpnError] = useState(false);
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -73,6 +81,7 @@ export default function AccessPolicy() {
   const onChangeSearchInputValue = async (params: string) => {
     const searchStr = params.toLowerCase();
     if (searchStr.length > 2) {
+      setsearchPopup(true);
       dispatch(setFilterCompanyOptions([]));
       dispatch(setFfilterCompanyOptionsLoading(true));
       const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
@@ -88,13 +97,27 @@ export default function AccessPolicy() {
         dispatch(setFilterCompanyOptions(filterContent));
       }
     } else {
+      setsearchPopup(false);
       dispatch(setFilterCompanyOptions([]));
     }
   };
 
-  const handleSearchTypeChange = (value: string) => {
+  const handleSearchTypeChange = (value: IntConnectorItem) => {
     setsearchFilterByType(value);
+    dispatch(setInputBpn(''));
   };
+  const handleAddBpn = () => {
+    if (_.inRange(inputBpn.length, 1, 16)) {
+      setbpnError(true);
+    } else {
+      setbpnError(false);
+      dispatch(addBpn());
+    }
+  };
+
+  useEffect(() => {
+    if (inputBpn.length == 16 || inputBpn.length == 0) setbpnError(false);
+  }, [inputBpn]);
 
   return (
     <>
@@ -120,26 +143,35 @@ export default function AccessPolicy() {
                   label={t('content.consumeData.selectType')}
                   fullWidth
                   size="small"
-                  onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
+                  onChangeItem={e => handleSearchTypeChange(e)}
                   items={ITEMS}
-                  defaultValue={ITEMS[0]}
+                  value={searchFilterByType}
+                  defaultValue={searchFilterByType}
                   disableClearable={true}
                   placeholder={t('content.consumeData.selectType')}
-                  value={searchFilterByType}
                   hiddenLabel
                 />
               </Grid>
               <Grid item xs={5}>
-                {searchFilterByType === 'bpn' ? (
+                {searchFilterByType.value === 'bpn' ? (
                   <Input
                     label={t('content.consumeData.enterBPN')}
                     placeholder={t('content.consumeData.enterBPN')}
                     size="small"
                     value={inputBpn}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(setInputBpn(e.target.value))}
+                    inputProps={{ maxLength: 16 }}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      const regex = /[a-zA-Z0-9]$/;
+                      if (e.target.value === '' || regex.test(e.target.value)) {
+                        dispatch(setInputBpn(e.target.value));
+                      }
+                    }}
+                    error={bpnError}
+                    helperText="Incorrect BPN"
                   />
                 ) : (
                   <Autocomplete
+                    open={searchPopup}
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
@@ -148,15 +180,18 @@ export default function AccessPolicy() {
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);
                     }, 1000)}
+                    onClose={() => setsearchPopup(false)}
+                    onBlur={() => setsearchPopup(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     getOptionLabel={option => {
                       return typeof option === 'string' ? option : `${option.value}`;
                     }}
+                    noOptionsText={t('content.consumeData.noCompany')}
                     renderInput={params => (
                       <Input
                         {...params}
-                        label={t('content.consumeData.selectCompany')}
-                        placeholder={t('content.consumeData.selectCompany')}
+                        label={t('content.consumeData.searchCompany')}
+                        placeholder={t('content.consumeData.searchPlaceholder')}
                         fullWidth
                       />
                     )}
@@ -180,7 +215,7 @@ export default function AccessPolicy() {
                 )}
               </Grid>
               <Grid item>
-                <Button variant="contained" sx={{ marginLeft: 1 }} onClick={() => dispatch(addBpn())}>
+                <Button variant="contained" sx={{ marginLeft: 1 }} onClick={handleAddBpn}>
                   {t('button.add')}
                 </Button>
               </Grid>
@@ -190,8 +225,8 @@ export default function AccessPolicy() {
                 <i> {t('content.policies.note')}</i>
               </Typography>
               <Stack direction="row" spacing={1} mt={bpnList.length ? 3 : 0} sx={{ flexWrap: 'wrap', gap: 1 }}>
-                {bpnList.map((bpnNum: string, key: number) => (
-                  <Chip color="secondary" label={bpnNum} key={key} onClick={() => dispatch(deleteBpn(bpnNum))} />
+                {bpnList.map((bpnNum: string) => (
+                  <Chip color="secondary" label={bpnNum} key={bpnNum + 1} onClick={() => dispatch(deleteBpn(bpnNum))} />
                 ))}
               </Stack>
             </Box>

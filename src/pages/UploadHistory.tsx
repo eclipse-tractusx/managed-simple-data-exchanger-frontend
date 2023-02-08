@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,7 +21,7 @@
 
 import { Refresh } from '@mui/icons-material';
 import { Box, Grid } from '@mui/material';
-import { Button, Typography } from 'cx-portal-shared-components';
+import { LoadingButton, Typography } from 'cx-portal-shared-components';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -35,15 +35,19 @@ export default function UploadHistory() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
   const [totalElements, setTotalElements] = useState<number>(0);
+  const [loading, setloading] = useState(false);
   const { t } = useTranslation();
 
   const refreshTable = useCallback(async () => {
     try {
+      setloading(true);
       const response = await ProviderService.getInstance().getUploadHistory({ page: page, pageSize: rowsPerPage });
       setTableData(response.data.items);
       setTotalElements(response.data.totalItems);
+      setloading(false);
     } catch (error) {
       console.log(error);
+      setloading(false);
     }
   }, [page, rowsPerPage]);
 
@@ -64,11 +68,16 @@ export default function UploadHistory() {
           <Grid item xs={6}>
             <Typography variant="h4">{t('pages.uploadHistory')}</Typography>
           </Grid>
-          <Grid item xs={6} textAlign="right">
-            <Button size="small" variant="contained" onClick={() => refreshTable()}>
-              <Refresh />
-              &nbsp; {t('button.refresh')}
-            </Button>
+          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+            <LoadingButton
+              size="small"
+              variant="contained"
+              label={t('button.refresh')}
+              onButtonClick={() => refreshTable()}
+              startIcon={<Refresh />}
+              loadIndicator={t('content.common.loading')}
+              loading={loading}
+            />
           </Grid>
         </Grid>
         <Box sx={{ mt: 4 }}>

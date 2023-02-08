@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,16 +21,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { IActionPayload, INotificationSlice } from './types';
 
+const initialState: INotificationSlice = {
+  openSnackBar: false,
+  snackBarMessage: '',
+  snackbarType: 'success',
+};
+
 export const notificationSlice = createSlice({
   name: 'notificationSlice',
-  initialState: {
-    openSnackBar: false,
-    snackBarMessage: '',
-    snackbarType: 'success',
-  } as INotificationSlice,
+  initialState,
   reducers: {
     toggleSnackbar: state => {
-      state.openSnackBar = !state.openSnackBar;
+      state.openSnackBar = false;
     },
     setSnackbarMessage: (state, action: PayloadAction<IActionPayload>) => {
       state.snackbarType = action.payload.type;

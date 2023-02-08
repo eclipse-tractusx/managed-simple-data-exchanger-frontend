@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+- Provider contract history tab.
+- Consumer contract history tab.
+- Support multi language.
+
 ## [1.8.1] - 2022-12-26
+
+### Added
 
 - Home page with usecase selection and app overview.
 - Search and select BPN by company name in access policy section.
@@ -14,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Download uploaded submodel data from upload history.
 - i18n setup with english.
 
-## [1.8.0] - 2022-12-012
+## [1.8.0] - 2022-12-12
 
 ### Added
 
@@ -100,10 +106,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Integration with Digital Twin registry service.
 
 [unreleased]:
-[1.8.0]: https://github.com/catenax-ng/tx-dft-frontend/tree/main
-[1.7.0]: https://github.com/catenax-ng/product-dft-frontend/compare/dft-frontend-1.6.0...dft-frontend-1.7.0
-[1.6.0]: https://github.com/catenax-ng/product-dft-frontend/compare/dft-frontend-1.5.0...dft-frontend-1.6.0
-[1.5.0]: https://github.com/catenax-ng/product-dft-frontend/compare/dft-frontend-1.4.0...dft-frontend-1.5.0
-[1.4.0]: https://github.com/catenax-ng/product-dft-frontend/compare/dft-frontend-1.3.0...dft-frontend-1.4.0
-[1.3.0]: https://github.com/catenax-ng/product-dft-frontend/compare/dft-frontend-1.2.0...dft-frontend-1.3.0
-[1.2.0]: https://github.com/catenax-ng/product-dft-frontend/compare/dft-frontend-1.1.0...dft-frontend-1.2.0
+[1.8.1]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.1
+[1.8.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.1
+[1.7.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.6.0...dft-frontend-1.7.0
+[1.6.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.5.0...dft-frontend-1.6.0
+[1.5.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.4.0...dft-frontend-1.5.0
+[1.4.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.3.0...dft-frontend-1.4.0
+[1.3.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.2.0...dft-frontend-1.3.0
+[1.2.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.1.0...dft-frontend-1.2.0

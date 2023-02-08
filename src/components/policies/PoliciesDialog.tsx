@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -78,14 +78,14 @@ export default function PoliciesDialog() {
     const durationCheck = duration === 'RESTRICTED' && durationValue === '';
     const purposeCheck = purpose === 'RESTRICTED' && purposeValue === '';
     const roleCheck = role === 'RESTRICTED' && roleValue === '';
-    setshowError(() => durationCheck || purposeCheck || roleCheck);
+    const customCheck = custom === 'RESTRICTED' && customValue === '';
+    setshowError(() => durationCheck || purposeCheck || roleCheck || customCheck);
     return () => {};
-  }, [duration, durationValue, purpose, purposeValue, role, roleValue]);
+  }, [duration, durationValue, purpose, purposeValue, role, roleValue, custom, customValue]);
 
   const clearUpload = () => {
     dispatch(setPageLoading(false));
     dispatch(setUploadStatus(true));
-    dispatch(setPageLoading(false));
     dispatch(clearRows());
     dispatch(handleDialogClose());
     dispatch(removeSelectedFiles());
@@ -122,7 +122,7 @@ export default function PoliciesDialog() {
         dispatch(
           setSnackbarMessage({
             message: t('alerts.uploadWarning'),
-            type: 'warning',
+            type: 'error', //warning
           }),
         );
       } else {
@@ -260,7 +260,7 @@ export default function PoliciesDialog() {
         <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
           {t('button.close')}
         </Button>
-        <Button variant="contained" onClick={handleSubmitData}>
+        <Button variant="contained" onClick={handleSubmitData} disabled={showError}>
           {t('button.submit')}
         </Button>
       </DialogActions>

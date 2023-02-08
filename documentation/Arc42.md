@@ -179,10 +179,11 @@ There is a web interface between frontend and backend.<br /><br />
 
 Detailed API specs available under:
 
-[https://github.com/catenax-ng/product-dft-backend/blob/Tractus-X_Eclipse_Repo_Changes_0.4/src/main/resources/open-api/sde-backend-openapi.yaml](https://github.com/catenax-ng/product-dft-backend/blob/Tractus-X_Eclipse_Repo_Changes_0.4/src/main/resources/open-api/sde-backend-openapi.yaml)
+[https://github.com/catenax-ng/tx-dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml](https://github.com/catenax-ng/tx-dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml)
 
-[https://github.com/catenax-ng/product-dft-backend/tree/Tractus-X_Eclipse_Repo_Changes_0.4#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/product-dft-backend/tree/Tractus-X_Eclipse_Repo_Changes_0.4#restful-apis-of-dft-simple-data-exchanger)
+[https://github.com/catenax-ng/tx-dft-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/tx-dft-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
 
+Backend API Swagger-ui : (https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
 <br />
 
 ### **Data processing pipelines**
@@ -281,15 +282,16 @@ Detailed API specs available under:
 
 #### **App routing**
 
-| Route               	| Description                                                      	| Type 	|
-|--------------------	|------------------------------------------------------------------	|------	|
-| /login                | Keycloak Authentication                                          	| Main 	|
-| /                  	| Home page for use case selection and app overview                 | Main 	|
-| /create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
-| /upload-history          	| Upload history table                                             	| Sub  	|
-| /help             	| Help guide, CSV rules and samples                                	| Sub  	|
-| /consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
-| /contract-history 	| Contract history table                                           	| Sub  	|
+| Route               	| Description                                                      	        | Type 	|
+|--------------------	|-------------------------------------------------------------------------	|------	|
+| /login                | Keycloak Authentication                                          	        | Main 	|
+| /logout               | Keycloak logout                                          			        | Main 	|
+| /                  	| Home page for use case selection and app overview                         | Main 	|
+| /create-data      	| Create data using a CSV file, table or submit JSON data directly 	        | Sub  	|
+| /upload-history       | Upload history table                                          		    | Sub  	|
+| /help           	  	| Help guide, CSV rules and samples                             		    | Sub  	|
+| /consume-data	     	| Get list of data offer by selected providers                  		    | Sub  	|
+| /contract-history 	| Contract history table                                        		    | Sub  	|
 
 <br />
 
