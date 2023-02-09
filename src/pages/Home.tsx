@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -30,6 +30,9 @@ import { DataExchangeStepper } from '../components/DataExchangeStepper';
 import { fetchUseCases } from '../features/app/actions';
 import { setSelectedUseCases } from '../features/app/slice';
 import { IUseCase } from '../features/app/types';
+import { clearRows, setSelectedSubmodel } from '../features/provider/submodels/slice';
+import { ISubmodelList } from '../features/provider/submodels/types';
+import { removeSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
 
@@ -46,6 +49,12 @@ export default function Home() {
   }, [dispatch]);
 
   const handleUseCaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Clearing all the ongoing uploads
+    dispatch(setSelectedSubmodel({} as ISubmodelList));
+    dispatch(setUploadStatus(true));
+    dispatch(clearRows());
+    dispatch(removeSelectedFiles());
+
     const { value, checked } = event.target;
     if (checked) {
       dispatch(setSelectedUseCases([...selectedUseCases, value]));
@@ -73,7 +82,9 @@ export default function Home() {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4">{t('content.home.selectUsecasesHeader')}</Typography>
-          <Typography variant="subtitle2">{t('content.home.selectUsecasesSubheader')}</Typography>
+          <Typography variant="subtitle2" maxWidth={900}>
+            {t('content.home.selectUsecasesSubheader')}
+          </Typography>
           <FormControl component="fieldset" variant="standard">
             <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
               {useCases.map((item: IUseCase) => (
@@ -100,7 +111,12 @@ export default function Home() {
         <Grid item xs={12} mt={5}>
           <Typography variant="h4">{t('content.home.exchangeDataHeader')}</Typography>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
-            <Tabs value={activeTab} onChange={handleTabChange} aria-label="Connector views: tabs" sx={{ pt: 0 }}>
+            <Tabs
+              value={activeTab}
+              onChange={(_event: SyntheticEvent, newValue: number) => handleTabChange(_event, newValue)}
+              aria-label="Connector views: tabs"
+              sx={{ pt: 0 }}
+            >
               <Tab label={t('content.home.provideDataTab')} />
               <Tab label={t('content.home.consumeDataTab')} />
             </Tabs>

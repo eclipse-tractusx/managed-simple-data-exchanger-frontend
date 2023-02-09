@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2021,2022 FEV Consulting GmbH
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -20,6 +20,14 @@
 
 @import './fonts';
 @import './colors';
+
+@include use-font('LibreFranklin-SemiBold', './assets/fonts/LibreFranklin-VariableFont_wght', 600);
+
+@include use-font('LibreFranklin-Medium', './assets/fonts/LibreFranklin-VariableFont_wght', 500);
+
+@include use-font('LibreFranklin', './assets/fonts/LibreFranklin-VariableFont_wght', 400);
+
+@include use-font('LibreFranklin-Light', './assets/fonts/LibreFranklin-VariableFont_wght', 300);
 
 body {
   margin: 0;

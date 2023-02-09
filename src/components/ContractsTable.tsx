@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,7 +23,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import { Button } from 'cx-portal-shared-components';
+import { LoadingButton } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -152,15 +152,20 @@ function ContractsTable({ type }: { type: string }) {
             </Typography>
           </Grid>
           <Grid item xs={6} my={4} textAlign={'right'}>
-            <Button size="small" variant="contained" onClick={refetch}>
-              <Refresh />
-              &nbsp; {t('button.refresh')}
-            </Button>
+            <LoadingButton
+              size="small"
+              variant="contained"
+              label={t('button.refresh')}
+              onButtonClick={() => refetch}
+              startIcon={<Refresh />}
+              loadIndicator={t('content.common.loading')}
+              loading={isLoading}
+            />
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
               <DataGrid
-                sx={{ py: 1 }}
+                sx={{ mt: 4 }}
                 autoHeight={true}
                 getRowId={row => row.negotiationId}
                 rows={data.contracts}

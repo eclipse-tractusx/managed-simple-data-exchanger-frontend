@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,7 +21,7 @@
 
 import { Refresh } from '@mui/icons-material';
 import { Box, Grid } from '@mui/material';
-import { Button, Typography } from 'cx-portal-shared-components';
+import { LoadingButton, Typography } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -34,7 +34,7 @@ export default function UploadHistory() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
 
-  const { isSuccess, data, refetch } = useGetHistoryQuery({ page: page, pageSize: rowsPerPage });
+  const { isSuccess, data, refetch, isLoading } = useGetHistoryQuery({ page: page, pageSize: rowsPerPage });
 
   return (
     <>
@@ -45,10 +45,15 @@ export default function UploadHistory() {
               <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
             </Grid>
             <Grid item xs={6} textAlign="right">
-              <Button size="small" variant="contained" onClick={refetch}>
-                <Refresh />
-                &nbsp; {t('button.refresh')}
-              </Button>
+              <LoadingButton
+                size="small"
+                variant="contained"
+                label={t('button.refresh')}
+                onButtonClick={() => refetch}
+                startIcon={<Refresh />}
+                loadIndicator={t('content.common.loading')}
+                loading={isLoading}
+              />
             </Grid>
           </Grid>
           <Box sx={{ mt: 4 }}>

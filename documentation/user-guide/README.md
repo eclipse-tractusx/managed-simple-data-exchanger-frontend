@@ -237,9 +237,12 @@ The table has the following columns columns:
 
 <img src="images/sde-delete-data-offer.png" height="60%" width="60%" />
 
-We also can delete any data offer or submodel by clicking on the delete action icon present at the end of each row.
+User can delete any data offer or submodel by clicking on the delete action icon present at the end of each row.
 The delete icon will only be visible if the Number of Deleted Items count is 0.
-After the successful data offer deletion, new row will be generated which shows the new process id and the reference id of the deleted data offer.  
+After the successful data offer deletion, new row will be generated which shows the new process id and the reference id of the deleted data offer.
+
+Uploaded submodel details can also be downloaded from here as CSV. Only for the deleted entry download option won't be visible.
+
 We can fetch the updated data offers by manually clicking on Refresh button present at top right section of the Upload History page.
 
 ## Help

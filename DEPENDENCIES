@@ -493,8 +493,8 @@ npm/npmjs/-/json-schema-traverse/1.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/json-schema/0.4.0, AFL-2.1 OR BSD-3-Clause, approved, #2410
 npm/npmjs/-/json-stable-stringify-without-jsonify/1.0.1, MIT, approved, clearlydefined
 npm/npmjs/-/json2mq/0.2.0, MIT, approved, clearlydefined
-npm/npmjs/-/json5/1.0.1, MIT, approved, CQ22351
-npm/npmjs/-/json5/2.2.1, MIT, approved, #2126
+npm/npmjs/-/json5/1.0.2, MIT, approved, CQ22351
+npm/npmjs/-/json5/2.2.3, MIT, approved, #2126
 npm/npmjs/-/jsonfile/6.1.0, MIT, approved, clearlydefined
 npm/npmjs/-/jsonpointer/5.0.1, MIT, approved, clearlydefined
 npm/npmjs/-/jsx-ast-utils/3.3.3, MIT, approved, clearlydefined

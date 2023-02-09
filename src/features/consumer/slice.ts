@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -37,7 +37,7 @@ const initialState: IConsumerSlice = {
   filterSelectedCompanyOption: null,
   filterSelectedBPN: '',
   filterConnectors: [],
-  filterSelectedConnector: '',
+  filterSelectedConnector: {},
   contractAgreements: [],
   isContractAgreementsLoading: false,
 };
@@ -91,7 +91,7 @@ export const consumerSlice = createSlice({
     setFilterConnectors: (state, action: PayloadAction<IntConnectorItem[]>) => {
       state.filterConnectors = action.payload;
     },
-    setFilterSelectedConnector: (state, action: PayloadAction<string>) => {
+    setFilterSelectedConnector: (state, action: PayloadAction<IntConnectorItem>) => {
       state.filterSelectedConnector = action.payload;
     },
     setContractAgreements: (state, action: PayloadAction<IContractAgreements[]>) => {
