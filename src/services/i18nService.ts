@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import i18n, { changeLanguage } from 'i18next';
-// import LanguageDetector from 'i18next-browser-languagedetector';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
 import mainDE from '../assets/locales/de/main.json';
@@ -37,7 +37,7 @@ const supportedLanguages = Object.keys(resources);
 
 const init = (): void => {
   i18n
-    // .use(LanguageDetector)
+    .use(LanguageDetector)
     .use(initReactI18next)
     .init({
       resources,
