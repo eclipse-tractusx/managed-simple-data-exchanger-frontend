@@ -29,7 +29,6 @@ const initialState: IAppSlice = {
     userName: '',
     name: '',
     email: '',
-    roles: [],
     company: '',
     bpn: '',
     tenant: '',

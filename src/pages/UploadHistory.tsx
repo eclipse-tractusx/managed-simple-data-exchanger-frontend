@@ -44,7 +44,7 @@ export default function UploadHistory() {
             <Grid item xs={6}>
               <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
             </Grid>
-            <Grid item xs={6} textAlign="right">
+            <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
               <LoadingButton
                 size="small"
                 variant="contained"

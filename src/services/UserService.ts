@@ -57,8 +57,7 @@ const hasRole = (roles: string[]) => roles.some((role: string) => KC.hasRealmRol
 
 const isLoggedIn = () => !!KC.token;
 
-const hasValidResource = () =>
-  KC.tokenParsed?.resource_access?.hasOwnProperty(keycloakConfig.clientId);
+const hasValidResource = () => KC.tokenParsed?.resource_access?.hasOwnProperty(keycloakConfig.clientId);
 
 const getLoggedUser = () => ({
   userName: getUsername(),

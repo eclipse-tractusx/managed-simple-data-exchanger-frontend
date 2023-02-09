@@ -401,7 +401,7 @@ export default function ConsumeData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h4" pb={4}>
+      <Typography variant="h3" pb={4}>
         {t('pages.consumeData')}
       </Typography>
       <Grid container spacing={2} alignItems="end">

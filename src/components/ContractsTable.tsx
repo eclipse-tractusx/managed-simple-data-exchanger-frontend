@@ -135,7 +135,7 @@ function ContractsTable({ type }: { type: string }) {
     }
   };
 
-  const { data, isLoading, isSuccess, refetch } = useGetContractsQuery({
+  const { data, isFetching, isSuccess, refetch } = useGetContractsQuery({
     type: type,
     offset: 0,
     maxLimit: MAX_CONTRACTS_AGREEMENTS,
@@ -145,21 +145,21 @@ function ContractsTable({ type }: { type: string }) {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6} my={4}>
+          <Grid item xs={6}>
             <Typography variant="h3">{handleTitle()}</Typography>
             <Typography variant="body1">
               {t('content.common.ownConnector')} {data.connector}
             </Typography>
           </Grid>
-          <Grid item xs={6} my={4} textAlign={'right'}>
+          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton
               size="small"
               variant="contained"
               label={t('button.refresh')}
-              onButtonClick={() => refetch}
+              onButtonClick={refetch}
               startIcon={<Refresh />}
               loadIndicator={t('content.common.loading')}
-              loading={isLoading}
+              loading={isFetching}
             />
           </Grid>
           <Grid item xs={12}>
@@ -170,7 +170,7 @@ function ContractsTable({ type }: { type: string }) {
                 getRowId={row => row.negotiationId}
                 rows={data.contracts}
                 columns={columns}
-                loading={isLoading}
+                loading={isFetching}
                 pagination
                 pageSize={pageSize}
                 onPageSizeChange={setPageSize}

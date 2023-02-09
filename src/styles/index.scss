@@ -21,14 +21,6 @@
 @import './fonts';
 @import './colors';
 
-@include use-font('LibreFranklin-SemiBold', './assets/fonts/LibreFranklin-VariableFont_wght', 600);
-
-@include use-font('LibreFranklin-Medium', './assets/fonts/LibreFranklin-VariableFont_wght', 500);
-
-@include use-font('LibreFranklin', './assets/fonts/LibreFranklin-VariableFont_wght', 400);
-
-@include use-font('LibreFranklin-Light', './assets/fonts/LibreFranklin-VariableFont_wght', 300);
-
 body {
   margin: 0;
   font-family: 'LibreFranklin', 'Libre Franklin', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;

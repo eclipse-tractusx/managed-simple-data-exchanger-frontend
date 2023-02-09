@@ -129,7 +129,7 @@ export interface IConsumerSlice {
   filterSelectedCompanyOption: IntOption | null;
   filterSelectedBPN: string | null;
   filterConnectors: IntConnectorItem[];
-  filterSelectedConnector: string;
+  filterSelectedConnector: Partial<IntConnectorItem>;
   contractAgreements: IContractAgreements[];
   isContractAgreementsLoading: boolean;
 }
