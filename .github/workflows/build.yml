@@ -25,7 +25,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ghcr.io/catenax-ng/tx-dft-frontend-qa-dev
+# IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
