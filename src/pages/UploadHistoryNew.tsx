@@ -17,8 +17,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { Refresh } from '@mui/icons-material';
-import { HighlightOffOutlined, HourglassEmptyOutlined, ReportGmailerrorredOutlined } from '@mui/icons-material';
+import {
+  HighlightOffOutlined,
+  HourglassEmptyOutlined,
+  Refresh,
+  ReportGmailerrorredOutlined,
+} from '@mui/icons-material';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';

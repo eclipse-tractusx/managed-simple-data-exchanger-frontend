@@ -34,7 +34,7 @@ export default function UploadHistory() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
 
-  const { isSuccess, data, refetch, isLoading } = useGetHistoryQuery({ page: page, pageSize: rowsPerPage });
+  const { isSuccess, data, refetch, isFetching } = useGetHistoryQuery({ page: page, pageSize: rowsPerPage });
 
   return (
     <>
@@ -49,10 +49,10 @@ export default function UploadHistory() {
                 size="small"
                 variant="contained"
                 label={t('button.refresh')}
-                onButtonClick={() => refetch}
+                onButtonClick={refetch}
                 startIcon={<Refresh />}
                 loadIndicator={t('content.common.loading')}
-                loading={isLoading}
+                loading={isFetching}
               />
             </Grid>
           </Grid>
