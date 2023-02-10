@@ -28,7 +28,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import { Button, IconButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import { t } from 'i18next';
 import { useState } from 'react';
 
@@ -87,11 +87,25 @@ function UploadHistoryNew() {
     {
       field: 'processId',
       headerName: 'Process Id',
+      minWidth: 300,
       flex: 1,
       renderCell: ({ row }) => (
-        <Tooltips tooltipPlacement="top" tooltipText={row.processId}>
-          <span>{row.processId}</span>
-        </Tooltips>
+        <div>
+          {row.referenceProcessId ? (
+            <Tooltips
+              tooltipPlacement="top-start"
+              tooltipText={`${row.processId} (Deletion of ${row.referenceProcessId})`}
+            >
+              <div>
+                {row.processId} (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
+              </div>
+            </Tooltips>
+          ) : (
+            <Tooltips tooltipPlacement="top-start" tooltipText={row.processId}>
+              <div>{row.processId}</div>
+            </Tooltips>
+          )}
+        </div>
       ),
     },
     {
@@ -100,7 +114,7 @@ function UploadHistoryNew() {
       minWidth: 100,
       flex: 1,
       renderCell: ({ row }) => (
-        <Tooltips tooltipPlacement="top" tooltipText={row.csvType}>
+        <Tooltips tooltipPlacement="top-start" tooltipText={row.csvType}>
           <span>{row.csvType}</span>
         </Tooltips>
       ),
@@ -109,24 +123,28 @@ function UploadHistoryNew() {
       field: 'numberOfSucceededItems',
       headerName: 'Created Items',
       align: 'center',
+      headerAlign: 'center',
       flex: 1,
     },
     {
       field: 'numberOfUpdatedItems',
       headerName: 'Updated Items',
       align: 'center',
+      headerAlign: 'center',
       flex: 1,
     },
     {
       field: 'numberOfDeletedItems',
       headerName: 'Deleted Items',
       align: 'center',
+      headerAlign: 'center',
       flex: 1,
     },
     {
       field: 'numberOfFailedItems',
       headerName: 'Failed Items',
       align: 'center',
+      headerAlign: 'center',
       flex: 1,
     },
     {
@@ -134,7 +152,6 @@ function UploadHistoryNew() {
       headerName: 'Status',
       align: 'center',
       headerAlign: 'center',
-      flex: 1,
       renderCell: ({ row }) => (
         <>
           {row.status === Status.completed && row.numberOfFailedItems === 0 && (
@@ -202,11 +219,16 @@ function UploadHistoryNew() {
           <Grid item xs={6}>
             <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
           </Grid>
-          <Grid item xs={6} textAlign="right">
-            <Button size="small" variant="contained" onClick={refetch}>
-              <Refresh />
-              &nbsp; {t('button.refresh')}
-            </Button>
+          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+            <LoadingButton
+              size="small"
+              variant="contained"
+              label={t('button.refresh')}
+              onButtonClick={refetch}
+              startIcon={<Refresh />}
+              loadIndicator={t('content.common.loading')}
+              loading={isFetching}
+            />
           </Grid>
         </Grid>
         <Box sx={{ mt: 4 }}>
@@ -215,7 +237,6 @@ function UploadHistoryNew() {
             rowCount={data.totalItems}
             title={''}
             getRowId={row => row.processId}
-            autoHeight
             disableColumnMenu
             disableColumnSelector
             disableDensitySelector
@@ -224,15 +245,15 @@ function UploadHistoryNew() {
             rows={data.items}
             pageSize={pageSize}
             page={page}
+            rowHeight={100}
             onPageChange={setPage}
             rowsPerPageOptions={[10, 15, 20, 100]}
-            toolbarVariant={'basic'}
             sx={{
-              '& .MuiDataGrid-columnHeaderTitle': {
+              '& .MuiDataGrid-columnHeaderTitle, & .MuiDataGrid-cell': {
                 textOverflow: 'clip',
-                whiteSpace: 'break-spaces',
-                lineHeight: 1.5,
-                textAlign: 'center',
+                whiteSpace: 'break-spaces !important',
+                maxHeight: 'none !important',
+                lineHeight: 1.4,
               },
               '& .MuiBox-root': { display: 'none' },
             }}

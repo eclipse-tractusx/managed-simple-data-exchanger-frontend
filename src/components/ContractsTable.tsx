@@ -166,7 +166,6 @@ function ContractsTable({ type }: { type: string }) {
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
               <DataGrid
                 sx={{ mt: 4 }}
-                autoHeight={true}
                 getRowId={row => row.negotiationId}
                 rows={data.contracts}
                 columns={columns}
