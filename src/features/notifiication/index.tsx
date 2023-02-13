@@ -17,9 +17,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
-import { SyntheticEvent } from 'react';
+import { PageSnackbar } from 'cx-portal-shared-components';
 
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { toggleSnackbar } from './slice';
@@ -28,25 +26,16 @@ export default function Notification() {
   const { openSnackBar, snackBarMessage, snackbarType } = useAppSelector(state => state.notificationSlice);
   const dispatch = useAppDispatch();
 
-  const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    dispatch(toggleSnackbar());
-  };
-
   return (
     <div>
-      <Snackbar
+      <PageSnackbar
+        autoClose
+        description={snackBarMessage}
         open={openSnackBar}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert onClose={handleClose} severity={snackbarType} sx={{ width: '100%' }}>
-          {snackBarMessage}
-        </Alert>
-      </Snackbar>
+        severity={snackbarType}
+        showIcon
+        onCloseNotification={() => dispatch(toggleSnackbar())}
+      ></PageSnackbar>
     </div>
   );
 }

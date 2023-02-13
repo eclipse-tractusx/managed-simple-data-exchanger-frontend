@@ -82,7 +82,9 @@ export default function Home() {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h4">{t('content.home.selectUsecasesHeader')}</Typography>
-          <Typography variant="subtitle2">{t('content.home.selectUsecasesSubheader')}</Typography>
+          <Typography variant="subtitle2" maxWidth={900}>
+            {t('content.home.selectUsecasesSubheader')}
+          </Typography>
           <FormControl component="fieldset" variant="standard">
             <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
               {useCases.map((item: IUseCase) => (
