@@ -17,31 +17,27 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-
 import { Refresh } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Chip, Grid, LinearProgress, Stack, Typography } from '@mui/material';
-import { DataGrid, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
+import { Box, Chip, Grid, Typography } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
 import { LoadingButton } from 'cx-portal-shared-components';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Permissions from '../components/Permissions';
+import { useGetContractsQuery } from '../features/provider/contracts/apiSlice';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { IContractAgreements } from '../models/ConsumerContractOffers';
-import ConsumerService from '../services/ConsumerService';
-import { setContractAgreements, setIsContractAgreementsLoading } from '../store/consumerSlice';
-import { useAppDispatch, useAppSelector } from '../store/store';
-import { convertEpochToDate, epochToDate } from '../utils/utils';
+import { convertEpochToDate } from '../utils/utils';
 
-const ContractHistory: React.FC = () => {
+function ContractsTable({ type }: { type: string }) {
   const [pageSize, setPageSize] = useState<number>(10);
-  const { contractAgreements, isContractAgreementsLoading } = useAppSelector(state => state.consumerSlice);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
+  const HEADER_MAPPING: { [key: string]: string } = {
+    PROVIDER: 'consumer',
+    CONSUMER: 'provider',
+  };
   const renderContractAgreementStatus = (params: GridRenderCellParams) => {
     switch (params.value) {
       case 'CONFIRMED':
@@ -78,7 +74,7 @@ const ContractHistory: React.FC = () => {
         return <Chip color="default" title={params.value} label={params.value} variant="outlined" />;
     }
   };
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: 'contractAgreementId',
       flex: 1,
@@ -95,25 +91,17 @@ const ContractHistory: React.FC = () => {
     {
       field: 'counterPartyAddress',
       flex: 1,
-      headerName: t('content.contractHistory.columns.counterPartyAddress'),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      headerName: `${t(`pages.${HEADER_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.counterPartyAddress),
-    },
-    {
-      field: 'title',
-      flex: 1,
-      headerName: t('content.contractHistory.columns.title'),
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.title),
-    },
-    {
-      field: 'organizationName',
-      flex: 1,
-      headerName: t('content.contractHistory.columns.organizationName'),
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.organizationName),
     },
     {
       field: 'contractAgreementInfo.contractSigningDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractSigningDate'),
+      sortingOrder: ['asc', 'desc'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractSigningDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractSigningDate)
@@ -123,6 +111,9 @@ const ContractHistory: React.FC = () => {
       field: 'contractAgreementInfo.contractEndDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractEndDate'),
+      sortingOrder: ['asc', 'desc'],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
       valueGetter: (params: GridValueGetterParams) =>
         params.row.contractAgreementInfo?.contractEndDate
           ? convertEpochToDate(params.row.contractAgreementInfo.contractEndDate)
@@ -136,80 +127,60 @@ const ContractHistory: React.FC = () => {
     },
   ];
 
-  const fetchContractAgreements = async () => {
-    dispatch(setIsContractAgreementsLoading(true));
-    try {
-      const response = await ConsumerService.getInstance().getContractAgreementsList(0, MAX_CONTRACTS_AGREEMENTS);
-      const contractAgreementsList = response.data;
-      contractAgreementsList.sort((contract1: IContractAgreements, contract2: IContractAgreements) => {
-        const d1 = epochToDate(contract1.dateUpdated).valueOf();
-        const d2 = epochToDate(contract2.dateUpdated).valueOf();
-        return d2 - d1;
-      });
-      dispatch(setContractAgreements(contractAgreementsList));
-      dispatch(setIsContractAgreementsLoading(false));
-    } catch (error) {
-      dispatch(setContractAgreements([]));
-      dispatch(setIsContractAgreementsLoading(false));
+  const handleTitle = () => {
+    if (type === 'PROVIDER') {
+      return t('content.providerContracts.title');
+    } else {
+      return t('content.consumerContracts.title');
     }
   };
 
-  useEffect(() => {
-    dispatch(setContractAgreements([]));
-    fetchContractAgreements();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data, isFetching, isSuccess, refetch } = useGetContractsQuery({
+    type: type,
+    offset: 0,
+    maxLimit: MAX_CONTRACTS_AGREEMENTS,
+  });
 
-  return (
-    <Box sx={{ flex: 1, p: 4 }}>
-      <Permissions values={['consumer_view_contract_agreement']} fullPage={true}>
-        <Grid container alignItems="center">
+  if (isSuccess) {
+    return (
+      <Box sx={{ flex: 1, p: 4 }}>
+        <Grid container spacing={2} alignItems="center">
           <Grid item xs={6}>
-            <Typography variant="h4">{t('content.contractHistory.title')}</Typography>
+            <Typography variant="h3">{handleTitle()}</Typography>
+            <Typography variant="body1">
+              {t('content.common.ownConnector')} {data.connector}
+            </Typography>
           </Grid>
           <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton
               size="small"
               variant="contained"
               label={t('button.refresh')}
-              onButtonClick={() => fetchContractAgreements()}
+              onButtonClick={refetch}
               startIcon={<Refresh />}
               loadIndicator={t('content.common.loading')}
-              loading={isContractAgreementsLoading}
+              loading={isFetching}
             />
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
               <DataGrid
                 sx={{ mt: 4 }}
-                autoHeight={true}
                 getRowId={row => row.negotiationId}
-                rows={contractAgreements}
+                rows={data.contracts}
                 columns={columns}
-                loading={isContractAgreementsLoading}
+                loading={isFetching}
                 pagination
                 pageSize={pageSize}
-                onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+                onPageSizeChange={setPageSize}
                 rowsPerPageOptions={[10, 25, 50, 100]}
                 components={{
                   Toolbar: GridToolbar,
-                  LoadingOverlay: LinearProgress,
-                  NoRowsOverlay: () => (
-                    <Stack height="100%" alignItems="center" justifyContent="center">
-                      {t('content.common.noData')}
-                    </Stack>
-                  ),
-                  NoResultsOverlay: () => (
-                    <Stack height="100%" alignItems="center" justifyContent="center">
-                      {t('content.common.noResults')}
-                    </Stack>
-                  ),
                 }}
                 componentsProps={{
                   toolbar: {
                     showQuickFilter: true,
                     quickFilterProps: { debounceMs: 500 },
-                    printOptions: { disableToolbarButton: true },
                   },
                 }}
                 disableColumnMenu
@@ -220,9 +191,9 @@ const ContractHistory: React.FC = () => {
             </Box>
           </Grid>
         </Grid>
-      </Permissions>
-    </Box>
-  );
-};
+      </Box>
+    );
+  } else return null;
+}
 
-export default ContractHistory;
+export default ContractsTable;

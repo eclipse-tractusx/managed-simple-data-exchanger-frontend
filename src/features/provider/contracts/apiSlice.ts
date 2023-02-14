@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,16 +17,19 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { apiSlice } from '../../app/apiSlice';
 
-interface SubmodelRows {
-  name: string;
-  mandatory: boolean;
-  position: number;
-}
+export const contractsSlice = apiSlice.injectEndpoints({
+  endpoints: builder => ({
+    getContracts: builder.query({
+      query: params => {
+        return {
+          url: '/contract-agreements',
+          params,
+        };
+      },
+    }),
+  }),
+});
 
-export interface ISubmodelHelpProps {
-  submodelName: string;
-  rows: Array<SubmodelRows>;
-  onCopyHeaders?: () => void;
-  downloadUrl: string;
-}
+export const { useGetContractsQuery } = contractsSlice;

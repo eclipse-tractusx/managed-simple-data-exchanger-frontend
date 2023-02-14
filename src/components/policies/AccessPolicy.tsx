@@ -33,11 +33,11 @@ import _ from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/policies/slice';
-import { ILegalEntityContent, IntOption } from '../../models/ConsumerContractOffers';
+import { setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../features/consumer/slice';
+import { ILegalEntityContent, IntConnectorItem, IntOption } from '../../features/consumer/types';
+import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/provider/policies/slice';
+import { useAppDispatch, useAppSelector } from '../../features/store';
 import ConsumerService from '../../services/ConsumerService';
-import { IntConnectorItem, setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../store/consumerSlice';
-import { useAppDispatch, useAppSelector } from '../../store/store';
 
 const ITEMS = [
   {

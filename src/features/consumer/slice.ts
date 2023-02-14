@@ -20,37 +20,8 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IConsumerDataOffers, IContractAgreements } from '../models/ConsumerContractOffers';
-
-export interface IntOption {
-  _id: number | string;
-  bpn: string;
-  value: string;
-}
-
-export interface IntConnectorItem {
-  id: number;
-  value: string;
-  title: string;
-}
-
-interface IConsumerSlice {
-  offersLoading: boolean;
-  contractOffers: IConsumerDataOffers[];
-  selectedOffersList: IConsumerDataOffers[];
-  selectedOffer: IConsumerDataOffers;
-  isMultipleContractSubscription: boolean;
-  searchFilterByType: string;
-  filterProviderUrl: string;
-  filterCompanyOptions: IntOption[];
-  filterCompanyOptionsLoading: boolean;
-  filterSelectedCompanyOption: IntOption | null;
-  filterSelectedBPN: string | null;
-  filterConnectors: IntConnectorItem[];
-  filterSelectedConnector: Partial<IntConnectorItem>;
-  contractAgreements: IContractAgreements[];
-  isContractAgreementsLoading: boolean;
-}
+import { epochToDate } from '../../utils/utils';
+import { IConsumerDataOffers, IConsumerSlice, IContractAgreements, IntConnectorItem, IntOption } from './types';
 
 const initialState: IConsumerSlice = {
   offersLoading: false,
@@ -79,7 +50,16 @@ export const consumerSlice = createSlice({
       state.offersLoading = action.payload;
     },
     setContractOffers: (state, action: PayloadAction<IConsumerDataOffers[]>) => {
-      state.contractOffers = action.payload;
+      const modifiedData = action.payload
+        .sort(
+          (contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) =>
+            new Date(contract2.created).getDate() - new Date(contract1.created).getDate(),
+        )
+        .map((item: IConsumerDataOffers, index: number) => {
+          return { ...item, ...{ id: index } };
+        })
+        .sort((contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) => contract2.id - contract1.id);
+      state.contractOffers = modifiedData;
     },
     setSelectedOffersList: (state, action: PayloadAction<IConsumerDataOffers[]>) => {
       state.selectedOffersList = action.payload;
@@ -115,7 +95,15 @@ export const consumerSlice = createSlice({
       state.filterSelectedConnector = action.payload;
     },
     setContractAgreements: (state, action: PayloadAction<IContractAgreements[]>) => {
-      state.contractAgreements = action.payload;
+      const modifiedData = action.payload
+        .sort(
+          (contract1: IContractAgreements, contract2: IContractAgreements) =>
+            epochToDate(contract2.dateUpdated).valueOf() - epochToDate(contract1.dateUpdated).valueOf(),
+        )
+        .map((item: IContractAgreements, index: number) => {
+          return { ...item, ...{ id: index } };
+        });
+      state.contractAgreements = modifiedData;
     },
     setIsContractAgreementsLoading: (state, action: PayloadAction<boolean>) => {
       state.isContractAgreementsLoading = action.payload;

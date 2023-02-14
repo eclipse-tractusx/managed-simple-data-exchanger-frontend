@@ -17,28 +17,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import ProviderService from '../../services/ProviderService';
-import { setPageLoading } from '../app/slice';
+import ContractsTable from '../components/ContractsTable';
 
-const fetchSubmodelList = createAsyncThunk('/submodel/list', async (params: unknown) => {
-  try {
-    const res = await ProviderService.getInstance().getSubmodelList(params);
-    return res;
-  } catch (error) {
-    console.log('api call error:', error);
-  }
-});
-const fetchSubmodelDetails = createAsyncThunk('/submodel/details', async (params: string, { dispatch }) => {
-  try {
-    dispatch(setPageLoading(true));
-    const res = await ProviderService.getInstance().getSubmodelDetails(params);
-    return res;
-  } catch (error) {
-    console.log('api call error:', error);
-  } finally {
-    dispatch(setPageLoading(false));
-  }
-});
-export { fetchSubmodelDetails, fetchSubmodelList };
+const ConsumerContracts = () => <ContractsTable type="CONSUMER" />;
+
+export default ConsumerContracts;

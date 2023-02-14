@@ -21,7 +21,7 @@
 import { render, screen } from '@testing-library/react';
 
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
-import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
+import { IConsumerDataOffers } from '../features/consumer/types';
 
 test('Snapshot OfferDetailsDialog - load and diaplay offer details component', () => {
   const isOpen = true;

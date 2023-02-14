@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,17 +17,13 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { KeycloakTokenParsed } from 'keycloak-js';
+import { apiBaseQuery } from '../../services/RequestService';
 
-export interface IUser {
-  userName: string;
-  name: string;
-  email: string;
-  company: string;
-  roles?: string[];
-  bpn: string;
-  tenant: string;
-  token: string;
-  parsedToken: KeycloakTokenParsed;
-}
+export const apiSlice = createApi({
+  reducerPath: 'api',
+  baseQuery: fetchBaseQuery(apiBaseQuery()),
+  endpoints: () => ({}),
+  tagTypes: ['UploadHistory'],
+});

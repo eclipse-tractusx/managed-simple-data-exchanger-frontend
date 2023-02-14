@@ -19,17 +19,17 @@
  ********************************************************************************/
 
 import { ErrorPage } from 'cx-portal-shared-components';
+import { ReactElement } from 'react';
 
-import { useAppSelector } from '../store/store';
+import { useAppSelector } from '../features/store';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Permissions(props: any) {
+export default function Permissions(props: { values: string[]; children: ReactElement; fullPage?: boolean }) {
   const { permissions } = useAppSelector(state => state.appSlice);
   const valid = props.values ? props.values.some((item: string) => permissions?.includes(item)) : true;
   if (valid) return props.children;
-  else if (permissions.length && props.fullPage)
+  else if (permissions.length && props.fullPage) {
     return (
       <ErrorPage title="You have no permission to view this content" description="Please contact your administrator" />
     );
-  else return null;
+  } else return null;
 }

@@ -18,25 +18,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-const ITEMS = [
-  {
-    id: 1,
-    title: 'Company Name',
-    value: 'company',
-  },
-  {
-    id: 2,
-    title: 'Business Partner Number',
-    value: 'bpn',
-  },
-  {
-    id: 3,
-    title: 'Connector URL',
-    value: 'url',
-  },
-];
 import { Autocomplete, Box, Grid, LinearProgress, Stack } from '@mui/material';
-import { DataGrid, GridSelectionModel, GridToolbar, GridValidRowModel, GridValueGetterParams } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridSelectionModel,
+  GridToolbar,
+  GridValidRowModel,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import {
   Button,
   Dialog,
@@ -55,15 +45,6 @@ import { useTranslation } from 'react-i18next';
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
 import Permissions from '../components/Permissions';
-import { setSnackbarMessage } from '../features/notifiication/slice';
-import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
-import {
-  IConnectorResponse,
-  IConsumerDataOffers,
-  ILegalEntityContent,
-  IntOption,
-} from '../models/ConsumerContractOffers';
-import ConsumerService from '../services/ConsumerService';
 import {
   setContractOffers,
   setFfilterCompanyOptionsLoading,
@@ -78,8 +59,30 @@ import {
   setSelectedFilterCompanyOption,
   setSelectedOffer,
   setSelectedOffersList,
-} from '../store/consumerSlice';
-import { useAppDispatch, useAppSelector } from '../store/store';
+} from '../features/consumer/slice';
+import { IConnectorResponse, IConsumerDataOffers, ILegalEntityContent, IntOption } from '../features/consumer/types';
+import { setSnackbarMessage } from '../features/notifiication/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
+import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
+import ConsumerService from '../services/ConsumerService';
+
+const ITEMS = [
+  {
+    id: 1,
+    title: 'Company Name',
+    value: 'company',
+  },
+  {
+    id: 2,
+    title: 'Business Partner Number',
+    value: 'bpn',
+  },
+  {
+    id: 3,
+    title: 'Connector URL',
+    value: 'url',
+  },
+];
 
 export default function ConsumeData() {
   const {
@@ -106,7 +109,7 @@ export default function ConsumeData() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: 'title',
       flex: 1,
@@ -121,6 +124,8 @@ export default function ConsumeData() {
       field: 'created',
       flex: 1,
       headerName: t('content.consumeData.columns.created'),
+      sortingOrder: ['asc', 'desc'],
+      sortComparator: (_v1: any, _v2: any, param1: any, param2: any) => param1.id - param2.id,
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.created),
     },
     {
@@ -204,7 +209,7 @@ export default function ConsumeData() {
         if (response.status == 200) {
           dispatch(
             setSnackbarMessage({
-              message: t('alerts.subscriptionSuccess'),
+              message: 'alerts.subscriptionSuccess',
               type: 'success',
             }),
           );
@@ -219,7 +224,7 @@ export default function ConsumeData() {
         setIsOfferSubLoading(false);
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.subscriptionError'),
+            message: 'alerts.subscriptionError',
             type: 'error',
           }),
         );
@@ -245,7 +250,7 @@ export default function ConsumeData() {
         return true;
       }
       dispatch(setOffersLoading(true));
-      const response = await ConsumerService.getInstance().fetchConsumerDataOffers(providerUrl);
+      const response = await ConsumerService.getInstance().fetchConsumerDataOffers({ providerUrl: providerUrl });
       dispatch(setContractOffers(response.data));
       dispatch(setOffersLoading(false));
     } catch (error) {
@@ -344,7 +349,7 @@ export default function ConsumeData() {
     } else {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.noConnector'),
+          message: 'alerts.noConnector',
           type: 'error', //warning
         }),
       );
@@ -370,7 +375,7 @@ export default function ConsumeData() {
 
   const handleSelectionModel = (newSelectionModel: GridSelectionModel) => {
     const selectedIDs = new Set(newSelectionModel);
-    const selectedRowData = contractOffers.filter((row: GridValidRowModel) => selectedIDs.has(row.assetId.toString()));
+    const selectedRowData = contractOffers.filter((row: GridValidRowModel) => selectedIDs.has(row.id));
     dispatch(setSelectedOffersList(selectedRowData));
     setSelectionModel(newSelectionModel);
   };
@@ -396,7 +401,7 @@ export default function ConsumeData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h4" pb={4}>
+      <Typography variant="h3" pb={4}>
         {t('pages.consumeData')}
       </Typography>
       <Grid container spacing={2} alignItems="end">
@@ -550,7 +555,7 @@ export default function ConsumeData() {
         <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
           <DataGrid
             autoHeight={true}
-            getRowId={row => row.assetId}
+            getRowId={row => row.id}
             rows={contractOffers}
             onRowClick={onRowClick}
             columns={columns}
@@ -641,14 +646,11 @@ export default function ConsumeData() {
         </>
       )}
       <Dialog open={dialogOpen}>
-        <DialogHeader title="Usage policies are not identical!" />
-        <DialogContent>
-          The contract offers within your search results do not have an identical usage policy. Subscribing to multiple
-          offers is only available for contract offers that have an identical policy.
-        </DialogContent>
+        <DialogHeader title={t('dialog.samePolicies.title')} />
+        <DialogContent>{t('dialog.samePolicies.content')}</DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={showAddDialog}>
-            Okay
+            {t('button.okay')}
           </Button>
         </DialogActions>
       </Dialog>

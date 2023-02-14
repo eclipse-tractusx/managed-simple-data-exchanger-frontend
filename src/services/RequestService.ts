@@ -19,6 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Config } from '../utils/config';
 import UserService from './UserService';
 
 export const getHeaders = () => ({
@@ -27,15 +28,17 @@ export const getHeaders = () => ({
   },
 });
 
-export const getTextHeaders = () => ({
-  headers: {
-    authorization: `Bearer ${UserService.getToken()}`,
-    'content-type': 'text/plain',
+export const apiBaseQuery = () => ({
+  baseUrl: Config.REACT_APP_API_URL,
+  prepareHeaders: (headers: Headers) => {
+    headers.set('authorization', `Bearer ${UserService.getToken()}`);
+    return headers;
   },
 });
 
 const RequestService = {
   getHeaders,
+  apiBaseQuery,
 };
 
 export default RequestService;

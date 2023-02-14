@@ -92,6 +92,14 @@ class ProviderService extends HttpService {
     });
     return res;
   }
+
+  public async getAllSchemas() {
+    const res = await this.instance({
+      method: 'GET',
+      url: '/submodels/schema-details',
+    });
+    return res?.data;
+  }
 }
 
 export default ProviderService;

@@ -17,6 +17,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+
 export interface IUsageControl {
   type: string;
   typeOfAccess: string;
@@ -24,6 +25,7 @@ export interface IUsageControl {
   durationUnit?: string | Record<string, never>;
 }
 export interface IConsumerDataOffers {
+  id?: number;
   // connectorOfferid same assetId
   connectorOfferid?: string;
   assetId?: string;
@@ -84,9 +86,9 @@ export interface IConnectorResponse {
   connectorEndpoint: string[];
 }
 export interface IContractAgreementInfo {
-  contractSigningDate: number | Date;
-  contractStartDate: number | Date;
-  contractEndDate: number | Date;
+  contractSigningDate: number;
+  contractStartDate: number;
+  contractEndDate: number;
   assetId: string;
   policies: IUsageControl[];
 }
@@ -100,4 +102,34 @@ export interface IContractAgreements {
   contractAgreementInfo?: IContractAgreementInfo;
   dateCreated: number;
   dateUpdated: number;
+}
+
+export interface IntOption {
+  _id: number | string;
+  bpn: string;
+  value: string;
+}
+
+export interface IntConnectorItem {
+  id: number;
+  value: string;
+  title: string;
+}
+
+export interface IConsumerSlice {
+  offersLoading: boolean;
+  contractOffers: IConsumerDataOffers[];
+  selectedOffersList: IConsumerDataOffers[];
+  selectedOffer: IConsumerDataOffers;
+  isMultipleContractSubscription: boolean;
+  searchFilterByType: string;
+  filterProviderUrl: string;
+  filterCompanyOptions: IntOption[];
+  filterCompanyOptionsLoading: boolean;
+  filterSelectedCompanyOption: IntOption | null;
+  filterSelectedBPN: string | null;
+  filterConnectors: IntConnectorItem[];
+  filterSelectedConnector: Partial<IntConnectorItem>;
+  contractAgreements: IContractAgreements[];
+  isContractAgreementsLoading: boolean;
 }

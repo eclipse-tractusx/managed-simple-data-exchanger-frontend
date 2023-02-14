@@ -20,7 +20,7 @@
 
 import Keycloak from 'keycloak-js';
 
-import { IUser } from '../models/User';
+import { IUser } from '../features/app/types';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
@@ -57,8 +57,7 @@ const hasRole = (roles: string[]) => roles.some((role: string) => KC.hasRealmRol
 
 const isLoggedIn = () => !!KC.token;
 
-const hasValidResource = () =>
-  KC.tokenParsed?.resource_access?.hasOwnProperty(keycloakConfig.clientId);
+const hasValidResource = () => KC.tokenParsed?.resource_access?.hasOwnProperty(keycloakConfig.clientId);
 
 const getLoggedUser = () => ({
   userName: getUsername(),

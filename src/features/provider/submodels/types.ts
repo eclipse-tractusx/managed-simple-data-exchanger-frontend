@@ -52,3 +52,15 @@ export interface DynamicTableColumn {
   type?: 'singleSelect' | 'number' | 'string';
   valueOptions?: string[];
 }
+
+export interface HelpPageData {
+  name: string;
+  description: string;
+  id: string;
+  rows: {
+    name: string;
+    mandatory: string;
+    order: number;
+    description: string;
+  }[];
+}

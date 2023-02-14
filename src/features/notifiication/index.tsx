@@ -18,19 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { PageSnackbar } from 'cx-portal-shared-components';
+import { useTranslation } from 'react-i18next';
 
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../store';
 import { toggleSnackbar } from './slice';
 
 export default function Notification() {
   const { openSnackBar, snackBarMessage, snackbarType } = useAppSelector(state => state.notificationSlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   return (
     <div>
       <PageSnackbar
         autoClose
-        description={snackBarMessage}
+        description={t(snackBarMessage)}
         open={openSnackBar}
         severity={snackbarType}
         showIcon

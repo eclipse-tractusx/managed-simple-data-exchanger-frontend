@@ -21,6 +21,8 @@
         - [Part As Planned](#part-as-planned)
         - [Single Level Bom As Planned](#single-level-bom-as-planned)
         - [Part Site Information As Planned](#part-site-information-as-planned)
+        - [Single Level Usage As Built](#single-level-usage-as-built)
+](#part-site-information-as-planned)
       - [JSON Entry](#manual-json-entry)
         - [Serial Part Typization](#serial-part-typization-1)
         - [Batch](#batch-1)
@@ -28,6 +30,8 @@
         - [Part As Planned](#part-as-planned-1)
         - [Single Level Bom As Planned](#single-level-bom-as-planned-1)
         - [Part Site Information As Planned](#part-site-information-as-planned-1)
+        - [Single Level Usage As Built](#single-level-usage-as-built-1)
+](#part-site-information-as-planned-1)
     - [Upload history](#upload-history)
     - [Help](#help)
   - [Consumer](#consumer)
@@ -84,12 +88,13 @@ On the left side menu, it is possible to navigate the Simple Data Exchanger appl
 
 - Create Data
 - Upload History
+- Contracts
 - Help
 
 **Consumer**
 
 - Consume Data
-- Contract History
+- Contracts
 
 [-- end of 'navigation' section --]: #
 
@@ -172,6 +177,10 @@ This is the process of creating new data offer through SDE application by upload
 
 <img src="images/sde-part-site-info-tabular.png" height="60%" width="60%" />
 
+#### Single Level Usage As Built
+
+<img src="images/sde-single-level-usage-table.png" height="60%" width="60%" />
+
 You can add and submit multiple data offers via Tabular entry option for particular submodel by clicking on "Add Row" button to bulk upload the multiple data offers in one go. Once you enter details in all of the required fields for a particular row, you need to select which offers we need to upload by ticking the checkboxes for the respective rows and then we need to click on "NEXT STEP - CONFIGURE POLICIES" button to configure Access and Usage policies and then you need to click on Submit button from policy dialog to uplod the data. You can upload the data for multiple submodels by selecting the respective submodel from the top level Select submodel dropdwon.
 We also can delete multiple rows by selecting which rows we want to delete and then click on Delete Row(s) button.
 
@@ -200,6 +209,10 @@ We also can delete multiple rows by selecting which rows we want to delete and t
 #### Part Site Information As Planned
 
 <img src="images/sde-part-site-info-json.png" height="60%" width="60%" />
+
+#### Single Level Usage As Built
+
+<img src="images/sde-single-level-usage-json.png" height="60%" width="60%" />
 
 You can also add and submit multiple data offers via Manual JSON entry for various supported submodels by clicking on respective textarea inputbox and entering submodel json schema in form of array or list of multiple objects mentioned in the placeholder for each teaxtarea. The textarea populates the placeholder text which shows the data format alongwith field names which will help to prepare the JSON structure.
 Then you need to configure Access and Usage policies by clicking on "NEXT STEP - CONFIGURE POLICIES" button and after successful configuration, click on Submit button from policy dialog to upload bulk data offers at once.

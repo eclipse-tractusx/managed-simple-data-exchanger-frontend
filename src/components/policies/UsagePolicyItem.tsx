@@ -22,8 +22,8 @@ import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack
 import { Input, SelectList } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
-import { setDurationUnit } from '../../features/policies/slice';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { setDurationUnit } from '../../features/provider/policies/slice';
+import { useAppDispatch, useAppSelector } from '../../features/store';
 
 interface FreeTextProps {
   restrictionType: string;

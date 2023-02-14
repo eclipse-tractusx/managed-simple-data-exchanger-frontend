@@ -22,76 +22,52 @@
 import { Refresh } from '@mui/icons-material';
 import { Box, Grid } from '@mui/material';
 import { LoadingButton, Typography } from 'cx-portal-shared-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import Permissions from '../components/Permissions';
 import StickyHeadTable from '../components/StickyHeadTable';
-import { ProcessReport } from '../models/ProcessReport';
-import ProviderService from '../services/ProviderService';
+import { useGetHistoryQuery } from '../features/provider/history/apiSlice';
 
 export default function UploadHistory() {
-  const [tableData, setTableData] = useState<ProcessReport[]>([]);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const [page, setPage] = useState<number>(0);
-  const [totalElements, setTotalElements] = useState<number>(0);
-  const [loading, setloading] = useState(false);
   const { t } = useTranslation();
 
-  const refreshTable = useCallback(async () => {
-    try {
-      setloading(true);
-      const response = await ProviderService.getInstance().getUploadHistory({ page: page, pageSize: rowsPerPage });
-      setTableData(response.data.items);
-      setTotalElements(response.data.totalItems);
-      setloading(false);
-    } catch (error) {
-      console.log(error);
-      setloading(false);
-    }
-  }, [page, rowsPerPage]);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [page, setPage] = useState<number>(0);
 
-  useEffect(() => {
-    let isApiSubscribed = true;
-    if (isApiSubscribed) {
-      refreshTable();
-    }
-    return () => {
-      isApiSubscribed = false;
-    };
-  }, [page, rowsPerPage, refreshTable]);
+  const { isSuccess, data, refetch, isFetching } = useGetHistoryQuery({ page: page, pageSize: rowsPerPage });
 
   return (
-    <Permissions values={['provider_view_history']} fullPage={true}>
-      <Box sx={{ flex: 1, p: 4 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Typography variant="h4">{t('pages.uploadHistory')}</Typography>
+    <>
+      {isSuccess ? (
+        <Box sx={{ flex: 1, p: 4 }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={6}>
+              <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
+            </Grid>
+            <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+              <LoadingButton
+                size="small"
+                variant="contained"
+                label={t('button.refresh')}
+                onButtonClick={refetch}
+                startIcon={<Refresh />}
+                loadIndicator={t('content.common.loading')}
+                loading={isFetching}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
-            <LoadingButton
-              size="small"
-              variant="contained"
-              label={t('button.refresh')}
-              onButtonClick={() => refreshTable()}
-              startIcon={<Refresh />}
-              loadIndicator={t('content.common.loading')}
-              loading={loading}
+          <Box sx={{ mt: 4 }}>
+            <StickyHeadTable
+              rows={data.items}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              totalElements={data.totalItems}
+              setPage={setPage}
+              setRowsPerPage={setRowsPerPage}
             />
-          </Grid>
-        </Grid>
-        <Box sx={{ mt: 4 }}>
-          <StickyHeadTable
-            rows={tableData}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            totalElements={totalElements}
-            setPage={setPage}
-            setRowsPerPage={setRowsPerPage}
-            refreshTable={refreshTable}
-          />
+          </Box>
         </Box>
-      </Box>
-    </Permissions>
+      ) : null}
+    </>
   );
 }

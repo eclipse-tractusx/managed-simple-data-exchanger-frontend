@@ -23,11 +23,11 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import UploadFile from '../components/UploadFile';
-import { handleDialogOpen } from '../features/policies/slice';
+import { handleDialogOpen } from '../features/provider/policies/slice';
+import { store } from '../features/store';
 import CreateData from '../pages/CreateData';
 import Help from '../pages/Help';
 import UploadHistory from '../pages/UploadHistory';
-import { store } from '../store/store';
 import { ReduxWrapper } from '../utils/testUtils';
 
 describe('Dashboard', () => {

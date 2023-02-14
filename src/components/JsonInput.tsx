@@ -19,16 +19,19 @@
  ********************************************************************************/
 import { Box, Grid, TextareaAutosize, useTheme } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
+import { useTranslation } from 'react-i18next';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { setJsonInputData } from '../features/submodels/slice';
+import { setJsonInputData } from '../features/provider/submodels/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { schemaValidator } from '../helpers/SchemaValidator';
-import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function JsonInput() {
   const theme = useTheme();
   const { submodelDetails, jsonInputData } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
   const submitData = (data: string) => {
     try {
       const json = JSON.parse(data.trim());
@@ -38,7 +41,7 @@ export default function JsonInput() {
     } catch (e) {
       dispatch(
         setSnackbarMessage({
-          message: 'Invalid data! Enter Required * fields.',
+          message: 'alerts.invalidData',
           type: 'error',
         }),
       );
@@ -62,7 +65,7 @@ export default function JsonInput() {
           onClick={() => submitData(jsonInputData)}
           disabled={!Boolean(jsonInputData.length)}
         >
-          Next Step - Configure Policies
+          {t('content.policies.configure')}
         </Button>
       </Box>
       <Grid display={'flex'} justifyContent="center" alignContent={'center'} pt={4}>
