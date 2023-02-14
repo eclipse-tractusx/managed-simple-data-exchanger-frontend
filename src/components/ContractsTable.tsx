@@ -93,15 +93,14 @@ function ContractsTable({ type }: { type: string }) {
       field: 'contractAgreementInfo.assetId',
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
-      renderCell: ({ row }) => (
-        <Tooltips
-          tooltipPlacement="top-start"
-          tooltipArrow={false}
-          tooltipText={handleBlankCellValues(row.contractAgreementInfo.assetId)}
-        >
-          <span>{handleBlankCellValues(row.contractAgreementInfo?.assetId)}</span>
-        </Tooltips>
-      ),
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.assetId ? (
+          <Tooltips tooltipPlacement="top" tooltipText={row.contractAgreementInfo.assetId}>
+            <span>{row.contractAgreementInfo.assetId}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'counterPartyAddress',
@@ -125,14 +124,17 @@ function ContractsTable({ type }: { type: string }) {
       sortingOrder: ['asc', 'desc'],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
-      renderCell: ({ row }) => (
-        <Tooltips
-          tooltipPlacement="top"
-          tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate) || '-'}
-        >
-          <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate) || '-'}</span>
-        </Tooltips>
-      ),
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.contractSigningDate ? (
+          <Tooltips
+            tooltipPlacement="top"
+            tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate)}
+          >
+            <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'contractAgreementInfo.contractEndDate',
@@ -141,11 +143,14 @@ function ContractsTable({ type }: { type: string }) {
       sortingOrder: ['asc', 'desc'],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
-      renderCell: ({ row }) => (
-        <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}>
-          <span>{convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}</span>
-        </Tooltips>
-      ),
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.contractSigningDate ? (
+          <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo.contractEndDate)}>
+            <span>{convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'state',
