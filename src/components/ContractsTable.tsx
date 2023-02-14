@@ -22,8 +22,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, Typography } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import { LoadingButton } from 'cx-portal-shared-components';
+import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
+import { LoadingButton, Tooltips } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -79,21 +79,44 @@ function ContractsTable({ type }: { type: string }) {
       field: 'contractAgreementId',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractAgreementId'),
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.contractAgreementId),
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top-start"
+          tooltipArrow={false}
+          tooltipText={handleBlankCellValues(row.contractAgreementId)}
+        >
+          <span>{handleBlankCellValues(row.contractAgreementId)}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'contractAgreementInfo.assetId',
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.contractAgreementInfo ? params.row.contractAgreementInfo?.assetId : '-',
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top-start"
+          tooltipArrow={false}
+          tooltipText={handleBlankCellValues(row.contractAgreementInfo.assetId)}
+        >
+          <span>{handleBlankCellValues(row.contractAgreementInfo?.assetId)}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'counterPartyAddress',
       flex: 1,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       headerName: `${t(`pages.${HEADER_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.counterPartyAddress),
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top-start"
+          tooltipArrow={false}
+          tooltipText={handleBlankCellValues(row.counterPartyAddress)}
+        >
+          <span>{handleBlankCellValues(row.counterPartyAddress)}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'contractAgreementInfo.contractSigningDate',
@@ -102,10 +125,14 @@ function ContractsTable({ type }: { type: string }) {
       sortingOrder: ['asc', 'desc'],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.contractAgreementInfo?.contractSigningDate
-          ? convertEpochToDate(params.row.contractAgreementInfo.contractSigningDate)
-          : '-',
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top"
+          tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate) || '-'}
+        >
+          <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate) || '-'}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'contractAgreementInfo.contractEndDate',
@@ -114,10 +141,11 @@ function ContractsTable({ type }: { type: string }) {
       sortingOrder: ['asc', 'desc'],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.contractAgreementInfo?.contractEndDate
-          ? convertEpochToDate(params.row.contractAgreementInfo.contractEndDate)
-          : '-',
+      renderCell: ({ row }) => (
+        <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}>
+          <span>{convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'state',
@@ -166,7 +194,8 @@ function ContractsTable({ type }: { type: string }) {
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
               <DataGrid
                 sx={{ mt: 4 }}
-                getRowId={row => row.negotiationId}
+                autoHeight={true}
+                getRowId={row => row.id}
                 rows={data.contracts}
                 columns={columns}
                 loading={isFetching}

@@ -18,6 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { apiSlice } from '../../app/apiSlice';
+import { IContractAgreements } from '../../consumer/types';
 
 export const contractsSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -27,6 +28,17 @@ export const contractsSlice = apiSlice.injectEndpoints({
           url: '/contract-agreements',
           params,
         };
+      },
+      transformResponse: async ({ connector, contracts }) => { 
+        const modifieldData = contracts
+          .sort(
+            (contract1: IContractAgreements, contract2: IContractAgreements) =>
+              contract2.dateCreated - contract1.dateCreated,
+          )
+          .map((item: IContractAgreements, index: number) => {
+            return { ...{ id: index, ...item  } };
+          });
+        return { connector, contracts: modifieldData };
       },
     }),
   }),
