@@ -646,14 +646,11 @@ export default function ConsumeData() {
         </>
       )}
       <Dialog open={dialogOpen}>
-        <DialogHeader title="Usage policies are not identical!" />
-        <DialogContent>
-          The contract offers within your search results do not have an identical usage policy. Subscribing to multiple
-          offers is only available for contract offers that have an identical policy.
-        </DialogContent>
+        <DialogHeader title={t('dialog.samePolicies.title')} />
+        <DialogContent>{t('dialog.samePolicies.content')}</DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={showAddDialog}>
-            Okay
+            {t('button.okay')}
           </Button>
         </DialogActions>
       </Dialog>

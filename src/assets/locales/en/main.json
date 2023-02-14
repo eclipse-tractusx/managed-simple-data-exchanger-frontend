@@ -151,7 +151,7 @@
   "dialog": {
     "samePolicies": {
       "title": "Usage policies are not identical!",
-      "content": " The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy."
+      "content": "The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy."
     },
     "offerDetails": {
       "title": "Offer Details",
