@@ -22,18 +22,22 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, Typography } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
 import { LoadingButton, Tooltips } from 'cx-portal-shared-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { setPageLoading } from '../features/app/slice';
 import { useGetContractsQuery } from '../features/provider/contracts/apiSlice';
+import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { convertEpochToDate } from '../utils/utils';
 
 function ContractsTable({ type }: { type: string }) {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
   const HEADER_MAPPING: { [key: string]: string } = {
     PROVIDER: 'consumer',
     CONSUMER: 'provider',
@@ -105,7 +109,6 @@ function ContractsTable({ type }: { type: string }) {
     {
       field: 'counterPartyAddress',
       flex: 1,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       headerName: `${t(`pages.${HEADER_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
       renderCell: ({ row }) => (
         <Tooltips
@@ -122,8 +125,7 @@ function ContractsTable({ type }: { type: string }) {
       flex: 1,
       headerName: t('content.contractHistory.columns.contractSigningDate'),
       sortingOrder: ['asc', 'desc'],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
+      sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
       renderCell: ({ row }) =>
         row.contractAgreementInfo?.contractSigningDate ? (
           <Tooltips
@@ -141,8 +143,7 @@ function ContractsTable({ type }: { type: string }) {
       flex: 1,
       headerName: t('content.contractHistory.columns.contractEndDate'),
       sortingOrder: ['asc', 'desc'],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
+      sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
       renderCell: ({ row }) =>
         row.contractAgreementInfo?.contractSigningDate ? (
           <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo.contractEndDate)}>
@@ -168,11 +169,15 @@ function ContractsTable({ type }: { type: string }) {
     }
   };
 
-  const { data, isFetching, isSuccess, refetch } = useGetContractsQuery({
+  const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
     type: type,
     offset: 0,
     maxLimit: MAX_CONTRACTS_AGREEMENTS,
   });
+
+  useEffect(() => {
+    dispatch(setPageLoading(isLoading));
+  }, [dispatch, isLoading]);
 
   if (isSuccess) {
     return (
