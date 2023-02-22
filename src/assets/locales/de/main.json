@@ -70,11 +70,12 @@
       "roleNote": "Nutzung nur für Individuen mit Rolle/Eigenschaft zugelassen",
       "custom": "Nutzerdefinierte Bedingung",
       "customNote": "Folgende Regel(n) gelten weiterhin für die Nutzung",
-      "purposeLabel": "Bitte beschreiben Sie ihre Anlegen. Oder Beschreiben Sie den Zweck",
+      "purposeLabel": "Beschreiben Sie den Zweck",
       "roleLabel": "Bitte fügen sie eine Rolle ein",
       "customLabel": "Bitte geben Sie Ihre benutzerdefinierten Bedingungen ein"
     },
     "uploadHistory": {
+      "description": "This history shows the status of your uploads. Furthermore, you can download the uploaded data.",
       "columns": {
         "processId": "Transaktion Id",
         "csvType": "CSV Typ",
@@ -89,7 +90,8 @@
       }
     },
     "providerContracts": {
-      "title": "Anbieterseitige Verträge"
+      "title": "Anbieterseitige Verträge",
+      "description": "This list shows all your contracts as a data provider."
     },
     "help": {
       "rules1": "Die Datei muss vom Typ CSV sein (.csv Endung).",
@@ -131,7 +133,8 @@
       }
     },
     "consumerContracts": {
-      "title": "Empfängerseitige Verträge"
+      "title": "Empfängerseitige Verträge",
+      "description": "This list shows your existing agreements (contracts) with the data providers."
     },
     "common": {
       "loading": "Laden...",

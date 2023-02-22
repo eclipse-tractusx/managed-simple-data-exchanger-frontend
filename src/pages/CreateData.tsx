@@ -59,6 +59,9 @@ export default function CreateData() {
       {Object.keys(selectedSubmodel).length ? (
         <Grid container>
           <Grid item xs={12}>
+            <Typography variant="body1" mb={4} maxWidth={900}>
+              {t('content.provider.description')}
+            </Typography>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
                 <Tab label={t('content.provider.uploadFile')} />
@@ -81,7 +84,7 @@ export default function CreateData() {
         </Grid>
       ) : (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
-          <Typography>{t('content.provider.selectSubmodel')}</Typography>
+          <Typography variant="body1">{t('content.provider.placeHolder')}</Typography>
         </Box>
       )}
       <PoliciesDialog />
