@@ -15,7 +15,7 @@
     "home": {
       "header": "Home",
       "selectUsecasesHeader": "Wählen Sie ihren Use Case",
-      "selectUsecasesSubheader": "You may select one or more use cases that interest you. Only those submodels will be displayed in successive steps that are relevant for the selected use cases. When you don’t make a selection, all submodels will be displayed.",
+      "selectUsecasesSubheader": "Sie können einen oder mehrere Anwendungsfälle auswählen, die Sie interessieren. In aufeinander folgenden Schritten werden nur die Teilmodelle angezeigt, die für die ausgewählten Anwendungsfälle relevant sind. Wenn Sie keine Auswahl treffen, werden alle Untermodelle angezeigt. Auf Google nach diesen Inhalten suchen",
       "exchangeDataHeader": "Daten austauschen",
       "provideDataTab": "Daten anbieten",
       "consumeDataTab": "Daten empfangen",
@@ -70,9 +70,9 @@
       "roleNote": "Nutzung nur für Individuen mit Rolle/Eigenschaft zugelassen",
       "custom": "Nutzerdefinierte Bedingung",
       "customNote": "Folgende Regel(n) gelten weiterhin für die Nutzung",
-      "purposeLabel": "Describe the purpose",
-      "roleLabel": "Enter a role/characteristic",
-      "customLabel": "Enter your custom conditions"
+      "purposeLabel": "Bitte beschreiben Sie ihre Anlegen. Oder Beschreiben Sie den Zweck",
+      "roleLabel": "Bitte fügen sie eine Rolle ein",
+      "customLabel": "Bitte geben Sie Ihre benutzerdefinierten Bedingungen ein"
     },
     "uploadHistory": {
       "columns": {
@@ -98,11 +98,11 @@
     },
     "consumeData": {
       "selectType": "Art der Suche",
-      "selectCompany": "Firmenname auswählen",
-      "searchPlaceholder": "Enter min. 3 characters",
-      "noCompany": "No company found",
+      "searchCompany": "Suche nach Firmennamen",
+      "searchPlaceholder": "Geben Sie mindestens 3 Buchstaben ein",
+      "noCompany": "Kein Unternehmen gefunden",
       "selectConnectors": "Connector auswählen",
-      "noConnectors": "No connectors found",
+      "noConnectors": "Keine Anschlüsse gefunden",
       "enterBPN": "Eingabe Business Partner Number",
       "enterURL": "Eingabe Connector URL",
       "selectTypeValues": {

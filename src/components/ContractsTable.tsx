@@ -22,18 +22,22 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, Typography } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValueGetterParams } from '@mui/x-data-grid';
-import { LoadingButton } from 'cx-portal-shared-components';
-import { useState } from 'react';
+import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
+import { LoadingButton, Tooltips } from 'cx-portal-shared-components';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { setPageLoading } from '../features/app/slice';
 import { useGetContractsQuery } from '../features/provider/contracts/apiSlice';
+import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { convertEpochToDate } from '../utils/utils';
 
 function ContractsTable({ type }: { type: string }) {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
   const HEADER_MAPPING: { [key: string]: string } = {
     PROVIDER: 'consumer',
     CONSUMER: 'provider',
@@ -79,45 +83,75 @@ function ContractsTable({ type }: { type: string }) {
       field: 'contractAgreementId',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractAgreementId'),
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.contractAgreementId),
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top-start"
+          tooltipArrow={false}
+          tooltipText={handleBlankCellValues(row.contractAgreementId)}
+        >
+          <span>{handleBlankCellValues(row.contractAgreementId)}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'contractAgreementInfo.assetId',
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.contractAgreementInfo ? params.row.contractAgreementInfo?.assetId : '-',
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.assetId ? (
+          <Tooltips tooltipPlacement="top" tooltipText={row.contractAgreementInfo.assetId}>
+            <span>{row.contractAgreementInfo.assetId}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'counterPartyAddress',
       flex: 1,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       headerName: `${t(`pages.${HEADER_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
-      valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.counterPartyAddress),
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top-start"
+          tooltipArrow={false}
+          tooltipText={handleBlankCellValues(row.counterPartyAddress)}
+        >
+          <span>{handleBlankCellValues(row.counterPartyAddress)}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'contractAgreementInfo.contractSigningDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractSigningDate'),
       sortingOrder: ['asc', 'desc'],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.contractAgreementInfo?.contractSigningDate
-          ? convertEpochToDate(params.row.contractAgreementInfo.contractSigningDate)
-          : '-',
+      sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.contractSigningDate ? (
+          <Tooltips
+            tooltipPlacement="top"
+            tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate)}
+          >
+            <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'contractAgreementInfo.contractEndDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractEndDate'),
       sortingOrder: ['asc', 'desc'],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sortComparator: (v1, v2, param1: any, param2: any) => param2.id - param1.id,
-      valueGetter: (params: GridValueGetterParams) =>
-        params.row.contractAgreementInfo?.contractEndDate
-          ? convertEpochToDate(params.row.contractAgreementInfo.contractEndDate)
-          : '-',
+      sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.contractSigningDate ? (
+          <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo.contractEndDate)}>
+            <span>{convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'state',
@@ -135,11 +169,15 @@ function ContractsTable({ type }: { type: string }) {
     }
   };
 
-  const { data, isFetching, isSuccess, refetch } = useGetContractsQuery({
+  const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
     type: type,
     offset: 0,
     maxLimit: MAX_CONTRACTS_AGREEMENTS,
   });
+
+  useEffect(() => {
+    dispatch(setPageLoading(isLoading));
+  }, [dispatch, isLoading]);
 
   if (isSuccess) {
     return (
@@ -166,7 +204,8 @@ function ContractsTable({ type }: { type: string }) {
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
               <DataGrid
                 sx={{ mt: 4 }}
-                getRowId={row => row.negotiationId}
+                autoHeight={true}
+                getRowId={row => row.id}
                 rows={data.contracts}
                 columns={columns}
                 loading={isFetching}
