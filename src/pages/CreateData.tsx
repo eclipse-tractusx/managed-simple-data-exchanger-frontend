@@ -43,7 +43,7 @@ export default function CreateData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h3" mb={4}>
+      <Typography variant="h3" mb={2}>
         {t('pages.createData')}
       </Typography>
       <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
@@ -59,7 +59,7 @@ export default function CreateData() {
       {Object.keys(selectedSubmodel).length ? (
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="body1" mb={4} maxWidth={900}>
+            <Typography variant="body1" mb={4} maxWidth={950}>
               {t('content.provider.description')}
             </Typography>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

@@ -45,7 +45,7 @@ export default function UploadHistory() {
               <Typography variant="h3" mb={1}>
                 {t('pages.uploadHistory')}
               </Typography>
-              <Typography variant="body1">{t('content.provider.description')}</Typography>
+              <Typography variant="body1">{t('content.uploadHistory.description')}</Typography>
             </Grid>
             <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
               <LoadingButton
