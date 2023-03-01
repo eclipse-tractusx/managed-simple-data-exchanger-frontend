@@ -27,7 +27,7 @@ import Home from '../pages/Home';
 import Logout from '../pages/Logout';
 import PageNotFound from '../pages/PageNotFound';
 import ProviderContracts from '../pages/ProviderContracts';
-import UploadHistory from '../pages/UploadHistory';
+import UploadHistoryNew from '../pages/UploadHistoryNew';
 
 export interface IRoutes {
   key?: string;
@@ -57,7 +57,7 @@ export const ROUTES: IRoutes[] = [
   },
   {
     path: 'provider/upload-history',
-    element: <UploadHistory />,
+    element: <UploadHistoryNew />,
     permissions: ['provider_view_history'],
   },
   {

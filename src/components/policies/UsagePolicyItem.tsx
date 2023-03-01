@@ -82,8 +82,8 @@ export default function UsagePolicyItem({
     <Box component="form" noValidate autoComplete="off">
       <FormLabel sx={{ mb: 2 }}>{constraintType}</FormLabel>
       <RadioGroup row value={restrictionType} onChange={e => setRestrictionType(e.target.value)}>
-        <FormControlLabel value="UNRESTRICTED" control={<Radio />} label="Unrestricted" />
-        <FormControlLabel value="RESTRICTED" control={<Radio />} label="Restricted" />
+        <FormControlLabel value="UNRESTRICTED" control={<Radio />} label={t('content.policies.unrestricted')} />
+        <FormControlLabel value="RESTRICTED" control={<Radio />} label={t('content.policies.restricted')} />
       </RadioGroup>
 
       <Box>
