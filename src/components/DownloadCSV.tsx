@@ -55,13 +55,25 @@ export default function DownloadCSV({ submodel }: { submodel: string }) {
           }),
         );
       }
-    } catch (error) {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.downloadError',
-          type: 'error',
-        }),
-      );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const data = error?.data;
+      const errorMessage = data?.msg;
+      if (errorMessage) {
+        dispatch(
+          setSnackbarMessage({
+            message: errorMessage,
+            type: 'error',
+          }),
+        );
+      } else {
+        dispatch(
+          setSnackbarMessage({
+            message: 'alerts.downloadError',
+            type: 'error',
+          }),
+        );
+      }
     } finally {
       setdownloadingSample(false);
       setdownloadingTemplate(false);

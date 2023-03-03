@@ -18,31 +18,32 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { HOST } from '../helpers/ApiHelper';
-import UserService from './UserService';
+import { IHistoryErrorLogs, IHistoryState } from './types';
 
-abstract class HttpService {
-  protected readonly instance: AxiosInstance;
+const initialState: IHistoryState = {
+  errorsList: [],
+  isLoading: false,
+  currentProcessId: '',
+};
 
-  public constructor(requestConfig: AxiosRequestConfig) {
-    this.instance = axios.create(requestConfig);
-    this.instance.interceptors.request.use(request => {
-      request.baseURL = HOST;
-      request.headers.Authorization = `Bearer ${UserService.getToken()}`;
-      return request;
-    });
+export const uploadHistorySlice = createSlice({
+  name: 'uploadHistorySlice',
+  initialState,
+  reducers: {
+    setErrorsList: (state, action: PayloadAction<IHistoryErrorLogs[]>) => {
+      state.errorsList = action.payload;
+    },
+    setIsLoding: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setCurrentProcessId: (state, action: PayloadAction<string>) => {
+      state.currentProcessId = action.payload;
+    },
+  },
+});
 
-    this.instance.interceptors.response.use(
-      (response: AxiosResponse) => {
-        return response;
-      },
-      (error: AxiosError) => {
-        return Promise.reject(error.response);
-      },
-    );
-  }
-}
+export const { setErrorsList, setIsLoding, setCurrentProcessId } = uploadHistorySlice.actions;
 
-export default HttpService;
+export default uploadHistorySlice.reducer;

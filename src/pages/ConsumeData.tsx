@@ -220,14 +220,25 @@ export default function ConsumeData() {
           dispatch(setSelectedOffersList([]));
           setSelectionModel([]);
         }
-      } catch (error) {
+      } catch (error: any) {
         setIsOfferSubLoading(false);
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.subscriptionError',
-            type: 'error',
-          }),
-        );
+        const data = error?.data;
+        const errorMessage = data?.msg;
+        if (errorMessage) {
+          dispatch(
+            setSnackbarMessage({
+              message: errorMessage,
+              type: 'error',
+            }),
+          );
+        } else {
+          dispatch(
+            setSnackbarMessage({
+              message: 'alerts.subscriptionError',
+              type: 'error',
+            }),
+          );
+        }
       }
     }
   };
@@ -334,25 +345,38 @@ export default function ConsumeData() {
     payload.push(bpn);
     dispatch(setFilterSelectedConnector(null));
     dispatch(setFilterConnectors([]));
-    const res = await ConsumerService.getInstance().searchConnectoByBPN(payload);
-    if (res.length) {
-      const resC: IConnectorResponse[] = res;
-      const connector = resC[0];
-      const optionConnectors = connector.connectorEndpoint.map((item, index) => {
-        return {
-          id: index,
-          value: item,
-          title: item,
-        };
-      });
-      dispatch(setFilterConnectors(optionConnectors));
-    } else {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.noConnector',
-          type: 'error', //warning
-        }),
-      );
+    try {
+      const res = await ConsumerService.getInstance().searchConnectoByBPN(payload);
+      if (res.length) {
+        const resC: IConnectorResponse[] = res;
+        const connector = resC[0];
+        const optionConnectors = connector.connectorEndpoint.map((item, index) => {
+          return {
+            id: index,
+            value: item,
+            title: item,
+          };
+        });
+        dispatch(setFilterConnectors(optionConnectors));
+      }
+    } catch (error: any) {
+      const data = error?.data;
+      const errorMessage = data?.msg;
+      if (errorMessage) {
+        dispatch(
+          setSnackbarMessage({
+            message: errorMessage,
+            type: 'error',
+          }),
+        );
+      } else {
+        dispatch(
+          setSnackbarMessage({
+            message: 'alerts.noConnector',
+            type: 'error', //warning
+          }),
+        );
+      }
     }
   };
 

@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,31 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-
-import { HOST } from '../helpers/ApiHelper';
-import UserService from './UserService';
-
-abstract class HttpService {
-  protected readonly instance: AxiosInstance;
-
-  public constructor(requestConfig: AxiosRequestConfig) {
-    this.instance = axios.create(requestConfig);
-    this.instance.interceptors.request.use(request => {
-      request.baseURL = HOST;
-      request.headers.Authorization = `Bearer ${UserService.getToken()}`;
-      return request;
-    });
-
-    this.instance.interceptors.response.use(
-      (response: AxiosResponse) => {
-        return response;
-      },
-      (error: AxiosError) => {
-        return Promise.reject(error.response);
-      },
-    );
-  }
+export interface IHistoryErrorLogs {
+  dateTime: string;
+  log: string;
+  processId: string;
+  uuid: string;
 }
 
-export default HttpService;
+export interface IHistoryState {
+  errorsList: IHistoryErrorLogs[];
+  isLoading: boolean;
+  currentProcessId: string;
+}

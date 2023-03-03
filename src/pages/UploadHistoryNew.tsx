@@ -33,16 +33,20 @@ import { t } from 'i18next';
 import { useState } from 'react';
 
 import Permissions from '../components/Permissions';
+import UploadHistoryErrorDialog from '../components/UploadHistoryErrorDialog';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
+import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
 import { useAppDispatch } from '../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { ProcessReport, Status } from '../models/ProcessReport';
 import AppService from '../services/appService';
+import ProviderService from '../services/ProviderService';
 import { formatDate } from '../utils/utils';
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
   const [pageSize] = useState<number>(10);
+  const [showErrorLogsDialog, setShowErrorLogsDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
@@ -73,15 +77,39 @@ function UploadHistoryNew() {
           }),
         );
       }
-    } catch (error) {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.downloadError',
-          type: 'error',
-        }),
-      );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const errorData = error?.data;
+      const errorMessage = errorData?.msg;
+      if (errorMessage) {
+        dispatch(
+          setSnackbarMessage({
+            message: errorMessage,
+            type: 'error',
+          }),
+        );
+      } else {
+        dispatch(
+          setSnackbarMessage({
+            message: 'alerts.downloadError',
+            type: 'error',
+          }),
+        );
+      }
     }
   }
+
+  const showUploadErrors = async (subModel: ProcessReport) => {
+    setShowErrorLogsDialog(true);
+    dispatch(setErrorsList([]));
+    dispatch(setIsLoding(true));
+    dispatch(setCurrentProcessId(subModel.processId));
+    const resp = await ProviderService.getInstance().getUplodHistoryErrors(subModel.processId);
+    dispatch(setErrorsList(resp.data));
+    dispatch(setIsLoding(false));
+  };
+
+  const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
 
   const columns: GridColDef[] = [
     {
@@ -158,7 +186,13 @@ function UploadHistoryNew() {
             <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
           )}
           {row.status === Status.completed && row.numberOfFailedItems > 0 && (
-            <ReportGmailerrorredOutlined fontSize="small" color="warning" />
+            <Tooltips tooltipPlacement="bottom" tooltipText="View error logs">
+              <span>
+                <IconButton aria-label="delete" size="small" onClick={() => showUploadErrors(row)}>
+                  <ReportGmailerrorredOutlined fontSize="small" color="warning" />
+                </IconButton>
+              </span>
+            </Tooltips>
           )}
           {row.status === Status.failed && <HighlightOffOutlined fontSize="small" color="error" />}
           {row.status === Status.inProgress && <HourglassEmptyOutlined fontSize="small" color="info" />}
@@ -258,6 +292,9 @@ function UploadHistoryNew() {
               '& .MuiBox-root': { display: 'none' },
             }}
           />
+        </Box>
+        <Box>
+          <UploadHistoryErrorDialog open={showErrorLogsDialog} handleDialogClose={handleErrorDialogClose} />
         </Box>
       </Box>
     );

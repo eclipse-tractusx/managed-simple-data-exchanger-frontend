@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2022 Contributors to the Eclipse Foundation
@@ -105,6 +106,15 @@ export default function PoliciesDialog() {
                 clearInterval(interval);
                 clearUpload();
               }
+            }).catch(error => {
+              const data = error?.data;
+              const errorMessage = data?.msg;
+              dispatch(
+                setSnackbarMessage({
+                  message: errorMessage,
+                  type: 'error',
+                }),
+              );
             }),
         2000,
       );
@@ -148,12 +158,23 @@ export default function PoliciesDialog() {
           if (error.response.status === 404) {
             processingReportFirstCall(processId);
           } else {
-            dispatch(
-              setSnackbarMessage({
-                message: 'alerts.uploadError',
-                type: 'error',
-              }),
-            );
+            const data = error?.data;
+            const errorMessage = data?.msg;
+            if (errorMessage) {
+              dispatch(
+                setSnackbarMessage({
+                  message: errorMessage,
+                  type: 'error',
+                }),
+              );
+            } else {
+              dispatch(
+                setSnackbarMessage({
+                  message: 'alerts.uploadError',
+                  type: 'error',
+                }),
+              );
+            }
             clearUpload();
           }
         });
@@ -188,21 +209,38 @@ export default function PoliciesDialog() {
       },
     ],
   };
-  const submitData = async () => {
-    try {
-      dispatch(setPageLoading(true));
-      const response = await ProviderService.getInstance().submitSubmodalData(uploadUrl, payload);
-      // first call
-      processingReportFirstCall(response.data);
-    } catch (error) {
+
+  const throwUploadError = (error: any) => {
+    const data = error?.data;
+    const errorMessage = data?.msg;
+    if (errorMessage) {
+      dispatch(
+        setSnackbarMessage({
+          message: errorMessage,
+          type: 'error',
+        }),
+      );
+    } else {
       dispatch(
         setSnackbarMessage({
           message: 'alerts.uploadError',
           type: 'error',
         }),
       );
-      dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
-      clearUpload();
+    }
+    dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
+    clearUpload();
+  };
+
+  const submitData = async () => {
+    try {
+      dispatch(setPageLoading(true));
+      const response = await ProviderService.getInstance().submitSubmodalData(uploadUrl, payload);
+      const submitSubmodelData = response?.data;
+      // first call
+      if (submitSubmodelData) processingReportFirstCall(submitSubmodelData);
+    } catch (error: any) {
+      throwUploadError(error);
     }
   };
 
@@ -214,19 +252,12 @@ export default function PoliciesDialog() {
 
     try {
       dispatch(setPageLoading(true));
-      const resp = await ProviderService.getInstance().uploadData(selectedSubmodel.value, formData);
-      const processId = resp.data;
+      const response = await ProviderService.getInstance().uploadData(selectedSubmodel.value, formData);
+      const uploadSubmodelData = response?.data;
       // first call
-      processingReportFirstCall(processId);
-    } catch (error) {
-      dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.uploadError',
-          type: 'error',
-        }),
-      );
-      clearUpload();
+      if (uploadSubmodelData) processingReportFirstCall(uploadSubmodelData);
+    } catch (error: any) {
+      throwUploadError(error);
     }
   };
 

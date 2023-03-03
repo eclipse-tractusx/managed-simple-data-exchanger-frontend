@@ -48,7 +48,6 @@ export default function UploadFile() {
     dispatch(setPageLoading(false));
     const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
     if (file.size < maxFileSize) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       dispatch(setSelectedFiles(file));
     } else {
       dispatch(
