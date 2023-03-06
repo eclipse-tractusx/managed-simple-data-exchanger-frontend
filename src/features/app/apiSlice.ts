@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
@@ -17,13 +18,30 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 import { apiBaseQuery } from '../../services/RequestService';
+import { setSnackbarMessage } from '../notifiication/slice';
+
+const baseQuery = fetchBaseQuery(apiBaseQuery());
+const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+  args,
+  api,
+  extraOptions,
+) => {
+  const { error, data } = await baseQuery(args, api, extraOptions);
+  if (error) {
+    api.dispatch( setSnackbarMessage({
+      message: (data as any)?.msg ? (data as any)?.msg : 'alerts.somethingWrong',
+      type: 'error',
+    }));
+  }
+  return { data };
+};
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery(apiBaseQuery()),
+  baseQuery: baseQueryInterceptor,
   endpoints: () => ({}),
   tagTypes: ['UploadHistory'],
 });

@@ -57,7 +57,7 @@ export const helpApiSlice = apiSlice.injectEndpoints({
         dispatch(setPageLoading(true));
         try {
           await queryFulfilled;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
           const data = err?.data;
           const errorMessage = data?.msg;

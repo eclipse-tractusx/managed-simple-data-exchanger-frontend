@@ -106,7 +106,8 @@ export default function PoliciesDialog() {
                 clearInterval(interval);
                 clearUpload();
               }
-            }).catch(error => {
+            })
+            .catch(error => {
               const data = error?.data;
               const errorMessage = data?.msg;
               dispatch(
@@ -210,28 +211,6 @@ export default function PoliciesDialog() {
     ],
   };
 
-  const throwUploadError = (error: any) => {
-    const data = error?.data;
-    const errorMessage = data?.msg;
-    if (errorMessage) {
-      dispatch(
-        setSnackbarMessage({
-          message: errorMessage,
-          type: 'error',
-        }),
-      );
-    } else {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.uploadError',
-          type: 'error',
-        }),
-      );
-    }
-    dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
-    clearUpload();
-  };
-
   const submitData = async () => {
     try {
       dispatch(setPageLoading(true));
@@ -240,7 +219,8 @@ export default function PoliciesDialog() {
       // first call
       if (submitSubmodelData) processingReportFirstCall(submitSubmodelData);
     } catch (error: any) {
-      throwUploadError(error);
+      dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
+      clearUpload();
     }
   };
 
@@ -257,7 +237,8 @@ export default function PoliciesDialog() {
       // first call
       if (uploadSubmodelData) processingReportFirstCall(uploadSubmodelData);
     } catch (error: any) {
-      throwUploadError(error);
+      dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
+      clearUpload();
     }
   };
 

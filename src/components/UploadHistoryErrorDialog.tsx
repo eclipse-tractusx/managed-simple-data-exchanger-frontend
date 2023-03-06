@@ -20,7 +20,16 @@
 
 import { Box, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  Table,
+  Tooltips,
+  Typography,
+} from 'cx-portal-shared-components';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -67,7 +76,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
   ];
 
   return (
-    <Dialog 
+    <Dialog
       open={open}
       additionalModalRootStyles={{
         width: '75%',
@@ -80,7 +89,9 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} display={'flex'}>
               <Typography variant="h4">Process Id:</Typography>
-              <Typography variant="subtitle1" ml={1}>{currentProcessId}</Typography>
+              <Typography variant="subtitle1" ml={1}>
+                {currentProcessId}
+              </Typography>
             </Grid>
           </Grid>
           <Box sx={{ mt: 2 }}>
@@ -97,7 +108,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
               pageSize={pageSize}
               page={page}
               rowHeight={100}
-              onPageChange={(newPage) => setPage(newPage)}
+              onPageChange={newPage => setPage(newPage)}
               rowsPerPageOptions={[10, 15, 20, 100]}
               sx={{
                 '& .MuiDataGrid-columnHeaderTitle, & .MuiDataGrid-cell': {
@@ -107,7 +118,8 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
                   lineHeight: 1.4,
                 },
                 '& .MuiBox-root': { display: 'none' },
-              }} />
+              }}
+            />
           </Box>
         </>
       </DialogContent>
