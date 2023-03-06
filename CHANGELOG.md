@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+- Dynamic help page with all available submodel details and download CSV sample and template options.
 - Provider contract history tab.
 - Consumer contract history tab.
 - Support multi language.
@@ -20,6 +21,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Download uploaded submodel data from upload history.
 - i18n setup with english.
 
+### Fixed
+
+- Bug fixes and enhancements
 ## [1.8.0] - 2022-12-12
 
 ### Added

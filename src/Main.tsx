@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
 import AppLayout from './components/layouts/AppLayout';
-import { IUser } from './models/User';
+import { IUser } from './features/app/types';
 import UserService from './services/UserService';
 
 export default function Main({ loggedUser }: { loggedUser: IUser }) {

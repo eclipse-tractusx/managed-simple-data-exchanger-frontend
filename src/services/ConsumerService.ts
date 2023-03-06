@@ -33,10 +33,11 @@ class ConsumerService extends HttpService {
     return this.classInstance;
   }
 
-  public async fetchConsumerDataOffers(providerUrl: string) {
+  public async fetchConsumerDataOffers(params: unknown) {
     const res = await this.instance({
       method: 'GET',
-      url: `/query-data-offers?providerUrl=${providerUrl}`,
+      url: '/query-data-offers',
+      params,
     });
     return res;
   }
@@ -69,10 +70,10 @@ class ConsumerService extends HttpService {
     return res.data;
   }
 
-  public async getContractAgreementsList(offSet: number, maxLimit: number) {
+  public async getContractAgreementsList(type: string, offSet: number, maxLimit: number) {
     const res = await this.instance({
       method: 'GET',
-      url: `/contract-offers?offset=${offSet}&limit=${maxLimit}`,
+      url: `/contract-agreements?type=${type}&offset=${offSet}&limit=${maxLimit}`,
     });
     return res;
   }

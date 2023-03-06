@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 
 import { fetchUserPermissions } from '../../features/app/actions';
 import { setLoggedInUser } from '../../features/app/slice';
-import { useAppDispatch } from '../../store/store';
+import { useAppDispatch } from '../../features/store';
 import Nav from '../Nav';
 import Sidebar from '../Sidebar';
 

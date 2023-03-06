@@ -9,7 +9,7 @@
     "help": "Help",
     "consumer": "Consumer",
     "consumeData": "Consume Data",
-    "contractHistory": "Contract History"
+    "contracts": "Contracts"
   },
   "content": {
     "home": {
@@ -88,6 +88,9 @@
         "actions": ""
       }
     },
+    "providerContracts": {
+      "title": "Data provider contracts"
+    },
     "help": {
       "rules1": "The file must be a file of type CSV (.csv extension).",
       "rules2": "Data fields must be separated by a semicolon (;).",
@@ -119,13 +122,16 @@
       "columns": {
         "contractAgreementId": "Contract Agreement ID",
         "assetId": "Asset ID",
-        "counterPartyAddress": "Counter Party Address On",
+        "counterPartyAddress": "Counter Party Address",
         "title": "Title",
         "organizationName": "Organization",
         "contractSigningDate": "Signing Date",
         "contractEndDate": "End Date",
         "state": "Status"
       }
+    },
+    "consumerContracts": {
+      "title": "Data consumer contracts"
     },
     "common": {
       "loading": "Loading...",
@@ -138,13 +144,14 @@
       "copyHeaders": "Copy headers to clipboard",
       "rules": "Rules",
       "enterValue": "Enter a value",
-      "agree": "I agree"
+      "agree": "I agree",
+      "ownConnector": "Connector of own organization:"
     }
   },
   "dialog": {
     "samePolicies": {
       "title": "Usage policies are not identical!",
-      "content": " The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy."
+      "content": "The contract offers within your search results do not have an identical usage policy. Subscribing to multiple offers is only available for contract offers that have an identical policy."
     },
     "offerDetails": {
       "title": "Offer Details",
@@ -190,6 +197,9 @@
     "submodelDeleteSuccess": "Submodel deleted successfully!",
     "submodelDeleteError": "Failed to delete Submodel!",
     "downloadSuccess": "File downloaded successfully!",
-    "downloadError": "File not downloaded!"
+    "downloadError": "File not downloaded!",
+    "invalidData": "Invalid data! Enter required fields.",
+    "deleteSuccess": "Deleted successfully!",
+    "somethingWrong": "Something went wrong!"
   }
 }

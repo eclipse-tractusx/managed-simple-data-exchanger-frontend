@@ -24,12 +24,12 @@ import { useTranslation } from 'react-i18next';
 
 import { setPageLoading } from '../../features/app/slice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
-import { handleDialogClose } from '../../features/policies/slice';
-import { clearRows } from '../../features/submodels/slice';
+import { handleDialogClose } from '../../features/provider/policies/slice';
+import { clearRows } from '../../features/provider/submodels/slice';
+import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../features/provider/upload/slice';
+import { useAppDispatch, useAppSelector } from '../../features/store';
 import { ProcessReport, Status } from '../../models/ProcessReport';
 import ProviderService from '../../services/ProviderService';
-import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../store/providerSlice';
-import { useAppDispatch, useAppSelector } from '../../store/store';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
 
@@ -67,7 +67,7 @@ export default function PoliciesDialog() {
     custom,
     customValue,
   } = useAppSelector(state => state.accessUsagePolicySlice);
-  const { currentUploadData, selectedFiles } = useAppSelector(state => state.providerSlice);
+  const { currentUploadData, selectedFiles } = useAppSelector(state => state.uploadFileSlice);
   const { selectedSubmodel } = useAppSelector(state => state.submodelSlice);
   const [showError, setshowError] = useState(false);
   const { t } = useTranslation();
@@ -114,21 +114,21 @@ export default function PoliciesDialog() {
       if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.uploadSuccess'),
+            message: 'alerts.uploadSuccess',
             type: 'success',
           }),
         );
       } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.uploadWarning'),
+            message: 'alerts.uploadWarning',
             type: 'error', //warning
           }),
         );
       } else {
         dispatch(
           setSnackbarMessage({
-            message: t('alerts.uploadError'),
+            message: 'alerts.uploadError',
             type: 'error',
           }),
         );
@@ -150,7 +150,7 @@ export default function PoliciesDialog() {
           } else {
             dispatch(
               setSnackbarMessage({
-                message: t('alerts.uploadError'),
+                message: 'alerts.uploadError',
                 type: 'error',
               }),
             );
@@ -197,7 +197,7 @@ export default function PoliciesDialog() {
     } catch (error) {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.uploadError'),
+          message: 'alerts.uploadError',
           type: 'error',
         }),
       );
@@ -222,7 +222,7 @@ export default function PoliciesDialog() {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.uploadError'),
+          message: 'alerts.uploadError',
           type: 'error',
         }),
       );

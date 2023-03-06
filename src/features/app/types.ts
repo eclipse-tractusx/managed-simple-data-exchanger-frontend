@@ -17,8 +17,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { IUser } from '../../models/User';
-
+import { KeycloakTokenParsed } from 'keycloak-js';
+export interface IUser {
+  userName: string;
+  name: string;
+  email: string;
+  company: string;
+  bpn: string;
+  tenant: string;
+  token: string;
+  parsedToken: KeycloakTokenParsed;
+}
 export interface IAppSlice {
   pageLoading: boolean;
   loggedInUser: IUser;
@@ -27,7 +36,6 @@ export interface IAppSlice {
   selectedUseCases: string[];
   sidebarExpanded: boolean;
 }
-
 export interface IUseCase {
   id: string;
   title: string;

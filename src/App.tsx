@@ -22,39 +22,32 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import PageLoading from './components/PageLoading';
+import Permissions from './components/Permissions';
+import { IUser } from './features/app/types';
 import Notification from './features/notifiication';
+import { IRoutes, ROUTES } from './helpers/RouteHelper';
 import Main from './Main';
-import { IUser } from './models/User';
-import ConsumeData from './pages/ConsumeData';
-import ContractHistory from './pages/ContractHistory';
-import CreateData from './pages/CreateData';
-import Help from './pages/Help';
-import Home from './pages/Home';
-import Logout from './pages/Logout';
-import PageNotFound from './pages/PageNotFound';
-import UploadHistory from './pages/UploadHistory';
 
-function App({ loggedUser }: { loggedUser: IUser }) {
+export default function App({ loggedUser }: { loggedUser: IUser }) {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main loggedUser={loggedUser} />}>
-            <Route key="home" path="/" element={<Home />}></Route>
-            <Route key="create-data" path="/create-data" element={<CreateData />} />
-            <Route key="upload-history" path="/upload-history" element={<UploadHistory />} />
-            <Route key="help" path="/help" element={<Help />} />
-            <Route key="consume-data" path="/consume-data" element={<ConsumeData />} />
-            <Route key="contract-history" path="/contract-history" element={<ContractHistory />} />
-            <Route key="logout" path="/logout" element={<Logout />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Route>
-        </Routes>
-        <Notification />
-        <PageLoading />
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main loggedUser={loggedUser} />}>
+          {ROUTES.map((route: IRoutes) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                <Permissions values={route.permissions} fullPage={true}>
+                  {route.element}
+                </Permissions>
+              }
+            ></Route>
+          ))}
+        </Route>
+      </Routes>
+      <Notification />
+      <PageLoading />
+    </BrowserRouter>
   );
 }
-
-export default App;

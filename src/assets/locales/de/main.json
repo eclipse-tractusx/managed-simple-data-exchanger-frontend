@@ -1,8 +1,205 @@
 {
   "title": "Catena-X SDE",
+  "logo": "Simple Data Exchanger",
   "pages": {
-    "home": "Hom",
-    "provider": "Provide",
-    "createData": "Create Dat"
+    "home": "Home",
+    "provider": "Datenanbieter",
+    "createData": "Daten anbieten",
+    "uploadHistory": "Upload-Verlauf",
+    "help": "Hilfe",
+    "consumer": "Datenempfänger",
+    "consumeData": "Suche Daten",
+    "contracts": "Verträge"
+  },
+  "content": {
+    "home": {
+      "header": "Home",
+      "selectUsecasesHeader": "Wählen Sie ihren Use Case",
+      "selectUsecasesSubheader": "Sie können einen oder mehrere Anwendungsfälle auswählen, die Sie interessieren. In aufeinander folgenden Schritten werden nur die Teilmodelle angezeigt, die für die ausgewählten Anwendungsfälle relevant sind. Wenn Sie keine Auswahl treffen, werden alle Untermodelle angezeigt. Auf Google nach diesen Inhalten suchen",
+      "exchangeDataHeader": "Daten austauschen",
+      "provideDataTab": "Daten anbieten",
+      "consumeDataTab": "Daten empfangen",
+      "provideDataStep": {
+        "downloadTemplate": "Download des relevanten Template",
+        "fillTemplate": "Template mit eigenen Daten befüllen",
+        "createDataText": "Daten anbieten und Policies setzen",
+        "manageUploadContract": "Managen der Uploads und Verträge"
+      },
+      "consumeDataSteps": {
+        "discoverCatalog": "Entdecke Datenkatalog von Geschäftspartnern",
+        "subscribeDataOffer": "Datenangebot abonnieren",
+        "manageContracts": "Verträge einsehen und verwalten"
+      },
+      "sdeDescription": "Simple Data Exchanger ermöglicht, Daten auf einfache Weise mit dem Catena-X Netzwerk zu teilen. Sie können Ihre Daten anderen Netzwerkteilnehmern zur Verfügung stellen - unter Beibehaltung Ihrer präferierten Zugangs- und Nutzungsbedingungen. Sie können die Datenangebote anderer Teilnehmer entdecken, Verträge etablieren und Daten für ihre präferierten Use Cases beziehen.",
+      "learnSde": "Wie funktioniert das genau?"
+    },
+    "provider": {
+      "selectSubmodel": "Submodel auswählen",
+      "uploadFile": "Datei hochladen",
+      "table": "Tabelle",
+      "json": "JSON",
+      "uploadInstruction": "Hochzuladende Datei einfach in dieses Feld ziehen.",
+      "selectedFile": "Ausgewählte Datei",
+      "dropFile": "Drop it like it's hot :)",
+      "dropInstruction": "Hochzuladende Datei einfach in dieses Feld ziehen.",
+      "addRow": "Zeile einfügen",
+      "deleteRow": "Zeile(n) löschen"
+    },
+    "policies": {
+      "title": "Policies",
+      "configure": "Nächster Schritt - Policies konfigurieren",
+      "accessPolicy": "Zugang Policy",
+      "restricted": "eingeschränkt",
+      "unrestricted": "uneingeschränkt",
+      "note": "Hinweis: Ihre Organisation gehört stets zu den berechtigten Empfängern.",
+      "unAccess": "Uneingeschränkter Zugang!",
+      "warningText": "Warnung! Durch diese Option werden Ihre Daten dem gesamten Catena-X Netzwerk uneingeschränkt zur Verfügung stehen. Sind sie sicher?",
+      "usagePolicy": "Nutzung Policy",
+      "duration": "Nutzungsdauer",
+      "durationNote": "Erlaubte Nutzungsdauer ab Vertragsstart",
+      "selectDuration": "Wähle Dauer",
+      "durationValues": {
+        "hour": "Stunde",
+        "day": "Tag",
+        "month": "Monat",
+        "year": "Jahr"
+      },
+      "purpose": "Nutzungszweck",
+      "purposeNote": "Nutzung nur für nachfolgenden Zweck zugelassen",
+      "role": "Rolle",
+      "roleNote": "Nutzung nur für Individuen mit Rolle/Eigenschaft zugelassen",
+      "custom": "Nutzerdefinierte Bedingung",
+      "customNote": "Folgende Regel(n) gelten weiterhin für die Nutzung",
+      "purposeLabel": "Bitte beschreiben Sie ihre Anlegen. Oder Beschreiben Sie den Zweck",
+      "roleLabel": "Bitte fügen sie eine Rolle ein",
+      "customLabel": "Bitte geben Sie Ihre benutzerdefinierten Bedingungen ein"
+    },
+    "uploadHistory": {
+      "columns": {
+        "processId": "Transaktion Id",
+        "csvType": "CSV Typ",
+        "numberOfSucceededItems": "Anzahl erstellte Einträge",
+        "numberOfUpdatedItems": "Anzahl aktualisierte Einträge",
+        "numberOfDeletedItems": "Anzahl gelöschte Einträge",
+        "numberOfFailedItems": "Nicht erfolgreich",
+        "status": "Status",
+        "startDate": "Start Datum",
+        "duration": "Dauer",
+        "actions": ""
+      }
+    },
+    "providerContracts": {
+      "title": "Anbieterseitige Verträge"
+    },
+    "help": {
+      "rules1": "Die Datei muss vom Typ CSV sein (.csv Endung).",
+      "rules2": "Datenfelder müssen durch Semikolon getrennt sein (;).",
+      "rules3": "Alle Datenfelder müssen vorhanden sein, auch wenn leer."
+    },
+    "consumeData": {
+      "selectType": "Art der Suche",
+      "searchCompany": "Suche nach Firmennamen",
+      "searchPlaceholder": "Geben Sie mindestens 3 Buchstaben ein",
+      "noCompany": "Kein Unternehmen gefunden",
+      "selectConnectors": "Connector auswählen",
+      "noConnectors": "Keine Anschlüsse gefunden",
+      "enterBPN": "Eingabe Business Partner Number",
+      "enterURL": "Eingabe Connector URL",
+      "selectTypeValues": {
+        "company": "Firmenname",
+        "bpn": "Business Partner Number",
+        "url": "Connector URL"
+      },
+      "columns": {
+        "title": "Titel",
+        "assetId": "Asset ID",
+        "created": "erstellt am",
+        "description": "Beschreibung"
+      }
+    },
+    "contractHistory": {
+      "title": "Verträge",
+      "columns": {
+        "contractAgreementId": "Vertrag ID",
+        "assetId": "Asset ID",
+        "counterPartyAddress": "Vertragspartner Addresse",
+        "title": "Titel",
+        "organizationName": "Organisation",
+        "contractSigningDate": "Unterschrift Datum",
+        "contractEndDate": "Ablaufdatum",
+        "state": "Status"
+      }
+    },
+    "consumerContracts": {
+      "title": "Empfängerseitige Verträge"
+    },
+    "common": {
+      "loading": "Laden...",
+      "downloading": "Downloaden...",
+      "or": "or",
+      "noData": "Keine Daten verfügbar!",
+      "noResults": "Nichts gefunden!",
+      "sampleCsv": "Beispiel CSV",
+      "sampleTemplate": "Formblatt CSV",
+      "copyHeaders": "Kopiere Überschriften nach Zwischenablage",
+      "rules": "Regeln",
+      "enterValue": "Wert eingeben",
+      "agree": "Ich stimme zu",
+      "ownConnector": "Connector der eigenen Organisation:"
+    }
+  },
+  "dialog": {
+    "samePolicies": {
+      "title": "Nutzungspolicies sind nicht identisch!",
+      "content": "Die Vertragsangebote in ihrem Suchergebnis haben keine identische Nutzungspolicy. Das Abonnieren mehrerer Vertragsangebote in einem Schritt ist nur möglich für Angebote mit identischen Policies."
+    },
+    "offerDetails": {
+      "title": "Angebotsdetails",
+      "type": "Typ",
+      "value": "Wert",
+      "titleText": "Titel",
+      "created": "Erstellt am",
+      "dataFormat": "Datenformat",
+      "description": "Beschreibung",
+      "publisher": "Anbieter",
+      "publisherUrl": "Anbieter URL",
+      "accessType": "Zugangstyp",
+      "bpnNumbers": "BPNs",
+      "confirmTermsTitle": "{{ count }} Vertragsangebote sind von dieser Aktion betroffen.",
+      "cofirmTermsSubtitle": "Sind sind dabei, einen rechtsgültigen Vertrag zu diesem Datenangebot mit dem Anbieter einzugehen",
+      "confirmHeading": "Bitte bestätigen Sie:",
+      "point1": "Sie sind befugt, Ihre Organisation in diesem Fall zu vertreten.",
+      "point2": "Sie haben die Zugangs- und Nutzungspolicies gelesen und verstanden.",
+      "point3": "Ihre Organisation ist verpflichtet, die Bedingungen der Zugangs- und Nutzungspolicy einzuhalten."
+    }
+  },
+  "button": {
+    "chooseFile": "Datei auswählen",
+    "refresh": "Aktualisieren",
+    "search": "Suchen",
+    "add": "Hinzufügen",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "confirm": "Bestätigen",
+    "submit": "Senden",
+    "okay": "Okay",
+    "subscribeSelected": "Auswahl abonnieren",
+    "subscribe": "Abonnieren"
+  },
+  "alerts": {
+    "invalidFile": "Datei nicht erlaubt!",
+    "uploadSuccess": "Hochladen abgeschlossen!",
+    "uploadWarning": "Hochladen abgeschlossen - mit Fehlermeldungen!",
+    "uploadError": "Hochladen fehlgeschlagen!",
+    "subscriptionSuccess": "Abonnieren der Vertragsangebote initiiert!",
+    "subscriptionError": "Abonnieren der Vertragsangebote fehlgeschlagen!",
+    "noConnector": "Connector nicht vergübar!",
+    "submodelDeleteSuccess": "Submodell erfolgreich gelöscht!",
+    "submodelDeleteError": "Submodel konnte nicht gelöscht werden!",
+    "downloadSuccess": "Datei erfolgreich heruntergeladen!",
+    "downloadError": "Datei nicht heruntergeladen!",
+    "invalidData": "Ungültige Eingabe, Bitte die Pflichtfelder ausfüllen!",
+    "deleteSuccess": "Erfolgreich gelöscht!",
+    "somethingWrong": "Fehler, Es ist etwas schief gegangen!"
   }
 }

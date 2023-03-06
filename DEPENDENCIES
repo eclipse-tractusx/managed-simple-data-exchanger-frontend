@@ -169,7 +169,7 @@ npm/npmjs/-/cssom/0.3.8, MIT, approved, clearlydefined
 npm/npmjs/-/cssom/0.4.4, MIT, approved, clearlydefined
 npm/npmjs/-/cssstyle/2.3.0, MIT, approved, clearlydefined
 npm/npmjs/-/csstype/3.1.1, MIT, approved, clearlydefined
-npm/npmjs/-/cx-portal-shared-components/0.10.0, , restricted, clearlydefined
+npm/npmjs/-/cx-portal-shared-components/0.10.0, Apache-2.0 AND MIT AND OFL-1.1, approved, #7083
 npm/npmjs/-/damerau-levenshtein/1.0.8, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/-/data-urls/2.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/date-fns/2.29.3, MIT, approved, clearlydefined
@@ -585,7 +585,7 @@ npm/npmjs/-/on-finished/2.4.1, MIT, approved, clearlydefined
 npm/npmjs/-/on-headers/1.0.2, MIT, approved, clearlydefined
 npm/npmjs/-/once/1.4.0, ISC, approved, clearlydefined
 npm/npmjs/-/onetime/5.1.2, MIT, approved, clearlydefined
-npm/npmjs/-/open/8.4.0, MIT, approved, clearlydefined
+npm/npmjs/-/open/8.4.0, MIT, approved, #7102
 npm/npmjs/-/optionator/0.8.3, MIT, approved, clearlydefined
 npm/npmjs/-/optionator/0.9.1, MIT, approved, clearlydefined
 npm/npmjs/-/p-limit/2.3.0, MIT, approved, clearlydefined
@@ -1242,7 +1242,7 @@ npm/npmjs/@types/json-schema/7.0.11, MIT, approved, clearlydefined
 npm/npmjs/@types/json5/0.0.29, MIT, approved, clearlydefined
 npm/npmjs/@types/lodash/4.14.188, MIT, approved, #4131
 npm/npmjs/@types/mime/3.0.1, MIT, approved, clearlydefined
-npm/npmjs/@types/node/16.18.3, MIT, approved, clearlydefined
+npm/npmjs/@types/node/16.18.3, MIT, approved, #7082
 npm/npmjs/@types/parse-json/4.0.0, MIT, approved, clearlydefined
 npm/npmjs/@types/prettier/2.7.1, MIT, approved, clearlydefined
 npm/npmjs/@types/prop-types/15.7.5, MIT, approved, clearlydefined

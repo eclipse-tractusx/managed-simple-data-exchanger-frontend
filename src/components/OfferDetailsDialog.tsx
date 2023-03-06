@@ -23,7 +23,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
+import Permissions from '../components/Permissions';
+import { IConsumerDataOffers } from '../features/consumer/types';
 
 interface IntDialogProps {
   open: boolean;
@@ -195,9 +196,11 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
         <Button variant="outlined" onClick={() => closeModal('close')}>
           {t('button.close')}
         </Button>
-        <Button variant="contained" onClick={() => closeModal('subscribe')}>
-          {t('button.subscribe')}
-        </Button>
+        <Permissions values={['consumer_establish_contract_agreement']}>
+          <Button variant="contained" onClick={() => closeModal('subscribe')}>
+            {t('button.subscribe')}
+          </Button>
+        </Permissions>
       </DialogActions>
     </Dialog>
   );

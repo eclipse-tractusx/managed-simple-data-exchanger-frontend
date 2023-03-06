@@ -21,13 +21,15 @@
 
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Box, Divider, Paper, useTheme } from '@mui/material';
-import { Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
+import { LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
+import i18next, { changeLanguage } from 'i18next';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { setSidebarExpanded } from '../features/app/slice';
-import { useAppDispatch, useAppSelector } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../features/store';
+import I18nService from '../services/i18nService';
 
 const Nav = () => {
   const theme = useTheme();
@@ -37,6 +39,7 @@ const Nav = () => {
   const { loggedInUser } = useAppSelector(state => state.appSlice);
   const NAV_ITEMS = [{ title: 'Logout', to: 'logout' }];
   const dispatch = useAppDispatch();
+  const [lang, setlang] = useState(i18next.language);
 
   const openCloseMenu = () => setMenuOpen(prevVal => !prevVal);
   const onClickAway = (e: MouseEvent | TouchEvent) => {
@@ -69,7 +72,7 @@ const Nav = () => {
         }}
       >
         <Box display={'flex'} alignItems="center">
-          <Box onClick={() => dispatch(setSidebarExpanded())}>
+          <Box onClick={() => dispatch(setSidebarExpanded())} sx={{ cursor: 'pointer' }}>
             <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
           </Box>
           <Typography variant="h4" color="white" ml={3}>
@@ -89,6 +92,16 @@ const Nav = () => {
           >
             <UserNav sx={{ my: 1 }} component={Link} items={NAV_ITEMS} />
             <Divider />
+            <LanguageSwitch
+              current={lang}
+              languages={I18nService.supportedLanguages.map(key => ({
+                key,
+              }))}
+              onChange={e => {
+                changeLanguage(e);
+                setlang(e);
+              }}
+            />
           </UserMenu>
         </Box>
       </Box>
