@@ -6,11 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 
+### Added
+
 - Dynamic help page with all available submodel details and download CSV sample and template options.
 - Provider contract history tab.
 - Consumer contract history tab.
-- Support multi language.
+- Multi language support (English & German).
+- UI usablility improvements.
+- Error logs in upload history for unsuccessful data uploads in create data page.
+### Fixed
 
+- Bug fixes and improvements
 ## [1.8.1] - 2022-12-26
 
 ### Added
