@@ -18,7 +18,7 @@ name: build
 on:
   push:
     branches:
-      - 'Release3.1/DST_PIP7_ITR5'
+      - 'Release-3.1'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
@@ -61,9 +61,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},value=v1.9.0
           flavor: |
               latest=true
 
