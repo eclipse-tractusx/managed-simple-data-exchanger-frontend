@@ -76,8 +76,11 @@ export default function Help() {
   if (isSuccess) {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
-        <Typography variant="h3" mb={4}>
+        <Typography variant="h3" mb={1}>
           {t('pages.help')}
+        </Typography>
+        <Typography variant="body1" mb={4}>
+          {t('content.help.description')}
         </Typography>
         {data.map((table: HelpPageData) => (
           <Grid key={table.id} container spacing={4} display={'flex'} alignItems={'center'}>

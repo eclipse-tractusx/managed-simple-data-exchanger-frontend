@@ -428,7 +428,7 @@ export default function ConsumeData() {
       <Typography variant="h3" mb={1}>
         {t('pages.consumeData')}
       </Typography>
-      <Typography variant="body1" mb={4} maxWidth={1000}>
+      <Typography variant="body1" mb={4} maxWidth={900}>
         {t('content.consumeData.description')}
       </Typography>
       <Grid container spacing={2} alignItems="end">

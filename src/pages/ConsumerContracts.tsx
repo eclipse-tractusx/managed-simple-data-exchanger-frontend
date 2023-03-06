@@ -27,8 +27,8 @@ const ConsumerContracts = () => {
   return (
     <ContractsTable
       type="CONSUMER"
-      title={t('content.consumerContracts.title')}
-      subtitle={t('content.consumerContracts.description')}
+      title={t('content.contractHistory.title')}
+      subtitle={t('content.contractHistory.description')}
     />
   );
 };

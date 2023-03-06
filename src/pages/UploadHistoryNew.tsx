@@ -250,10 +250,13 @@ function UploadHistoryNew() {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
+          <Grid item xs={9}>
+            <Typography variant="h3" mb={1}>
+              {t('pages.uploadHistory')}
+            </Typography>
+            <Typography variant="body1">{t('content.uploadHistory.description')}</Typography>
           </Grid>
-          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+          <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton
               size="small"
               variant="contained"
