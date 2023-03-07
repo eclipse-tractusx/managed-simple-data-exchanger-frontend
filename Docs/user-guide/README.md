@@ -5,7 +5,7 @@
 - [Getting started](#getting-started)
   - [Accessing the app](#accessing-the-app)
     - [Login](#login)
-    - [Sign-out](#sign-out)
+    - [Logout](#logout)
   - [Navigation](#navigation)
     - [Header](#header)
     - [Main navigation](#left-side-menu)
@@ -22,7 +22,6 @@
         - [Single Level Bom As Planned](#single-level-bom-as-planned)
         - [Part Site Information As Planned](#part-site-information-as-planned)
         - [Single Level Usage As Built](#single-level-usage-as-built)
-](#part-site-information-as-planned)
       - [JSON Entry](#manual-json-entry)
         - [Serial Part Typization](#serial-part-typization-1)
         - [Batch](#batch-1)
@@ -31,12 +30,12 @@
         - [Single Level Bom As Planned](#single-level-bom-as-planned-1)
         - [Part Site Information As Planned](#part-site-information-as-planned-1)
         - [Single Level Usage As Built](#single-level-usage-as-built-1)
-](#part-site-information-as-planned-1)
     - [Upload history](#upload-history)
+    - [Contracts](#provider-contracts)
     - [Help](#help)
   - [Consumer](#consumer)
     - [Consume Data](#consume-data)
-    - [Contract History](#contract-history)
+    - [Contracts](#consumer-contracts)
 
 # Getting started
 
@@ -54,9 +53,9 @@
 2. Select the organization from the list or search the organization by typing name in input textbox and select the organization from the search results to login to the Simple Data Exchanger application. After selecting the organization from the list, it will redirect to the CatenaX keycloak login page.
 3. On Keycloak login page of the selected organization, enter login details i.e. Username or email and Password. Click on Sign In button to login to the Simple Data Exchanger application.
 
-### **Sign out**
+### **Logout**
 
-<img src="images/sign-out.png" width="320"/>&nbsp;&nbsp;<img src="images/catenax-login-org-search.png" width="320">
+<img src="images/sde-profile-menu.png" width="320"/>&nbsp;&nbsp;<img src="images/catenax-login-org-search.png" width="320">
 
 1. On the header, click on the user avatar (top right).
 2. On the menu click on "Logout".
@@ -70,15 +69,14 @@ SDE navigation is based on a header and a left-side menu.
 
 ## **Header**
 
-<img src="images/header.png" alt="SDE header"/>
+<img src="images/sde-header.png" alt="SDE header"/>
 
 1. On the left side on the header, there is the Simple Data Exchanger header text.
-2. On the right side of the header, there is the avatar of the logged-in user. When clicked, it is possible to see the option to Sign-out.
+2. On the right side of the header, there is the avatar of the logged-in user. When clicked, there are few information about the logged in user, Logout link and Language switching options will be visible.
 
 ## **Left-side menu**
 
-<img src="images/left-aside.png" alt="SDE navigation" height="350"/>
-<img src="images/left-aside-expanded.png" alt="SDE open navigation" height="350"/>
+<img src="images/sde-sidemenu.png" alt="SDE sidemenu" height="350"/>
 
 On the left side menu, it is possible to navigate the Simple Data Exchanger application by choosing each the following options / features:
 
@@ -245,18 +243,32 @@ Uploaded submodel details can also be downloaded from here as CSV. Only for the 
 
 We can fetch the updated data offers by manually clicking on Refresh button present at top right section of the Upload History page.
 
+## Provider Contracts
+
+<img src="images/sde-provider-contracts.png" height="60%" width="60%" />
+
+This page contains an overview of the data exchange contracts your organization has with other Catena-X members to provide data.
+
+The table includes below columns:
+
+- Contract Agreement ID (ID of the contract agreement);
+- Asset ID (ID of the Asset);
+- Consumer Counter Party Address (Counter party address of the contract agreement);
+- Signing Date (Signing date of the contract agreement);
+- End Date (End date of the contract agreement);
+- Status (CONFIRMED or DECLINED or ERROR );
+
 ## Help
 
-<img src="images/help.png" height="60%" width="60%" />
-<img src="images/help-batch.png" height="60%" width="30%" />
+<img src="images/sde-help-page.png" height="60%" width="60%" />
 
-On this page, you can see the rules of content (.csv files), the field's name and type (mandatory or not) and you can download the sample or copy the headers from clipboard.
+This dynamic help page provides the submodel informations of selected use case in the home page. if no use case selected, it will show all available submodels. User can see the the order of the fields and details of each field by hovering the info icon in each row. User can download the sample csv and csv template for any submodels as well from this page.
 
 # **Consumer**
 
 ## Consume Data
 
-<img src="images/consume-data.png" height="60%" width="90%" />
+<img src="images/sde-consume-data-page.png" height="60%" width="90%" />
 
 After clicking on the "Consume Data" link in the sidebar navigation menu, user will be redirected to this Consumer view page. On this page, we need to enter the URL of provider connector for which we need to search the already uploaded data or contract offers from provider view. After entering the provider URL, we need to click on "QUERY" button to search or fetch the list of contract offers catalogs. After the successful query operation, the below table will populate list of Contract offers. The table will show the basic meta data of the offers and include the below columns,
 
@@ -282,20 +294,17 @@ User can also subscribe to multiple data offers at a time by ticking or checking
 Please note that, user can only subscribe to multiple data offers if the offers have exact similar usage policies configured.
 After clicking on Subscribe button and agreeing to the terms and conditions, the contract agreements establishment process will start for all of the selected data offers for the subscription.
 
-## Contract History
+## Consumer Contracts
 
-<img src="images/contract-agreements-history.png" height="60%" width="90%" />
+<img src="images/sde-consumer-contracts.png" height="60%" width="90%" />
 
-After clicking on the Contract History menu item from the sidebar navigation menu, the contract agreements subscription history information will be retrieved and displayed in the Contract Agreements History table. The user can stay up to date with the latest Contract Agreements by clicking on Refresh button to retrieve the latest contract agreements.
-This table also provides rich set of convinient user friendly features such as Filter by, Export, Sort, Search and Pagination.
+This page contains an overview of the data exchange contracts your organization has with other Catena-X members to receive & consume data from them.
 
 The table includes below columns:
 
 - Contract Agreement ID (ID of the contract agreement);
 - Asset ID (ID of the Asset);
-- Counter Party Address (Counter party address of the contract agreement);
-- Title (Title of the contract agreement);
-- Organization (Name of the organization to which contract agreements associated);
+- Provider Counter Party Address (Counter party address of the contract agreement);
 - Signing Date (Signing date of the contract agreement);
 - End Date (End date of the contract agreement);
 - Status (CONFIRMED or DECLINED or ERROR );

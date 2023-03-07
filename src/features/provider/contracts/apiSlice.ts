@@ -29,14 +29,14 @@ export const contractsSlice = apiSlice.injectEndpoints({
           params,
         };
       },
-      transformResponse: async ({ connector, contracts }) => { 
+      transformResponse: async ({ connector, contracts }) => {
         const modifieldData = contracts
           .sort(
             (contract1: IContractAgreements, contract2: IContractAgreements) =>
               contract2.dateCreated - contract1.dateCreated,
           )
           .map((item: IContractAgreements, index: number) => {
-            return { ...{ id: index, ...item  } };
+            return { ...{ id: index, ...item } };
           });
         return { connector, contracts: modifieldData };
       },

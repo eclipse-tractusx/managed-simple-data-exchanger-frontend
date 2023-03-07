@@ -15,7 +15,7 @@
     "home": {
       "header": "Home",
       "selectUsecasesHeader": "Wählen Sie ihren Use Case",
-      "selectUsecasesSubheader": "Sie können einen oder mehrere Anwendungsfälle auswählen, die Sie interessieren. In aufeinander folgenden Schritten werden nur die Teilmodelle angezeigt, die für die ausgewählten Anwendungsfälle relevant sind. Wenn Sie keine Auswahl treffen, werden alle Untermodelle angezeigt. Auf Google nach diesen Inhalten suchen",
+      "selectUsecasesSubheader": "Sie können einen oder mehrere Anwendungsfälle auswählen, die Sie interessieren. In aufeinander folgenden Schritten werden nur die Teilmodelle angezeigt, die für die ausgewählten Anwendungsfälle relevant sind. Wenn Sie keine Auswahl treffen, werden alle Untermodelle angezeigt.",
       "exchangeDataHeader": "Daten austauschen",
       "provideDataTab": "Daten anbieten",
       "consumeDataTab": "Daten empfangen",
