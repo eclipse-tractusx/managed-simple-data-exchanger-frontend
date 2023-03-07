@@ -1,6 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the CatenaX (ng) GitHub Organisation
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -29,8 +29,8 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
-import { t } from 'i18next';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Permissions from '../components/Permissions';
 import UploadHistoryErrorDialog from '../components/UploadHistoryErrorDialog';
@@ -48,6 +48,7 @@ function UploadHistoryNew() {
   const [pageSize] = useState<number>(10);
   const [showErrorLogsDialog, setShowErrorLogsDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
