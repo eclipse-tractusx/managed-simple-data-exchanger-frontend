@@ -181,10 +181,16 @@ function UploadHistoryNew() {
       headerName: 'Status',
       align: 'center',
       headerAlign: 'center',
+      minWidth: 150,
+      sortable: false,
       renderCell: ({ row }) => (
         <>
           {row.status === Status.completed && row.numberOfFailedItems === 0 && (
-            <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
+            <Tooltips tooltipPlacement="bottom" tooltipText={t('alerts.uploadSuccess')}>
+              <span>
+                <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
+              </span>
+            </Tooltips>
           )}
           {row.status === Status.completed && row.numberOfFailedItems > 0 && (
             <Tooltips tooltipPlacement="bottom" tooltipText="View error logs">
@@ -195,8 +201,20 @@ function UploadHistoryNew() {
               </span>
             </Tooltips>
           )}
-          {row.status === Status.failed && <HighlightOffOutlined fontSize="small" color="error" />}
-          {row.status === Status.inProgress && <HourglassEmptyOutlined fontSize="small" color="info" />}
+          {row.status === Status.failed && (
+            <Tooltips tooltipPlacement="bottom" tooltipText={t('alerts.uploadError')}>
+              <span>
+                <HighlightOffOutlined fontSize="small" color="error" />
+              </span>
+            </Tooltips>
+          )}
+          {row.status === Status.inProgress && (
+            <Tooltips tooltipPlacement="bottom" tooltipText="Upload in progress">
+              <span>
+                <HourglassEmptyOutlined fontSize="small" color="info" />
+              </span>
+            </Tooltips>
+          )}
         </>
       ),
     },
