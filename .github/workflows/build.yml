@@ -18,6 +18,7 @@ name: build
 on:
   push:
     branches:
+
       - 'DST_PIP8_ITR1'
     tags:
       - 'v*.*.*'
@@ -25,8 +26,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/catenax-ng/tx-dft-frontend-qa
-# IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
