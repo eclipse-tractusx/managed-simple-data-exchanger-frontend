@@ -18,7 +18,7 @@ name: build
 on:
   push:
     branches:
-      - 'Release-3.1'
+      - 'main'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
