@@ -52,13 +52,6 @@ function UploadHistoryNew() {
 
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
-  const deleteSubmodal = async (subModel: ProcessReport) => {
-    try {
-      await deleteHistory(subModel);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   async function download(subModel: ProcessReport) {
     try {
@@ -241,7 +234,7 @@ function UploadHistoryNew() {
               {row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
                 <Tooltips tooltipPlacement="bottom" tooltipText="Delete">
                   <span>
-                    <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)} sx={{ mr: 2 }}>
+                    <IconButton aria-label="delete" size="small" onClick={() => deleteHistory(row)} sx={{ mr: 2 }}>
                       <DeleteIcon color="error" fontSize="small" />
                     </IconButton>
                   </span>

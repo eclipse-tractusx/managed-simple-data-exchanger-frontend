@@ -21,19 +21,32 @@ import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError 
 
 import { apiBaseQuery } from '../../services/RequestService';
 import { setSnackbarMessage } from '../notifiication/slice';
+import { IExtraOptions } from './types';
 
 const baseQuery = fetchBaseQuery(apiBaseQuery());
-const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, IExtraOptions> = async (
   args,
   api,
   extraOptions,
 ) => {
-  const { error, data } = await baseQuery(args, api, extraOptions);
+  const { error, data }: any = await baseQuery(args, api, extraOptions);
+  // Common error handling for all the rtk queries
   if (error) {
-    api.dispatch( setSnackbarMessage({
-      message: (data as any)?.msg ? (data as any)?.msg : 'alerts.somethingWrong',
-      type: 'error',
-    }));
+    const { data: errorData } = error;
+    api.dispatch(
+      setSnackbarMessage({
+        message: errorData?.msg ? errorData?.msg : 'alerts.somethingWrong',
+        type: 'error',
+      }),
+    );
+  } else if (extraOptions?.showNotification) {
+    // Backend should send/handle success messages, which isnt done
+    api.dispatch(
+      setSnackbarMessage({
+        message: extraOptions.message,
+        type: 'success',
+      }),
+    );
   }
   return { data };
 };

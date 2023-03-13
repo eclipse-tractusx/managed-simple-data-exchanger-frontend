@@ -40,3 +40,7 @@ export interface IUseCase {
   id: string;
   title: string;
 }
+export interface IExtraOptions {
+  showNotification?: boolean;
+  message?: string;
+}

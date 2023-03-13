@@ -21,7 +21,6 @@ import _ from 'lodash';
 
 import { apiSlice } from '../../app/apiSlice';
 import { setPageLoading } from '../../app/slice';
-import { setSnackbarMessage } from '../../notifiication/slice';
 
 export const helpApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -53,15 +52,9 @@ export const helpApiSlice = apiSlice.injectEndpoints({
         return pageData;
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        dispatch(setPageLoading(true));
         try {
+          dispatch(setPageLoading(true));
           await queryFulfilled;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-          const data = err?.data;
-          const errorMessage = data?.msg;
-          if (errorMessage) dispatch(setSnackbarMessage({ type: 'error', message: errorMessage }));
-          else dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.somethingWrong' }));
         } finally {
           dispatch(setPageLoading(false));
         }
