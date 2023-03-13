@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "dft-frontend.name" -}}
+{{- define "dftfrontend.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "dft-frontend.fullname" -}}
+{{- define "dftfrontend.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "dft-frontend.chart" -}}
+{{- define "dftfrontend.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "dft-frontend.labels" -}}
-helm.sh/chart: {{ include "dft-frontend.chart" . }}
-{{ include "dft-frontend.selectorLabels" . }}
+{{- define "dftfrontend.labels" -}}
+helm.sh/chart: {{ include "dftfrontend.chart" . }}
+{{ include "dftfrontend.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "dft-frontend.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "dft-frontend.name" . }}
+{{- define "dftfrontend.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "dftfrontend.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "dft-frontend.serviceAccountName" -}}
+{{- define "dftfrontend.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "dft-frontend.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "dftfrontend.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
