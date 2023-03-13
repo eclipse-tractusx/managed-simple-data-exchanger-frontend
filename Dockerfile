@@ -13,15 +13,9 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-FROM nginx:1.22.1-alpine
+FROM nginx:latest
 
-ENV CURL_VERSION=7.87.0
-
-RUN set -eux; \
-      apk add --no-cache \
-        curl="${CURL_VERSION}" \
-        libcurl="${CURL_VERSION}" \
-
+#ENV CURL_VERSION=7.87.0
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -35,19 +29,14 @@ RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
 
-# Copy .env file and shell script to container
+RUN chmod -R 755 /usr/share/nginx/html/
+
 WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
-USER nginx
-
 EXPOSE 8080
 
 # Start Nginx server
-#CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
 
-#EXPOSE 8080
-
-CMD ["nginx", "-g", "daemon off;"]
-#CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
