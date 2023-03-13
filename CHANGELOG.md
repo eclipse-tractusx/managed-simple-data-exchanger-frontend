@@ -12,10 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Provider contract history tab.
 - Consumer contract history tab.
 - Multi language support (English & German).
-### Fixed
-
+- UI usablility improvements.
+- Error logs in upload history for unsuccessful data uploads in create data page.
 - Bug fixes and improvements
-
 ## [1.8.1] - 2022-12-26
 
 ### Added

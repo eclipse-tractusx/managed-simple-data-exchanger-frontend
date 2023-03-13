@@ -43,8 +43,11 @@ export default function CreateData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h3" mb={4}>
+      <Typography variant="h3" mb={2}>
         {t('pages.createData')}
+      </Typography>
+      <Typography variant="body1" mb={4}>
+        {t('content.provider.description')}
       </Typography>
       <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
         <Grid item xs={3}>
@@ -81,7 +84,7 @@ export default function CreateData() {
         </Grid>
       ) : (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
-          <Typography>{t('content.provider.selectSubmodel')}</Typography>
+          <Typography variant="body1">{t('content.provider.selectSubmodel')}</Typography>
         </Box>
       )}
       <PoliciesDialog />

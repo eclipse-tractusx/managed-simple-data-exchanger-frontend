@@ -1,7 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
- *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -57,8 +56,12 @@ export const helpApiSlice = apiSlice.injectEndpoints({
         dispatch(setPageLoading(true));
         try {
           await queryFulfilled;
-        } catch (err) {
-          dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.somethingWrong' }));
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          const data = err?.data;
+          const errorMessage = data?.msg;
+          if (errorMessage) dispatch(setSnackbarMessage({ type: 'error', message: errorMessage }));
+          else dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.somethingWrong' }));
         } finally {
           dispatch(setPageLoading(false));
         }

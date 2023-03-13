@@ -76,13 +76,15 @@ export default function Home() {
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h3">{t('content.home.header')}</Typography>
-          <Typography variant="subtitle1" mt={2}>
+          <Typography variant="body1" mt={2}>
             {loggedInUser.company}
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h4">{t('content.home.selectUsecasesHeader')}</Typography>
-          <Typography variant="subtitle2" maxWidth={900}>
+          <Typography variant="h4" mb={1}>
+            {t('content.home.selectUsecasesHeader')}
+          </Typography>
+          <Typography variant="body1" maxWidth={1000}>
             {t('content.home.selectUsecasesSubheader')}
           </Typography>
           <FormControl component="fieldset" variant="standard">
@@ -136,26 +138,24 @@ export default function Home() {
             <img src="images/play.png" className="playIcon" />
           </Box>
         </Grid>
-        <Grid item xs={5} pt={0}>
-          <article>
-            <p style={{ margin: 0 }}>{t('content.home.sdeDescription')}</p>
-            <Button
-              variant="text"
-              size="medium"
-              onClick={() => openInNewTab(userGuideUrl)}
-              endIcon={<ArrowForwardIcon />}
-              sx={{
-                p: 0,
-                mt: 2,
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-            >
-              {t('content.home.learnSde')}
-            </Button>
-          </article>
+        <Grid item xs={6} pt={0}>
+          <Typography>{t('content.home.sdeDescription')}</Typography>
+          <Button
+            variant="text"
+            size="medium"
+            onClick={() => openInNewTab(userGuideUrl)}
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              p: 0,
+              mt: 2,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            {t('content.home.learnSde')}
+          </Button>
         </Grid>
       </Grid>
     </Box>

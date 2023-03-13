@@ -33,7 +33,12 @@ import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { convertEpochToDate } from '../utils/utils';
 
-function ContractsTable({ type }: { type: string }) {
+interface IContractsTable {
+  type: string;
+  title: string;
+  subtitle: string;
+}
+function ContractsTable({ type, title, subtitle }: IContractsTable) {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -161,14 +166,6 @@ function ContractsTable({ type }: { type: string }) {
     },
   ];
 
-  const handleTitle = () => {
-    if (type === 'PROVIDER') {
-      return t('content.providerContracts.title');
-    } else {
-      return t('content.consumerContracts.title');
-    }
-  };
-
   const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
     type: type,
     offset: 0,
@@ -183,13 +180,13 @@ function ContractsTable({ type }: { type: string }) {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Typography variant="h3">{handleTitle()}</Typography>
-            <Typography variant="body1">
-              {t('content.common.ownConnector')} {data.connector}
+          <Grid item xs={9}>
+            <Typography variant="h3">{title}</Typography>
+            <Typography variant="body1" mt={1}>
+              {subtitle}
             </Typography>
           </Grid>
-          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+          <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton
               size="small"
               variant="contained"
@@ -202,8 +199,10 @@ function ContractsTable({ type }: { type: string }) {
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+              <Typography variant="body1" maxWidth={900} mb={2}>
+                {t('content.common.ownConnector')} {data.connector}
+              </Typography>
               <DataGrid
-                sx={{ mt: 4 }}
                 autoHeight={true}
                 getRowId={row => row.id}
                 rows={data.contracts}
