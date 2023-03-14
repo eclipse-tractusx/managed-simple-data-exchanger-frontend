@@ -19,7 +19,7 @@ on:
   push:
     branches:
 
-      - 'DST_PIP8_ITR1'
+      - 'DST_PIP8_ITR2'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
