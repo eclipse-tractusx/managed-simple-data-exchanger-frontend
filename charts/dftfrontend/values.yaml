@@ -22,9 +22,10 @@ portContainer: 8080
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
+  fsGroup: 2000
 
 securityContext: {}
+  allowPrivilegeEscalation: false
   # capabilities:
   #   drop:
   #   - ALL
