@@ -15,7 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
-- Bug fixes and improvements
+- Table sort by date issues resolved.
+- Error page for restricted user instead of blank screen.
 
 ## [1.8.1] - 2022-12-26
 
