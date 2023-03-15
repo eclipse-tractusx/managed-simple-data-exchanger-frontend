@@ -26,7 +26,7 @@ const ProviderContracts = () => {
   const { t } = useTranslation();
   return (
     <ContractsTable
-      type="PROVIDER"
+      type="provider"
       title={t('content.providerContracts.title')}
       subtitle={t('content.providerContracts.description')}
     />

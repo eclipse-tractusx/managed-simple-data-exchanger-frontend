@@ -23,12 +23,12 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Chip, Grid, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
-import { LoadingButton, Tooltips } from 'cx-portal-shared-components';
+import { IconButton, LoadingButton, Tooltips } from 'cx-portal-shared-components';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { setPageLoading } from '../features/app/slice';
-import { useGetContractsQuery } from '../features/provider/contracts/apiSlice';
+import { useDeleteContractMutation, useGetContractsQuery } from '../features/provider/contracts/apiSlice';
 import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { convertEpochToDate } from '../utils/utils';
@@ -43,10 +43,6 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const HEADER_MAPPING: { [key: string]: string } = {
-    PROVIDER: 'consumer',
-    CONSUMER: 'provider',
-  };
   const renderContractAgreementStatus = (params: GridRenderCellParams) => {
     switch (params.value) {
       case 'CONFIRMED':
@@ -83,6 +79,21 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
         return <Chip color="default" title={params.value} label={params.value} variant="outlined" />;
     }
   };
+
+  const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
+    type: type,
+    params: {
+      offset: 0,
+      maxLimit: MAX_CONTRACTS_AGREEMENTS,
+    },
+  });
+
+  const [deleteContract, { isLoading: isDeleting }] = useDeleteContractMutation({});
+
+  useEffect(() => {
+    dispatch(setPageLoading(isLoading));
+  }, [dispatch, isLoading, isDeleting]);
+
   const columns: GridColDef[] = [
     {
       field: 'contractAgreementId',
@@ -114,7 +125,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
     {
       field: 'counterPartyAddress',
       flex: 1,
-      headerName: `${t(`pages.${HEADER_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
+      headerName: `${t(`pages.${type}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
       renderCell: ({ row }) => (
         <Tooltips
           tooltipPlacement="top-start"
@@ -166,15 +177,30 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
     },
   ];
 
-  const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
-    type: type,
-    offset: 0,
-    maxLimit: MAX_CONTRACTS_AGREEMENTS,
-  });
-
-  useEffect(() => {
-    dispatch(setPageLoading(isLoading));
-  }, [dispatch, isLoading]);
+  const actionCol: GridColDef[] = [
+    {
+      field: 'actions',
+      headerName: '',
+      renderCell: ({ row }) => {
+        if (row.state !== 'DECLINED') {
+          return (
+            <Tooltips tooltipPlacement="bottom" tooltipText="Cancel Contract">
+              <span>
+                <IconButton
+                  aria-label="delete"
+                  size="small"
+                  onClick={() => deleteContract({ negotiationId: row.negotiationId, type })}
+                  sx={{ mr: 2 }}
+                >
+                  <CancelIcon color="error" fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltips>
+          );
+        }
+      },
+    },
+  ];
 
   if (isSuccess) {
     return (
@@ -206,7 +232,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                 autoHeight={true}
                 getRowId={row => row.id}
                 rows={data.contracts}
-                columns={columns}
+                columns={type === 'provider' ? [...columns, ...actionCol] : columns}
                 loading={isFetching}
                 pagination
                 pageSize={pageSize}
