@@ -21,7 +21,7 @@ fullnameOverride: ""
 portContainer: 8080
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext: 
   fsGroup: 2000
 
 securityContext: 
