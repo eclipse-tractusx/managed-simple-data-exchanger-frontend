@@ -179,11 +179,10 @@ There is a web interface between frontend and backend.<br /><br />
 
 Detailed API specs available under:
 
-[https://github.com/catenax-ng/tx-dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml](https://github.com/catenax-ng/tx-dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml)
+[https://github.com/eclipse-tractusx/dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml](https://github.com/eclipse-tractusx/dft-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml)
 
-[https://github.com/catenax-ng/tx-dft-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/tx-dft-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
 
-Backend API Swagger-ui : (https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
+Backend API Swagger-ui : (https://[domain_name]/api/swagger-ui/index.html)
 <br />
 
 ### **Data processing pipelines**
