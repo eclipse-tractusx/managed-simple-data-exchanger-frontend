@@ -6,7 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ##[Unreleased]
 
+### Added
 
+- Purpose, role, custom usage policies removed
+- Country list dropdown in manufacturing_country column
+- Descriptions added for each page under title
+- User can see the error logs of uploaded data in upload history page
+- Error handling done for all api calls
+- Upload history page table component revamped
+- Frontend document updates
+
+### Fixed
+
+- German translation missing texts added
 
 ## [1.9.0] - 2023-03-16
 
