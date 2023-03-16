@@ -18,16 +18,16 @@ The templates require your application to built into a Docker image. The Docker 
 This project provides the following files:
 
 File	Description
-/charts/dft-frontend/Chart.yaml	The definition file for your application
-/charts/dft-frontend/values.yaml	Configurable values that are inserted into the following template files
-/charts/dft-frontend/values-int.yaml	Configurable values for int env
-/charts/dft-frontend/templates/deployment.yaml	Template to configure your application deployment.
-/charts/dft-frontend/templates/ingress.yaml	Template to configure your application deployment.
-/charts/dft-frontend/templates/service.yaml	Template to configure your application deployment.
-/charts/dft-frontend/templates/hpa.yaml	Template to configure your application deployment.
-/charts/dft-frontend/templates/NOTES.txt	Helper to enable locating your application IP and PORT
+/charts/dftfrontend/Chart.yaml	The definition file for your application
+/charts/dftfrontend/values.yaml	Configurable values that are inserted into the following template files
+/charts/dftfrontend/values-int.yaml	Configurable values for int env
+/charts/dftfrontend/templates/deployment.yaml	Template to configure your application deployment.
+/charts/dftfrontend/templates/ingress.yaml	Template to configure your application deployment.
+/charts/dftfrontend/templates/service.yaml	Template to configure your application deployment.
+/charts/dftfrontend/templates/hpa.yaml	Template to configure your application deployment.
+/charts/dftfrontend/templates/NOTES.txt	Helper to enable locating your application IP and PORT
 
 Helm Commands
-$ helm repo add eclipse-tractusx-dft-frontend https://github.com/eclipse-tractusx/dft-frontend/tree/main/charts/dft-frontend
+$ helm repo add eclipse-tractusx-dft-frontend https://github.com/eclipse-tractusx/dft-frontend/tree/main/charts/dftfrontend
 
-$ helm install my-release eclipse-tractusx/dft-frontend --version 1.8.1
+$ helm install my-release eclipse-tractusx/dftfrontend --version 1.9.0

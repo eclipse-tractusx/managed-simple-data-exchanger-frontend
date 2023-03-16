@@ -49,7 +49,7 @@ dft:
       path: /  
           
 ingress:
-  - enabled: true
+  - enabled: false
     className: "nginx"
     annotations: 
      kubernetes.io/tls-acme: "true"
