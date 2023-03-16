@@ -394,7 +394,7 @@ npm/npmjs/-/inflight/1.0.6, ISC, approved, clearlydefined
 npm/npmjs/-/inherits/2.0.3, ISC, approved, clearlydefined
 npm/npmjs/-/inherits/2.0.4, ISC, approved, clearlydefined
 npm/npmjs/-/ini/1.3.8, ISC AND MIT AND BSD-3-Clause, approved, CQ23023
-npm/npmjs/-/internal-slot/1.0.3, MIT, approved, clearlydefined
+npm/npmjs/-/internal-slot/1.0.3, MIT, approved, #7118
 npm/npmjs/-/ipaddr.js/1.9.1, MIT, approved, clearlydefined
 npm/npmjs/-/ipaddr.js/2.0.1, MIT, approved, clearlydefined
 npm/npmjs/-/is-arguments/1.1.1, MIT, approved, clearlydefined
@@ -1118,7 +1118,7 @@ npm/npmjs/@date-io/date-fns/2.16.0, MIT, approved, clearlydefined
 npm/npmjs/@date-io/dayjs/2.16.0, MIT, approved, clearlydefined
 npm/npmjs/@date-io/luxon/2.16.1, MIT, approved, clearlydefined
 npm/npmjs/@date-io/moment/2.16.1, MIT, approved, clearlydefined
-npm/npmjs/@emotion/babel-plugin/11.10.5, MIT, approved, clearlydefined
+npm/npmjs/@emotion/babel-plugin/11.10.5, MIT, approved, #7345
 npm/npmjs/@emotion/cache/11.10.5, MIT, approved, clearlydefined
 npm/npmjs/@emotion/hash/0.9.0, MIT, approved, clearlydefined
 npm/npmjs/@emotion/is-prop-valid/1.2.0, MIT, approved, clearlydefined
@@ -1126,7 +1126,7 @@ npm/npmjs/@emotion/memoize/0.8.0, MIT, approved, clearlydefined
 npm/npmjs/@emotion/react/11.10.5, MIT AND (BSD-3-Clause AND MIT), approved, #3236
 npm/npmjs/@emotion/serialize/1.1.1, MIT, approved, clearlydefined
 npm/npmjs/@emotion/sheet/1.2.1, MIT, approved, clearlydefined
-npm/npmjs/@emotion/styled/11.10.5, MIT, approved, clearlydefined
+npm/npmjs/@emotion/styled/11.10.5, MIT, approved, #7347
 npm/npmjs/@emotion/stylis/0.8.5, MIT, approved, clearlydefined
 npm/npmjs/@emotion/unitless/0.7.5, MIT, approved, clearlydefined
 npm/npmjs/@emotion/unitless/0.8.0, MIT, approved, clearlydefined
