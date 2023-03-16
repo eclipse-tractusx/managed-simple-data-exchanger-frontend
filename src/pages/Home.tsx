@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import './Home.scss';
+import '../styles/home.scss';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Avatar, Box, FormControl, Grid, Stack } from '@mui/material';
@@ -30,11 +30,11 @@ import { DataExchangeStepper } from '../components/DataExchangeStepper';
 import { fetchUseCases } from '../features/app/actions';
 import { setSelectedUseCases } from '../features/app/slice';
 import { IUseCase } from '../features/app/types';
-import { clearRows, setSelectedSubmodel } from '../features/submodels/slice';
-import { ISubmodelList } from '../features/submodels/types';
+import { clearRows, setSelectedSubmodel } from '../features/provider/submodels/slice';
+import { ISubmodelList } from '../features/provider/submodels/types';
+import { removeSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
-import { removeSelectedFiles, setUploadStatus } from '../store/providerSlice';
-import { useAppDispatch, useAppSelector } from '../store/store';
 
 const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/documentation/user-guide';
 
@@ -59,7 +59,7 @@ export default function Home() {
     if (checked) {
       dispatch(setSelectedUseCases([...selectedUseCases, value]));
     } else {
-      dispatch(setSelectedUseCases(selectedUseCases.filter(e => e !== value)));
+      dispatch(setSelectedUseCases(selectedUseCases.filter((e: string) => e !== value)));
     }
   };
 

@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import './index.scss';
+import './styles/index.scss';
 
 import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
 import React from 'react';
@@ -27,9 +27,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import App from './App';
+import { store } from './features/store';
 import I18nService from './services/i18nService';
 import UserService from './services/UserService';
-import { store } from './store/store';
 import { clearConsoles } from './utils/utils';
 
 clearConsoles();

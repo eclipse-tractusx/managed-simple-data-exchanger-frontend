@@ -34,13 +34,13 @@ in the GitHub organization https://github.com/eclipse-tractusx:
 
 ## Third-party Content
 
-See DEPENDENCIES file.
-
 This project leverages the following third party content:
 
-License: Open Font License 1.1
-Licence Path: https://github.com/impallari/Libre-Franklin/blob/master/OFL.txt
-Source URL: https://github.com/impallari/Libre-Franklin
+* License: Open Font License 1.1
+* Licence Path: https://github.com/impallari/Libre-Franklin/blob/master/OFL.txt
+* Source URL: https://github.com/impallari/Libre-Franklin
+
+See DEPENDENCIES file.
 
 ## Cryptography
 

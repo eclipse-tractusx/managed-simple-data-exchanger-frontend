@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -29,15 +29,15 @@ import { useTranslation } from 'react-i18next';
 
 import { setPageLoading } from '../features/app/slice';
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { handleDialogOpen } from '../features/policies/slice';
+import { handleDialogOpen } from '../features/provider/policies/slice';
+import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { FileSize } from '../models/FileSize';
-import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../store/providerSlice';
-import { useAppDispatch, useAppSelector } from '../store/store';
 import { Config } from '../utils/config';
 import { trimText } from '../utils/utils';
 
 export default function UploadFile() {
-  const { selectedFiles, uploadStatus } = useAppSelector(state => state.providerSlice);
+  const { selectedFiles, uploadStatus } = useAppSelector(state => state.uploadFileSlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -53,7 +53,7 @@ export default function UploadFile() {
     } else {
       dispatch(
         setSnackbarMessage({
-          message: t('alerts.invalidFile'),
+          message: 'alerts.invalidFile',
           type: 'error',
         }),
       );

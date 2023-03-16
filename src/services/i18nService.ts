@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,31 +18,31 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import i18n, { changeLanguage } from 'i18next';
-// import LanguageDetector from 'i18next-browser-languagedetector';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
-// import mainDE from '../assets/locales/de/main.json';
+import mainDE from '../assets/locales/de/main.json';
 import mainEN from '../assets/locales/en/main.json';
 
 const resources = {
-  // de: {
-  //   translation: mainDE,
-  // },
   en: {
     translation: mainEN,
   },
+  de: {
+    translation: mainDE,
+  },
 };
 
-const supportedLanguages = Object.keys(resources).sort();
+const supportedLanguages = Object.keys(resources);
 
 const init = (): void => {
   i18n
-    // .use(LanguageDetector)
+    .use(LanguageDetector)
     .use(initReactI18next)
     .init({
       resources,
       fallbackLng: 'en',
-      supportedLngs: ['de', 'en'],
+      supportedLngs: ['en', 'de'],
       interpolation: {
         escapeValue: false,
       },

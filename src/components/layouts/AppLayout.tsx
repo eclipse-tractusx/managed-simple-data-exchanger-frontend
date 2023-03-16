@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 
 import { fetchUserPermissions } from '../../features/app/actions';
 import { setLoggedInUser } from '../../features/app/slice';
-import { useAppDispatch } from '../../store/store';
+import { useAppDispatch } from '../../features/store';
 import Nav from '../Nav';
 import Sidebar from '../Sidebar';
 

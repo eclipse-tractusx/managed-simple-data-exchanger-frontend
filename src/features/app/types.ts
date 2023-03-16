@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,8 +17,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { IUser } from '../../models/User';
-
+import { KeycloakTokenParsed } from 'keycloak-js';
+export interface IUser {
+  userName: string;
+  name: string;
+  email: string;
+  company: string;
+  bpn: string;
+  tenant: string;
+  token: string;
+  parsedToken: KeycloakTokenParsed;
+}
 export interface IAppSlice {
   pageLoading: boolean;
   loggedInUser: IUser;
@@ -27,7 +36,6 @@ export interface IAppSlice {
   selectedUseCases: string[];
   sidebarExpanded: boolean;
 }
-
 export interface IUseCase {
   id: string;
   title: string;

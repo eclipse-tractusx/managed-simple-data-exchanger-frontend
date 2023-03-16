@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,8 +22,8 @@ import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack
 import { Input, SelectList } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
-import { setDurationUnit } from '../../features/policies/slice';
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { setDurationUnit } from '../../features/provider/policies/slice';
+import { useAppDispatch, useAppSelector } from '../../features/store';
 
 interface FreeTextProps {
   restrictionType: string;

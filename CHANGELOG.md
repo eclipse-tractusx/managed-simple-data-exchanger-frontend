@@ -4,11 +4,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-## [Unreleased]
+##[Unreleased]
 
+### Added
+
+- Purpose, role, custom usage policies removed
+- Country list dropdown in manufacturing_country column
+- Descriptions added for each page under title
+- User can see the error logs of uploaded data in upload history page
+- Error handling done for all api calls
+- Upload history page table component revamped
+- Frontend document updates
+
+### Fixed
+
+- German translation missing texts added
+
+## [1.9.0] - 2023-03-16
+
+### Added
+
+- Dynamic help page with all available submodel details and download CSV sample and template options.
 - Provider contract history tab.
 - Consumer contract history tab.
-- Support multi language.
+- Multi language support (English & German).
+
+### Fixed
+
+- Table sort by date issues resolved.
+- Error page for restricted user instead of blank screen.
 
 ## [1.8.1] - 2022-12-26
 
@@ -20,6 +44,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Download uploaded submodel data from upload history.
 - i18n setup with english.
 
+### Fixed
+
+- Bug fixes and enhancements
 ## [1.8.0] - 2022-12-12
 
 ### Added
@@ -105,12 +132,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]:
-[1.8.1]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.1
-[1.8.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.1
-[1.7.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.6.0...dft-frontend-1.7.0
-[1.6.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.5.0...dft-frontend-1.6.0
-[1.5.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.4.0...dft-frontend-1.5.0
-[1.4.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.3.0...dft-frontend-1.4.0
-[1.3.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.2.0...dft-frontend-1.3.0
-[1.2.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.1.0...dft-frontend-1.2.0
+[unreleased]:https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...main
+[1.8.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.0...dft-frontend-1.8.1
+[1.8.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.0
+[1.7.0]: https://github.com/eclipse-tractusx/dft-frontend/releases/tag/dft-frontend-1.7.0
+

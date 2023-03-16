@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,19 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { PageSnackbar } from 'cx-portal-shared-components';
+import { useTranslation } from 'react-i18next';
 
-import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../store';
 import { toggleSnackbar } from './slice';
 
 export default function Notification() {
   const { openSnackBar, snackBarMessage, snackbarType } = useAppSelector(state => state.notificationSlice);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   return (
     <div>
       <PageSnackbar
         autoClose
-        description={snackBarMessage}
+        description={t(snackBarMessage)}
         open={openSnackBar}
         severity={snackbarType}
         showIcon

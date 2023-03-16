@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,10 +21,13 @@
 import { Backdrop, CircularProgress } from '@mui/material';
 import { Typography } from 'cx-portal-shared-components';
 
-import { useAppSelector } from '../store/store';
+import { useAppSelector } from '../features/store';
 
 export default function PageLoading() {
   const { pageLoading } = useAppSelector(state => state.appSlice);
+  // const isFetching = useAppSelector(state =>
+  //   Object.values(state.api.queries).some(query => query.status === 'pending'),
+  // );
   return (
     <Backdrop sx={{ color: '#fff', zIndex: 2000, flexDirection: 'column' }} open={pageLoading}>
       <CircularProgress color="inherit" />

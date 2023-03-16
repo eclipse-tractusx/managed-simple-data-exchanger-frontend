@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,7 +23,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogHeader, LoadingButt
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { IConsumerDataOffers } from '../models/ConsumerContractOffers';
+import { IConsumerDataOffers } from '../features/consumer/types';
 
 interface IntConfirmOffer {
   offers?: IConsumerDataOffers[] | [];

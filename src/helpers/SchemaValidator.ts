@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,8 +23,8 @@ import { DefinedError } from 'ajv/dist/core';
 import addFormats from 'ajv-formats';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { handleDialogOpen } from '../features/policies/slice';
-import { store } from '../store/store';
+import { handleDialogOpen } from '../features/provider/policies/slice';
+import { store } from '../features/store';
 
 export const schemaValidator = async (data: GridValidRowModel[]) => {
   const ajv = new Ajv2019();

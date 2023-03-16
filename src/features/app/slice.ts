@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -20,9 +20,8 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IUser } from '../../models/User';
 import { fetchUseCases, fetchUserPermissions } from './actions';
-import { IAppSlice } from './types';
+import { IAppSlice, IUser } from './types';
 
 const initialState: IAppSlice = {
   pageLoading: false,
@@ -30,7 +29,6 @@ const initialState: IAppSlice = {
     userName: '',
     name: '',
     email: '',
-    roles: [],
     company: '',
     bpn: '',
     tenant: '',

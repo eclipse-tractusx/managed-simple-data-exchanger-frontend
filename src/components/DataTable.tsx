@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -22,9 +22,9 @@ import { GridCellEditCommitParams, GridRowId } from '@mui/x-data-grid';
 import { Button, Table } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
-import { addRows, deleteRows, setRows, setSelectionModel } from '../features/submodels/slice';
+import { addRows, deleteRows, setRows, setSelectionModel } from '../features/provider/submodels/slice';
+import { useAppDispatch, useAppSelector } from '../features/store';
 import { schemaValidator } from '../helpers/SchemaValidator';
-import { useAppDispatch, useAppSelector } from '../store/store';
 
 export default function DataTable() {
   const { submodelDetails, columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
@@ -57,7 +57,7 @@ export default function DataTable() {
               schemaValidator(rows);
             }}
           >
-            Next Step - Configure Policies
+            {t('content.policies.configure')}
           </Button>
         </Box>
       </Box>
