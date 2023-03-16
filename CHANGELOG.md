@@ -132,12 +132,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]:
-[1.8.1]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.1
-[1.8.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.1
-[1.7.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.6.0...dft-frontend-1.7.0
-[1.6.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.5.0...dft-frontend-1.6.0
-[1.5.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.4.0...dft-frontend-1.5.0
-[1.4.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.3.0...dft-frontend-1.4.0
-[1.3.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.2.0...dft-frontend-1.3.0
-[1.2.0]: https://github.com/catenax-ng/tx-dft-frontend/compare/dft-frontend-1.1.0...dft-frontend-1.2.0
+[unreleased]:https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...main
+[1.8.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.0...dft-frontend-1.8.1
+[1.8.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.0
+[1.7.0]: https://github.com/eclipse-tractusx/dft-frontend/releases/tag/dft-frontend-1.7.0
+
