@@ -46,7 +46,7 @@
 ### **Login**
 
 <img src="images/catenax-login-org-select.png" height="60%" width="60%">
-<img src="images/catenax-login-org-search.png" height="60%" width="60%">
+<img src="images/catenax-login-org-search.png" height="60%" width="60%"> 
 <img src="images/catenax-keycloak-signin.png" height="60%" width="60%">
 
 1. Open **S**imple **D**ata **E**xchanger application via the [URL](https://dft.int.demo.catena-x.net/) (recommended browser Google Chrome).
