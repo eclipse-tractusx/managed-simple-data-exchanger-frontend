@@ -185,7 +185,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       renderCell: ({ row }) => {
         if (row.state !== 'DECLINED') {
           return (
-            <Tooltips tooltipPlacement="bottom" tooltipText="Cancel Contract">
+            <Tooltips tooltipPlacement="bottom" tooltipText={t('button.declineContract')}>
               <span>
                 <IconButton
                   aria-label="delete"
