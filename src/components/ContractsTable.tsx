@@ -42,6 +42,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const pageType = `pages.${type}`; // to avoid nested template literals
 
   const renderContractAgreementStatus = (params: GridRenderCellParams) => {
     switch (params.value) {
@@ -125,7 +126,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
     {
       field: 'counterPartyAddress',
       flex: 1,
-      headerName: `${t(`pages.${type}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
+      headerName: `${t(pageType)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
       renderCell: ({ row }) => (
         <Tooltips
           tooltipPlacement="top-start"
@@ -184,7 +185,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       renderCell: ({ row }) => {
         if (row.state !== 'DECLINED') {
           return (
-            <Tooltips tooltipPlacement="bottom" tooltipText="Cancel Contract">
+            <Tooltips tooltipPlacement="bottom" tooltipText={t('button.declineContract')}>
               <span>
                 <IconButton
                   aria-label="delete"

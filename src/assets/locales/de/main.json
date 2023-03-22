@@ -187,7 +187,8 @@
     "submit": "Senden",
     "okay": "Okay",
     "subscribeSelected": "Auswahl abonnieren",
-    "subscribe": "Abonnieren"
+    "subscribe": "Abonnieren",
+    "declineContract": "Vertrag ablehnen"
   },
   "alerts": {
     "invalidFile": "Datei nicht erlaubt!",
@@ -203,6 +204,7 @@
     "downloadError": "Datei nicht heruntergeladen!",
     "invalidData": "Ungültige Eingabe, Bitte die Pflichtfelder ausfüllen!",
     "deleteSuccess": "Erfolgreich gelöscht!",
-    "somethingWrong": "Fehler, Es ist etwas schief gegangen!"
+    "somethingWrong": "Fehler, Es ist etwas schief gegangen!",
+    "contractDeclined": "Vertrag erfolgreich abgelehnt!"
   }
 }
