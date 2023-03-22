@@ -178,12 +178,14 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
     },
   ];
 
+  const CONTRACT_STATES: string[] = ['CONFIRMED', 'DECLINED', 'ERROR'];
   const actionCol: GridColDef[] = [
     {
       field: 'actions',
       headerName: '',
       renderCell: ({ row }) => {
-        if (row.state !== 'DECLINED') {
+        const checkState = CONTRACT_STATES.some(e => e === row.state);
+        if (!checkState) {
           return (
             <Tooltips tooltipPlacement="bottom" tooltipText={t('button.declineContract')}>
               <span>
