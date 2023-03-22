@@ -20,6 +20,8 @@
 
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
+import { setSnackbarMessage } from '../features/notifiication/slice';
+import { store } from '../features/store';
 import { HOST } from '../helpers/ApiHelper';
 import UserService from './UserService';
 
@@ -39,7 +41,15 @@ abstract class HttpService {
         return response;
       },
       (error: AxiosError) => {
-        Promise.reject(error.response);
+        // Need to remove this store usage to avoid circlular dependecy issues
+        const errorMessage = error.response?.data?.msg;
+        store.dispatch(
+          setSnackbarMessage({
+            message: errorMessage ? errorMessage : 'alerts.somethingWrong',
+            type: 'error',
+          }),
+        );
+        return Promise.reject(error.response);
       },
     );
   }

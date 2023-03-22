@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2022 T-Systems International GmbH
+ * Copyright (c) 2022 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,19 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { useTranslation } from 'react-i18next';
+export interface IHistoryErrorLogs {
+  dateTime: string;
+  log: string;
+  processId: string;
+  uuid: string;
+}
 
-import ContractsTable from '../components/ContractsTable';
-
-const ProviderContracts = () => {
-  const { t } = useTranslation();
-  return (
-    <ContractsTable
-      type="provider"
-      title={t('content.providerContracts.title')}
-      subtitle={t('content.providerContracts.description')}
-    />
-  );
-};
-
-export default ProviderContracts;
+export interface IHistoryState {
+  errorsList: IHistoryErrorLogs[];
+  isLoading: boolean;
+  currentProcessId: string;
+}

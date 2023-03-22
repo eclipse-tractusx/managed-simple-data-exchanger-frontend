@@ -29,31 +29,29 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
-import { t } from 'i18next';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import Permissions from '../components/Permissions';
+import UploadHistoryErrorDialog from '../components/UploadHistoryErrorDialog';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
+import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
 import { useAppDispatch } from '../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { ProcessReport, Status } from '../models/ProcessReport';
 import AppService from '../services/appService';
+import ProviderService from '../services/ProviderService';
 import { formatDate } from '../utils/utils';
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
   const [pageSize] = useState<number>(10);
+  const [showErrorLogsDialog, setShowErrorLogsDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
-  const deleteSubmodal = async (subModel: ProcessReport) => {
-    try {
-      await deleteHistory(subModel);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   async function download(subModel: ProcessReport) {
     try {
@@ -73,15 +71,39 @@ function UploadHistoryNew() {
           }),
         );
       }
-    } catch (error) {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.downloadError',
-          type: 'error',
-        }),
-      );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const errorData = error?.data;
+      const errorMessage = errorData?.msg;
+      if (errorMessage) {
+        dispatch(
+          setSnackbarMessage({
+            message: errorMessage,
+            type: 'error',
+          }),
+        );
+      } else {
+        dispatch(
+          setSnackbarMessage({
+            message: 'alerts.downloadError',
+            type: 'error',
+          }),
+        );
+      }
     }
   }
+
+  const showUploadErrors = async (subModel: ProcessReport) => {
+    setShowErrorLogsDialog(true);
+    dispatch(setErrorsList([]));
+    dispatch(setIsLoding(true));
+    dispatch(setCurrentProcessId(subModel.processId));
+    const resp = await ProviderService.getInstance().getUplodHistoryErrors(subModel.processId);
+    dispatch(setErrorsList(resp.data));
+    dispatch(setIsLoding(false));
+  };
+
+  const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
 
   const columns: GridColDef[] = [
     {
@@ -152,16 +174,40 @@ function UploadHistoryNew() {
       headerName: 'Status',
       align: 'center',
       headerAlign: 'center',
+      minWidth: 150,
+      sortable: false,
       renderCell: ({ row }) => (
         <>
           {row.status === Status.completed && row.numberOfFailedItems === 0 && (
-            <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
+            <Tooltips tooltipPlacement="bottom" tooltipText={t('alerts.uploadSuccess')}>
+              <span>
+                <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
+              </span>
+            </Tooltips>
           )}
           {row.status === Status.completed && row.numberOfFailedItems > 0 && (
-            <ReportGmailerrorredOutlined fontSize="small" color="warning" />
+            <Tooltips tooltipPlacement="bottom" tooltipText="View error logs">
+              <span>
+                <IconButton aria-label="delete" size="small" onClick={() => showUploadErrors(row)}>
+                  <ReportGmailerrorredOutlined fontSize="small" color="warning" />
+                </IconButton>
+              </span>
+            </Tooltips>
           )}
-          {row.status === Status.failed && <HighlightOffOutlined fontSize="small" color="error" />}
-          {row.status === Status.inProgress && <HourglassEmptyOutlined fontSize="small" color="info" />}
+          {row.status === Status.failed && (
+            <Tooltips tooltipPlacement="bottom" tooltipText={t('alerts.uploadError')}>
+              <span>
+                <HighlightOffOutlined fontSize="small" color="error" />
+              </span>
+            </Tooltips>
+          )}
+          {row.status === Status.inProgress && (
+            <Tooltips tooltipPlacement="bottom" tooltipText="Upload in progress">
+              <span>
+                <HourglassEmptyOutlined fontSize="small" color="info" />
+              </span>
+            </Tooltips>
+          )}
         </>
       ),
     },
@@ -188,7 +234,7 @@ function UploadHistoryNew() {
               {row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
                 <Tooltips tooltipPlacement="bottom" tooltipText="Delete">
                   <span>
-                    <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)} sx={{ mr: 2 }}>
+                    <IconButton aria-label="delete" size="small" onClick={() => deleteHistory(row)} sx={{ mr: 2 }}>
                       <DeleteIcon color="error" fontSize="small" />
                     </IconButton>
                   </span>
@@ -216,10 +262,13 @@ function UploadHistoryNew() {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
+          <Grid item xs={9}>
+            <Typography variant="h3" mb={1}>
+              {t('pages.uploadHistory')}
+            </Typography>
+            <Typography variant="body1">{t('content.uploadHistory.description')}</Typography>
           </Grid>
-          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+          <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton
               size="small"
               variant="contained"
@@ -258,6 +307,9 @@ function UploadHistoryNew() {
               '& .MuiBox-root': { display: 'none' },
             }}
           />
+        </Box>
+        <Box>
+          <UploadHistoryErrorDialog open={showErrorLogsDialog} handleDialogClose={handleErrorDialogClose} />
         </Box>
       </Box>
     );

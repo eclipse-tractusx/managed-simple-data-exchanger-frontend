@@ -69,7 +69,7 @@ export default function JsonInput() {
         </Button>
       </Box>
       <Grid display={'flex'} justifyContent="center" alignContent={'center'} pt={4}>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <Typography variant="h4">{submodelDetails.title}</Typography>
           <TextareaAutosize
             value={jsonInputData}

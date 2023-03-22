@@ -100,6 +100,14 @@ class ProviderService extends HttpService {
     });
     return res?.data;
   }
+
+  public async getUplodHistoryErrors(processId: string) {
+    const res = await this.instance({
+      method: 'GET',
+      url: `/processing-report/failure-details/${processId}`,
+    });
+    return res;
+  }
 }
 
 export default ProviderService;

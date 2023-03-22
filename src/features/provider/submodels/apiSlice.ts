@@ -1,7 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
- *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -22,7 +21,6 @@ import _ from 'lodash';
 
 import { apiSlice } from '../../app/apiSlice';
 import { setPageLoading } from '../../app/slice';
-import { setSnackbarMessage } from '../../notifiication/slice';
 
 export const helpApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -54,11 +52,9 @@ export const helpApiSlice = apiSlice.injectEndpoints({
         return pageData;
       },
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        dispatch(setPageLoading(true));
         try {
+          dispatch(setPageLoading(true));
           await queryFulfilled;
-        } catch (err) {
-          dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.somethingWrong' }));
         } finally {
           dispatch(setPageLoading(false));
         }
