@@ -124,7 +124,7 @@ export default function ConsumeData() {
       field: 'created',
       flex: 1,
       headerName: t('content.consumeData.columns.created'),
-      sortingOrder: ['asc', 'desc'],
+      sortingOrder: ['desc', 'asc'],
       sortComparator: (_v1: any, _v2: any, param1: any, param2: any) => param1.id - param2.id,
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.created),
     },
