@@ -47,7 +47,7 @@ export const contractsSlice = apiSlice.injectEndpoints({
         url: `contract-agreements/${negotiationId}/${type}/decline`,
         method: 'POST',
       }),
-      extraOptions: { showNotification: true, message: 'alerts.contractDeclined' },
+      extraOptions: { showNotification: true, message: 'alerts.contractDeclined', type: 'error' },
       invalidatesTags: ['DeleteContract'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {

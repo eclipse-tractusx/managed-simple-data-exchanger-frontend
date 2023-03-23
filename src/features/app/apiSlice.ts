@@ -44,7 +44,7 @@ const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQu
     api.dispatch(
       setSnackbarMessage({
         message: extraOptions.message,
-        type: 'success',
+        type: extraOptions.type,
       }),
     );
   }
