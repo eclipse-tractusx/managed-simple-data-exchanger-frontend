@@ -48,7 +48,7 @@ dft:
       # -- The path mapping the "default" api is going to be exposed at
       path: /  
           
-ingress:
+ingresses:
   - enabled: false
     className: "nginx"
     annotations: 
