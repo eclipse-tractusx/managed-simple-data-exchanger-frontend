@@ -19,7 +19,7 @@ on:
   push:
     branches:
 
-      - 'DST_PIP8_ITR3'
+      - 'CX-REL-3.1'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
