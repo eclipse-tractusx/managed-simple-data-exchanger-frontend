@@ -244,7 +244,6 @@ export default function ConsumeData() {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onRowClick = (params: any) => {
     dispatch(setSelectedOffer(params.row));
     toggleDialog(true);
