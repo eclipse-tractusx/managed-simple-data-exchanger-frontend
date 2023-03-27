@@ -41,6 +41,7 @@ import {
 import { debounce } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuid } from 'uuid';
 
 import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
 import OfferDetailsDialog from '../components/OfferDetailsDialog';
@@ -105,7 +106,7 @@ export default function ConsumeData() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [conKey, setConKey] = useState(Math.random());
+  const [conKey, setConKey] = useState(uuid());
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -243,7 +244,6 @@ export default function ConsumeData() {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onRowClick = (params: any) => {
     dispatch(setSelectedOffer(params.row));
     toggleDialog(true);
@@ -337,7 +337,7 @@ export default function ConsumeData() {
     dispatch(setFilterSelectedBPN(''));
     dispatch(setFilterConnectors([]));
     dispatch(setFilterSelectedConnector(null));
-    setConKey(Math.random());
+    setConKey(uuid());
   };
 
   const getConnectorByBPN = async (bpn: string) => {
@@ -487,7 +487,7 @@ export default function ConsumeData() {
                     loading={filterCompanyOptionsLoading}
                     onChange={(event, value: any) => {
                       onCompanyOptionChange(value);
-                      setConKey(Math.random());
+                      setConKey(uuid());
                     }}
                     onInputChange={debounce((event, newInputValue) => {
                       onChangeSearchInputValue(newInputValue);

@@ -54,7 +54,8 @@ export const consumerSlice = createSlice({
       const modifiedData = action.payload
         .sort(
           (contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) =>
-            moment(contract1.created, 'DD/MM/YYYY HH:mm:ss').unix() - moment(contract2.created, 'DD/MM/YYYY HH:mm:ss').unix(),
+            moment(contract1.created, 'DD/MM/YYYY HH:mm:ss').unix() -
+            moment(contract2.created, 'DD/MM/YYYY HH:mm:ss').unix(),
         )
         .map((item: IConsumerDataOffers, index: number) => {
           return { ...item, ...{ id: index } };
