@@ -109,7 +109,7 @@ function UploadHistoryNew() {
     {
       field: 'processId',
       headerName: 'Process Id',
-      minWidth: 300,
+      minWidth: 250,
       flex: 1,
       renderCell: ({ row }) => (
         <div>
@@ -143,37 +143,27 @@ function UploadHistoryNew() {
     },
     {
       field: 'numberOfSucceededItems',
-      headerName: 'Created Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Created',
       flex: 1,
     },
     {
       field: 'numberOfUpdatedItems',
-      headerName: 'Updated Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Updated',
       flex: 1,
     },
     {
       field: 'numberOfDeletedItems',
-      headerName: 'Deleted Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Deleted',
       flex: 1,
     },
     {
       field: 'numberOfFailedItems',
-      headerName: 'Failed Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Failed',
       flex: 1,
     },
     {
       field: 'status',
       headerName: 'Status',
-      align: 'center',
-      headerAlign: 'center',
       minWidth: 150,
       sortable: false,
       renderCell: ({ row }) => (
