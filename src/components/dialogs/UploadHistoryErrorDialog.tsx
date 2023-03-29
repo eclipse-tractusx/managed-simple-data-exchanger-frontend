@@ -36,7 +36,6 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../features/store';
 import { formatDate } from '../../utils/utils';
 
-
 interface UploadHistoryErrorDialogProps {
   errors?: Array<unknown>;
   title?: string;

@@ -149,7 +149,8 @@
       "rules": "Rules",
       "enterValue": "Enter a value",
       "agree": "I agree",
-      "ownConnector": "Connector of own organization:"
+      "ownConnector": "Connector of own organization:",
+      "collapseSidebar": "Collapse sidebar"
     }
   },
   "dialog": {

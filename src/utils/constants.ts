@@ -20,8 +20,8 @@
 
 import { theme } from 'cx-portal-shared-components';
 
-interface IDefaultObject { 
-  [key: string]: string 
+interface IDefaultObject {
+  [key: string]: string;
 }
 const CONTRACT_STATES: string[] = ['CONFIRMED', 'DECLINED', 'ERROR'];
 
@@ -31,9 +31,9 @@ const STATUS_COLOR_MAPPING: IDefaultObject = {
   ERROR: theme.palette.warning.main,
 };
 
-const USER_TYPE_SWITCH: IDefaultObject = { 
+const USER_TYPE_SWITCH: IDefaultObject = {
   provider: 'consumer',
-  consumer: 'provider', 
+  consumer: 'provider',
 };
 
 export { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };

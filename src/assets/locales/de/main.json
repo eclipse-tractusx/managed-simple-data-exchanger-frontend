@@ -148,7 +148,8 @@
       "rules": "Regeln",
       "enterValue": "Wert eingeben",
       "agree": "Ich stimme zu",
-      "ownConnector": "Connector der eigenen Organisation:"
+      "ownConnector": "Connector der eigenen Organisation:",
+      "collapseSidebar": "Seitenleiste einklappen"
     }
   },
   "dialog": {

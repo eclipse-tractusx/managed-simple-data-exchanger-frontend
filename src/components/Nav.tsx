@@ -19,7 +19,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import { Box, Divider, Paper, useTheme } from '@mui/material';
 import { LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
 import i18next, { changeLanguage } from 'i18next';
@@ -27,8 +26,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { setSidebarExpanded } from '../features/app/slice';
-import { useAppDispatch, useAppSelector } from '../features/store';
+import { useAppSelector } from '../features/store';
 import I18nService from '../services/i18nService';
 
 const Nav = () => {
@@ -38,7 +36,6 @@ const Nav = () => {
   const avatar = useRef<HTMLDivElement>(null);
   const { loggedInUser } = useAppSelector(state => state.appSlice);
   const NAV_ITEMS = [{ title: 'Logout', to: 'logout' }];
-  const dispatch = useAppDispatch();
   const [lang, setlang] = useState(i18next.language);
 
   const openCloseMenu = () => setMenuOpen(prevVal => !prevVal);
@@ -72,10 +69,7 @@ const Nav = () => {
         }}
       >
         <Box display={'flex'} alignItems="center">
-          <Box onClick={() => dispatch(setSidebarExpanded())} sx={{ cursor: 'pointer' }}>
-            <MenuOutlinedIcon fontSize="medium" sx={{ color: theme.palette.common.white }} />
-          </Box>
-          <Typography variant="h4" color="white" ml={3}>
+          <Typography variant="h4" color="white">
             {t('logo')}
           </Typography>
         </Box>
