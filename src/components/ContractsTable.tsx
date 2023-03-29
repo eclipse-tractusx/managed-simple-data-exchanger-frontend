@@ -166,7 +166,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                   onClick={() => deleteContract({ negotiationId: row.negotiationId, type })}
                   sx={{ mr: 2 }}
                 >
-                  <CancelIcon color="disabled" fontSize="small" />
+                  <CancelIcon color="action" fontSize="small" />
                 </IconButton>
               </span>
             </Tooltips>

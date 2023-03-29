@@ -225,7 +225,7 @@ function UploadHistoryNew() {
                 <Tooltips tooltipPlacement="bottom" tooltipText="Delete">
                   <span>
                     <IconButton aria-label="delete" size="small" onClick={() => deleteHistory(row)} sx={{ mr: 2 }}>
-                      <DeleteIcon color="error" fontSize="small" />
+                      <DeleteIcon color="action" fontSize="small" />
                     </IconButton>
                   </span>
                 </Tooltips>
@@ -235,7 +235,7 @@ function UploadHistoryNew() {
               {row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
                 <Tooltips tooltipPlacement="bottom" tooltipText="Download">
                   <span>
-                    <IconButton aria-label="delete" size="small" onClick={() => download(row)}>
+                    <IconButton aria-label="download" size="small" onClick={() => download(row)}>
                       <DownloadIcon color="primary" fontSize="small" />
                     </IconButton>
                   </span>
