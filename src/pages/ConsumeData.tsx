@@ -43,8 +43,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 
-import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
-import OfferDetailsDialog from '../components/OfferDetailsDialog';
+import ConfirmTermsDialog from '../components/dialogs/ConfirmTermsDialog';
+import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
 import Permissions from '../components/Permissions';
 import {
   setContractOffers,

@@ -33,8 +33,9 @@ import {
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useAppSelector } from '../features/store';
-import { formatDate } from '../utils/utils';
+import { useAppSelector } from '../../features/store';
+import { formatDate } from '../../utils/utils';
+
 
 interface UploadHistoryErrorDialogProps {
   errors?: Array<unknown>;
@@ -125,7 +126,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" onClick={() => handleClose()}>
-          {t('button.cancel')}
+          {t('button.close')}
         </Button>
       </DialogActions>
     </Dialog>

@@ -32,8 +32,8 @@ import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-porta
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import UploadHistoryErrorDialog from '../components/dialogs/UploadHistoryErrorDialog';
 import Permissions from '../components/Permissions';
-import UploadHistoryErrorDialog from '../components/UploadHistoryErrorDialog';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
 import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
