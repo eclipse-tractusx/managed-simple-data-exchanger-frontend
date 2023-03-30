@@ -151,11 +151,12 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
   const actionCol: GridColDef[] = [
     {
       field: 'actions',
+      headerName: '',
       flex: 1,
       maxWidth: 80,
+      sortable: false,
       renderCell: ({ row }) => {
         const checkState = CONTRACT_STATES.some(e => e === row.state);
-
         if (!checkState) {
           return (
             <Tooltips tooltipPlacement="bottom" tooltipText={t('button.declineContract')}>

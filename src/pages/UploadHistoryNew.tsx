@@ -17,18 +17,13 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import {
-  HighlightOffOutlined,
-  HourglassEmptyOutlined,
-  Refresh,
-  ReportGmailerrorredOutlined,
-} from '@mui/icons-material';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { Refresh } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import _ from 'lodash';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -39,9 +34,10 @@ import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provid
 import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
 import { useAppDispatch } from '../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { ProcessReport, Status } from '../models/ProcessReport';
+import { ProcessReport } from '../models/ProcessReport';
 import AppService from '../services/appService';
 import ProviderService from '../services/ProviderService';
+import { Status, STATUS_COLOR_MAPPING } from '../utils/constants';
 import { formatDate } from '../utils/utils';
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
@@ -52,6 +48,7 @@ function UploadHistoryNew() {
 
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
+  const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
 
   async function download(subModel: ProcessReport) {
     try {
@@ -103,31 +100,50 @@ function UploadHistoryNew() {
     dispatch(setIsLoding(false));
   };
 
-  const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
+  const renderStatusCell = (row: ProcessReport) => {
+    if (row.status === Status.completed && row.numberOfFailedItems > 0) {
+      return (
+        <Typography
+          color={STATUS_COLOR_MAPPING.ERROR}
+          variant="body2"
+          sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+          onClick={() => showUploadErrors(row)}
+        >
+          View errors
+        </Typography>
+      );
+    } else {
+      return (
+        <Typography color={STATUS_COLOR_MAPPING[row.status]} variant="body2">
+          {_.capitalize(row.status)}
+        </Typography>
+      );
+    }
+  };
 
   const columns: GridColDef[] = [
     {
       field: 'processId',
       headerName: 'Process Id',
-      minWidth: 250,
+      minWidth: 200,
       flex: 1,
       renderCell: ({ row }) => (
-        <div>
+        <>
           {row.referenceProcessId ? (
             <Tooltips
               tooltipPlacement="top-start"
               tooltipText={`${row.processId} (Deletion of ${row.referenceProcessId})`}
             >
-              <div>
+              <span>
                 {row.processId} (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
-              </div>
+              </span>
             </Tooltips>
           ) : (
             <Tooltips tooltipPlacement="top-start" tooltipText={row.processId}>
-              <div>{row.processId}</div>
+              <span>{row.processId}</span>
             </Tooltips>
           )}
-        </div>
+        </>
       ),
     },
     {
@@ -166,44 +182,12 @@ function UploadHistoryNew() {
       headerName: 'Status',
       minWidth: 150,
       sortable: false,
-      renderCell: ({ row }) => (
-        <>
-          {row.status === Status.completed && row.numberOfFailedItems === 0 && (
-            <Tooltips tooltipPlacement="bottom" tooltipText={t('alerts.uploadSuccess')}>
-              <span>
-                <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
-              </span>
-            </Tooltips>
-          )}
-          {row.status === Status.completed && row.numberOfFailedItems > 0 && (
-            <Tooltips tooltipPlacement="bottom" tooltipText="View error logs">
-              <span>
-                <IconButton aria-label="delete" size="small" onClick={() => showUploadErrors(row)}>
-                  <ReportGmailerrorredOutlined fontSize="small" color="warning" />
-                </IconButton>
-              </span>
-            </Tooltips>
-          )}
-          {row.status === Status.failed && (
-            <Tooltips tooltipPlacement="bottom" tooltipText={t('alerts.uploadError')}>
-              <span>
-                <HighlightOffOutlined fontSize="small" color="error" />
-              </span>
-            </Tooltips>
-          )}
-          {row.status === Status.inProgress && (
-            <Tooltips tooltipPlacement="bottom" tooltipText="Upload in progress">
-              <span>
-                <HourglassEmptyOutlined fontSize="small" color="info" />
-              </span>
-            </Tooltips>
-          )}
-        </>
-      ),
+      renderCell: ({ row }) => renderStatusCell(row),
     },
     {
       field: 'startDate',
       headerName: 'Start Date',
+      minWidth: 200,
       flex: 1,
       renderCell: ({ row }) => (
         <Tooltips tooltipPlacement="top" tooltipText={formatDate(row.startDate)}>
@@ -216,6 +200,7 @@ function UploadHistoryNew() {
       headerName: '',
       align: 'center',
       headerAlign: 'center',
+      sortable: false,
       flex: 1,
       renderCell: ({ row }) => {
         return (
@@ -284,11 +269,10 @@ function UploadHistoryNew() {
             rows={data.items}
             pageSize={pageSize}
             page={page}
-            rowHeight={100}
             onPageChange={setPage}
             rowsPerPageOptions={[10, 15, 20, 100]}
             sx={{
-              '& .MuiDataGrid-columnHeaderTitle, & .MuiDataGrid-cell': {
+              '& .MuiDataGrid-columnHeaderTitle': {
                 textOverflow: 'clip',
                 whiteSpace: 'break-spaces !important',
                 maxHeight: 'none !important',

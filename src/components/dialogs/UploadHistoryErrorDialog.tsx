@@ -37,17 +37,11 @@ import { useAppSelector } from '../../features/store';
 import { formatDate } from '../../utils/utils';
 
 interface UploadHistoryErrorDialogProps {
-  errors?: Array<unknown>;
-  title?: string;
   open: boolean;
   handleDialogClose?: () => void;
 }
 
-const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
-  title = 'Upload History Error Logs',
-  open = false,
-  handleDialogClose,
-}) => {
+const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({ open = false, handleDialogClose }) => {
   const { t } = useTranslation();
   const [page, setPage] = useState<number>(0);
   const [pageSize] = useState<number>(10);
@@ -68,6 +62,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
     },
     {
       field: 'log',
+      sortable: false,
       headerName: 'Error Log',
       flex: 5,
       align: 'center',
@@ -83,7 +78,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({
         maxHeight: '90%',
       }}
     >
-      <DialogHeader closeWithIcon onCloseWithIcon={() => handleClose()} title={title} />
+      <DialogHeader closeWithIcon onCloseWithIcon={() => handleClose()} title={t('content.uploadHistory.errorLogs')} />
       <DialogContent dividers sx={{ py: 3 }}>
         <>
           <Grid container spacing={2} alignItems="center">

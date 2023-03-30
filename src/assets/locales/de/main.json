@@ -77,6 +77,7 @@
     },
     "uploadHistory": {
       "description": "Dies ist ein Überblick über die Datenbereitstellung ihres Unternehmens an das Catena-X Ökosystem. Alle Aktivitäten werden hier gelistet, d.h. die Erstellung, Updates, Löschung von Daten. Vergangene Versionen der bereitgestellten Daten können heruntergeladen werden.",
+      "errorLogs": "Fehlerprotokolle des Upload-Verlaufs",
       "columns": {
         "processId": "Transaktion Id",
         "csvType": "CSV Typ",

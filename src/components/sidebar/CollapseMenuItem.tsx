@@ -17,7 +17,9 @@ export default function CollapseMenuItem() {
 
   return (
     <>
-      <ListItem sx={{ px: sidebarExpanded ? 2 : '6px' }}>{`v${version}`}</ListItem>
+      <ListItem sx={{ px: sidebarExpanded ? 2 : '6px' }}>
+        {sidebarExpanded ? `SDE v${version}` : `v${version}`}
+      </ListItem>
       <ListItem onClick={() => dispatch(setSidebarExpanded())} sx={{ p: 0 }}>
         <ListItemButton sx={{ minHeight: '48px', display: 'flex', alignItems: 'center' }}>
           <ListItemIcon

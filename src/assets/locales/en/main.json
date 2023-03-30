@@ -78,6 +78,7 @@
     },
     "uploadHistory": {
       "description": "This is an overview of your company's data delivery to the Catena-X ecosystem. All activities are listed here, i.e. creation, updates, deletion of data. Past versions of the provided data can be downloaded.",
+      "errorLogs": "Upload history Error logs",
       "columns": {
         "processId": "Process Id",
         "csvType": "CSV Type",

@@ -26,9 +26,12 @@ interface IDefaultObject {
 const CONTRACT_STATES: string[] = ['CONFIRMED', 'DECLINED', 'ERROR'];
 
 const STATUS_COLOR_MAPPING: IDefaultObject = {
+  IN_PROGRESS: theme.palette.info.main,
   CONFIRMED: theme.palette.success.main,
+  COMPLETED: theme.palette.success.main,
   DECLINED: theme.palette.error.main,
-  ERROR: theme.palette.warning.main,
+  ERROR: theme.palette.error.main,
+  FAILED: theme.palette.error.main,
 };
 
 const USER_TYPE_SWITCH: IDefaultObject = {
@@ -36,4 +39,10 @@ const USER_TYPE_SWITCH: IDefaultObject = {
   consumer: 'provider',
 };
 
-export { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };
+enum Status {
+  completed = 'COMPLETED',
+  failed = 'FAILED',
+  inProgress = 'IN_PROGRESS',
+}
+
+export { CONTRACT_STATES, Status, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };

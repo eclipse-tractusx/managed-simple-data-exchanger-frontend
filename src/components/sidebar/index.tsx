@@ -49,14 +49,14 @@ export default function Sidebar() {
       >
         <Box>
           {MenuItems.map((menuItem, index) => (
-            <div key={index}>
+            <Box key={index}>
               {/* Menu heading */}
               {menuItem.isHeading ? <MenuItemHeading text={menuItem.text} /> : <MenuItem key={index} item={menuItem} />}
               {/* Menu children */}
               {menuItem.childrens?.map((children, k) => (
                 <MenuItem key={k} item={children} />
               ))}
-            </div>
+            </Box>
           ))}
         </Box>
         <Box>
