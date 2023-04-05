@@ -90,7 +90,7 @@ export default function Home() {
           <FormControl component="fieldset" variant="standard">
             <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
               {useCases.map((item: IUseCase) => (
-                <div className="usecase-tile" key={item.id}>
+                <Box className="usecase-tile" key={item.id}>
                   <input
                     type="checkbox"
                     name={item.title}
@@ -105,7 +105,7 @@ export default function Home() {
                       <Typography variant="subtitle1">{item.title}</Typography>
                     </Stack>
                   </label>
-                </div>
+                </Box>
               ))}
             </Stack>
           </FormControl>

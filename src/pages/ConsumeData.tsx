@@ -43,8 +43,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 
-import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
-import OfferDetailsDialog from '../components/OfferDetailsDialog';
+import ConfirmTermsDialog from '../components/dialogs/ConfirmTermsDialog';
+import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
 import Permissions from '../components/Permissions';
 import {
   setContractOffers,
@@ -64,7 +64,7 @@ import {
 import { IConnectorResponse, IConsumerDataOffers, ILegalEntityContent, IntOption } from '../features/consumer/types';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
-import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
+import { arraysEqual, handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import ConsumerService from '../services/ConsumerService';
 
 const ITEMS = [
@@ -261,7 +261,11 @@ export default function ConsumeData() {
         return true;
       }
       dispatch(setOffersLoading(true));
-      const response = await ConsumerService.getInstance().fetchConsumerDataOffers({ providerUrl: providerUrl });
+      const response = await ConsumerService.getInstance().fetchConsumerDataOffers({
+        providerUrl: providerUrl,
+        offset: 0,
+        maxLimit: MAX_CONTRACTS_AGREEMENTS,
+      });
       dispatch(setContractOffers(response.data));
       dispatch(setOffersLoading(false));
     } catch (error) {

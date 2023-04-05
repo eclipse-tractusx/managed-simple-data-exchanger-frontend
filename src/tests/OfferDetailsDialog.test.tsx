@@ -20,7 +20,7 @@
 
 import { render, screen } from '@testing-library/react';
 
-import OfferDetailsDialog from '../components/OfferDetailsDialog';
+import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
 import { IConsumerDataOffers } from '../features/consumer/types';
 
 test('Snapshot OfferDetailsDialog - load and diaplay offer details component', () => {

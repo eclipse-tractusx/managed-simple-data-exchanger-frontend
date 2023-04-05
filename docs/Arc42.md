@@ -48,6 +48,7 @@ In order to allow Data Providers and Data Consumers to easily participate in rel
 - It enables companies to provide their data in the Catena-X network via an EDC.
 - Data is uploaded via CSV-files/Manual Entry/Json format.
 - The SDE registers the data in the Digital Twin Registry and makes it accessible via an EDC.
+- It is validate the CX network company BPN's to allow data as consumer. 
 - SDE also act as a Data Consumer.
 - It is show the data offers from data provider.
 
@@ -59,6 +60,8 @@ In order to allow Data Providers and Data Consumers to easily participate in rel
 - Parsing of CSV file/manual Entry for Parts and Relationships.
 - Integration with Digital Twin registry.
 - Utilization of EDC to provide data and consume data.
+- Integration with Portal Service to validate BPN's Numbers as well as get the Connectors URL details of companies.
+- Integration Keycloak authentication for security.
 
 <br />
 
@@ -127,6 +130,7 @@ The following table illustrates the stakeholders of SDE and their respective int
 |------------------------------------------	|----------------	|
 | EDC connector for external communication 	| EDC/IDS        	|
 | Digital twin registry                    	| HTTPs          	|
+| Portal Service                        	| HTTPs          	|
 | File Upload (CSV)                        	| HTTPs endpoint 	|
 
 <br />

@@ -19,11 +19,10 @@
  ********************************************************************************/
 import { Refresh } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Chip, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
-import { IconButton, LoadingButton, Tooltips } from 'cx-portal-shared-components';
+import { IconButton, LoadingButton, Tooltips, Typography } from 'cx-portal-shared-components';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -31,6 +30,7 @@ import { setPageLoading } from '../features/app/slice';
 import { useDeleteContractMutation, useGetContractsQuery } from '../features/provider/contracts/apiSlice';
 import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
+import { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH } from '../utils/constants';
 import { convertEpochToDate } from '../utils/utils';
 
 interface IContractsTable {
@@ -42,44 +42,13 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const pageType = `pages.${type}`; // to avoid nested template literals
+  const pageType = `pages.${USER_TYPE_SWITCH[type]}`; // to avoid nested template literals
 
-  const renderContractAgreementStatus = (params: GridRenderCellParams) => {
-    switch (params.value) {
-      case 'CONFIRMED':
-        return (
-          <Chip
-            color="success"
-            icon={<CheckCircleIcon fontSize="small" />}
-            title={params.value}
-            label={params.value}
-            variant="outlined"
-          />
-        );
-      case 'DECLINED':
-        return (
-          <Chip
-            color="error"
-            icon={<CancelIcon fontSize="small" />}
-            title={params.value}
-            label={params.value}
-            variant="outlined"
-          />
-        );
-      case 'ERROR':
-        return (
-          <Chip
-            color="warning"
-            icon={<ErrorIcon fontSize="small" />}
-            title={params.value}
-            label={params.value}
-            variant="outlined"
-          />
-        );
-      default:
-        return <Chip color="default" title={params.value} label={params.value} variant="outlined" />;
-    }
-  };
+  const renderContractAgreementStatus = (params: GridRenderCellParams) => (
+    <Typography color={STATUS_COLOR_MAPPING[params.value]} variant="body2">
+      {_.capitalize(params.value)}
+    </Typography>
+  );
 
   const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
     type: type,
@@ -116,7 +85,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       headerName: t('content.contractHistory.columns.assetId'),
       renderCell: ({ row }) =>
         row.contractAgreementInfo?.assetId ? (
-          <Tooltips tooltipPlacement="top" tooltipText={row.contractAgreementInfo.assetId}>
+          <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.contractAgreementInfo.assetId}>
             <span>{row.contractAgreementInfo.assetId}</span>
           </Tooltips>
         ) : (
@@ -126,6 +95,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
     {
       field: 'counterPartyAddress',
       flex: 1,
+      minWidth: 250,
       headerName: `${t(pageType)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
       renderCell: ({ row }) => (
         <Tooltips
@@ -178,11 +148,13 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
     },
   ];
 
-  const CONTRACT_STATES: string[] = ['CONFIRMED', 'DECLINED', 'ERROR'];
   const actionCol: GridColDef[] = [
     {
       field: 'actions',
       headerName: '',
+      flex: 1,
+      maxWidth: 80,
+      sortable: false,
       renderCell: ({ row }) => {
         const checkState = CONTRACT_STATES.some(e => e === row.state);
         if (!checkState) {
@@ -195,7 +167,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                   onClick={() => deleteContract({ negotiationId: row.negotiationId, type })}
                   sx={{ mr: 2 }}
                 >
-                  <CancelIcon color="error" fontSize="small" />
+                  <CancelIcon color="action" fontSize="small" />
                 </IconButton>
               </span>
             </Tooltips>
@@ -254,6 +226,14 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                 disableColumnSelector
                 disableDensitySelector
                 disableSelectionOnClick
+                sx={{
+                  '& .MuiDataGrid-columnHeaderTitle': {
+                    textOverflow: 'clip',
+                    whiteSpace: 'break-spaces !important',
+                    maxHeight: 'none !important',
+                    lineHeight: 1.4,
+                  },
+                }}
               />
             </Box>
           </Grid>

@@ -29,8 +29,9 @@ import { handleDialogClose } from '../../features/provider/policies/slice';
 import { clearRows } from '../../features/provider/submodels/slice';
 import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
-import { ProcessReport, Status } from '../../models/ProcessReport';
+import { ProcessReport } from '../../models/ProcessReport';
 import ProviderService from '../../services/ProviderService';
+import { Status } from '../../utils/constants';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
 
