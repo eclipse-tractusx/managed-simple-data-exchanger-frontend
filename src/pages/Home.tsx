@@ -36,7 +36,7 @@ import { removeSelectedFiles, setUploadStatus } from '../features/provider/uploa
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
 
-const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/documentation/user-guide';
+const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/docs/user-guide';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
@@ -73,16 +73,43 @@ export default function Home() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12}>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
           <Typography variant="h3">{t('content.home.header')}</Typography>
-          <Typography variant="body1" mt={2}>
+          <Typography variant="body1" my={2}>
             {loggedInUser.company}
           </Typography>
+          <Typography variant="h4" mb={1}>
+            {t('content.common.introduction')}
+          </Typography>
+          <Box>
+            <Typography>{t('content.home.sdeDescription')}</Typography>
+            <Button
+              variant="text"
+              size="medium"
+              onClick={() => openInNewTab(userGuideUrl)}
+              endIcon={<ArrowForwardIcon />}
+              sx={{
+                p: 0,
+                mt: 2,
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  textDecoration: 'underline',
+                },
+              }}
+            >
+              {t('content.home.accessDescription')}
+            </Button>
+          </Box>
+        </Grid>
+        <Grid item xs={6}>
+          <Box>
+            <img src="images/sde.png" width={'100%'} />
+          </Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h4" mb={1}>
-            {t('content.home.selectUsecasesHeader')}
+          <Typography variant="h4" mt={3} mb={1}>
+            {t('content.home.selectUsecasesHeader')} (optional)
           </Typography>
           <Typography variant="body1" maxWidth={1000}>
             {t('content.home.selectUsecasesSubheader')}
@@ -110,7 +137,7 @@ export default function Home() {
             </Stack>
           </FormControl>
         </Grid>
-        <Grid item xs={12} mt={5}>
+        <Grid item xs={12} my={5}>
           <Typography variant="h4">{t('content.home.exchangeDataHeader')}</Typography>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
             <Tabs
@@ -131,31 +158,6 @@ export default function Home() {
               <DataExchangeStepper data={consumeDataSteps} />
             </TabPanel>
           </Box>
-        </Grid>
-        <Grid item xs={12} mt={5}>
-          <Box mt={4} className="video-wrapper">
-            <img src="images/sde.png" width={700} />
-            <img src="images/play.png" className="playIcon" />
-          </Box>
-        </Grid>
-        <Grid item xs={6} pt={0}>
-          <Typography>{t('content.home.sdeDescription')}</Typography>
-          <Button
-            variant="text"
-            size="medium"
-            onClick={() => openInNewTab(userGuideUrl)}
-            endIcon={<ArrowForwardIcon />}
-            sx={{
-              p: 0,
-              mt: 2,
-              '&:hover': {
-                backgroundColor: 'transparent',
-                textDecoration: 'underline',
-              },
-            }}
-          >
-            {t('content.home.learnSde')}
-          </Button>
         </Grid>
       </Grid>
     </Box>

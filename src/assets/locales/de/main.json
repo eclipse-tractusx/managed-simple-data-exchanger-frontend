@@ -14,6 +14,7 @@
   "content": {
     "home": {
       "header": "Home",
+      "accessDescription": "Greifen Sie auf die detaillierte Benutzerbeschreibung zu",
       "selectUsecasesHeader": "Wählen Sie ihren Use Case",
       "selectUsecasesSubheader": "Sie können einen oder mehrere Anwendungsfälle auswählen, die Sie interessieren. In aufeinander folgenden Schritten werden nur die Teilmodelle angezeigt, die für die ausgewählten Anwendungsfälle relevant sind. Wenn Sie keine Auswahl treffen, werden alle Untermodelle angezeigt.",
       "exchangeDataHeader": "Daten austauschen",
@@ -150,7 +151,8 @@
       "enterValue": "Wert eingeben",
       "agree": "Ich stimme zu",
       "ownConnector": "Connector der eigenen Organisation:",
-      "collapseSidebar": "Seitenleiste einklappen"
+      "collapseSidebar": "Seitenleiste einklappen",
+      "introduction": "Einführung"
     }
   },
   "dialog": {

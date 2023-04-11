@@ -14,6 +14,7 @@
   "content": {
     "home": {
       "header": "Home",
+      "accessDescription": "Access detailed user description",
       "selectUsecasesHeader": "Select your use cases",
       "selectUsecasesSubheader": "You may select one or more use cases that interest you. Only those submodels will be displayed in successive steps that are relevant for the selected use cases. When you don’t make a selection, all submodels will be displayed.",
       "exchangeDataHeader": "Exchange your data",
@@ -151,7 +152,8 @@
       "enterValue": "Enter a value",
       "agree": "I agree",
       "ownConnector": "Connector of own organization:",
-      "collapseSidebar": "Collapse sidebar"
+      "collapseSidebar": "Collapse sidebar",
+      "introduction": "Introduction"
     }
   },
   "dialog": {
