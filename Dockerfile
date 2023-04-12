@@ -37,4 +37,5 @@ COPY ./env.sh .
 EXPOSE 8080
 
 # Start Nginx server
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["nginx", "-g", "daemon off;"]
+#CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
