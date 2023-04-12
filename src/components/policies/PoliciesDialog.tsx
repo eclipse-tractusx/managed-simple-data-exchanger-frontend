@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -266,6 +266,19 @@ export default function PoliciesDialog() {
         title={t('content.policies.title')}
       />
       <DialogContent>
+        <Typography variant="body2">
+          {t('content.policies.description')}
+          <ol>
+            <li>
+              {t('content.policies.description_1')}
+              <ul>
+                <li>{t('content.policies.description_1_1')}</li>
+                <li>{t('content.policies.description_1_2')}</li>
+              </ul>
+            </li>
+            <li>{t('content.policies.description_2')}</li>
+          </ol>
+        </Typography>
         <AccessPolicy />
         <UsagePolicy />
       </DialogContent>

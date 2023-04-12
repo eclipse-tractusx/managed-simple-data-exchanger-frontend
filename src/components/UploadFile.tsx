@@ -35,6 +35,7 @@ import { useAppDispatch, useAppSelector } from '../features/store';
 import { FileSize } from '../models/FileSize';
 import { Config } from '../utils/config';
 import { trimText } from '../utils/utils';
+import InfoSteps from './InfoSteps';
 
 export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.uploadFileSlice);
@@ -101,7 +102,7 @@ export default function UploadFile() {
           {t('content.policies.configure')}
         </Button>
       </Box>
-      <Box sx={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Box sx={{ height: '60vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h4" marginBottom={3} textAlign="center">
             {t('content.provider.uploadFile')}
@@ -179,6 +180,7 @@ export default function UploadFile() {
           )}
         </Box>
       </Box>
+      <InfoSteps icon="info" steps={['content.provider.uploadStep_1', 'content.provider.uploadStep_2']} />
     </>
   );
 }
