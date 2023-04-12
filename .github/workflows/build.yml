@@ -18,7 +18,6 @@ name: build
 on:
   push:
     branches:
-
       - 'DST_PIP8_ITR3'
     tags:
       - 'v*.*.*'
