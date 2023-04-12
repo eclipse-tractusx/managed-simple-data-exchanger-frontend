@@ -138,7 +138,12 @@ export default function Home() {
           </FormControl>
         </Grid>
         <Grid item xs={12} my={5}>
-          <Typography variant="h4">{t('content.home.exchangeDataHeader')}</Typography>
+          <Typography variant="h4" mb={1}>
+            {t('content.home.exchangeDataHeader')}
+          </Typography>
+          <Typography variant="body1" maxWidth={1000}>
+            {t('content.home.exchangeDataDescription')}
+          </Typography>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
             <Tabs
               value={activeTab}

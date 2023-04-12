@@ -26,7 +26,6 @@ import { useTranslation } from 'react-i18next';
 
 import DataTable from '../components/DataTable';
 import DownloadCSV from '../components/DownloadCSV';
-import JsonInput from '../components/JsonInput';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
 import UploadFile from '../components/UploadFile';
@@ -47,7 +46,12 @@ export default function CreateData() {
         {t('pages.createData')}
       </Typography>
       <Typography variant="body1" mb={4}>
-        {t('content.provider.description')}
+        <Box>{t('content.provider.description_1')}</Box>
+        <Box>{t('content.provider.description_2')}</Box>
+        <ul style={{ margin: 0 }}>
+          <li> {t('content.provider.description_2_1')}</li>
+          <li> {t('content.provider.description_2_2')}</li>
+        </ul>
       </Typography>
       <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
         <Grid item xs={3}>
@@ -66,7 +70,6 @@ export default function CreateData() {
               <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
                 <Tab label={t('content.provider.uploadFile')} />
                 <Tab label={t('content.provider.table')} />
-                <Tab label={t('content.provider.json')} />
               </Tabs>
             </Box>
             <Box>
@@ -75,9 +78,6 @@ export default function CreateData() {
               </TabPanel>
               <TabPanel value={activeTab} index={1}>
                 <DataTable />
-              </TabPanel>
-              <TabPanel value={activeTab} index={2}>
-                <JsonInput />
               </TabPanel>
             </Box>
           </Grid>
