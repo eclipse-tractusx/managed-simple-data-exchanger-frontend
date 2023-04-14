@@ -136,7 +136,7 @@ export default function AccessPolicy() {
 
   return (
     <>
-      <Typography>{t('content.policies.accessPolicy')}</Typography>
+      <Typography fontWeight={'bold'}>{t('content.policies.accessPolicy')}</Typography>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"

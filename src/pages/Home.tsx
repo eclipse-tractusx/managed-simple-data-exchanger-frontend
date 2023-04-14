@@ -23,7 +23,7 @@ import '../styles/home.scss';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Avatar, Box, FormControl, Grid, Stack } from '@mui/material';
 import { Button, Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DataExchangeStepper } from '../components/DataExchangeStepper';
@@ -48,20 +48,23 @@ export default function Home() {
     dispatch(fetchUseCases());
   }, [dispatch]);
 
-  const handleUseCaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Clearing all the ongoing uploads
-    dispatch(setSelectedSubmodel({} as ISubmodelList));
-    dispatch(setUploadStatus(true));
-    dispatch(clearRows());
-    dispatch(removeSelectedFiles());
+  const handleUseCaseChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      // Clearing all the ongoing uploads
+      dispatch(setSelectedSubmodel({} as ISubmodelList));
+      dispatch(setUploadStatus(true));
+      dispatch(clearRows());
+      dispatch(removeSelectedFiles());
 
-    const { value, checked } = event.target;
-    if (checked) {
-      dispatch(setSelectedUseCases([...selectedUseCases, value]));
-    } else {
-      dispatch(setSelectedUseCases(selectedUseCases.filter((e: string) => e !== value)));
-    }
-  };
+      const { value, checked } = event.target;
+      if (checked) {
+        dispatch(setSelectedUseCases([...selectedUseCases, value]));
+      } else {
+        dispatch(setSelectedUseCases(selectedUseCases.filter((e: string) => e !== value)));
+      }
+    },
+    [dispatch, selectedUseCases],
+  );
 
   const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);

@@ -32,7 +32,7 @@
         "subscribeDataOffer": "Subscribe to data contract offer",
         "manageContracts": "View & manage contracts"
       },
-      "sdeDescription": "Simple Data Exchanger is your easy way to publish data in the Catena-X network. It makes your automotive data available to other participants respecting your individual access and usage rules. It allows you to discover data of other participants and to establish data contracts, so that you can access their data within the use cases that interest you.",
+      "sdeDescription": "Simple Data Exchanger is your easy way to provide and consume data within the Catena-X network. It makes your data available to other participants respecting your individual access and usage rules. It allows you to discover data of other participants and to establish data contracts, so that you can access their data within the use cases that interest you.",
       "learnSde": "Learn how it works"
     },
     "provider": {

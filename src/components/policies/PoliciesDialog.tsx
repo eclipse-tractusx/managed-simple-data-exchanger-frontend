@@ -267,11 +267,11 @@ export default function PoliciesDialog() {
       />
       <DialogContent>
         <Typography variant="body2">
-          {t('content.policies.description')}
-          <ol>
+          <b>{t('content.policies.description')}</b>
+          <ol style={{ padding: 0, listStylePosition: 'inside' }}>
             <li>
               {t('content.policies.description_1')}
-              <ul>
+              <ul style={{ listStyleType: 'disc' }}>
                 <li>{t('content.policies.description_1_1')}</li>
                 <li>{t('content.policies.description_1_2')}</li>
               </ul>
