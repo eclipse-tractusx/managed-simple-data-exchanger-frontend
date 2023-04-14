@@ -42,6 +42,7 @@
       "description_2_2": "Manueller Upload (über direkte Eingabe im Tabellenformat)",
       "selectSubmodel": "Submodel auswählen",
       "uploadFile": "Datei hochladen",
+      "uploadedFile": "hochgeladene Datei",
       "table": "Manueller Eintrag",
       "json": "JSON",
       "uploadInstruction": "Hochzuladende Datei einfach in dieses Feld ziehen.",
@@ -50,6 +51,7 @@
       "dropInstruction": "Hochzuladende Datei einfach in dieses Feld ziehen.",
       "addRow": "Zeile einfügen",
       "deleteRow": "Zeile(n) löschen",
+      "previewTableTitle": "Vorschau des Teilmodells einschließlich Hilfebeschreibung",
       "uploadStep_1": "1. Wählen Sie die Datei aus, die Sie hochladen möchten.",
       "uploadStep_2": "2. Klicken Sie auf 'Nächster Schritt – Richtlinien konfigurieren', um festzulegen, mit wem Sie Ihre Daten teilen und den/die digitalen Zwilling(e) registrieren möchten.",
       "manualStep_1": "1. Klicken Sie für manuelle Eingaben auf 'Zeile hinzufügen' und geben Sie die Werte ein, indem Sie in die entsprechenden Felder klicken.",
@@ -151,6 +153,15 @@
         "contractEndDate": "Ablaufdatum",
         "state": "Status"
       }
+    },
+    "dropzone": {
+      "title": "Dateien hierher ziehen",
+      "subTitle": "oder %wähle eine Datei% direkt aus.",
+      "errorTitle": "Es tut uns leid",
+      "placeholder": "",
+      "uploadError": "Not Uploaded",
+      "uploadSuccess": "Uploaded",
+      "uploadProgess": "Uploaded % of % files"
     },
     "common": {
       "loading": "Laden...",

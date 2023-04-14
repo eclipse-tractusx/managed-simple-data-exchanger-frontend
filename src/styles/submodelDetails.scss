@@ -18,37 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { GridColDef, GridSelectionModel, GridValidRowModel } from '@mui/x-data-grid';
-
-export interface ISubmodelList {
-  id: number;
-  title: string;
-  value: string;
-}
-export interface ISubmodelsSlice {
-  selectedSubmodel: ISubmodelList;
-  submodelList: ISubmodelList[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  submodelDetails: any;
-  columns: GridColDef[];
-  rows: GridValidRowModel[];
-  row: GridValidRowModel;
-  selectionModel: GridSelectionModel;
-  selectedRows: GridValidRowModel[];
-  jsonInputData: string;
-  previewTableHeadings: string[];
-  previewTableDescriptions: string[];
-  previewTableData: Array<string[]>;
-}
-
-export interface HelpPageData {
-  name: string;
-  description: string;
-  id: string;
-  rows: {
-    name: string;
-    mandatory: string;
-    order: number;
-    description: string;
-  }[];
+.submodel-detail-table {
+  border-collapse: collapse;
+  padding: 4px 10px;
+  td,
+  th {
+    width: 100%;
+    border: 1px solid #dadada;
+    border-collapse: collapse;
+    padding: 4px 10px;
+    &:first-child {
+      background-color: rgb(236, 240, 244);
+    }
+  }
 }

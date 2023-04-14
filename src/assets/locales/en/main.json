@@ -43,6 +43,7 @@
       "placeHolder": "Please select a submodel (use case) for creating data.",
       "selectSubmodel": "Select Submodel",
       "uploadFile": "Upload File",
+      "uploadedFile": "Uploaded File",
       "table": "Manual entry",
       "json": "JSON",
       "uploadInstruction": "Upload your file by dropping it here.",
@@ -51,6 +52,7 @@
       "dropInstruction": "Upload your file by dropping it here.",
       "addRow": "Add row",
       "deleteRow": "Delete row(s)",
+      "previewTableTitle": "Preview of Submodel including help description",
       "uploadStep_1": "1. Choose the file you want to upload.",
       "uploadStep_2": "2. Click on “Next Step – Configure Policies” to manage with whom to share your data and register the digital twin(s)",
       "manualStep_1": "1. For manual entries click 'add a row' and enter the values by clicking inside the respective fields.",
@@ -152,6 +154,15 @@
         "contractEndDate": "End Date",
         "state": "Status"
       }
+    },
+    "dropzone": {
+      "title": "Drag & drop your files here",
+      "subTitle": "or %browse files% on your computer.",
+      "errorTitle": "Sorry",
+      "placeholder": "",
+      "uploadError": "Not Uploaded",
+      "uploadSuccess": "Uploaded",
+      "uploadProgess": "Uploaded % of % files"
     },
     "common": {
       "loading": "Loading...",

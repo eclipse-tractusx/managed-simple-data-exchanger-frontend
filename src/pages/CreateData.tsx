@@ -28,6 +28,7 @@ import DataTable from '../components/DataTable';
 import DownloadCSV from '../components/DownloadCSV';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
+import SubmodelInfo from '../components/SubmodelInfo';
 import UploadFile from '../components/UploadFile';
 import { useAppSelector } from '../features/store';
 
@@ -45,7 +46,7 @@ export default function CreateData() {
       <Typography variant="h3" mb={2}>
         {t('pages.createData')}
       </Typography>
-      <Typography variant="body1" mb={4}>
+      <Typography variant="body1">
         <Box>{t('content.provider.description_1')}</Box>
         <Box>{t('content.provider.description_2')}</Box>
         <ul style={{ margin: 0 }}>
@@ -64,24 +65,23 @@ export default function CreateData() {
         ) : null}
       </Grid>
       {Object.keys(selectedSubmodel).length ? (
-        <Grid container>
-          <Grid item xs={12}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
-                <Tab label={t('content.provider.uploadFile')} />
-                <Tab label={t('content.provider.table')} />
-              </Tabs>
-            </Box>
-            <Box>
-              <TabPanel value={activeTab} index={0}>
-                <UploadFile />
-              </TabPanel>
-              <TabPanel value={activeTab} index={1}>
-                <DataTable />
-              </TabPanel>
-            </Box>
-          </Grid>
-        </Grid>
+        <Box>
+          <SubmodelInfo />
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
+              <Tab label={t('content.provider.uploadFile')} />
+              <Tab label={t('content.provider.table')} />
+            </Tabs>
+          </Box>
+          <Box>
+            <TabPanel value={activeTab} index={0}>
+              <UploadFile />
+            </TabPanel>
+            <TabPanel value={activeTab} index={1}>
+              <DataTable />
+            </TabPanel>
+          </Box>
+        </Box>
       ) : (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
           <Typography variant="body1">{t('content.provider.selectSubmodel')}</Typography>

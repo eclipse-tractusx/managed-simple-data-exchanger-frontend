@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
@@ -35,6 +36,9 @@ const initialState: ISubmodelsSlice = {
   selectionModel: [],
   selectedRows: [],
   jsonInputData: '',
+  previewTableHeadings: [],
+  previewTableData: [],
+  previewTableDescriptions: [],
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -97,10 +101,9 @@ export const submodelSlice = createSlice({
     });
     builder.addCase(fetchSubmodelDetails.fulfilled, (state, { payload }) => {
       state.submodelDetails = payload;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       state.columns = Object.entries(payload.items.properties).map(([key, value]: any) => ({
         field: key,
-        headerName: `${value.title}${_.indexOf(state.submodelDetails.items.required, key) > -1 ? '*' : ''}`,
+        headerName: `${value.title}${_.indexOf(payload.items.required, key) > -1 ? '*' : ''}`,
         editable: true,
         sortable: false,
         flex: 1,
@@ -108,7 +111,6 @@ export const submodelSlice = createSlice({
         type: handleColumnTypes(value),
         valueOptions: value.enum,
       }));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Object.entries(payload.items.properties).forEach(([key, value]: any) => {
         if (value.enum?.length) {
           state.row[key] = '';
@@ -116,6 +118,26 @@ export const submodelSlice = createSlice({
           state.row[key] = null;
         }
       });
+      // for submodel description table
+      state.previewTableHeadings = ['Field name', ...Object.keys(payload.items.properties)];
+      state.previewTableDescriptions = Object.entries(payload.items.properties).map(
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+        ([key, value]: any) => value.description,
+      );
+      state.previewTableData = [
+        [
+          'Example entries',
+          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+          ...Object.entries(payload.items.properties).map(([key, value]: any) => value.examples[0]),
+        ],
+        [
+          'Mandatory',
+          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+          ...Object.entries(payload.items.properties).map(([key, value]: any) =>
+            _.indexOf(payload.items.required, key) > -1 ? 'true' : 'false',
+          ),
+        ],
+      ];
     });
   },
 });

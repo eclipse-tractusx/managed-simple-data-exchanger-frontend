@@ -24,7 +24,6 @@ import { setPageLoading } from '../../app/slice';
 
 export const helpApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getHelpPageData: builder.query({
       query: params => {
         return {
