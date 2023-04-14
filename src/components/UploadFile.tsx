@@ -18,11 +18,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import CloseIcon from '@mui/icons-material/Close';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Box, Link, useTheme } from '@mui/material';
-import { Button, Typography } from 'cx-portal-shared-components';
+import { Box } from '@mui/material';
+import { Button, DropArea, DropPreview, UploadStatus } from 'cx-portal-shared-components';
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
@@ -41,8 +38,6 @@ export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.uploadFileSlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  const theme = useTheme();
 
   const handleFiles = (file: File) => {
     dispatch(setUploadStatus(false));
@@ -65,7 +60,7 @@ export default function UploadFile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     maxFiles: 1,
     accept: {
@@ -104,76 +99,34 @@ export default function UploadFile() {
       </Box>
       <Box sx={{ height: '60vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h4" marginBottom={3} textAlign="center">
-            {t('content.provider.uploadFile')}
-          </Typography>
-          <Box
-            sx={{
-              border: '1px dashed lightgrey',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              p: 3,
-              position: 'relative',
-            }}
-            {...getRootProps()}
-          >
+          <Box {...getRootProps()}>
             <input {...getInputProps()} />
-            <CloudUploadIcon sx={{ fontSize: 40, color: theme.palette.grey[500] }} />
-            <Typography variant="body1" my={3} textAlign="center">
-              {t('content.provider.uploadInstruction')}
-            </Typography>
-            <Typography variant="body1" mb={3} textAlign="center">
-              {t('content.common.or')}
-            </Typography>
-            <Button variant="outlined" size="small">
-              {t('button.chooseFile')}
-            </Button>
-
-            {isDragActive ? (
-              <Box
-                sx={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  background: theme.palette.primary.main,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <Box sx={{ textAlign: 'center' }}>
-                  <CloudUploadIcon style={{ fontSize: 40 }} sx={{ color: theme.palette.common.white }} />
-                  <Typography color="white" variant="h4">
-                    {t('content.provider.dropFile')}
-                  </Typography>
-                  <Typography color="white" variant="body1">
-                    {t('content.provider.dropInstruction')}
-                  </Typography>
-                </Box>
-              </Box>
-            ) : (
-              ''
-            )}
+            <DropArea
+              translations={{
+                title: t('content.dropzone.title'),
+                subTitle: t('content.dropzone.subTitle'),
+                errorTitle: t('content.dropzone.errorTitle'),
+              }}
+            />
           </Box>
           {selectedFiles.length && !uploadStatus ? (
             <Box sx={{ display: 'flex', mt: 2, flexDirection: 'column' }}>
-              <Typography variant="subtitle1" mb={2} fontWeight={'bold'}>
-                {t('content.provider.selectedFile')}
-              </Typography>
-
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', py: 1.5, px: 2, background: 'lightgrey' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-                  <UploadFileIcon />
-                  <Typography fontSize={16}>
-                    {trimText(selectedFiles[0].name, 20)} ({fileSize(selectedFiles[0].size)})
-                  </Typography>
-                </Box>
-                <Link sx={{ color: 'black' }} onClick={() => dispatch(removeSelectedFiles())}>
-                  <CloseIcon />
-                </Link>
-              </Box>
+              <DropPreview
+                onDelete={() => dispatch(removeSelectedFiles())}
+                translations={{
+                  placeholder: '',
+                  uploadError: '',
+                  uploadProgess: t('content.provider.uploadedFile'),
+                  uploadSuccess: '',
+                }}
+                uploadFiles={[
+                  {
+                    name: trimText(selectedFiles[0].name, 20),
+                    size: parseInt(fileSize(selectedFiles[0].size), 10),
+                    status: UploadStatus.NEW,
+                  },
+                ]}
+              />
             </Box>
           ) : (
             ''
