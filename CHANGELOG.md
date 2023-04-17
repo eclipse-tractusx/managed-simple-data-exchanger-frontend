@@ -4,7 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-##[2.0.0] - 2023-03-27
+### Unreleased 
+
+### Added
+
+- Incorporate of Customer feedback in the SDE-GUI
+
+### Fixed
+
+## [2.0.0] - 2023-03-27
 
 ### Added
 
