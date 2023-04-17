@@ -68,23 +68,23 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
           <>
             <Box sx={{ mb: 1 }}>
               {offerObj?.offerCount !== 0 && (
-                <p>
+                <Box>
                   <Trans i18nKey={'dialog.offerDetails.confirmTermsTitle'} count={offerObj.offerCount} />
-                </p>
+                </Box>
               )}
-              <p>
+              <Box>
                 {t('dialog.offerDetails.cofirmTermsSubtitle')}
                 {offerObj ? (
-                  <strong style={{ margin: '0 5px' }}>{`${splitWithFirstOcc(offerObj.provider)[0]}.` || '-.'}</strong>
+                  <b style={{ margin: '0 5px' }}>{`${splitWithFirstOcc(offerObj.provider)[0]}.` || '-.'}</b>
                 ) : (
                   '-.'
                 )}
-              </p>
-              <p>{t('dialog.offerDetails.confirmHeading')}</p>
+              </Box>
+              <Box>{t('dialog.offerDetails.confirmHeading')}</Box>
             </Box>
-            <p>(1) {t('dialog.offerDetails.point1')}</p>
-            <p>(2) {t('dialog.offerDetails.point2')}</p>
-            <p>(3) {t('dialog.offerDetails.point3')}</p>
+            <Box>(1) {t('dialog.offerDetails.point1')}</Box>
+            <Box>(2) {t('dialog.offerDetails.point2')}</Box>
+            <Box>(3) {t('dialog.offerDetails.point3')}</Box>
             <FormControlLabel
               control={<Checkbox checked={isAgreed} onChange={() => setIsAgreed(!isAgreed)} name="gilad" />}
               label={t('content.common.agree')}

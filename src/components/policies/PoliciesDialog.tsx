@@ -268,17 +268,23 @@ export default function PoliciesDialog() {
       <DialogContent>
         <Typography variant="body2">
           <b>{t('content.policies.description')}</b>
-          <ol style={{ padding: 0, listStylePosition: 'inside' }}>
-            <li>
-              {t('content.policies.description_1')}
-              <ul style={{ listStyleType: 'disc' }}>
-                <li>{t('content.policies.description_1_1')}</li>
-                <li>{t('content.policies.description_1_2')}</li>
-              </ul>
-            </li>
-            <li>{t('content.policies.description_2')}</li>
-          </ol>
         </Typography>
+        <ol style={{ padding: 0, listStylePosition: 'inside' }}>
+          <li>
+            <Typography variant="body2">{t('content.policies.description_1')}</Typography>
+            <ul style={{ listStyleType: 'disc' }}>
+              <li>
+                <Typography variant="body2">{t('content.policies.description_1_1')}</Typography>
+              </li>
+              <li>
+                <Typography variant="body2">{t('content.policies.description_1_2')}</Typography>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <Typography variant="body2">{t('content.policies.description_2')}</Typography>
+          </li>
+        </ol>
         <AccessPolicy />
         <UsagePolicy />
       </DialogContent>

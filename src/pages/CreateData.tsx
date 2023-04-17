@@ -46,14 +46,16 @@ export default function CreateData() {
       <Typography variant="h3" mb={2}>
         {t('pages.createData')}
       </Typography>
-      <Typography variant="body1">
-        <Box>{t('content.provider.description_1')}</Box>
-        <Box>{t('content.provider.description_2')}</Box>
-        <ul style={{ margin: 0 }}>
-          <li> {t('content.provider.description_2_1')}</li>
-          <li> {t('content.provider.description_2_2')}</li>
-        </ul>
-      </Typography>
+      <Typography variant="body1">{t('content.provider.description_1')}</Typography>
+      <Typography variant="body1">{t('content.provider.description_2')}</Typography>
+      <ul style={{ margin: 0 }}>
+        <li>
+          <Typography variant="body1">{t('content.provider.description_2_1')}</Typography>
+        </li>
+        <li>
+          <Typography variant="body1">{t('content.provider.description_2_2')}</Typography>
+        </li>
+      </ul>
       <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
         <Grid item xs={3}>
           <SelectSubmodel />

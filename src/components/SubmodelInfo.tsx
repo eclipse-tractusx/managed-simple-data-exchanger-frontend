@@ -22,39 +22,38 @@ import '../styles/submodelDetails.scss';
 import InfoIcon from '@mui/icons-material/Info';
 import { Box } from '@mui/material';
 import { Tooltips, Typography } from 'cx-portal-shared-components';
-import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 
 import { useAppSelector } from '../features/store';
 
 export default function SubmodelInfo() {
-  const { previewTableHeadings, previewTableData, previewTableDescriptions } = useAppSelector(
+  const { previewTableHeadings, previewTableData, previewTableDescriptions, selectedSubmodel } = useAppSelector(
     state => state.submodelSlice,
   );
-  const { t } = useTranslation();
 
   return (
     <>
       <Typography variant="body1" fontWeight={'bold'} mb={2}>
-        {t('content.provider.previewTableTitle')}
+        <Trans i18nKey={'content.provider.previewTableTitle'} values={{ submodel: selectedSubmodel.title }} />
       </Typography>
       <Box overflow={'scroll'} mb={3}>
         <table className="submodel-detail-table">
           <tr>
-            {previewTableHeadings.map((title: string) => (
-              <th>{title}</th>
+            {previewTableHeadings.map((title: string, index: number) => (
+              <th key={index}>{title}</th>
             ))}
           </tr>
-          {previewTableData.map(data => (
-            <tr>
-              {data.map(e => (
-                <td>{e}</td>
+          {previewTableData.map((data: string[], i: number) => (
+            <tr key={i}>
+              {data.map((e: string, index: number) => (
+                <td key={index}>{e}</td>
               ))}
             </tr>
           ))}
           <tr>
             <td>Description</td>
-            {previewTableDescriptions.map((desc: string) => (
-              <td>
+            {previewTableDescriptions.map((desc: string, index: number) => (
+              <td key={index}>
                 <Tooltips tooltipPlacement="top" tooltipText={desc}>
                   <span>
                     <InfoIcon color="primary" />

@@ -52,7 +52,7 @@
       "dropInstruction": "Upload your file by dropping it here.",
       "addRow": "Add row",
       "deleteRow": "Delete row(s)",
-      "previewTableTitle": "Preview of Submodel including help description",
+      "previewTableTitle": "Preview of {{ submodel }} Submodel including help description",
       "uploadStep_1": "1. Choose the file you want to upload.",
       "uploadStep_2": "2. Click on “Next Step – Configure Policies” to manage with whom to share your data and register the digital twin(s)",
       "manualStep_1": "1. For manual entries click 'add a row' and enter the values by clicking inside the respective fields.",

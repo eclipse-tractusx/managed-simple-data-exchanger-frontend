@@ -38,7 +38,7 @@ export interface ISubmodelsSlice {
   jsonInputData: string;
   previewTableHeadings: string[];
   previewTableDescriptions: string[];
-  previewTableData: Array<string[]>;
+  previewTableData: string[][];
 }
 
 export interface HelpPageData {
