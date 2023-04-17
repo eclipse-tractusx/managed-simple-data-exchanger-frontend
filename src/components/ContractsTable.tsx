@@ -220,6 +220,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                   toolbar: {
                     showQuickFilter: true,
                     quickFilterProps: { debounceMs: 500 },
+                    printOptions: { disableToolbarButton: true },
                   },
                 }}
                 disableColumnMenu
