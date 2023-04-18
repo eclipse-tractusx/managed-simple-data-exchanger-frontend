@@ -36,7 +36,7 @@ import { removeSelectedFiles, setUploadStatus } from '../features/provider/uploa
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
 
-const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/documentation/user-guide';
+const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/docs/user-guide';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
