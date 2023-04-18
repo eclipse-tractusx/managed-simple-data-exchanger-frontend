@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-##[2.0.0] - 2023-03-27
+## [2.0.0] - 2023-03-27
 
 ### Added
 
@@ -13,12 +13,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Descriptions added for each page under title
 - User can see the error logs of uploaded data in upload history page
 - Error handling done for all api calls
+- Unified BPN validation in access policy section
+- Decline contract in provider contracts page
 - Upload history page table component revamped
 - Frontend document updates
 
 ### Fixed
 
 - German translation missing texts added
+- Table column titles shortened in upload history
+- Table row CSS fixes
+- Status texts in tables improved
 
 ## [1.9.0] - 2023-03-16
 
@@ -138,4 +143,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [1.8.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.0...dft-frontend-1.8.1
 [1.8.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.0
 [1.7.0]: https://github.com/eclipse-tractusx/dft-frontend/releases/tag/dft-frontend-1.7.0
-
