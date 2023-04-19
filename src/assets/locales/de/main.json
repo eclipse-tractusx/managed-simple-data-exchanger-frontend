@@ -193,7 +193,8 @@
     "declineContract": "Vertrag ablehnen"
   },
   "alerts": {
-    "invalidFile": "Datei nicht erlaubt!",
+    "invalidFile": "Ungültiges Dateiformat!",
+    "largeFile": "Dateigröße ist zu groß!!",
     "uploadSuccess": "Hochladen abgeschlossen!",
     "uploadWarning": "Hochladen abgeschlossen - mit Fehlermeldungen!",
     "uploadError": "Hochladen fehlgeschlagen!",

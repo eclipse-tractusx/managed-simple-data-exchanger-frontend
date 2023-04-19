@@ -39,10 +39,4 @@ const USER_TYPE_SWITCH: IDefaultObject = {
   consumer: 'provider',
 };
 
-enum Status {
-  completed = 'COMPLETED',
-  failed = 'FAILED',
-  inProgress = 'IN_PROGRESS',
-}
-
-export { CONTRACT_STATES, Status, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };
+export { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };

@@ -194,7 +194,8 @@
     "declineContract": "Decline Contract"
   },
   "alerts": {
-    "invalidFile": "File not permitted!",
+    "invalidFile": "Invalid file format!",
+    "largeFile": "File size is too large!",
     "uploadSuccess": "Upload completed!",
     "uploadWarning": "Upload completed with warnings!",
     "uploadError": "Upload failed!",

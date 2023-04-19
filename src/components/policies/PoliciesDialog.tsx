@@ -23,6 +23,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-p
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Status } from '../../enums';
 import { setPageLoading } from '../../features/app/slice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
 import { handleDialogClose } from '../../features/provider/policies/slice';
@@ -31,7 +32,6 @@ import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../featu
 import { useAppDispatch, useAppSelector } from '../../features/store';
 import { ProcessReport } from '../../models/ProcessReport';
 import ProviderService from '../../services/ProviderService';
-import { Status } from '../../utils/constants';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
 
