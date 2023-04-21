@@ -4,34 +4,28 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-### Unreleased 
-
-### Added
-
-- Incorporate of Customer feedback in the SDE-GUI
-
-### Fixed
-
 ## [2.0.0] - 2023-03-27
 
 ### Added
 
-- Purpose, role, custom usage policies removed
-- Country list dropdown in manufacturing_country column
-- Descriptions added for each page under title
-- User can see the error logs of uploaded data in upload history page
-- Error handling done for all api calls
+- Create data: Country list dropdown in manufacturing_country column
+- Descriptions for each page under title
+- Error logs of uploaded data in upload history
+- Error handling for all api calls
 - Unified BPN validation in access policy section
-- Decline contract in provider contracts page
-- Upload history page table component revamped
+- Decline contract option for provider contracts
+- App version and collapse button added in sidebar
 - Frontend document updates
+
+### Changes
+
+- Upload history page table component revamped
+- Role, custom usage policies removed
+- Table row design, titles and Status column design modified
 
 ### Fixed
 
 - German translation missing texts added
-- Table column titles shortened in upload history
-- Table row CSS fixes
-- Status texts in tables improved
 
 ## [1.9.0] - 2023-03-16
 
@@ -151,4 +145,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [1.8.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.0...dft-frontend-1.8.1
 [1.8.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.0
 [1.7.0]: https://github.com/eclipse-tractusx/dft-frontend/releases/tag/dft-frontend-1.7.0
-

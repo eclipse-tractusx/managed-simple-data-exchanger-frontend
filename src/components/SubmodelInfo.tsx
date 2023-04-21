@@ -38,30 +38,32 @@ export default function SubmodelInfo() {
       </Typography>
       <Box overflow={'scroll'} mb={3}>
         <table className="submodel-detail-table">
-          <tr>
-            {previewTableHeadings.map((title: string, index: number) => (
-              <th key={index}>{title}</th>
-            ))}
-          </tr>
-          {previewTableData.map((data: string[], i: number) => (
-            <tr key={i}>
-              {data.map((e: string, index: number) => (
-                <td key={index}>{e}</td>
+          <tbody>
+            <tr>
+              {previewTableHeadings.map((title: string, index: number) => (
+                <th key={index}>{title}</th>
               ))}
             </tr>
-          ))}
-          <tr>
-            <td>Description</td>
-            {previewTableDescriptions.map((desc: string, index: number) => (
-              <td key={index}>
-                <Tooltips tooltipPlacement="top" tooltipText={desc}>
-                  <span>
-                    <InfoIcon color="primary" />
-                  </span>
-                </Tooltips>
-              </td>
+            {previewTableData.map((data: string[], i: number) => (
+              <tr key={i}>
+                {data.map((e: string, index: number) => (
+                  <td key={index}>{e}</td>
+                ))}
+              </tr>
             ))}
-          </tr>
+            <tr>
+              <td>Description</td>
+              {previewTableDescriptions.map((desc: string, index: number) => (
+                <td key={index}>
+                  <Tooltips tooltipPlacement="top" tooltipText={desc}>
+                    <span>
+                      <InfoIcon color="primary" />
+                    </span>
+                  </Tooltips>
+                </td>
+              ))}
+            </tr>
+          </tbody>
         </table>
       </Box>
     </>
