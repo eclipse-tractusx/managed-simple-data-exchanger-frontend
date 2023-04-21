@@ -20,6 +20,7 @@
  ********************************************************************************/
 
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -78,7 +79,7 @@ export default function PoliciesDialog() {
 
   useEffect(() => {
     const durationCheck = duration === 'RESTRICTED' && durationValue === '';
-    const purposeCheck = purpose === 'RESTRICTED' && purposeValue === '';
+    const purposeCheck = purpose === 'RESTRICTED' && _.isEmpty(purposeValue);
     const roleCheck = role === 'RESTRICTED' && roleValue === '';
     const customCheck = custom === 'RESTRICTED' && customValue === '';
     setshowError(() => durationCheck || purposeCheck || roleCheck || customCheck);
@@ -96,7 +97,7 @@ export default function PoliciesDialog() {
   const processingReport = (r: { data: ProcessReport }, processId: string) => {
     dispatch(setUploadData(r.data));
     if (r?.data?.status !== Status.completed && r?.data?.status !== Status.failed) {
-      // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
+      // if status !== 'COMPLETED' && status !== 'FAILED' -> repeat in interval with 2 seconds to refresh data
       const interval = setInterval(
         () =>
           ProviderService.getInstance()
@@ -148,11 +149,13 @@ export default function PoliciesDialog() {
     }
   };
 
+  // Generate process id 
   const processingReportFirstCall = (processId: string) => {
     setTimeout(async () => {
       ProviderService.getInstance()
         .getReportById(processId)
         .then(response => {
+          // if process id is ready - upload the data
           processingReport(response, processId);
         })
         .catch(error => {
@@ -202,7 +205,7 @@ export default function PoliciesDialog() {
       {
         type: 'PURPOSE',
         typeOfAccess: purpose,
-        value: purposeValue,
+        value: purposeValue.value,
       },
       {
         type: 'CUSTOM',
@@ -217,7 +220,6 @@ export default function PoliciesDialog() {
       dispatch(setPageLoading(true));
       const response = await ProviderService.getInstance().submitSubmodalData(uploadUrl, payload);
       const submitSubmodelData = response?.data;
-      // first call
       if (submitSubmodelData) processingReportFirstCall(submitSubmodelData);
     } catch (error: any) {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));

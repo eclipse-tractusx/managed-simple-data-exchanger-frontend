@@ -39,4 +39,35 @@ const USER_TYPE_SWITCH: IDefaultObject = {
   consumer: 'provider',
 };
 
-export { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };
+const DURATION_UNITS = [
+  {
+    id: 0,
+    title: 'Hour',
+    value: 'HOUR',
+  },
+  {
+    id: 1,
+    title: 'Day',
+    value: 'DAY',
+  },
+  {
+    id: 2,
+    title: 'Month',
+    value: 'MONTH',
+  },
+  {
+    id: 3,
+    title: 'Year',
+    value: 'YEAR',
+  },
+];
+
+const PURPOSE_VALUES = [
+  {
+    id: 0,
+    title: 'ID 3.0 Trace',
+    value: 'ID 3.0 Trace',
+  },
+];
+
+export { CONTRACT_STATES, DURATION_UNITS, PURPOSE_VALUES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };

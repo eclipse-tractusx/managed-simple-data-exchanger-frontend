@@ -22,12 +22,12 @@ import { Box } from '@mui/material';
 import { Typography } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
-import { setDuration, setDurationValue } from '../../features/provider/policies/slice';
+import { setDuration, setDurationValue, setPurpose } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
 import UsagePolicyItem from './UsagePolicyItem';
 
 export default function UsagePolicy() {
-  const { duration, durationValue } = useAppSelector(state => state.accessUsagePolicySlice);
+  const { duration, durationValue, purpose } = useAppSelector(state => state.accessUsagePolicySlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -45,18 +45,16 @@ export default function UsagePolicy() {
           setInputFreeText={e => dispatch(setDurationValue(e))}
         />
       </Box>
-      {/* <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 4 }}>
         <UsagePolicyItem
           restrictionType={purpose}
           setRestrictionType={e => dispatch(setPurpose(e))}
           constraintType={t('content.policies.purpose')}
           displayText={t('content.policies.purposeNote')}
           labelText={t('content.policies.purposeLabel')}
-          inputFreeText={purposeValue}
-          setInputFreeText={e => dispatch(setPurposeValue(e))}
         />
       </Box>
-      <Box sx={{ mt: 4 }}>
+      {/* <Box sx={{ mt: 4 }}>
         <UsagePolicyItem
           restrictionType={role}
           setRestrictionType={e => dispatch(setRole(e))}
