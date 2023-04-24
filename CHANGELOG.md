@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changes
 
 - Upload history page table component revamped
-- Role, custom usage policies removed
+- Purpose, Role, custom usage policies removed
 - Table row design, titles and Status column design modified
 
 ### Fixed
