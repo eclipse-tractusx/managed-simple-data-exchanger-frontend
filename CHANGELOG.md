@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [Unreleased]
+
+### Added
+
+- Purpose restriction added in usage policies
+
+### Fixed
+
+- File extention validation while drag and drop
+- User guide link updated in home page
+- Persisting selected value in select submodel dropdown 
+
 ## [2.0.0] - 2023-03-27
 
 ### Added
@@ -20,7 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changes
 
 - Upload history page table component revamped
-- Role, custom usage policies removed
+- Purpose, Role, custom usage policies removed
 - Table row design, titles and Status column design modified
 
 ### Fixed
