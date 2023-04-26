@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-## [Unreleased]
+## [2.0.1] - 2023-04-26
 
 ### Added
 
@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Fixed
 
-- File extention validation while drag and drop
+- File extension validation while drag and drop
 - User guide link updated in home page
 - Persisting selected value in select submodel dropdown 
 
@@ -114,7 +114,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- Created user guidliance and installation documentation
+- Created user guidance and installation documentation
 
 ## [1.4.0] - 2022-09-30
 
@@ -151,8 +151,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/dft-frontend/compare/dftfrontend-2.0.0...main
-[2.0.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...dftfrontend-2.0.0
+[unreleased]: https://github.com/eclipse-tractusx/dft-frontend/compare/dftfrontend-2.0.1...main
+[2.0.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...dftfrontend-2.0.1
 [1.9.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.1...dftfrontend-1.9.0
 [1.8.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.0...dft-frontend-1.8.1
 [1.8.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.0

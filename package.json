@@ -1,6 +1,6 @@
 {
   "name": "sde-app",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "dependencies": {
     "@mui/icons-material": "^5.4.2",
