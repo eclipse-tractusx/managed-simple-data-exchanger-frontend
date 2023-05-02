@@ -94,10 +94,36 @@ export default function PoliciesDialog() {
     dispatch(removeSelectedFiles());
   };
 
+  const handleAlerts = (r: { data: ProcessReport }) => {
+    if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
+      dispatch(
+        setSnackbarMessage({
+          message: 'alerts.uploadSuccess',
+          type: 'success',
+        }),
+      );
+    } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
+      dispatch(
+        setSnackbarMessage({
+          message: 'alerts.uploadWarning',
+          type: 'error', //warning
+        }),
+      );
+    } else {
+      dispatch(
+        setSnackbarMessage({
+          message: 'alerts.uploadError',
+          type: 'error',
+        }),
+      );
+    }
+  };
+
   const processingReport = (r: { data: ProcessReport }, processId: string) => {
     dispatch(setUploadData(r.data));
     if (r?.data?.status !== Status.completed && r?.data?.status !== Status.failed) {
       // if status !== 'COMPLETED' && status !== 'FAILED' -> repeat in interval with 2 seconds to refresh data
+      console.log('STATUS NOT COMPLETED');
       const interval = setInterval(
         () =>
           ProviderService.getInstance()
@@ -107,49 +133,20 @@ export default function PoliciesDialog() {
               if (result?.data?.status === Status.completed || result.data.status === Status.failed) {
                 clearInterval(interval);
                 clearUpload();
+                handleAlerts(result);
               }
-            })
-            .catch(error => {
-              const data = error?.data;
-              const errorMessage = data?.msg;
-              dispatch(
-                setSnackbarMessage({
-                  message: errorMessage,
-                  type: 'error',
-                }),
-              );
             }),
         2000,
       );
     } else {
+      console.log('inside else');
       clearUpload();
       dispatch(setUploadData(defaultUploadData));
-      if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.uploadSuccess',
-            type: 'success',
-          }),
-        );
-      } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.uploadWarning',
-            type: 'error', //warning
-          }),
-        );
-      } else {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.uploadError',
-            type: 'error',
-          }),
-        );
-      }
+      handleAlerts(r);
     }
   };
 
-  // Generate process id 
+  // Generate process id
   const processingReportFirstCall = (processId: string) => {
     setTimeout(async () => {
       ProviderService.getInstance()
@@ -162,25 +159,6 @@ export default function PoliciesDialog() {
           // if process id not ready - repeat request
           if (error.response.status === 404) {
             processingReportFirstCall(processId);
-          } else {
-            const data = error?.data;
-            const errorMessage = data?.msg;
-            if (errorMessage) {
-              dispatch(
-                setSnackbarMessage({
-                  message: errorMessage,
-                  type: 'error',
-                }),
-              );
-            } else {
-              dispatch(
-                setSnackbarMessage({
-                  message: 'alerts.uploadError',
-                  type: 'error',
-                }),
-              );
-            }
-            clearUpload();
           }
         });
     }, 2000);

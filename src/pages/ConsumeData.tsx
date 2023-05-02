@@ -221,25 +221,7 @@ export default function ConsumeData() {
           dispatch(setSelectedOffersList([]));
           setSelectionModel([]);
         }
-      } catch (error: any) {
-        setIsOfferSubLoading(false);
-        const data = error?.data;
-        const errorMessage = data?.msg;
-        if (errorMessage) {
-          dispatch(
-            setSnackbarMessage({
-              message: errorMessage,
-              type: 'error',
-            }),
-          );
-        } else {
-          dispatch(
-            setSnackbarMessage({
-              message: 'alerts.subscriptionError',
-              type: 'error',
-            }),
-          );
-        }
+      } finally {
       }
     }
   };
@@ -363,24 +345,7 @@ export default function ConsumeData() {
         });
         dispatch(setFilterConnectors(optionConnectors));
       }
-    } catch (error: any) {
-      const data = error?.data;
-      const errorMessage = data?.msg;
-      if (errorMessage) {
-        dispatch(
-          setSnackbarMessage({
-            message: errorMessage,
-            type: 'error',
-          }),
-        );
-      } else {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.noConnector',
-            type: 'error', //warning
-          }),
-        );
-      }
+    } finally {
     }
   };
 

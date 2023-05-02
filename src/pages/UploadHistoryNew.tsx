@@ -69,25 +69,7 @@ function UploadHistoryNew() {
           }),
         );
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      const errorData = error?.data;
-      const errorMessage = errorData?.msg;
-      if (errorMessage) {
-        dispatch(
-          setSnackbarMessage({
-            message: errorMessage,
-            type: 'error',
-          }),
-        );
-      } else {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.downloadError',
-            type: 'error',
-          }),
-        );
-      }
+    } finally {
     }
   }
 
