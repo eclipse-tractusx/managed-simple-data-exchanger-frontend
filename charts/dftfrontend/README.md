@@ -30,4 +30,4 @@ File	Description
 Helm Commands
 $ helm repo add eclipse-tractusx-dft-frontend https://github.com/eclipse-tractusx/dft-frontend/tree/main/charts/dftfrontend
 
-$ helm install my-release eclipse-tractusx/dftfrontend --version 1.9.0
+$ helm install my-release eclipse-tractusx/dftfrontend --version 2.0.0
