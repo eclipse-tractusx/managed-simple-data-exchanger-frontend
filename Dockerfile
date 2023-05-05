@@ -12,7 +12,7 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-FROM nginx:1.23.3
+FROM nginx:1.23.4
 
 #ENV CURL_VERSION=7.87.0
 
