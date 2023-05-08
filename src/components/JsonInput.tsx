@@ -35,8 +35,8 @@ export default function JsonInput() {
   const submitData = async (data: string) => {
     try {
       const json = JSON.parse(data.trim());
-      if (await json) {
-        schemaValidator(json);
+      if (json) {
+        await schemaValidator(json);
       }
     } catch (e) {
       dispatch(
