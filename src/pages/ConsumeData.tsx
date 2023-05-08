@@ -257,9 +257,9 @@ export default function ConsumeData() {
   };
 
   // enter key fetch data
-  const handleKeypress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeypress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 13 || e.code == 'Enter') {
-      fetchConsumerDataOffers();
+      await fetchConsumerDataOffers();
     }
   };
   const [dialogOpen, setdialogOpen] = useState<boolean>(false);
@@ -350,17 +350,17 @@ export default function ConsumeData() {
   };
 
   // on option selected of company dropdown
-  const onCompanyOptionChange = (value: IntOption | string) => {
+  const onCompanyOptionChange = async (value: IntOption | string) => {
     const payload = value as IntOption;
     dispatch(setSelectedFilterCompanyOption(payload));
     if (payload !== null) {
-      getConnectorByBPN(payload.bpn);
+      await getConnectorByBPN(payload.bpn);
     }
   };
 
-  const onBlurBPN = () => {
+  const onBlurBPN = async () => {
     if (filterSelectedBPN.length > 3) {
-      getConnectorByBPN(filterSelectedBPN);
+      await getConnectorByBPN(filterSelectedBPN);
     } else {
       dispatch(setFilterConnectors([]));
     }
@@ -454,12 +454,12 @@ export default function ConsumeData() {
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
-                    onChange={(event, value: any) => {
-                      onCompanyOptionChange(value);
+                    onChange={async (event, value: any) => {
+                      await onCompanyOptionChange(value);
                       setConKey(uuid());
                     }}
-                    onInputChange={debounce((event, newInputValue) => {
-                      onChangeSearchInputValue(newInputValue);
+                    onInputChange={debounce(async (event, newInputValue) => {
+                      await onChangeSearchInputValue(newInputValue);
                     }, 1000)}
                     onBlur={() => setSearchOpen(false)}
                     onClose={() => setSearchOpen(false)}

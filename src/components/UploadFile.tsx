@@ -43,7 +43,6 @@ export default function UploadFile() {
   const theme = useTheme();
 
   const handleFiles = (file: File) => {
-    console.log(file);
     dispatch(setUploadStatus(false));
     dispatch(setPageLoading(false));
     const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
