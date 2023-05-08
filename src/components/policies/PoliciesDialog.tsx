@@ -221,14 +221,14 @@ export default function PoliciesDialog() {
     }
   };
 
-  function handleSubmitData() {
+  async function handleSubmitData() {
     if (showError) return;
     switch (uploadType) {
       case 'file':
-        uploadFile();
+        await uploadFile();
         break;
       case 'json':
-        submitData();
+        await submitData();
         break;
       default:
         break;
