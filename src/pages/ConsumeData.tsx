@@ -454,8 +454,8 @@ export default function ConsumeData() {
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
-                    onChange={(event, value: any) => {
-                      onCompanyOptionChange(value);
+                    onChange={async (event, value: any) => {
+                      await onCompanyOptionChange(value);
                       setConKey(uuid());
                     }}
                     onInputChange={debounce(async (event, newInputValue) => {
