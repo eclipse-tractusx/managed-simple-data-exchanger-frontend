@@ -94,15 +94,15 @@ export default function PoliciesDialog() {
     dispatch(removeSelectedFiles());
   };
 
-  const handleAlerts = (r: { data: ProcessReport }) => {
-    if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
+  const handleAlerts = (res: { data: ProcessReport }) => {
+    if (res?.data?.status === Status.completed && res?.data?.numberOfFailedItems === 0) {
       dispatch(
         setSnackbarMessage({
           message: 'alerts.uploadSuccess',
           type: 'success',
         }),
       );
-    } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
+    } else if (res?.data?.status === Status.completed && res?.data?.numberOfFailedItems > 0) {
       dispatch(
         setSnackbarMessage({
           message: 'alerts.uploadWarning',
@@ -123,7 +123,6 @@ export default function PoliciesDialog() {
     dispatch(setUploadData(r.data));
     if (r?.data?.status !== Status.completed && r?.data?.status !== Status.failed) {
       // if status !== 'COMPLETED' && status !== 'FAILED' -> repeat in interval with 2 seconds to refresh data
-      console.log('STATUS NOT COMPLETED');
       const interval = setInterval(
         () =>
           ProviderService.getInstance()
@@ -139,7 +138,6 @@ export default function PoliciesDialog() {
         2000,
       );
     } else {
-      console.log('inside else');
       clearUpload();
       dispatch(setUploadData(defaultUploadData));
       handleAlerts(r);

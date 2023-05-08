@@ -32,10 +32,10 @@ export default function JsonInput() {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const submitData = (data: string) => {
+  const submitData = async (data: string) => {
     try {
       const json = JSON.parse(data.trim());
-      if (json) {
+      if (await json) {
         schemaValidator(json);
       }
     } catch (e) {
