@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 
 import Permissions from '../../components/Permissions';
 import { IConsumerDataOffers } from '../../features/consumer/types';
+import UsagePolicies from './UsagePolicies';
 
 interface IntDialogProps {
   open: boolean;
@@ -60,26 +61,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
                   {t('content.policies.usagePolicy')}
                 </Typography>
               </Grid>
-              {usagePolicies.map((item, index) => {
-                return (
-                  <Grid item xs={6} sx={{ mb: 1 }} key={index}>
-                    <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
-                      {item.type.toLowerCase()}
-                    </Typography>
-                    <Typography variant="body2">
-                      {t('dialog.offerDetails.type')}:<strong>{item.typeOfAccess}</strong>
-                    </Typography>
-
-                    {item.typeOfAccess.toLowerCase() !== 'unrestricted' && (
-                      <>
-                        <Typography variant="body2">
-                          {t('dialog.offerDetails.value')}:<strong>{item.value || '-'}</strong>
-                        </Typography>
-                      </>
-                    )}
-                  </Grid>
-                );
-              })}
+              <UsagePolicies usagePolicies={usagePolicies} />
             </Grid>
           </DialogContent>
         </>
@@ -163,31 +145,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
                   {t('content.policies.usagePolicy')}
                 </Typography>
               </Grid>
-              {usagePolicies.map((item, index) => {
-                return (
-                  <Grid item xs={6} sx={{ mb: 1 }} key={index}>
-                    <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
-                      {item.type.toLowerCase()}
-                    </Typography>
-                    <Typography variant="body2">
-                      {t('dialog.offerDetails.type')}:<strong>{item.typeOfAccess}</strong>
-                    </Typography>
-
-                    {item.typeOfAccess.toLowerCase() !== 'unrestricted' && (
-                      <>
-                        <Typography variant="body2">
-                          {t('dialog.offerDetails.value')}:
-                          <strong>
-                            {item.type.toLowerCase() === 'duration'
-                              ? `${item.value} ${item.durationUnit}` || '-'
-                              : item.value || '-'}
-                          </strong>
-                        </Typography>
-                      </>
-                    )}
-                  </Grid>
-                );
-              })}
+              <UsagePolicies usagePolicies={usagePolicies} />
             </Grid>
           </DialogContent>
         </>
