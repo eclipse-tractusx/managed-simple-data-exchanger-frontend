@@ -16,6 +16,8 @@ FROM nginx:1.24.0-alpine3.17
 
 RUN apk update && apk upgrade
 
+RUN  addgroup nginx nginx
+
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 
