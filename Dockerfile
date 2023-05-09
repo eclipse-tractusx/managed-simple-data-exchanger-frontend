@@ -12,7 +12,9 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-FROM nginx:1.24.0
+FROM nginx:1.24.0-alpine3.17
+
+RUN apk update && apk upgrade
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
@@ -36,4 +38,4 @@ EXPOSE 8080
 
 # Start Nginx server
 
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
