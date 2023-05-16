@@ -34,6 +34,8 @@
       "learnSde": "Learn how it works"
     },
     "provider": {
+      "description": "Provide data to the Catena-X ecosystem in the format of digital twin submodels so that it can be found & accessed by other companies. The data will be uploaded and offered via the Eclipse Dataspace Connector (EDC) and the Digital Twin Registry (DTR). You can provide data via three different ways – upload as CSV file, enter in table or enter in JSON format.",
+      "placeHolder": "Please select a submodel (use case) for creating data.",
       "selectSubmodel": "Select Submodel",
       "uploadFile": "Upload File",
       "table": "Table",
@@ -70,11 +72,13 @@
       "roleNote": "Usage allowed only by individuals with the following roles/characteristics",
       "custom": "Custom restriction",
       "customNote": "Usage must comply to the following additional conditions",
-      "purposeLabel": "Describe the purpose",
+      "purposeLabel": "Select the purpose",
       "roleLabel": "Enter a role/characteristic",
       "customLabel": "Enter your custom conditions"
     },
     "uploadHistory": {
+      "description": "This is an overview of your company's data delivery to the Catena-X ecosystem. All activities are listed here, i.e. creation, updates, deletion of data. Past versions of the provided data can be downloaded.",
+      "errorLogs": "Upload history Error logs",
       "columns": {
         "processId": "Process Id",
         "csvType": "CSV Type",
@@ -89,14 +93,17 @@
       }
     },
     "providerContracts": {
-      "title": "Data provider contracts"
+      "title": "Data provider contracts",
+      "description": "This is an overview of the data exchange contracts your organization has with other Catena-X members to provide data."
     },
     "help": {
+      "description": "Learn more about the supported digital twin submodels and download respective templates & samples.",
       "rules1": "The file must be a file of type CSV (.csv extension).",
       "rules2": "Data fields must be separated by a semicolon (;).",
       "rules3": "All data fields must be present even if empty."
     },
     "consumeData": {
+      "description": "Discover the data offer catalog of other Catena-X member companies. You can select an interesting offer and subscribe to it.",
       "selectType": "Select search type",
       "searchCompany": "Search company name",
       "searchPlaceholder": "Enter min. 3 characters",
@@ -118,7 +125,8 @@
       }
     },
     "contractHistory": {
-      "title": "Contract Agreements History",
+      "title": "Data consumer contracts",
+      "description": "This is an overview of the data exchange contracts your organization has with other Catena-X members to receive & consume data from them.",
       "columns": {
         "contractAgreementId": "Contract Agreement ID",
         "assetId": "Asset ID",
@@ -129,9 +137,6 @@
         "contractEndDate": "End Date",
         "state": "Status"
       }
-    },
-    "consumerContracts": {
-      "title": "Data consumer contracts"
     },
     "common": {
       "loading": "Loading...",
@@ -145,7 +150,8 @@
       "rules": "Rules",
       "enterValue": "Enter a value",
       "agree": "I agree",
-      "ownConnector": "Connector of own organization:"
+      "ownConnector": "Connector of own organization:",
+      "collapseSidebar": "Collapse sidebar"
     }
   },
   "dialog": {
@@ -184,10 +190,12 @@
     "submit": "Submit",
     "okay": "Okay",
     "subscribeSelected": "Subscribe to selected",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe",
+    "declineContract": "Decline Contract"
   },
   "alerts": {
-    "invalidFile": "File not permitted!",
+    "invalidFile": "Invalid file format!",
+    "largeFile": "File size is too large!",
     "uploadSuccess": "Upload completed!",
     "uploadWarning": "Upload completed with warnings!",
     "uploadError": "Upload failed!",
@@ -200,6 +208,7 @@
     "downloadError": "File not downloaded!",
     "invalidData": "Invalid data! Enter required fields.",
     "deleteSuccess": "Deleted successfully!",
-    "somethingWrong": "Something went wrong!"
+    "somethingWrong": "Something went wrong!",
+    "contractDeclined": "Contract declined successfully!"
   }
 }

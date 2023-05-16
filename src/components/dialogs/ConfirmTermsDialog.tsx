@@ -23,7 +23,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogHeader, LoadingButt
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { IConsumerDataOffers } from '../features/consumer/types';
+import { IConsumerDataOffers } from '../../features/consumer/types';
 
 interface IntConfirmOffer {
   offers?: IConsumerDataOffers[] | [];

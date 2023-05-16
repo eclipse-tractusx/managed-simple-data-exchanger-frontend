@@ -55,13 +55,6 @@ export default function DownloadCSV({ submodel }: { submodel: string }) {
           }),
         );
       }
-    } catch (error) {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.downloadError',
-          type: 'error',
-        }),
-      );
     } finally {
       setdownloadingSample(false);
       setdownloadingTemplate(false);

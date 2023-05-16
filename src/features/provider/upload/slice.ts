@@ -20,7 +20,8 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ProcessReport, Status } from '../../../models/ProcessReport';
+import { Status } from '../../../enums';
+import { ProcessReport } from '../../../models/ProcessReport';
 import { IUploadFileSlice } from './types';
 
 const initialState: IUploadFileSlice = {

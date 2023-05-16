@@ -26,6 +26,7 @@ import { apiSlice } from './app/apiSlice';
 import appSlice from './app/slice';
 import consumerSlice from './consumer/slice';
 import notificationSlice from './notifiication/slice';
+import uploadHistorySlice from './provider/history/slice';
 import accessUsagePolicySlice from './provider/policies/slice';
 import submodelSlice from './provider/submodels/slice';
 import uploadFileSlice from './provider/upload/slice';
@@ -37,6 +38,7 @@ export const reducers = {
   consumerSlice: consumerSlice,
   notificationSlice: notificationSlice,
   submodelSlice: submodelSlice,
+  uploadHistorySlice: uploadHistorySlice,
   [apiSlice.reducerPath]: apiSlice.reducer,
 };
 

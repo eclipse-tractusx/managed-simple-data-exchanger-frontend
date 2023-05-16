@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
- *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -17,13 +17,43 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 import { apiBaseQuery } from '../../services/RequestService';
+import { setSnackbarMessage } from '../notifiication/slice';
+import { IExtraOptions } from './types';
+
+const baseQuery = fetchBaseQuery(apiBaseQuery());
+const baseQueryInterceptor: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, IExtraOptions> = async (
+  args,
+  api,
+  extraOptions,
+) => {
+  const { error, data }: any = await baseQuery(args, api, extraOptions);
+  // Common error handling for all the rtk queries
+  if (error) {
+    const { data: errorData } = error;
+    api.dispatch(
+      setSnackbarMessage({
+        message: errorData?.msg ? errorData?.msg : 'alerts.somethingWrong',
+        type: 'error',
+      }),
+    );
+  } else if (extraOptions?.showNotification) {
+    // Backend should send/handle success messages, which isnt done
+    api.dispatch(
+      setSnackbarMessage({
+        message: extraOptions.message,
+        type: extraOptions.type,
+      }),
+    );
+  }
+  return { data };
+};
 
 export const apiSlice = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery(apiBaseQuery()),
+  baseQuery: baseQueryInterceptor,
   endpoints: () => ({}),
-  tagTypes: ['UploadHistory'],
+  tagTypes: ['UploadHistory', 'DeleteContract'],
 });

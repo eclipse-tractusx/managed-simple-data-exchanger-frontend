@@ -27,7 +27,7 @@ import { handleDialogOpen } from '../features/provider/policies/slice';
 import { store } from '../features/store';
 import CreateData from '../pages/CreateData';
 import Help from '../pages/Help';
-import UploadHistory from '../pages/UploadHistory';
+import UploadHistoryNew from '../pages/UploadHistoryNew';
 import { ReduxWrapper } from '../utils/testUtils';
 
 describe('Dashboard', () => {
@@ -37,7 +37,7 @@ describe('Dashboard', () => {
   });
 
   test('upload history page', () => {
-    const { container } = render(<UploadHistory />, { wrapper: ReduxWrapper });
+    const { container } = render(<UploadHistoryNew />, { wrapper: ReduxWrapper });
     container.querySelector('.upload-title');
     expect(container.firstChild).toMatchSnapshot();
   });

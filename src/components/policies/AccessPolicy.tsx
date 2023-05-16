@@ -26,6 +26,7 @@ import {
   DialogContent,
   DialogHeader,
   Input,
+  LoadingButton,
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
@@ -35,6 +36,8 @@ import { useTranslation } from 'react-i18next';
 
 import { setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../features/consumer/slice';
 import { ILegalEntityContent, IntConnectorItem, IntOption } from '../../features/consumer/types';
+import { setSnackbarMessage } from '../../features/notifiication/slice';
+import { useValidateBpnMutation } from '../../features/provider/policies/apiSlice';
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
 import ConsumerService from '../../services/ConsumerService';
@@ -106,14 +109,25 @@ export default function AccessPolicy() {
     setsearchFilterByType(value);
     dispatch(setInputBpn(''));
   };
-  const handleAddBpn = () => {
+
+  const [validateBpn, { isLoading, data }] = useValidateBpnMutation();
+  const [addBpnPrompt, setAddBpnPrompt] = useState(false);
+  const handleAddBpn = async () => {
     if (_.inRange(inputBpn.length, 1, 16)) {
       setbpnError(true);
     } else {
       setbpnError(false);
-      dispatch(addBpn());
+      await validateBpn(inputBpn);
     }
   };
+
+  useEffect(() => {
+    if (data?.bpnStatus === 'FULL_PARTNER') {
+      dispatch(setSnackbarMessage({ message: data?.msg, type: 'success' }));
+      dispatch(addBpn());
+    } else if (data?.bpnStatus === 'PARTNER') setAddBpnPrompt(true);
+    else if (data?.bpnStatus === 'NOT_PARTNER') dispatch(setSnackbarMessage({ message: data?.msg, type: 'error' }));
+  }, [data, dispatch]);
 
   useEffect(() => {
     if (inputBpn.length == 16 || inputBpn.length == 0) setbpnError(false);
@@ -152,7 +166,7 @@ export default function AccessPolicy() {
                   hiddenLabel
                 />
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={4}>
                 {searchFilterByType.value === 'bpn' ? (
                   <Input
                     label={t('content.consumeData.enterBPN')}
@@ -177,8 +191,8 @@ export default function AccessPolicy() {
                     loading={filterCompanyOptionsLoading}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onChange={(e, value: any) => dispatch(setInputBpn(value.bpn))}
-                    onInputChange={debounce((event, newInputValue) => {
-                      onChangeSearchInputValue(newInputValue);
+                    onInputChange={debounce(async (event, newInputValue) => {
+                      await onChangeSearchInputValue(newInputValue);
                     }, 1000)}
                     onClose={() => setsearchPopup(false)}
                     onBlur={() => setsearchPopup(false)}
@@ -215,9 +229,14 @@ export default function AccessPolicy() {
                 )}
               </Grid>
               <Grid item>
-                <Button variant="contained" sx={{ marginLeft: 1 }} onClick={handleAddBpn}>
-                  {t('button.add')}
-                </Button>
+                <LoadingButton
+                  sx={{ marginLeft: 1 }}
+                  variant="contained"
+                  label={t('button.add')}
+                  onButtonClick={handleAddBpn}
+                  loadIndicator={t('content.common.loading')}
+                  loading={isLoading}
+                />
               </Grid>
             </Grid>
             <Box sx={{ mt: 2 }}>
@@ -264,6 +283,31 @@ export default function AccessPolicy() {
           </Button>
         </DialogActions>
       </Dialog>
+      {addBpnPrompt ? (
+        <Dialog open={addBpnPrompt}>
+          <DialogHeader title={t('content.consumeData.noConnectors')} />
+          <DialogContent>{data.msg}</DialogContent>
+          <DialogActions>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setAddBpnPrompt(false);
+              }}
+            >
+              {t('button.cancel')}
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                dispatch(addBpn());
+                setAddBpnPrompt(false);
+              }}
+            >
+              {t('button.add')}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      ) : null}
     </>
   );
 }

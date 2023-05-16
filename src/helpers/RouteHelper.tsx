@@ -1,7 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
- *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -27,7 +26,7 @@ import Home from '../pages/Home';
 import Logout from '../pages/Logout';
 import PageNotFound from '../pages/PageNotFound';
 import ProviderContracts from '../pages/ProviderContracts';
-import UploadHistory from '../pages/UploadHistory';
+import UploadHistoryNew from '../pages/UploadHistoryNew';
 
 export interface IRoutes {
   key?: string;
@@ -57,7 +56,7 @@ export const ROUTES: IRoutes[] = [
   },
   {
     path: 'provider/upload-history',
-    element: <UploadHistory />,
+    element: <UploadHistoryNew />,
     permissions: ['provider_view_history'],
   },
   {

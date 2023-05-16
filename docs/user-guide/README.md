@@ -46,7 +46,7 @@
 ### **Login**
 
 <img src="images/catenax-login-org-select.png" height="60%" width="60%">
-<img src="images/catenax-login-org-search.png" height="60%" width="60%">
+<img src="images/catenax-login-org-search.png" height="60%" width="60%"> 
 <img src="images/catenax-keycloak-signin.png" height="60%" width="60%">
 
 1. Open **S**imple **D**ata **E**xchanger application via the [URL](https://dft.int.demo.catena-x.net/) (recommended browser Google Chrome).
@@ -217,37 +217,36 @@ Then you need to configure Access and Usage policies by clicking on "NEXT STEP -
 
 ## Upload history
 
-<img src="images/upload-history-new.png" height="60%" width="60%" />
+<img src="images/sde-upload-history.png" height="60%" width="60%" />
 
-In this menu you can see a table with audit trail logs of the uploaded data offers.
+In this menu you can see the list of uploaded data offers.
 
-The table has the following columns columns:
+The table has the following columns:
 
-- Process Id (id of process);
-- CSV Type (ASPECT or ASPECT RELATIONSHIP or BATCH or PARTASPLANNED or SINGLELEVELBOMASPLANNED);
-- Number of Created Items (number of Successfully Created items);
-- Number of Updated Items (number of Successfully Updated items);
-- Number of Deleted Items (number of Successfully Deleted items);
-- Number of Failed Items (number of failed items);
-- Status (Completed or Completed with warnings or failed);
-- Start Date (start date of upload history);
-- Duration (duration of uplaod);
+- Process Id
+- CSV Type
+- Created(number of Successfully Created items)
+- Updated(number of Successfully Updated items)
+- Deleted(number of Successfully Deleted items)
+- Failed(number of failed items)
+- Status
+- Created Date
 
-<img src="images/sde-delete-data-offer.png" height="60%" width="60%" />
-
-User can delete any data offer or submodel by clicking on the delete action icon present at the end of each row.
+User can delete and download any uploaded data offer by clicking on the respective action icon present at the end of each row.
 The delete icon will only be visible if the Number of Deleted Items count is 0.
 After the successful data offer deletion, new row will be generated which shows the new process id and the reference id of the deleted data offer.
-
 Uploaded submodel details can also be downloaded from here as CSV. Only for the deleted entry download option won't be visible.
-
 We can fetch the updated data offers by manually clicking on Refresh button present at top right section of the Upload History page.
+
+User can see the detailed error logs during the upload data by clicking "View errors" link.
+
+<img src="images/sde-upload-error-logs.png" height="60%" width="60%" />
 
 ## Provider Contracts
 
 <img src="images/sde-provider-contracts.png" height="60%" width="60%" />
 
-This page contains an overview of the data exchange contracts your organization has with other Catena-X members to provide data.
+This page contains an overview of the data exchange contracts your organization has with other Catena-X members to provide data. User can decline the data except the contracts which have status CONFIRMED, DECLINED, ERROR. 
 
 The table includes below columns:
 

@@ -35,6 +35,7 @@
     },
     "provider": {
       "selectSubmodel": "Submodel auswählen",
+      "description": "Stellen sie Daten für das Catena-X-Ökosystem im Format von Submodellen digitaler Zwillinge bereit, damit diese von anderen Unternehmen gefunden und abgerufen werden können. Die Daten werden über den Eclipse Dataspace Connector (EDC) und die Digital Twin Registry (DTR) hochgeladen und angeboten. Sie können Daten auf drei verschiedene Arten bereitstellen – als CSV-Datei hochladen, in eine Tabelle eingeben oder im JSON-Format eingeben.",
       "uploadFile": "Datei hochladen",
       "table": "Tabelle",
       "json": "JSON",
@@ -70,11 +71,13 @@
       "roleNote": "Nutzung nur für Individuen mit Rolle/Eigenschaft zugelassen",
       "custom": "Nutzerdefinierte Bedingung",
       "customNote": "Folgende Regel(n) gelten weiterhin für die Nutzung",
-      "purposeLabel": "Bitte beschreiben Sie ihre Anlegen. Oder Beschreiben Sie den Zweck",
+      "purposeLabel": "Wählen Sie den Zweck aus",
       "roleLabel": "Bitte fügen sie eine Rolle ein",
       "customLabel": "Bitte geben Sie Ihre benutzerdefinierten Bedingungen ein"
     },
     "uploadHistory": {
+      "description": "Dies ist ein Überblick über die Datenbereitstellung ihres Unternehmens an das Catena-X Ökosystem. Alle Aktivitäten werden hier gelistet, d.h. die Erstellung, Updates, Löschung von Daten. Vergangene Versionen der bereitgestellten Daten können heruntergeladen werden.",
+      "errorLogs": "Fehlerprotokolle des Upload-Verlaufs",
       "columns": {
         "processId": "Transaktion Id",
         "csvType": "CSV Typ",
@@ -89,14 +92,17 @@
       }
     },
     "providerContracts": {
-      "title": "Anbieterseitige Verträge"
+      "title": "Anbieterseitige Verträge",
+      "description": "Dies ist eine Übersicht der Datenaustauschverträge zwischen ihrer Organisation und anderen Catena-X Mitgliedsunternehmen. Hierbei geht es um das Anbieten von Daten durch ihre Organisation."
     },
     "help": {
+      "description": "Erfahren sie mehr über die unterstützten Digital Twin Submodelle und downloaden sie Templates & Beispiele.",
       "rules1": "Die Datei muss vom Typ CSV sein (.csv Endung).",
       "rules2": "Datenfelder müssen durch Semikolon getrennt sein (;).",
       "rules3": "Alle Datenfelder müssen vorhanden sein, auch wenn leer."
     },
     "consumeData": {
+      "description": "Entdecken sie die Datenangebote bzw. Datenkataloge anderer Catena-X Mitgliedsunternehmen. Sie können interessante Datenangebote auswählen und abonnieren.",
       "selectType": "Art der Suche",
       "searchCompany": "Suche nach Firmennamen",
       "searchPlaceholder": "Geben Sie mindestens 3 Buchstaben ein",
@@ -118,7 +124,8 @@
       }
     },
     "contractHistory": {
-      "title": "Verträge",
+      "title": "Empfängerseitige Verträge",
+      "description": "Dies ist eine Übersicht der Datenaustauschverträge zwischen ihrer Organisation und anderen Catena-X Mitgliedsunternehmen. Hierbei geht es um den Empfang bzw. Konsum von Daten durch ihre Organisation.",
       "columns": {
         "contractAgreementId": "Vertrag ID",
         "assetId": "Asset ID",
@@ -129,9 +136,6 @@
         "contractEndDate": "Ablaufdatum",
         "state": "Status"
       }
-    },
-    "consumerContracts": {
-      "title": "Empfängerseitige Verträge"
     },
     "common": {
       "loading": "Laden...",
@@ -145,7 +149,8 @@
       "rules": "Regeln",
       "enterValue": "Wert eingeben",
       "agree": "Ich stimme zu",
-      "ownConnector": "Connector der eigenen Organisation:"
+      "ownConnector": "Connector der eigenen Organisation:",
+      "collapseSidebar": "Seitenleiste einklappen"
     }
   },
   "dialog": {
@@ -184,10 +189,12 @@
     "submit": "Senden",
     "okay": "Okay",
     "subscribeSelected": "Auswahl abonnieren",
-    "subscribe": "Abonnieren"
+    "subscribe": "Abonnieren",
+    "declineContract": "Vertrag ablehnen"
   },
   "alerts": {
-    "invalidFile": "Datei nicht erlaubt!",
+    "invalidFile": "Ungültiges Dateiformat!",
+    "largeFile": "Dateigröße ist zu groß!!",
     "uploadSuccess": "Hochladen abgeschlossen!",
     "uploadWarning": "Hochladen abgeschlossen - mit Fehlermeldungen!",
     "uploadError": "Hochladen fehlgeschlagen!",
@@ -200,6 +207,7 @@
     "downloadError": "Datei nicht heruntergeladen!",
     "invalidData": "Ungültige Eingabe, Bitte die Pflichtfelder ausfüllen!",
     "deleteSuccess": "Erfolgreich gelöscht!",
-    "somethingWrong": "Fehler, Es ist etwas schief gegangen!"
+    "somethingWrong": "Fehler, Es ist etwas schief gegangen!",
+    "contractDeclined": "Vertrag erfolgreich abgelehnt!"
   }
 }

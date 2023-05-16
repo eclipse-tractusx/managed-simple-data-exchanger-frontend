@@ -41,9 +41,10 @@ import {
 import { debounce } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuid } from 'uuid';
 
-import ConfirmTermsDialog from '../components/ConfirmTermsDialog';
-import OfferDetailsDialog from '../components/OfferDetailsDialog';
+import ConfirmTermsDialog from '../components/dialogs/ConfirmTermsDialog';
+import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
 import Permissions from '../components/Permissions';
 import {
   setContractOffers,
@@ -63,7 +64,7 @@ import {
 import { IConnectorResponse, IConsumerDataOffers, ILegalEntityContent, IntOption } from '../features/consumer/types';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
-import { arraysEqual, handleBlankCellValues } from '../helpers/ConsumerOfferHelper';
+import { arraysEqual, handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import ConsumerService from '../services/ConsumerService';
 
 const ITEMS = [
@@ -105,7 +106,7 @@ export default function ConsumeData() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [conKey, setConKey] = useState(Math.random());
+  const [conKey, setConKey] = useState(uuid());
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -124,7 +125,7 @@ export default function ConsumeData() {
       field: 'created',
       flex: 1,
       headerName: t('content.consumeData.columns.created'),
-      sortingOrder: ['asc', 'desc'],
+      sortingOrder: ['desc', 'asc'],
       sortComparator: (_v1: any, _v2: any, param1: any, param2: any) => param1.id - param2.id,
       valueGetter: (params: GridValueGetterParams) => handleBlankCellValues(params.row.created),
     },
@@ -220,19 +221,11 @@ export default function ConsumeData() {
           dispatch(setSelectedOffersList([]));
           setSelectionModel([]);
         }
-      } catch (error) {
-        setIsOfferSubLoading(false);
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.subscriptionError',
-            type: 'error',
-          }),
-        );
+      } finally {
       }
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onRowClick = (params: any) => {
     dispatch(setSelectedOffer(params.row));
     toggleDialog(true);
@@ -250,7 +243,11 @@ export default function ConsumeData() {
         return true;
       }
       dispatch(setOffersLoading(true));
-      const response = await ConsumerService.getInstance().fetchConsumerDataOffers({ providerUrl: providerUrl });
+      const response = await ConsumerService.getInstance().fetchConsumerDataOffers({
+        providerUrl: providerUrl,
+        offset: 0,
+        maxLimit: MAX_CONTRACTS_AGREEMENTS,
+      });
       dispatch(setContractOffers(response.data));
       dispatch(setOffersLoading(false));
     } catch (error) {
@@ -260,9 +257,9 @@ export default function ConsumeData() {
   };
 
   // enter key fetch data
-  const handleKeypress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeypress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 13 || e.code == 'Enter') {
-      fetchConsumerDataOffers();
+      await fetchConsumerDataOffers();
     }
   };
   const [dialogOpen, setdialogOpen] = useState<boolean>(false);
@@ -326,7 +323,7 @@ export default function ConsumeData() {
     dispatch(setFilterSelectedBPN(''));
     dispatch(setFilterConnectors([]));
     dispatch(setFilterSelectedConnector(null));
-    setConKey(Math.random());
+    setConKey(uuid());
   };
 
   const getConnectorByBPN = async (bpn: string) => {
@@ -334,40 +331,36 @@ export default function ConsumeData() {
     payload.push(bpn);
     dispatch(setFilterSelectedConnector(null));
     dispatch(setFilterConnectors([]));
-    const res = await ConsumerService.getInstance().searchConnectoByBPN(payload);
-    if (res.length) {
-      const resC: IConnectorResponse[] = res;
-      const connector = resC[0];
-      const optionConnectors = connector.connectorEndpoint.map((item, index) => {
-        return {
-          id: index,
-          value: item,
-          title: item,
-        };
-      });
-      dispatch(setFilterConnectors(optionConnectors));
-    } else {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.noConnector',
-          type: 'error', //warning
-        }),
-      );
+    try {
+      const res = await ConsumerService.getInstance().searchConnectoByBPN(payload);
+      if (res.length) {
+        const resC: IConnectorResponse[] = res;
+        const connector = resC[0];
+        const optionConnectors = connector.connectorEndpoint.map((item, index) => {
+          return {
+            id: index,
+            value: item,
+            title: item,
+          };
+        });
+        dispatch(setFilterConnectors(optionConnectors));
+      }
+    } finally {
     }
   };
 
   // on option selected of company dropdown
-  const onCompanyOptionChange = (value: IntOption | string) => {
+  const onCompanyOptionChange = async (value: IntOption | string) => {
     const payload = value as IntOption;
     dispatch(setSelectedFilterCompanyOption(payload));
     if (payload !== null) {
-      getConnectorByBPN(payload.bpn);
+      await getConnectorByBPN(payload.bpn);
     }
   };
 
-  const onBlurBPN = () => {
+  const onBlurBPN = async () => {
     if (filterSelectedBPN.length > 3) {
-      getConnectorByBPN(filterSelectedBPN);
+      await getConnectorByBPN(filterSelectedBPN);
     } else {
       dispatch(setFilterConnectors([]));
     }
@@ -401,8 +394,11 @@ export default function ConsumeData() {
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Typography variant="h3" pb={4}>
+      <Typography variant="h3" mb={1}>
         {t('pages.consumeData')}
+      </Typography>
+      <Typography variant="body1" mb={4} maxWidth={900}>
+        {t('content.consumeData.description')}
       </Typography>
       <Grid container spacing={2} alignItems="end">
         <Grid item xs={3}>
@@ -458,12 +454,12 @@ export default function ConsumeData() {
                     options={filterCompanyOptions}
                     includeInputInList
                     loading={filterCompanyOptionsLoading}
-                    onChange={(event, value: any) => {
-                      onCompanyOptionChange(value);
-                      setConKey(Math.random());
+                    onChange={async (event, value: any) => {
+                      await onCompanyOptionChange(value);
+                      setConKey(uuid());
                     }}
-                    onInputChange={debounce((event, newInputValue) => {
-                      onChangeSearchInputValue(newInputValue);
+                    onInputChange={debounce(async (event, newInputValue) => {
+                      await onChangeSearchInputValue(newInputValue);
                     }, 1000)}
                     onBlur={() => setSearchOpen(false)}
                     onClose={() => setSearchOpen(false)}

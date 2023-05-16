@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 import { epochToDate } from '../../utils/utils';
 import { IConsumerDataOffers, IConsumerSlice, IContractAgreements, IntConnectorItem, IntOption } from './types';
@@ -53,12 +54,12 @@ export const consumerSlice = createSlice({
       const modifiedData = action.payload
         .sort(
           (contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) =>
-            new Date(contract2.created).getDate() - new Date(contract1.created).getDate(),
+            moment(contract1.created, 'DD/MM/YYYY HH:mm:ss').unix() -
+            moment(contract2.created, 'DD/MM/YYYY HH:mm:ss').unix(),
         )
         .map((item: IConsumerDataOffers, index: number) => {
           return { ...item, ...{ id: index } };
-        })
-        .sort((contract1: IConsumerDataOffers, contract2: IConsumerDataOffers) => contract2.id - contract1.id);
+        });
       state.contractOffers = modifiedData;
     },
     setSelectedOffersList: (state, action: PayloadAction<IConsumerDataOffers[]>) => {

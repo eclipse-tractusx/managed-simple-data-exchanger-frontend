@@ -17,43 +17,39 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import {
-  HighlightOffOutlined,
-  HourglassEmptyOutlined,
-  Refresh,
-  ReportGmailerrorredOutlined,
-} from '@mui/icons-material';
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import { Refresh } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
-import { t } from 'i18next';
+import _ from 'lodash';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import UploadHistoryErrorDialog from '../components/dialogs/UploadHistoryErrorDialog';
 import Permissions from '../components/Permissions';
+import { Status } from '../enums';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
+import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
 import { useAppDispatch } from '../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { ProcessReport, Status } from '../models/ProcessReport';
+import { ProcessReport } from '../models/ProcessReport';
 import AppService from '../services/appService';
+import ProviderService from '../services/ProviderService';
+import { STATUS_COLOR_MAPPING } from '../utils/constants';
 import { formatDate } from '../utils/utils';
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
   const [pageSize] = useState<number>(10);
+  const [showErrorLogsDialog, setShowErrorLogsDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
-  const deleteSubmodal = async (subModel: ProcessReport) => {
-    try {
-      await deleteHistory(subModel);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
 
   async function download(subModel: ProcessReport) {
     try {
@@ -73,39 +69,64 @@ function UploadHistoryNew() {
           }),
         );
       }
-    } catch (error) {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.downloadError',
-          type: 'error',
-        }),
-      );
+    } finally {
     }
   }
+
+  const showUploadErrors = async (subModel: ProcessReport) => {
+    setShowErrorLogsDialog(true);
+    dispatch(setErrorsList([]));
+    dispatch(setIsLoding(true));
+    dispatch(setCurrentProcessId(subModel.processId));
+    const resp = await ProviderService.getInstance().getUplodHistoryErrors(subModel.processId);
+    dispatch(setErrorsList(resp.data));
+    dispatch(setIsLoding(false));
+  };
+
+  const renderStatusCell = (row: ProcessReport) => {
+    if (row.status === Status.completed && row.numberOfFailedItems > 0) {
+      return (
+        <Typography
+          color={STATUS_COLOR_MAPPING.ERROR}
+          variant="body2"
+          sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+          onClick={() => showUploadErrors(row)}
+        >
+          View errors
+        </Typography>
+      );
+    } else {
+      return (
+        <Typography color={STATUS_COLOR_MAPPING[row.status]} variant="body2">
+          {_.capitalize(row.status)}
+        </Typography>
+      );
+    }
+  };
 
   const columns: GridColDef[] = [
     {
       field: 'processId',
       headerName: 'Process Id',
-      minWidth: 300,
+      minWidth: 200,
       flex: 1,
       renderCell: ({ row }) => (
-        <div>
+        <>
           {row.referenceProcessId ? (
             <Tooltips
               tooltipPlacement="top-start"
               tooltipText={`${row.processId} (Deletion of ${row.referenceProcessId})`}
             >
-              <div>
+              <span>
                 {row.processId} (Deletion of <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
-              </div>
+              </span>
             </Tooltips>
           ) : (
             <Tooltips tooltipPlacement="top-start" tooltipText={row.processId}>
-              <div>{row.processId}</div>
+              <span>{row.processId}</span>
             </Tooltips>
           )}
-        </div>
+        </>
       ),
     },
     {
@@ -121,53 +142,35 @@ function UploadHistoryNew() {
     },
     {
       field: 'numberOfSucceededItems',
-      headerName: 'Created Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Created',
       flex: 1,
     },
     {
       field: 'numberOfUpdatedItems',
-      headerName: 'Updated Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Updated',
       flex: 1,
     },
     {
       field: 'numberOfDeletedItems',
-      headerName: 'Deleted Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Deleted',
       flex: 1,
     },
     {
       field: 'numberOfFailedItems',
-      headerName: 'Failed Items',
-      align: 'center',
-      headerAlign: 'center',
+      headerName: 'Failed',
       flex: 1,
     },
     {
       field: 'status',
       headerName: 'Status',
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: ({ row }) => (
-        <>
-          {row.status === Status.completed && row.numberOfFailedItems === 0 && (
-            <CheckCircleOutlineOutlinedIcon fontSize="small" color="success" />
-          )}
-          {row.status === Status.completed && row.numberOfFailedItems > 0 && (
-            <ReportGmailerrorredOutlined fontSize="small" color="warning" />
-          )}
-          {row.status === Status.failed && <HighlightOffOutlined fontSize="small" color="error" />}
-          {row.status === Status.inProgress && <HourglassEmptyOutlined fontSize="small" color="info" />}
-        </>
-      ),
+      minWidth: 150,
+      sortable: false,
+      renderCell: ({ row }) => renderStatusCell(row),
     },
     {
       field: 'startDate',
       headerName: 'Start Date',
+      minWidth: 200,
       flex: 1,
       renderCell: ({ row }) => (
         <Tooltips tooltipPlacement="top" tooltipText={formatDate(row.startDate)}>
@@ -180,6 +183,7 @@ function UploadHistoryNew() {
       headerName: '',
       align: 'center',
       headerAlign: 'center',
+      sortable: false,
       flex: 1,
       renderCell: ({ row }) => {
         return (
@@ -188,8 +192,8 @@ function UploadHistoryNew() {
               {row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
                 <Tooltips tooltipPlacement="bottom" tooltipText="Delete">
                   <span>
-                    <IconButton aria-label="delete" size="small" onClick={() => deleteSubmodal(row)} sx={{ mr: 2 }}>
-                      <DeleteIcon color="error" fontSize="small" />
+                    <IconButton aria-label="delete" size="small" onClick={() => deleteHistory(row)} sx={{ mr: 2 }}>
+                      <DeleteIcon color="action" fontSize="small" />
                     </IconButton>
                   </span>
                 </Tooltips>
@@ -199,7 +203,7 @@ function UploadHistoryNew() {
               {row.numberOfDeletedItems === 0 && !row.referenceProcessId && (
                 <Tooltips tooltipPlacement="bottom" tooltipText="Download">
                   <span>
-                    <IconButton aria-label="delete" size="small" onClick={() => download(row)}>
+                    <IconButton aria-label="download" size="small" onClick={() => download(row)}>
                       <DownloadIcon color="primary" fontSize="small" />
                     </IconButton>
                   </span>
@@ -216,10 +220,13 @@ function UploadHistoryNew() {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Typography variant="h3">{t('pages.uploadHistory')}</Typography>
+          <Grid item xs={9}>
+            <Typography variant="h3" mb={1}>
+              {t('pages.uploadHistory')}
+            </Typography>
+            <Typography variant="body1">{t('content.uploadHistory.description')}</Typography>
           </Grid>
-          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+          <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton
               size="small"
               variant="contained"
@@ -245,11 +252,10 @@ function UploadHistoryNew() {
             rows={data.items}
             pageSize={pageSize}
             page={page}
-            rowHeight={100}
             onPageChange={setPage}
             rowsPerPageOptions={[10, 15, 20, 100]}
             sx={{
-              '& .MuiDataGrid-columnHeaderTitle, & .MuiDataGrid-cell': {
+              '& .MuiDataGrid-columnHeaderTitle': {
                 textOverflow: 'clip',
                 whiteSpace: 'break-spaces !important',
                 maxHeight: 'none !important',
@@ -258,6 +264,9 @@ function UploadHistoryNew() {
               '& .MuiBox-root': { display: 'none' },
             }}
           />
+        </Box>
+        <Box>
+          <UploadHistoryErrorDialog open={showErrorLogsDialog} handleDialogClose={handleErrorDialogClose} />
         </Box>
       </Box>
     );

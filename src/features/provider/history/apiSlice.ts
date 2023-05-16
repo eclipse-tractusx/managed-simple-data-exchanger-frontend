@@ -1,7 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
- *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -19,7 +18,6 @@
  ********************************************************************************/
 import { apiSlice } from '../../app/apiSlice';
 import { setPageLoading } from '../../app/slice';
-import { setSnackbarMessage } from '../../notifiication/slice';
 
 export const providerHistorySlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -37,14 +35,12 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
         url: `${csvType}/delete/${processId}`,
         method: 'DELETE',
       }),
+      extraOptions: { showNotification: true, message: 'alerts.deleteSuccess', type: 'success' },
       invalidatesTags: ['UploadHistory'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
-        dispatch(setPageLoading(true));
         try {
+          dispatch(setPageLoading(true));
           await queryFulfilled;
-          dispatch(setSnackbarMessage({ type: 'success', message: 'alerts.deleteSuccess' }));
-        } catch (err) {
-          dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.somethingWrong' }));
         } finally {
           dispatch(setPageLoading(false));
         }

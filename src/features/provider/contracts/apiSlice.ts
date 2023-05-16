@@ -1,7 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
- *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,17 +17,19 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { apiSlice } from '../../app/apiSlice';
+import { setPageLoading } from '../../app/slice';
 import { IContractAgreements } from '../../consumer/types';
 
 export const contractsSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getContracts: builder.query({
-      query: params => {
+      query: ({ type, params }) => {
         return {
-          url: '/contract-agreements',
+          url: `/contract-agreements/${type}`,
           params,
         };
       },
+      providesTags: ['DeleteContract'],
       transformResponse: async ({ connector, contracts }) => {
         const modifieldData = contracts
           .sort(
@@ -41,7 +42,23 @@ export const contractsSlice = apiSlice.injectEndpoints({
         return { connector, contracts: modifieldData };
       },
     }),
+    deleteContract: builder.mutation({
+      query: ({ negotiationId, type }) => ({
+        url: `contract-agreements/${negotiationId}/${type}/decline`,
+        method: 'POST',
+      }),
+      extraOptions: { showNotification: true, message: 'alerts.contractDeclined', type: 'error' },
+      invalidatesTags: ['DeleteContract'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setPageLoading(true));
+          await queryFulfilled;
+        } finally {
+          dispatch(setPageLoading(false));
+        }
+      },
+    }),
   }),
 });
 
-export const { useGetContractsQuery } = contractsSlice;
+export const { useGetContractsQuery, useDeleteContractMutation } = contractsSlice;

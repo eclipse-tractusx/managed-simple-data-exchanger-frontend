@@ -18,8 +18,19 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { useTranslation } from 'react-i18next';
+
 import ContractsTable from '../components/ContractsTable';
 
-const ConsumerContracts = () => <ContractsTable type="CONSUMER" />;
+const ConsumerContracts = () => {
+  const { t } = useTranslation();
+  return (
+    <ContractsTable
+      type="consumer"
+      title={t('content.contractHistory.title')}
+      subtitle={t('content.contractHistory.description')}
+    />
+  );
+};
 
 export default ConsumerContracts;

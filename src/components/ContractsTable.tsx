@@ -19,65 +19,51 @@
  ********************************************************************************/
 import { Refresh } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Chip, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
-import { LoadingButton, Tooltips } from 'cx-portal-shared-components';
+import { IconButton, LoadingButton, Tooltips, Typography } from 'cx-portal-shared-components';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { setPageLoading } from '../features/app/slice';
-import { useGetContractsQuery } from '../features/provider/contracts/apiSlice';
+import { useDeleteContractMutation, useGetContractsQuery } from '../features/provider/contracts/apiSlice';
 import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
+import { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH } from '../utils/constants';
 import { convertEpochToDate } from '../utils/utils';
 
-function ContractsTable({ type }: { type: string }) {
+interface IContractsTable {
+  type: string;
+  title: string;
+  subtitle: string;
+}
+function ContractsTable({ type, title, subtitle }: IContractsTable) {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const pageType = `pages.${USER_TYPE_SWITCH[type]}`; // to avoid nested template literals
 
-  const HEADER_MAPPING: { [key: string]: string } = {
-    PROVIDER: 'consumer',
-    CONSUMER: 'provider',
-  };
-  const renderContractAgreementStatus = (params: GridRenderCellParams) => {
-    switch (params.value) {
-      case 'CONFIRMED':
-        return (
-          <Chip
-            color="success"
-            icon={<CheckCircleIcon fontSize="small" />}
-            title={params.value}
-            label={params.value}
-            variant="outlined"
-          />
-        );
-      case 'DECLINED':
-        return (
-          <Chip
-            color="error"
-            icon={<CancelIcon fontSize="small" />}
-            title={params.value}
-            label={params.value}
-            variant="outlined"
-          />
-        );
-      case 'ERROR':
-        return (
-          <Chip
-            color="warning"
-            icon={<ErrorIcon fontSize="small" />}
-            title={params.value}
-            label={params.value}
-            variant="outlined"
-          />
-        );
-      default:
-        return <Chip color="default" title={params.value} label={params.value} variant="outlined" />;
-    }
-  };
+  const renderContractAgreementStatus = (params: GridRenderCellParams) => (
+    <Typography color={STATUS_COLOR_MAPPING[params.value]} variant="body2">
+      {_.capitalize(params.value)}
+    </Typography>
+  );
+
+  const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
+    type: type,
+    params: {
+      offset: 0,
+      maxLimit: MAX_CONTRACTS_AGREEMENTS,
+    },
+  });
+
+  const [deleteContract, { isLoading: isDeleting }] = useDeleteContractMutation({});
+
+  useEffect(() => {
+    dispatch(setPageLoading(isLoading));
+  }, [dispatch, isLoading, isDeleting]);
+
   const columns: GridColDef[] = [
     {
       field: 'contractAgreementId',
@@ -99,7 +85,7 @@ function ContractsTable({ type }: { type: string }) {
       headerName: t('content.contractHistory.columns.assetId'),
       renderCell: ({ row }) =>
         row.contractAgreementInfo?.assetId ? (
-          <Tooltips tooltipPlacement="top" tooltipText={row.contractAgreementInfo.assetId}>
+          <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.contractAgreementInfo.assetId}>
             <span>{row.contractAgreementInfo.assetId}</span>
           </Tooltips>
         ) : (
@@ -109,7 +95,8 @@ function ContractsTable({ type }: { type: string }) {
     {
       field: 'counterPartyAddress',
       flex: 1,
-      headerName: `${t(`pages.${HEADER_MAPPING[type]}`)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
+      minWidth: 250,
+      headerName: `${t(pageType)} ${t('content.contractHistory.columns.counterPartyAddress')}`,
       renderCell: ({ row }) => (
         <Tooltips
           tooltipPlacement="top-start"
@@ -161,35 +148,46 @@ function ContractsTable({ type }: { type: string }) {
     },
   ];
 
-  const handleTitle = () => {
-    if (type === 'PROVIDER') {
-      return t('content.providerContracts.title');
-    } else {
-      return t('content.consumerContracts.title');
-    }
-  };
-
-  const { isLoading, data, isFetching, isSuccess, refetch } = useGetContractsQuery({
-    type: type,
-    offset: 0,
-    maxLimit: MAX_CONTRACTS_AGREEMENTS,
-  });
-
-  useEffect(() => {
-    dispatch(setPageLoading(isLoading));
-  }, [dispatch, isLoading]);
+  const actionCol: GridColDef[] = [
+    {
+      field: 'actions',
+      headerName: '',
+      flex: 1,
+      maxWidth: 80,
+      sortable: false,
+      renderCell: ({ row }) => {
+        const checkState = CONTRACT_STATES.some(e => e === row.state);
+        if (!checkState) {
+          return (
+            <Tooltips tooltipPlacement="bottom" tooltipText={t('button.declineContract')}>
+              <span>
+                <IconButton
+                  aria-label="delete"
+                  size="small"
+                  onClick={() => deleteContract({ negotiationId: row.negotiationId, type })}
+                  sx={{ mr: 2 }}
+                >
+                  <CancelIcon color="action" fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltips>
+          );
+        }
+      },
+    },
+  ];
 
   if (isSuccess) {
     return (
       <Box sx={{ flex: 1, p: 4 }}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
-            <Typography variant="h3">{handleTitle()}</Typography>
-            <Typography variant="body1">
-              {t('content.common.ownConnector')} {data.connector}
+          <Grid item xs={9}>
+            <Typography variant="h3">{title}</Typography>
+            <Typography variant="body1" mt={1}>
+              {subtitle}
             </Typography>
           </Grid>
-          <Grid item xs={6} display={'flex'} justifyContent={'flex-end'}>
+          <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
             <LoadingButton
               size="small"
               variant="contained"
@@ -202,12 +200,14 @@ function ContractsTable({ type }: { type: string }) {
           </Grid>
           <Grid item xs={12}>
             <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+              <Typography variant="body1" maxWidth={900} mb={2}>
+                {t('content.common.ownConnector')} {data.connector}
+              </Typography>
               <DataGrid
-                sx={{ mt: 4 }}
                 autoHeight={true}
                 getRowId={row => row.id}
                 rows={data.contracts}
-                columns={columns}
+                columns={type === 'provider' ? [...columns, ...actionCol] : columns}
                 loading={isFetching}
                 pagination
                 pageSize={pageSize}
@@ -226,6 +226,14 @@ function ContractsTable({ type }: { type: string }) {
                 disableColumnSelector
                 disableDensitySelector
                 disableSelectionOnClick
+                sx={{
+                  '& .MuiDataGrid-columnHeaderTitle': {
+                    textOverflow: 'clip',
+                    whiteSpace: 'break-spaces !important',
+                    maxHeight: 'none !important',
+                    lineHeight: 1.4,
+                  },
+                }}
               />
             </Box>
           </Grid>

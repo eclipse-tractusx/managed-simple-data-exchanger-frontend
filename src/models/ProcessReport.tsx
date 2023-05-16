@@ -19,6 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Status } from '../enums';
+
 export interface ProcessReport {
   processId: string;
   referenceProcessId: string;
@@ -34,10 +36,4 @@ export interface ProcessReport {
   endDate?: string;
   duration?: string;
   actions?: unknown;
-}
-
-export enum Status {
-  completed = 'COMPLETED',
-  failed = 'FAILED',
-  inProgress = 'IN_PROGRESS',
 }

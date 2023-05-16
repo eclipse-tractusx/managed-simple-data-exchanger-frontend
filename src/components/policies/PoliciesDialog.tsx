@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
@@ -19,16 +20,18 @@
  ********************************************************************************/
 
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Status } from '../../enums';
 import { setPageLoading } from '../../features/app/slice';
 import { setSnackbarMessage } from '../../features/notifiication/slice';
 import { handleDialogClose } from '../../features/provider/policies/slice';
 import { clearRows } from '../../features/provider/submodels/slice';
 import { removeSelectedFiles, setUploadData, setUploadStatus } from '../../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
-import { ProcessReport, Status } from '../../models/ProcessReport';
+import { ProcessReport } from '../../models/ProcessReport';
 import ProviderService from '../../services/ProviderService';
 import AccessPolicy from './AccessPolicy';
 import UsagePolicy from './UsagePolicy';
@@ -76,7 +79,7 @@ export default function PoliciesDialog() {
 
   useEffect(() => {
     const durationCheck = duration === 'RESTRICTED' && durationValue === '';
-    const purposeCheck = purpose === 'RESTRICTED' && purposeValue === '';
+    const purposeCheck = purpose === 'RESTRICTED' && _.isEmpty(purposeValue);
     const roleCheck = role === 'RESTRICTED' && roleValue === '';
     const customCheck = custom === 'RESTRICTED' && customValue === '';
     setshowError(() => durationCheck || purposeCheck || roleCheck || customCheck);
@@ -91,10 +94,35 @@ export default function PoliciesDialog() {
     dispatch(removeSelectedFiles());
   };
 
+  const handleAlerts = (res: { data: ProcessReport }) => {
+    if (res?.data?.status === Status.completed && res?.data?.numberOfFailedItems === 0) {
+      dispatch(
+        setSnackbarMessage({
+          message: 'alerts.uploadSuccess',
+          type: 'success',
+        }),
+      );
+    } else if (res?.data?.status === Status.completed && res?.data?.numberOfFailedItems > 0) {
+      dispatch(
+        setSnackbarMessage({
+          message: 'alerts.uploadWarning',
+          type: 'error', //warning
+        }),
+      );
+    } else {
+      dispatch(
+        setSnackbarMessage({
+          message: 'alerts.uploadError',
+          type: 'error',
+        }),
+      );
+    }
+  };
+
   const processingReport = (r: { data: ProcessReport }, processId: string) => {
     dispatch(setUploadData(r.data));
     if (r?.data?.status !== Status.completed && r?.data?.status !== Status.failed) {
-      // if status !== 'COMPLETED' && status !== 'FAILED' -> set interval with 2 seconds to refresh data
+      // if status !== 'COMPLETED' && status !== 'FAILED' -> repeat in interval with 2 seconds to refresh data
       const interval = setInterval(
         () =>
           ProviderService.getInstance()
@@ -104,6 +132,7 @@ export default function PoliciesDialog() {
               if (result?.data?.status === Status.completed || result.data.status === Status.failed) {
                 clearInterval(interval);
                 clearUpload();
+                handleAlerts(result);
               }
             }),
         2000,
@@ -111,50 +140,23 @@ export default function PoliciesDialog() {
     } else {
       clearUpload();
       dispatch(setUploadData(defaultUploadData));
-      if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems === 0) {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.uploadSuccess',
-            type: 'success',
-          }),
-        );
-      } else if (r?.data?.status === Status.completed && r?.data?.numberOfFailedItems > 0) {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.uploadWarning',
-            type: 'error', //warning
-          }),
-        );
-      } else {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.uploadError',
-            type: 'error',
-          }),
-        );
-      }
+      handleAlerts(r);
     }
   };
 
+  // Generate process id
   const processingReportFirstCall = (processId: string) => {
     setTimeout(async () => {
       ProviderService.getInstance()
         .getReportById(processId)
         .then(response => {
+          // if process id is ready - upload the data
           processingReport(response, processId);
         })
         .catch(error => {
           // if process id not ready - repeat request
           if (error.response.status === 404) {
             processingReportFirstCall(processId);
-          } else {
-            dispatch(
-              setSnackbarMessage({
-                message: 'alerts.uploadError',
-                type: 'error',
-              }),
-            );
-            clearUpload();
           }
         });
     }, 2000);
@@ -179,7 +181,7 @@ export default function PoliciesDialog() {
       {
         type: 'PURPOSE',
         typeOfAccess: purpose,
-        value: purposeValue,
+        value: purposeValue.value,
       },
       {
         type: 'CUSTOM',
@@ -188,19 +190,14 @@ export default function PoliciesDialog() {
       },
     ],
   };
+
   const submitData = async () => {
     try {
       dispatch(setPageLoading(true));
       const response = await ProviderService.getInstance().submitSubmodalData(uploadUrl, payload);
-      // first call
-      processingReportFirstCall(response.data);
-    } catch (error) {
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.uploadError',
-          type: 'error',
-        }),
-      );
+      const submitSubmodelData = response?.data;
+      if (submitSubmodelData) processingReportFirstCall(submitSubmodelData);
+    } catch (error: any) {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
       clearUpload();
     }
@@ -214,30 +211,24 @@ export default function PoliciesDialog() {
 
     try {
       dispatch(setPageLoading(true));
-      const resp = await ProviderService.getInstance().uploadData(selectedSubmodel.value, formData);
-      const processId = resp.data;
+      const response = await ProviderService.getInstance().uploadData(selectedSubmodel.value, formData);
+      const uploadSubmodelData = response?.data;
       // first call
-      processingReportFirstCall(processId);
-    } catch (error) {
+      if (uploadSubmodelData) processingReportFirstCall(uploadSubmodelData);
+    } catch (error: any) {
       dispatch(setUploadData({ ...currentUploadData, status: Status.failed }));
-      dispatch(
-        setSnackbarMessage({
-          message: 'alerts.uploadError',
-          type: 'error',
-        }),
-      );
       clearUpload();
     }
   };
 
-  function handleSubmitData() {
+  async function handleSubmitData() {
     if (showError) return;
     switch (uploadType) {
       case 'file':
-        uploadFile();
+        await uploadFile();
         break;
       case 'json':
-        submitData();
+        await submitData();
         break;
       default:
         break;

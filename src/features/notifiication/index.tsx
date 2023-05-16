@@ -29,15 +29,13 @@ export default function Notification() {
   const { t } = useTranslation();
 
   return (
-    <div>
-      <PageSnackbar
-        autoClose
-        description={t(snackBarMessage)}
-        open={openSnackBar}
-        severity={snackbarType}
-        showIcon
-        onCloseNotification={() => dispatch(toggleSnackbar())}
-      ></PageSnackbar>
-    </div>
+    <PageSnackbar
+      autoClose
+      description={t(snackBarMessage)}
+      open={openSnackBar}
+      severity={snackbarType}
+      showIcon
+      onCloseNotification={() => dispatch(toggleSnackbar())}
+    ></PageSnackbar>
   );
 }

@@ -36,7 +36,7 @@ import { removeSelectedFiles, setUploadStatus } from '../features/provider/uploa
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
 
-const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/documentation/user-guide';
+const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/docs/user-guide';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
@@ -76,19 +76,21 @@ export default function Home() {
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12}>
           <Typography variant="h3">{t('content.home.header')}</Typography>
-          <Typography variant="subtitle1" mt={2}>
+          <Typography variant="body1" mt={2}>
             {loggedInUser.company}
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h4">{t('content.home.selectUsecasesHeader')}</Typography>
-          <Typography variant="subtitle2" maxWidth={900}>
+          <Typography variant="h4" mb={1}>
+            {t('content.home.selectUsecasesHeader')}
+          </Typography>
+          <Typography variant="body1" maxWidth={1000}>
             {t('content.home.selectUsecasesSubheader')}
           </Typography>
           <FormControl component="fieldset" variant="standard">
             <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
               {useCases.map((item: IUseCase) => (
-                <div className="usecase-tile" key={item.id}>
+                <Box className="usecase-tile" key={item.id}>
                   <input
                     type="checkbox"
                     name={item.title}
@@ -103,7 +105,7 @@ export default function Home() {
                       <Typography variant="subtitle1">{item.title}</Typography>
                     </Stack>
                   </label>
-                </div>
+                </Box>
               ))}
             </Stack>
           </FormControl>
@@ -136,26 +138,24 @@ export default function Home() {
             <img src="images/play.png" className="playIcon" />
           </Box>
         </Grid>
-        <Grid item xs={5} pt={0}>
-          <article>
-            <p style={{ margin: 0 }}>{t('content.home.sdeDescription')}</p>
-            <Button
-              variant="text"
-              size="medium"
-              onClick={() => openInNewTab(userGuideUrl)}
-              endIcon={<ArrowForwardIcon />}
-              sx={{
-                p: 0,
-                mt: 2,
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-            >
-              {t('content.home.learnSde')}
-            </Button>
-          </article>
+        <Grid item xs={6} pt={0}>
+          <Typography>{t('content.home.sdeDescription')}</Typography>
+          <Button
+            variant="text"
+            size="medium"
+            onClick={() => openInNewTab(userGuideUrl)}
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              p: 0,
+              mt: 2,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            {t('content.home.learnSde')}
+          </Button>
         </Grid>
       </Grid>
     </Box>

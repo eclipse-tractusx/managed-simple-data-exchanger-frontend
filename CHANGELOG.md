@@ -4,21 +4,32 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
-##[Unreleased]
+## [2.0.0] - 2023-05-08
 
 ### Added
 
-- Purpose, role, custom usage policies removed
-- Country list dropdown in manufacturing_country column
-- Descriptions added for each page under title
-- User can see the error logs of uploaded data in upload history page
-- Error handling done for all api calls
-- Upload history page table component revamped
-- Frontend document updates
+- Create data: Country list dropdown in manufacturing_country column.
+- Descriptions for each page under title.
+- Error logs of uploaded data in upload history.
+- Error handling for all api calls.
+- Unified BPN validation in access policy section.
+- Decline contract option for provider contracts.
+- App version and collapse button added in sidebar.
+- Frontend document updates.
+- Purpose restriction added in usage policies.
+
+### Changes
+
+- Upload history page table component revamped.
+- Role, custom usage policies removed.
+- Table row design, titles and Status column design modified.
 
 ### Fixed
 
-- German translation missing texts added
+- German translation missing texts added.
+- File extension validation while drag and drop.
+- User guide link updated in home page.
+- Persisting selected value in select submodel dropdown.
 
 ## [1.9.0] - 2023-03-16
 
@@ -95,7 +106,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- Created user guidliance and installation documentation
+- Created user guidance and installation documentation
 
 ## [1.4.0] - 2022-09-30
 
@@ -118,7 +129,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- Integrated Keycloack
+- Integrated Keycloak
 - Batch submodel upload implementation.
 - Integrated contract offer listing.
 - added usage policies
@@ -132,8 +143,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]:https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...main
+[unreleased]: https://github.com/eclipse-tractusx/dft-frontend/compare/dftfrontend-2.0.0...main
+[2.0.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...dftfrontend-2.0.0
+[1.9.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.1...dftfrontend-1.9.0
 [1.8.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.0...dft-frontend-1.8.1
 [1.8.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.7.0...dft-frontend-1.8.0
 [1.7.0]: https://github.com/eclipse-tractusx/dft-frontend/releases/tag/dft-frontend-1.7.0
-

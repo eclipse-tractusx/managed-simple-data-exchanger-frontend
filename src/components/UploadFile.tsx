@@ -23,16 +23,15 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Link, useTheme } from '@mui/material';
 import { Button, Typography } from 'cx-portal-shared-components';
-import { useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 
+import { FileSize, FileType } from '../enums';
 import { setPageLoading } from '../features/app/slice';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { handleDialogOpen } from '../features/provider/policies/slice';
 import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
-import { FileSize } from '../models/FileSize';
 import { Config } from '../utils/config';
 import { trimText } from '../utils/utils';
 
@@ -48,22 +47,28 @@ export default function UploadFile() {
     dispatch(setPageLoading(false));
     const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
     if (file.size < maxFileSize) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      dispatch(setSelectedFiles(file));
+      if (file.type === FileType.csv) dispatch(setSelectedFiles(file));
+      else
+        dispatch(
+          setSnackbarMessage({
+            message: 'alerts.invalidFile',
+            type: 'error',
+          }),
+        );
     } else {
       dispatch(
         setSnackbarMessage({
-          message: 'alerts.invalidFile',
+          message: 'alerts.largeFile',
           type: 'error',
         }),
       );
     }
   };
 
-  const onDrop = useCallback(acceptedFiles => {
-    handleFiles(acceptedFiles[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const onDrop = (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+    if (fileRejections.length) dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.invalidFile' }));
+    else handleFiles(acceptedFiles[0]);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
