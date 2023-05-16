@@ -88,7 +88,7 @@
       "roleNote": "Nutzung nur für Individuen mit Rolle/Eigenschaft zugelassen",
       "custom": "Nutzerdefinierte Bedingung",
       "customNote": "Folgende Regel(n) gelten weiterhin für die Nutzung",
-      "purposeLabel": "Beschreiben Sie den Zweck",
+      "purposeLabel": "Wählen Sie den Zweck aus",
       "roleLabel": "Bitte fügen sie eine Rolle ein",
       "customLabel": "Bitte geben Sie Ihre benutzerdefinierten Bedingungen ein"
     },
@@ -220,7 +220,8 @@
     "declineContract": "Vertrag ablehnen"
   },
   "alerts": {
-    "invalidFile": "Datei nicht erlaubt!",
+    "invalidFile": "Ungültiges Dateiformat!",
+    "largeFile": "Dateigröße ist zu groß!!",
     "uploadSuccess": "Hochladen abgeschlossen!",
     "uploadWarning": "Hochladen abgeschlossen - mit Fehlermeldungen!",
     "uploadError": "Hochladen fehlgeschlagen!",

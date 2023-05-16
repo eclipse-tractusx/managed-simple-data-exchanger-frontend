@@ -89,7 +89,7 @@
       "roleNote": "Usage allowed only by individuals with the following roles/characteristics",
       "custom": "Custom restriction",
       "customNote": "Usage must comply to the following additional conditions",
-      "purposeLabel": "Describe the purpose",
+      "purposeLabel": "Select the purpose",
       "roleLabel": "Enter a role/characteristic",
       "customLabel": "Enter your custom conditions"
     },
@@ -221,7 +221,8 @@
     "declineContract": "Decline Contract"
   },
   "alerts": {
-    "invalidFile": "File not permitted!",
+    "invalidFile": "Invalid file format!",
+    "largeFile": "File size is too large!",
     "uploadSuccess": "Upload completed!",
     "uploadWarning": "Upload completed with warnings!",
     "uploadError": "Upload failed!",

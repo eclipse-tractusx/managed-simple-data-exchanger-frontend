@@ -22,17 +22,18 @@ import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack
 import { Input, SelectList } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
-import { setDurationUnit } from '../../features/provider/policies/slice';
+import { setDurationUnit, setPurposeValue } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
+import { DURATION_UNITS, PURPOSE_VALUES } from '../../utils/constants';
 
 interface FreeTextProps {
   restrictionType: string;
   setRestrictionType: (restrictionType: string) => void;
   constraintType: string;
   displayText: string;
-  inputFreeText: string;
+  inputFreeText?: string;
   labelText: string;
-  setInputFreeText: (freeText: string) => void;
+  setInputFreeText?: (freeText: string) => void;
 }
 
 export default function UsagePolicyItem({
@@ -44,32 +45,10 @@ export default function UsagePolicyItem({
   labelText,
   setInputFreeText,
 }: FreeTextProps) {
-  const { durationUnit } = useAppSelector(state => state.accessUsagePolicySlice);
+  const { durationUnit, purposeValue } = useAppSelector(state => state.accessUsagePolicySlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const DURATION_UNITS = [
-    {
-      id: 0,
-      title: 'Hour',
-      value: 'HOUR',
-    },
-    {
-      id: 1,
-      title: 'Day',
-      value: 'DAY',
-    },
-    {
-      id: 2,
-      title: 'Month',
-      value: 'MONTH',
-    },
-    {
-      id: 3,
-      title: 'Year',
-      value: 'YEAR',
-    },
-  ];
   function checkErrors() {
     if (constraintType === t('content.policies.duration')) {
       const result = /^[1-9]\d*$/.test(inputFreeText);
@@ -91,25 +70,26 @@ export default function UsagePolicyItem({
           <>
             <FormLabel sx={{ my: 1, display: 'block' }}>{displayText}</FormLabel>
             <Stack direction="row" alignItems={'flex-end'} spacing={2}>
-              <Input
-                label={labelText}
-                placeholder={labelText}
-                size="small"
-                type={constraintType === t('content.policies.duration') ? 'number' : 'text'}
-                InputProps={{
-                  inputProps: { min: 1 },
-                }}
-                value={inputFreeText}
-                required
-                error={checkErrors()}
-                onChange={e => {
-                  setInputFreeText(e.target.value);
-                }}
-                sx={{ minWidth: 250 }}
-              />
+              {constraintType !== t('content.policies.purpose') && (
+                <Input
+                  label={labelText}
+                  placeholder={labelText}
+                  size="small"
+                  type={constraintType === t('content.policies.duration') ? 'number' : 'text'}
+                  InputProps={{
+                    inputProps: { min: 1 },
+                  }}
+                  value={inputFreeText}
+                  required
+                  error={checkErrors()}
+                  onChange={e => {
+                    setInputFreeText(e.target.value);
+                  }}
+                  sx={{ minWidth: 250 }}
+                />
+              )}
               {constraintType === t('content.policies.duration') && (
                 <FormControl sx={{ minWidth: 150 }} size="small">
-                  {/* need to replace with cx-lib selectList */}
                   <SelectList
                     keyTitle="title"
                     value={durationUnit}
@@ -121,6 +101,23 @@ export default function UsagePolicyItem({
                     onChangeItem={e => {
                       dispatch(setDurationUnit(e.value));
                     }}
+                  />
+                </FormControl>
+              )}
+              {constraintType === t('content.policies.purpose') && (
+                <FormControl sx={{ minWidth: 250 }} size="small">
+                  <SelectList
+                    keyTitle="title"
+                    value={purposeValue}
+                    defaultValue={purposeValue}
+                    items={PURPOSE_VALUES}
+                    label={t('content.policies.purposeLabel')}
+                    placeholder={t('content.policies.purposeLabel')}
+                    disableClearable={true}
+                    onChangeItem={e => {
+                      dispatch(setPurposeValue(e));
+                    }}
+                    error={checkErrors()}
                   />
                 </FormControl>
               )}

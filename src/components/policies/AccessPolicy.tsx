@@ -118,7 +118,6 @@ export default function AccessPolicy() {
     } else {
       setbpnError(false);
       await validateBpn(inputBpn);
-      console.log(data);
     }
   };
 
@@ -192,8 +191,8 @@ export default function AccessPolicy() {
                     loading={filterCompanyOptionsLoading}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onChange={(e, value: any) => dispatch(setInputBpn(value.bpn))}
-                    onInputChange={debounce((event, newInputValue) => {
-                      onChangeSearchInputValue(newInputValue);
+                    onInputChange={debounce(async (event, newInputValue) => {
+                      await onChangeSearchInputValue(newInputValue);
                     }, 1000)}
                     onClose={() => setsearchPopup(false)}
                     onBlur={() => setsearchPopup(false)}

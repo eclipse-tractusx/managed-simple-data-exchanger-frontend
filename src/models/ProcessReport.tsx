@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Status } from '../utils/constants';
+import { Status } from '../enums';
 
 export interface ProcessReport {
   processId: string;

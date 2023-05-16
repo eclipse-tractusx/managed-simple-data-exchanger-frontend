@@ -29,6 +29,7 @@ import { useTranslation } from 'react-i18next';
 
 import UploadHistoryErrorDialog from '../components/dialogs/UploadHistoryErrorDialog';
 import Permissions from '../components/Permissions';
+import { Status } from '../enums';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
 import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
@@ -37,7 +38,7 @@ import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { ProcessReport } from '../models/ProcessReport';
 import AppService from '../services/appService';
 import ProviderService from '../services/ProviderService';
-import { Status, STATUS_COLOR_MAPPING } from '../utils/constants';
+import { STATUS_COLOR_MAPPING } from '../utils/constants';
 import { formatDate } from '../utils/utils';
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
@@ -68,25 +69,7 @@ function UploadHistoryNew() {
           }),
         );
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      const errorData = error?.data;
-      const errorMessage = errorData?.msg;
-      if (errorMessage) {
-        dispatch(
-          setSnackbarMessage({
-            message: errorMessage,
-            type: 'error',
-          }),
-        );
-      } else {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.downloadError',
-            type: 'error',
-          }),
-        );
-      }
+    } finally {
     }
   }
 
