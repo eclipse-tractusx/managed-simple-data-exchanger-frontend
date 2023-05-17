@@ -508,6 +508,8 @@ export default function ConsumeData() {
                   keyTitle="title"
                   label={t('content.consumeData.selectConnectors')}
                   placeholder={t('content.consumeData.selectConnectors')}
+                  value={filterSelectedConnector}
+                  defaultValue={filterSelectedConnector}
                   noOptionsText={t('content.consumeData.noConnectors')}
                   fullWidth
                   size="small"
