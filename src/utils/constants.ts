@@ -23,6 +23,9 @@ import { theme } from 'cx-portal-shared-components';
 interface IDefaultObject {
   [key: string]: string;
 }
+
+const USER_GUIDE_URL = 'https://github.com/eclipse-tractusx/dft-frontend/blob/main/docs/user-guide/README.md';
+
 const CONTRACT_STATES: string[] = ['CONFIRMED', 'DECLINED', 'ERROR'];
 
 const STATUS_COLOR_MAPPING: IDefaultObject = {
@@ -70,4 +73,4 @@ const PURPOSE_VALUES = [
   },
 ];
 
-export { CONTRACT_STATES, DURATION_UNITS, PURPOSE_VALUES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };
+export { CONTRACT_STATES, DURATION_UNITS, PURPOSE_VALUES, STATUS_COLOR_MAPPING, USER_GUIDE_URL, USER_TYPE_SWITCH };

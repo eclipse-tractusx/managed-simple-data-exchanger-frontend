@@ -35,8 +35,8 @@ import { ISubmodelList } from '../features/provider/submodels/types';
 import { removeSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
-
-const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/docs/user-guide';
+import { USER_GUIDE_URL } from '../utils/constants';
+import { openInNewTab } from '../utils/utils';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
@@ -70,10 +70,6 @@ export default function Home() {
     setActiveTab(newValue);
   };
 
-  const openInNewTab = (url: string) => {
-    window.open(url, '_blank');
-  };
-
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Grid container spacing={2}>
@@ -90,7 +86,7 @@ export default function Home() {
             <Button
               variant="text"
               size="medium"
-              onClick={() => openInNewTab(userGuideUrl)}
+              onClick={() => openInNewTab(USER_GUIDE_URL)}
               endIcon={<ArrowForwardIcon />}
               sx={{
                 p: 0,
