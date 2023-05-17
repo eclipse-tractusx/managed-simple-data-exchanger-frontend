@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
 
 import { setDurationUnit, setPurposeValue } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
-import { DURATION_UNITS, PURPOSE_VALUES } from '../../utils/constants';
+import { DURATION_UNITS, ONLY_NUM_REGEX, PURPOSE_VALUES } from '../../utils/constants';
 
 interface FreeTextProps {
   restrictionType: string;
@@ -51,7 +51,7 @@ export default function UsagePolicyItem({
 
   function checkErrors() {
     if (constraintType === t('content.policies.duration')) {
-      const result = /^[1-9]\d*$/.test(inputFreeText);
+      const result = ONLY_NUM_REGEX.test(inputFreeText);
       return !result;
     } else if (restrictionType === 'RESTRICTED' && inputFreeText === '') {
       return true;
@@ -83,7 +83,9 @@ export default function UsagePolicyItem({
                   required
                   error={checkErrors()}
                   onChange={e => {
-                    setInputFreeText(e.target.value);
+                    const val = e.target.value;
+                    const check = ONLY_NUM_REGEX.test(val) || val === '';
+                    if (check) setInputFreeText(val);
                   }}
                   sx={{ minWidth: 250 }}
                 />
