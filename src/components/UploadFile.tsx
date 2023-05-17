@@ -17,11 +17,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import CloseIcon from '@mui/icons-material/Close';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Box, Link, useTheme } from '@mui/material';
-import { Button, Typography } from 'cx-portal-shared-components';
+import { Box } from '@mui/material';
+import { Button, DropArea, DropPreview, UploadStatus } from 'cx-portal-shared-components';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 

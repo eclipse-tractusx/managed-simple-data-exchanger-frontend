@@ -52,8 +52,6 @@ const SelectSubmodel = () => {
       defaultValue={selectedSubmodel}
       fullWidth
       size="small"
-      value={selectedSubmodel}
-      defaultValue={selectedSubmodel}
       onChangeItem={e => handleTypeChange(e)}
       items={submodelList}
       placeholder={t('content.provider.selectSubmodel')}
