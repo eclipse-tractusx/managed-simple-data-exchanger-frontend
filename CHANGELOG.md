@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
+## [Unreleased]
+
+### Added
+
+- Home page - Content and design update.
+- Create data page - Submodel preview and help texts added.
+- Help link for app user guide in nav bar.
+
+### Changes
+
+- Create data page - JSON input upload option removed.
+
+### Fixed
+
+- Negative number entry in duration under usage policy
+
 ## [2.0.0] - 2023-05-08
 
 ### Added
