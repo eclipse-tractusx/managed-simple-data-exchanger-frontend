@@ -104,12 +104,6 @@ export interface IContractAgreements {
   dateUpdated: number;
 }
 
-export interface IntOption {
-  _id: number | string;
-  bpn: string;
-  value: string;
-}
-
 export interface IntConnectorItem {
   id: number;
   value: string;
