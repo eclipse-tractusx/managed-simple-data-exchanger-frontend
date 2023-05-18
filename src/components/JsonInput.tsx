@@ -63,7 +63,7 @@ export default function JsonInput() {
           variant="contained"
           size="small"
           onClick={() => submitData(jsonInputData)}
-          disabled={!Boolean(jsonInputData.length)}
+          disabled={!jsonInputData.length}
         >
           {t('content.policies.configure')}
         </Button>

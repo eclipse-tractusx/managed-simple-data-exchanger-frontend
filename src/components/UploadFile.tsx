@@ -94,7 +94,7 @@ export default function UploadFile() {
         }}
       >
         <Button
-          disabled={!Boolean(selectedFiles.length)}
+          disabled={!selectedFiles.length}
           size="small"
           variant="contained"
           onClick={() => dispatch(handleDialogOpen({ type: 'file' }))}

@@ -69,7 +69,8 @@ function UploadHistoryNew() {
           }),
         );
       }
-    } finally {
+    } catch (e) {
+      console.log(e);
     }
   }
 

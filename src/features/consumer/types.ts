@@ -60,8 +60,8 @@ export interface ILegalentity {
   bpn?: string;
   identifiers?: unknown[];
   names?: ILegalEntityName[];
-  legalForm?: null | unknown;
-  status?: null | unknown;
+  legalForm?: unknown;
+  status?: unknown;
 }
 export interface ILegalEntityContent {
   score?: number;

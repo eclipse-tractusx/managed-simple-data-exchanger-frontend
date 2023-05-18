@@ -38,7 +38,7 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import { debounce } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
@@ -84,6 +84,15 @@ const ITEMS = [
     value: 'url',
   },
 ];
+
+function NoDataPlaceholder({ text }: { text: string }) {
+  const { t } = useTranslation();
+  return (
+    <Stack height="100%" alignItems="center" justifyContent="center">
+      {t(text)}
+    </Stack>
+  );
+}
 
 export default function ConsumeData() {
   const {
@@ -221,7 +230,8 @@ export default function ConsumeData() {
           dispatch(setSelectedOffersList([]));
           setSelectionModel([]);
         }
-      } finally {
+      } catch (e) {
+        console.log(e);
       }
     }
   };
@@ -345,7 +355,8 @@ export default function ConsumeData() {
         });
         dispatch(setFilterConnectors(optionConnectors));
       }
-    } finally {
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -505,7 +516,7 @@ export default function ConsumeData() {
               <Grid item xs={5}>
                 <SelectList
                   key={conKey}
-                  disabled={!Boolean(filterConnectors.length)}
+                  disabled={!filterConnectors.length}
                   keyTitle="title"
                   label={t('content.consumeData.selectConnectors')}
                   placeholder={t('content.consumeData.selectConnectors')}
@@ -524,9 +535,7 @@ export default function ConsumeData() {
             <LoadingButton
               color="primary"
               variant="contained"
-              disabled={
-                filterSelectedConnector ? filterSelectedConnector.value === '' : false || filterProviderUrl.length === 0
-              }
+              disabled={isEmpty(filterSelectedConnector) && isEmpty(filterProviderUrl)}
               label={t('button.search')}
               loadIndicator={t('content.common.loading')}
               onButtonClick={fetchConsumerDataOffers}
@@ -567,16 +576,8 @@ export default function ConsumeData() {
             components={{
               Toolbar: GridToolbar,
               LoadingOverlay: LinearProgress,
-              NoRowsOverlay: () => (
-                <Stack height="100%" alignItems="center" justifyContent="center">
-                  {t('content.common.noData')}
-                </Stack>
-              ),
-              NoResultsOverlay: () => (
-                <Stack height="100%" alignItems="center" justifyContent="center">
-                  {t('content.common.noResults')}
-                </Stack>
-              ),
+              NoRowsOverlay: () => NoDataPlaceholder({ text: 'content.common.noData' }),
+              NoResultsOverlay: () => NoDataPlaceholder({ text: 'content.common.noResults' }),
             }}
             componentsProps={{
               toolbar: {

@@ -49,7 +49,7 @@ export default function DataTable() {
             size="small"
             onClick={() => dispatch(deleteRows())}
             sx={{ ml: 2 }}
-            disabled={!Boolean(selectedRows.length)}
+            disabled={!selectedRows.length}
           >
             {t('content.provider.deleteRow')}
           </Button>
@@ -58,7 +58,7 @@ export default function DataTable() {
           <Button
             variant="contained"
             size="small"
-            disabled={!Boolean(rows.length)}
+            disabled={!rows.length}
             onClick={() => {
               schemaValidator(rows);
             }}

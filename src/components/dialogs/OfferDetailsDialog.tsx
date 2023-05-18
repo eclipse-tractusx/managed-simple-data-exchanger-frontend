@@ -36,7 +36,6 @@ interface IntDialogProps {
 
 const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: IntDialogProps) => {
   const [offer] = useState(offerObj);
-  // const { typeOfAccess, bpnNumbers, title, created, description, publisher, usagePolicies, fileContentType } = offer;
   const { title, created, description, publisher, usagePolicies, fileContentType } = offer;
   const { t } = useTranslation();
 
