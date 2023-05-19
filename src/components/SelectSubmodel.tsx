@@ -48,7 +48,6 @@ const SelectSubmodel = () => {
     <SelectList
       keyTitle="title"
       label={t('content.provider.selectSubmodel')}
-      value={selectedSubmodel}
       defaultValue={selectedSubmodel}
       fullWidth
       size="small"

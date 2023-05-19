@@ -55,14 +55,7 @@ export default function DataTable() {
           </Button>
         </Box>
         <Box>
-          <Button
-            variant="contained"
-            size="small"
-            disabled={!rows.length}
-            onClick={() => {
-              schemaValidator(rows);
-            }}
-          >
+          <Button variant="contained" size="small" disabled={!rows.length} onClick={() => schemaValidator(rows)}>
             {t('content.policies.configure')}
           </Button>
         </Box>

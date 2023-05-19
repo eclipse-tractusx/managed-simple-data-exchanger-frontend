@@ -61,13 +61,19 @@ import {
   setSelectedOffer,
   setSelectedOffersList,
 } from '../features/consumer/slice';
-import { IConnectorResponse, IConsumerDataOffers, ILegalEntityContent, IntOption } from '../features/consumer/types';
+import {
+  IConnectorResponse,
+  IConsumerDataOffers,
+  ILegalEntityContent,
+  IntConnectorItem,
+  IntOption,
+} from '../features/consumer/types';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { arraysEqual, handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import ConsumerService from '../services/ConsumerService';
 
-const ITEMS = [
+const ITEMS: IntConnectorItem[] = [
   {
     id: 1,
     title: 'Company Name',
@@ -85,7 +91,7 @@ const ITEMS = [
   },
 ];
 
-function NoDataPlaceholder({ text }: { text: string }) {
+function NoDataPlaceholder(text: string) {
   const { t } = useTranslation();
   return (
     <Stack height="100%" alignItems="center" justifyContent="center">
@@ -189,10 +195,7 @@ export default function ConsumeData() {
           });
           payload = {
             connectorId: selectedOffersList[0].connectorId,
-            providerUrl:
-              searchFilterByType === 'company' || searchFilterByType === 'bpn'
-                ? filterSelectedConnector.value
-                : filterProviderUrl,
+            providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
             offers: offersList,
             policies: selectedOffersList[0].usagePolicies,
           };
@@ -205,10 +208,7 @@ export default function ConsumeData() {
           });
           payload = {
             connectorId: connectorId,
-            providerUrl:
-              searchFilterByType === 'company' || searchFilterByType === 'bpn'
-                ? filterSelectedConnector.value
-                : filterProviderUrl,
+            providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
             offers: offersList,
             policies: usagePolicies,
           };
@@ -244,7 +244,7 @@ export default function ConsumeData() {
   const fetchConsumerDataOffers = async () => {
     try {
       let providerUrl = '';
-      if (searchFilterByType === 'company' || searchFilterByType === 'bpn') {
+      if (searchFilterByType.value === 'company' || searchFilterByType.value === 'bpn') {
         providerUrl = filterSelectedConnector.value;
       } else {
         providerUrl = filterProviderUrl;
@@ -268,7 +268,7 @@ export default function ConsumeData() {
 
   // enter key fetch data
   const handleKeypress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.keyCode === 13 || e.code == 'Enter') {
+    if (['Enter', 'NumpadEnter'].includes(e.key)) {
       await fetchConsumerDataOffers();
     }
   };
@@ -326,7 +326,7 @@ export default function ConsumeData() {
   };
 
   // on change search type filter option
-  const handleSearchTypeChange = (value: string) => {
+  const handleSearchTypeChange = (value: IntConnectorItem) => {
     dispatch(setSearchFilterByType(value));
     dispatch(setSelectedFilterCompanyOption(null));
     dispatch(setFilterProviderUrl(''));
@@ -389,7 +389,7 @@ export default function ConsumeData() {
     dispatch(setSelectedOffer(null));
     dispatch(setSelectedOffersList([]));
     setSelectionModel([]);
-    dispatch(setSearchFilterByType('company'));
+    dispatch(setSearchFilterByType(ITEMS[0]));
     dispatch(setSelectedFilterCompanyOption(null));
     dispatch(setFilterCompanyOptions([]));
     dispatch(setFilterProviderUrl(''));
@@ -416,19 +416,17 @@ export default function ConsumeData() {
           <SelectList
             keyTitle="title"
             label={t('content.consumeData.selectType')}
+            placeholder={t('content.consumeData.selectType')}
+            defaultValue={searchFilterByType}
+            items={ITEMS}
+            onChangeItem={e => handleSearchTypeChange(e)}
             fullWidth
             size="small"
-            onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
-            items={ITEMS}
-            defaultValue={ITEMS[0]}
             disableClearable={true}
-            placeholder={t('content.consumeData.selectType')}
-            value={searchFilterByType}
-            hiddenLabel
           />
         </Grid>
         <Grid item xs={6}>
-          {searchFilterByType === 'url' ? (
+          {searchFilterByType.value === 'url' ? (
             <Input
               value={filterProviderUrl}
               type="url"
@@ -442,7 +440,7 @@ export default function ConsumeData() {
           ) : (
             <Grid container spacing={1} alignItems="flex-end">
               <Grid item xs={7}>
-                {searchFilterByType === 'bpn' ? (
+                {searchFilterByType.value === 'bpn' ? (
                   <Input
                     value={filterSelectedBPN}
                     type="text"
@@ -523,6 +521,7 @@ export default function ConsumeData() {
                   noOptionsText={t('content.consumeData.noConnectors')}
                   fullWidth
                   size="small"
+                  defaultValue={filterSelectedConnector}
                   onChangeItem={e => dispatch(setFilterSelectedConnector(e))}
                   items={filterConnectors}
                 />
@@ -576,8 +575,8 @@ export default function ConsumeData() {
             components={{
               Toolbar: GridToolbar,
               LoadingOverlay: LinearProgress,
-              NoRowsOverlay: () => NoDataPlaceholder({ text: 'content.common.noData' }),
-              NoResultsOverlay: () => NoDataPlaceholder({ text: 'content.common.noResults' }),
+              NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+              NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
             }}
             componentsProps={{
               toolbar: {

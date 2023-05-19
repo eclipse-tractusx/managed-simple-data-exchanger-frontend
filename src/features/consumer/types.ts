@@ -116,7 +116,7 @@ export interface IConsumerSlice {
   selectedOffersList: IConsumerDataOffers[];
   selectedOffer: IConsumerDataOffers;
   isMultipleContractSubscription: boolean;
-  searchFilterByType: string;
+  searchFilterByType: Partial<IntConnectorItem>;
   filterProviderUrl: string;
   filterCompanyOptions: IntOption[];
   filterCompanyOptionsLoading: boolean;
