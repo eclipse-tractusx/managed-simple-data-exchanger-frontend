@@ -41,20 +41,20 @@ export default function SubmodelInfo() {
           <tbody>
             <tr>
               {previewTableHeadings.map((title: string, index: number) => (
-                <th key={index}>{title}</th>
+                <th key={index + title}>{title}</th>
               ))}
             </tr>
             {previewTableData.map((data: string[], i: number) => (
               <tr key={i}>
                 {data.map((e: string, index: number) => (
-                  <td key={index}>{e}</td>
+                  <td key={index + e}>{e}</td>
                 ))}
               </tr>
             ))}
             <tr>
               <td>Description</td>
               {previewTableDescriptions.map((desc: string, index: number) => (
-                <td key={index}>
+                <td key={index + desc}>
                   <Tooltips tooltipPlacement="top" tooltipText={desc}>
                     <span>
                       <InfoIcon color="primary" />
