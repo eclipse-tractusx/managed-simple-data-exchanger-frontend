@@ -19,7 +19,7 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
 import { ISelectList } from '../../../models/Common';
 import { Config } from '../../../utils/config';
@@ -102,7 +102,7 @@ export const accessUsagePolicySlice = createSlice({
     handleDialogClose: state => Object.assign(state, initialState),
     checkFieldValidations: state => {
       const durationCheck = state.duration === 'RESTRICTED' && state.durationValue === '';
-      const purposeCheck = state.purpose === 'RESTRICTED' && _.isEmpty(state.purposeValue);
+      const purposeCheck = state.purpose === 'RESTRICTED' && isEmpty(state.purposeValue);
       const roleCheck = state.role === 'RESTRICTED' && state.roleValue === '';
       if (durationCheck || purposeCheck || roleCheck) {
         state.showValidationError = true;

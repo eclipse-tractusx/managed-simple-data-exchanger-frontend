@@ -21,7 +21,7 @@
 
 import { Box, Grid } from '@mui/material';
 import { Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -61,13 +61,13 @@ export default function CreateData() {
         <Grid item xs={3}>
           <SelectSubmodel />
         </Grid>
-        {!_.isEmpty(selectedSubmodel) ? (
+        {!isEmpty(selectedSubmodel) ? (
           <Grid item xs={6}>
             <DownloadCSV submodel={selectedSubmodel.value} />
           </Grid>
         ) : null}
       </Grid>
-      {!_.isEmpty(selectedSubmodel) ? (
+      {!isEmpty(selectedSubmodel) ? (
         <Box>
           <SubmodelInfo />
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

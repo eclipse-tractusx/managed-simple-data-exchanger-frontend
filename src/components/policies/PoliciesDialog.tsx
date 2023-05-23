@@ -20,7 +20,7 @@
  ********************************************************************************/
 
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -79,7 +79,7 @@ export default function PoliciesDialog() {
 
   useEffect(() => {
     const durationCheck = duration === 'RESTRICTED' && durationValue === '';
-    const purposeCheck = purpose === 'RESTRICTED' && _.isEmpty(purposeValue);
+    const purposeCheck = purpose === 'RESTRICTED' && isEmpty(purposeValue);
     const roleCheck = role === 'RESTRICTED' && roleValue === '';
     const customCheck = custom === 'RESTRICTED' && customValue === '';
     setshowError(() => durationCheck || purposeCheck || roleCheck || customCheck);

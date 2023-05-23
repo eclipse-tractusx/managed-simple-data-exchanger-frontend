@@ -20,7 +20,7 @@
  ********************************************************************************/
 import { GridSelectionModel, GridValidRowModel } from '@mui/x-data-grid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import { indexOf } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { fetchSubmodelDetails, fetchSubmodelList } from './actions';
@@ -103,7 +103,7 @@ export const submodelSlice = createSlice({
       state.submodelDetails = payload;
       state.columns = Object.entries(payload.items.properties).map(([key, value]: any) => ({
         field: key,
-        headerName: `${value.title}${_.indexOf(payload.items.required, key) > -1 ? '*' : ''}`,
+        headerName: `${value.title}${indexOf(payload.items.required, key) > -1 ? '*' : ''}`,
         editable: true,
         sortable: false,
         flex: 1,
@@ -134,7 +134,7 @@ export const submodelSlice = createSlice({
           'Mandatory',
           // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
           ...Object.entries(payload.items.properties).map(([key, value]: any) =>
-            _.indexOf(payload.items.required, key) > -1 ? 'true' : 'false',
+            indexOf(payload.items.required, key) > -1 ? 'true' : 'false',
           ),
         ],
       ];

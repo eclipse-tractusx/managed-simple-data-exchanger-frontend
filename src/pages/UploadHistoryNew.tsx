@@ -23,7 +23,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
-import _ from 'lodash';
+import { capitalize } from 'lodash';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -99,7 +99,7 @@ function UploadHistoryNew() {
     } else {
       return (
         <Typography color={STATUS_COLOR_MAPPING[row.status]} variant="body2">
-          {_.capitalize(row.status)}
+          {capitalize(row.status)}
         </Typography>
       );
     }

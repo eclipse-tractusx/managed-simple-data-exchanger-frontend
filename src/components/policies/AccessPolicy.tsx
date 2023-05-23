@@ -30,7 +30,7 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import _ from 'lodash';
+import { inRange } from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -113,7 +113,7 @@ export default function AccessPolicy() {
   const [validateBpn, { isLoading, data }] = useValidateBpnMutation();
   const [addBpnPrompt, setAddBpnPrompt] = useState(false);
   const handleAddBpn = async () => {
-    if (_.inRange(inputBpn.length, 1, 16)) {
+    if (inRange(inputBpn.length, 1, 16)) {
       setbpnError(true);
     } else {
       setbpnError(false);
