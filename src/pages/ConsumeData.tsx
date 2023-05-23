@@ -160,79 +160,58 @@ export default function ConsumeData() {
     }
   };
 
-  /**
-   * Handle offer details dialog action button event
-   * @param type: 'close', 'subscribe': type of button
-   */
-  const handleDetailsButtonEvent = (type: string) => {
-    if (type === 'close') {
-      toggleDialog(false);
-    } else if (type === 'subscribe') {
-      // open policy dialog
-      setIsOpenOfferConfirmDialog(true);
-    }
-  };
-
-  /**
-   * Toggle terms and condition confirm dialog
-   * @param flag: 'close', 'confirm': type of button
-   */
-  const handleConfirmTermDialog = async (flag: string) => {
-    if (flag === 'close') {
-      setIsOpenOfferConfirmDialog(false);
-    } else if (flag === 'confirm') {
-      try {
-        let payload;
-        const offersList: unknown[] = [];
-        // multiselect or single selecte
-        if (isMultipleContractSubscription) {
-          selectedOffersList.forEach((offer: IConsumerDataOffers) => {
-            offersList.push({
-              offerId: offer.offerId || '',
-              assetId: offer.assetId || '',
-              policyId: offer.policyId || '',
-            });
-          });
-          payload = {
-            connectorId: selectedOffersList[0].connectorId,
-            providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
-            offers: offersList,
-            policies: selectedOffersList[0].usagePolicies,
-          };
-        } else {
-          const { usagePolicies, offerId, assetId, policyId, connectorId } = selectedOffer;
+  const handleConfirmTermDialog = async () => {
+    try {
+      let payload;
+      const offersList: unknown[] = [];
+      // multiselect or single selecte
+      if (isMultipleContractSubscription) {
+        selectedOffersList.forEach((offer: IConsumerDataOffers) => {
           offersList.push({
-            offerId: offerId || '',
-            assetId: assetId || '',
-            policyId: policyId || '',
+            offerId: offer.offerId || '',
+            assetId: offer.assetId || '',
+            policyId: offer.policyId || '',
           });
-          payload = {
-            connectorId: connectorId,
-            providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
-            offers: offersList,
-            policies: usagePolicies,
-          };
-        }
-        setIsOfferSubLoading(true);
-        const response = await ConsumerService.getInstance().subscribeToOffers(payload);
-        setIsOfferSubLoading(false);
-        if (response.status == 200) {
-          dispatch(
-            setSnackbarMessage({
-              message: 'alerts.subscriptionSuccess',
-              type: 'success',
-            }),
-          );
-          setIsOpenOfferDialog(false);
-          setIsOpenOfferConfirmDialog(false);
-          dispatch(setIsMultipleContractSubscription(false));
-          dispatch(setSelectedOffer(null));
-          dispatch(setSelectedOffersList([]));
-          setSelectionModel([]);
-        }
-      } catch (e) {
-        console.log(e);
+        });
+        payload = {
+          connectorId: selectedOffersList[0].connectorId,
+          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
+          offers: offersList,
+          policies: selectedOffersList[0].usagePolicies,
+        };
+      } else {
+        const { usagePolicies, offerId, assetId, policyId, connectorId } = selectedOffer;
+        offersList.push({
+          offerId: offerId || '',
+          assetId: assetId || '',
+          policyId: policyId || '',
+        });
+        payload = {
+          connectorId: connectorId,
+          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
+          offers: offersList,
+          policies: usagePolicies,
+        };
       }
+      setIsOfferSubLoading(true);
+      const response = await ConsumerService.getInstance().subscribeToOffers(payload);
+      setIsOfferSubLoading(false);
+      if (response.status == 200) {
+        dispatch(
+          setSnackbarMessage({
+            message: 'alerts.subscriptionSuccess',
+            type: 'success',
+          }),
+        );
+        setIsOpenOfferDialog(false);
+        setIsOpenOfferConfirmDialog(false);
+        dispatch(setIsMultipleContractSubscription(false));
+        dispatch(setSelectedOffer(null));
+        dispatch(setSelectedOffersList([]));
+        setSelectionModel([]);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -608,7 +587,8 @@ export default function ConsumeData() {
           <OfferDetailsDialog
             open={isOpenOfferDialog}
             offerObj={selectedOffersList[0]}
-            handleButtonEvent={handleDetailsButtonEvent}
+            handleConfirm={setIsOpenOfferConfirmDialog}
+            handleClose={toggleDialog}
             isMultiple
           />
           <ConfirmTermsDialog
@@ -619,7 +599,8 @@ export default function ConsumeData() {
             }}
             isProgress={isOfferSubLoading}
             open={isOpenOfferConfirmDialog}
-            handleButtonEvent={handleConfirmTermDialog}
+            handleConfirm={handleConfirmTermDialog}
+            handleClose={setIsOpenOfferConfirmDialog}
           />
         </>
       )}
@@ -628,7 +609,8 @@ export default function ConsumeData() {
           <OfferDetailsDialog
             open={isOpenOfferDialog}
             offerObj={selectedOffer}
-            handleButtonEvent={handleDetailsButtonEvent}
+            handleConfirm={setIsOpenOfferConfirmDialog}
+            handleClose={toggleDialog}
           />
           <ConfirmTermsDialog
             offerObj={{
@@ -638,7 +620,8 @@ export default function ConsumeData() {
             }}
             isProgress={isOfferSubLoading}
             open={isOpenOfferConfirmDialog}
-            handleButtonEvent={handleConfirmTermDialog}
+            handleConfirm={handleConfirmTermDialog}
+            handleClose={setIsOpenOfferConfirmDialog}
           />
         </>
       )}
