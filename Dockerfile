@@ -34,6 +34,8 @@ WORKDIR /usr/share/nginx/html
 
 COPY ./env.sh .
 
+USER nginx
+
 EXPOSE 8080
 
 # Start Nginx server
