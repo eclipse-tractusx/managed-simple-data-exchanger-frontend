@@ -19,10 +19,12 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 
+import { ISelectList } from '../../../models/Common';
 import { Config } from '../../../utils/config';
-import { IAccessPolicyState, ISelectList } from './types';
+import { DURATION_UNITS } from '../../../utils/constants';
+import { IAccessPolicyState } from './types';
 
 const initialState: IAccessPolicyState = {
   uploadUrl: '',
@@ -41,7 +43,7 @@ const initialState: IAccessPolicyState = {
   purposeValue: {} as ISelectList,
   roleValue: '',
   customValue: '',
-  durationUnit: 'HOUR',
+  durationUnit: DURATION_UNITS[0],
   showValidationError: true,
 };
 
@@ -79,7 +81,7 @@ export const accessUsagePolicySlice = createSlice({
     setDurationValue: (state, action: PayloadAction<string>) => {
       state.durationValue = action.payload;
     },
-    setDurationUnit: (state, action: PayloadAction<string>) => {
+    setDurationUnit: (state, action: PayloadAction<ISelectList>) => {
       state.durationUnit = action.payload;
     },
     setPurposeValue: (state, action: PayloadAction<ISelectList>) => {
@@ -100,7 +102,7 @@ export const accessUsagePolicySlice = createSlice({
     handleDialogClose: state => Object.assign(state, initialState),
     checkFieldValidations: state => {
       const durationCheck = state.duration === 'RESTRICTED' && state.durationValue === '';
-      const purposeCheck = state.purpose === 'RESTRICTED' && _.isEmpty(state.purposeValue);
+      const purposeCheck = state.purpose === 'RESTRICTED' && isEmpty(state.purposeValue);
       const roleCheck = state.role === 'RESTRICTED' && state.roleValue === '';
       if (durationCheck || purposeCheck || roleCheck) {
         state.showValidationError = true;

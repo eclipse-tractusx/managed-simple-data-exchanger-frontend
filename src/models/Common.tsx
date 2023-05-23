@@ -1,6 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -17,25 +18,14 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { ISelectList } from '../../../models/Common';
-
-export interface IAccessPolicyState {
-  uploadUrl: string;
-  uploadData: unknown;
-  uploadType: string;
-  openDialog: boolean;
-  accessType: string;
-  bpnList: Array<string>;
-  inputBpn: string;
-  companyBpn: string;
-  duration: string;
-  purpose: string;
-  role: string;
-  custom: string;
-  durationValue: string;
-  purposeValue: ISelectList;
-  roleValue: string;
-  customValue: string;
-  durationUnit: ISelectList;
-  showValidationError: boolean;
+interface IDefaultObject {
+  [key: string]: string;
 }
+
+interface ISelectList {
+  id: number;
+  title: string;
+  value: string;
+}
+
+export type { IDefaultObject, ISelectList };

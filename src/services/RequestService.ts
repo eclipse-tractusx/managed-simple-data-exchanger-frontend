@@ -1,5 +1,4 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2021,2022 Contributors to the Eclipse Foundation
  *

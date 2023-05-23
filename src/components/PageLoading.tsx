@@ -25,9 +25,6 @@ import { useAppSelector } from '../features/store';
 
 export default function PageLoading() {
   const { pageLoading } = useAppSelector(state => state.appSlice);
-  // const isFetching = useAppSelector(state =>
-  //   Object.values(state.api.queries).some(query => query.status === 'pending'),
-  // );
   return (
     <Backdrop sx={{ color: '#fff', zIndex: 2000, flexDirection: 'column' }} open={pageLoading}>
       <CircularProgress color="inherit" />

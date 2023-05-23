@@ -1,8 +1,22 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+## [2.0.1] - 2023-05-23
+
+### Added
+
+- Home page - Content and design update.
+- Create data page - Submodel preview and help texts added.
+- Help link for app user guide in nav bar.
+
+### Changes
+
+- Create data page - JSON input upload option removed.
+
+### Fixed
+
+- Negative number entry in duration under usage policy restricted
 
 ## [2.0.0] - 2023-05-08
 
@@ -23,6 +37,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Upload history page table component revamped.
 - Role, custom usage policies removed.
 - Table row design, titles and Status column design modified.
+
+### Changes
+
+- Upload history page table component revamped
+- Purpose, Role, custom usage policies removed
+- Table row design, titles and Status column design modified
 
 ### Fixed
 
@@ -143,7 +163,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/dft-frontend/compare/dftfrontend-2.0.0...main
+[unreleased]: https://github.com/eclipse-tractusx/dft-frontend/compare/dftfrontend-2.0.1...main
+[2.0.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-2.0.0...dftfrontend-2.0.1
 [2.0.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...dftfrontend-2.0.0
 [1.9.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.1...dftfrontend-1.9.0
 [1.8.1]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.8.0...dft-frontend-1.8.1

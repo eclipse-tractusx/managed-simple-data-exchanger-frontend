@@ -30,19 +30,15 @@ import UsagePolicies from './UsagePolicies';
 interface IntDialogProps {
   open: boolean;
   offerObj?: IConsumerDataOffers;
-  handleButtonEvent?: (flag: string) => void;
+  handleConfirm?: (state: boolean) => void;
+  handleClose?: (state: boolean) => void;
   isMultiple?: boolean;
 }
 
-const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: IntDialogProps) => {
+const OfferDetailsDialog = ({ open, offerObj, handleConfirm, handleClose, isMultiple }: IntDialogProps) => {
   const [offer] = useState(offerObj);
-  // const { typeOfAccess, bpnNumbers, title, created, description, publisher, usagePolicies, fileContentType } = offer;
   const { title, created, description, publisher, usagePolicies, fileContentType } = offer;
   const { t } = useTranslation();
-
-  const closeModal = (flag: string) => {
-    handleButtonEvent(flag);
-  };
 
   function splitWithFirstOcc(str: string) {
     const regX = /:(.*)/s;
@@ -51,7 +47,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
 
   return (
     <Dialog open={open}>
-      <DialogHeader closeWithIcon onCloseWithIcon={() => closeModal('close')} title={t('dialog.offerDetails.title')} />
+      <DialogHeader closeWithIcon onCloseWithIcon={() => handleClose(false)} title={t('dialog.offerDetails.title')} />
       {isMultiple ? (
         <>
           <DialogContent dividers sx={{ pt: 3 }}>
@@ -151,11 +147,11 @@ const OfferDetailsDialog = ({ open, offerObj, handleButtonEvent, isMultiple }: I
         </>
       )}
       <DialogActions>
-        <Button variant="outlined" onClick={() => closeModal('close')}>
+        <Button variant="outlined" onClick={() => handleClose(false)}>
           {t('button.close')}
         </Button>
         <Permissions values={['consumer_establish_contract_agreement']}>
-          <Button variant="contained" onClick={() => closeModal('subscribe')}>
+          <Button variant="contained" onClick={() => handleConfirm(true)}>
             {t('button.subscribe')}
           </Button>
         </Permissions>

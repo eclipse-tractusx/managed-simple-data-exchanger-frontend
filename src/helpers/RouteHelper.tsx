@@ -16,17 +16,17 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { ReactElement } from 'react';
+import { lazy, ReactElement } from 'react';
 
-import ConsumeData from '../pages/ConsumeData';
-import ConsumerContracts from '../pages/ConsumerContracts';
-import CreateData from '../pages/CreateData';
-import Help from '../pages/Help';
-import Home from '../pages/Home';
-import Logout from '../pages/Logout';
-import PageNotFound from '../pages/PageNotFound';
-import ProviderContracts from '../pages/ProviderContracts';
-import UploadHistoryNew from '../pages/UploadHistoryNew';
+const ConsumeData = lazy(() => import('../pages/ConsumeData'));
+const ConsumerContracts = lazy(() => import('../pages/ConsumerContracts'));
+const CreateData = lazy(() => import('../pages/CreateData'));
+const Help = lazy(() => import('../pages/Help'));
+const Home = lazy(() => import('../pages/Home'));
+const Logout = lazy(() => import('../pages/Logout'));
+const PageNotFound = lazy(() => import('../pages/PageNotFound'));
+const ProviderContracts = lazy(() => import('../pages/ProviderContracts'));
+const UploadHistoryNew = lazy(() => import('../pages/UploadHistoryNew'));
 
 export interface IRoutes {
   key?: string;

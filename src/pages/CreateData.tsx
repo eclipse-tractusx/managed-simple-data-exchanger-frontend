@@ -21,14 +21,15 @@
 
 import { Box, Grid } from '@mui/material';
 import { Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
+import { isEmpty } from 'lodash';
 import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DataTable from '../components/DataTable';
 import DownloadCSV from '../components/DownloadCSV';
-import JsonInput from '../components/JsonInput';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
+import SubmodelInfo from '../components/SubmodelInfo';
 import UploadFile from '../components/UploadFile';
 import { useAppSelector } from '../features/store';
 
@@ -46,42 +47,44 @@ export default function CreateData() {
       <Typography variant="h3" mb={2}>
         {t('pages.createData')}
       </Typography>
-      <Typography variant="body1" mb={4}>
-        {t('content.provider.description')}
-      </Typography>
+      <Typography variant="body1">{t('content.provider.description_1')}</Typography>
+      <Typography variant="body1">{t('content.provider.description_2')}</Typography>
+      <ul style={{ margin: 0 }}>
+        <li>
+          <Typography variant="body1">{t('content.provider.description_2_1')}</Typography>
+        </li>
+        <li>
+          <Typography variant="body1">{t('content.provider.description_2_2')}</Typography>
+        </li>
+      </ul>
       <Grid container spacing={2} mb={3} display={'flex'} alignItems={'flex-end'}>
         <Grid item xs={3}>
           <SelectSubmodel />
         </Grid>
-        {Object.keys(selectedSubmodel).length ? (
+        {!isEmpty(selectedSubmodel) ? (
           <Grid item xs={6}>
             <DownloadCSV submodel={selectedSubmodel.value} />
           </Grid>
         ) : null}
       </Grid>
-      {Object.keys(selectedSubmodel).length ? (
-        <Grid container>
-          <Grid item xs={12}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
-                <Tab label={t('content.provider.uploadFile')} />
-                <Tab label={t('content.provider.table')} />
-                <Tab label={t('content.provider.json')} />
-              </Tabs>
-            </Box>
-            <Box>
-              <TabPanel value={activeTab} index={0}>
-                <UploadFile />
-              </TabPanel>
-              <TabPanel value={activeTab} index={1}>
-                <DataTable />
-              </TabPanel>
-              <TabPanel value={activeTab} index={2}>
-                <JsonInput />
-              </TabPanel>
-            </Box>
-          </Grid>
-        </Grid>
+      {!isEmpty(selectedSubmodel) ? (
+        <Box>
+          <SubmodelInfo />
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
+              <Tab label={t('content.provider.uploadFile')} />
+              <Tab label={t('content.provider.table')} />
+            </Tabs>
+          </Box>
+          <Box>
+            <TabPanel value={activeTab} index={0}>
+              <UploadFile />
+            </TabPanel>
+            <TabPanel value={activeTab} index={1}>
+              <DataTable />
+            </TabPanel>
+          </Box>
+        </Box>
       ) : (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
           <Typography variant="body1">{t('content.provider.selectSubmodel')}</Typography>

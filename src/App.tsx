@@ -19,6 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import PageLoading from './components/PageLoading';
@@ -31,21 +32,23 @@ import Main from './Main';
 export default function App({ loggedUser }: { loggedUser: IUser }) {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main loggedUser={loggedUser} />}>
-          {ROUTES.map((route: IRoutes) => (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={
-                <Permissions values={route.permissions} fullPage={true}>
-                  {route.element}
-                </Permissions>
-              }
-            ></Route>
-          ))}
-        </Route>
-      </Routes>
+      <Suspense fallback={''}>
+        <Routes>
+          <Route path="/" element={<Main loggedUser={loggedUser} />}>
+            {ROUTES.map((route: IRoutes) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={
+                  <Permissions values={route.permissions} fullPage={true}>
+                    {route.element}
+                  </Permissions>
+                }
+              ></Route>
+            ))}
+          </Route>
+        </Routes>
+      </Suspense>
       <Notification />
       <PageLoading />
     </BrowserRouter>

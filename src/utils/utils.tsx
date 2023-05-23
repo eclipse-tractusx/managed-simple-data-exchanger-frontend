@@ -51,3 +51,7 @@ export function clearConsoles() {
 export function trimText(string: string, length: number) {
   return string.length > length ? string.substring(0, length) + '...' : string;
 }
+
+export const openInNewTab = (url: string) => {
+  window.open(url, '_blank');
+};

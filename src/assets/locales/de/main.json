@@ -14,9 +14,11 @@
   "content": {
     "home": {
       "header": "Home",
+      "accessDescription": "Greifen Sie auf die detaillierte Benutzerbeschreibung zu",
       "selectUsecasesHeader": "Wählen Sie ihren Use Case",
       "selectUsecasesSubheader": "Sie können einen oder mehrere Anwendungsfälle auswählen, die Sie interessieren. In aufeinander folgenden Schritten werden nur die Teilmodelle angezeigt, die für die ausgewählten Anwendungsfälle relevant sind. Wenn Sie keine Auswahl treffen, werden alle Untermodelle angezeigt.",
       "exchangeDataHeader": "Daten austauschen",
+      "exchangeDataDescription": "Unten sehen Sie eine Übersicht der Schritte, die Sie ausführen müssen, um Daten bereitzustellen oder Daten zu konsumieren. Über die bereitgestellten Links gelangen Sie direkt zu den für den jeweiligen Schritt benötigten Informationen oder Funktionen.",
       "provideDataTab": "Daten anbieten",
       "consumeDataTab": "Daten empfangen",
       "provideDataStep": {
@@ -34,20 +36,35 @@
       "learnSde": "Wie funktioniert das genau?"
     },
     "provider": {
+      "description_1": "Zuerst müssen Sie das Datenmodell, das Sie hochladen möchten, unter 'Submodel auswählen' auswählen.",
+      "description_2": "Als zweiten Schritt müssen Sie die Methode zum Hochladen von Daten auswählen:",
+      "description_2_1": "Datei hochladen (über .csv-Upload)",
+      "description_2_2": "Manueller Upload (über direkte Eingabe im Tabellenformat)",
       "selectSubmodel": "Submodel auswählen",
-      "description": "Stellen sie Daten für das Catena-X-Ökosystem im Format von Submodellen digitaler Zwillinge bereit, damit diese von anderen Unternehmen gefunden und abgerufen werden können. Die Daten werden über den Eclipse Dataspace Connector (EDC) und die Digital Twin Registry (DTR) hochgeladen und angeboten. Sie können Daten auf drei verschiedene Arten bereitstellen – als CSV-Datei hochladen, in eine Tabelle eingeben oder im JSON-Format eingeben.",
       "uploadFile": "Datei hochladen",
-      "table": "Tabelle",
+      "uploadedFile": "hochgeladene Datei",
+      "table": "Manueller Eintrag",
       "json": "JSON",
       "uploadInstruction": "Hochzuladende Datei einfach in dieses Feld ziehen.",
       "selectedFile": "Ausgewählte Datei",
       "dropFile": "Drop it like it's hot :)",
       "dropInstruction": "Hochzuladende Datei einfach in dieses Feld ziehen.",
       "addRow": "Zeile einfügen",
-      "deleteRow": "Zeile(n) löschen"
+      "deleteRow": "Zeile(n) löschen",
+      "previewTableTitle": "Vorschau des Teilmodells einschließlich Hilfebeschreibung",
+      "uploadStep_1": "1. Wählen Sie die Datei aus, die Sie hochladen möchten.",
+      "uploadStep_2": "2. Klicken Sie auf 'Nächster Schritt – Richtlinien konfigurieren', um festzulegen, mit wem Sie Ihre Daten teilen und den/die digitalen Zwilling(e) registrieren möchten.",
+      "manualStep_1": "1. Klicken Sie für manuelle Eingaben auf 'Zeile hinzufügen' und geben Sie die Werte ein, indem Sie in die entsprechenden Felder klicken.",
+      "manualInfo_1": "Zum Anlegen neuer Daten lassen Sie das Feld 'UUID' leer.",
+      "manualInfo_2": "Für die Aktualisierung bestehender Daten müssen Sie die jeweilige 'UUID' des digitalen Zwillings eingeben."
     },
     "policies": {
       "title": "Policies",
+      "description": "Hier können Sie die Zugriffsrichtlinien verwalten, mit welchen Partnern Sie Ihre Daten teilen möchten.",
+      "description_1": "Wählen Sie aus, mit wem Sie die hochgeladenen Daten teilen möchten",
+      "description_1_1": "Uneingeschränkt: Jeder im Netzwerk kann die Daten sehen",
+      "description_1_2": "Eingeschränkt: nur für die ausgewählten Unternehmen sichtbar (Suche nach Name oder BPN)",
+      "description_2": "Wählen Sie die Dauer aus, wie lange Sie die Daten teilen möchten",
       "configure": "Nächster Schritt - Policies konfigurieren",
       "accessPolicy": "Zugang Policy",
       "restricted": "eingeschränkt",
@@ -137,6 +154,15 @@
         "state": "Status"
       }
     },
+    "dropzone": {
+      "title": "Dateien hierher ziehen",
+      "subTitle": "oder %wähle eine Datei% direkt aus.",
+      "errorTitle": "Es tut uns leid",
+      "placeholder": "",
+      "uploadError": "Not Uploaded",
+      "uploadSuccess": "Uploaded",
+      "uploadProgess": "Uploaded % of % files"
+    },
     "common": {
       "loading": "Laden...",
       "downloading": "Downloaden...",
@@ -150,7 +176,8 @@
       "enterValue": "Wert eingeben",
       "agree": "Ich stimme zu",
       "ownConnector": "Connector der eigenen Organisation:",
-      "collapseSidebar": "Seitenleiste einklappen"
+      "collapseSidebar": "Seitenleiste einklappen",
+      "introduction": "Einführung"
     }
   },
   "dialog": {
