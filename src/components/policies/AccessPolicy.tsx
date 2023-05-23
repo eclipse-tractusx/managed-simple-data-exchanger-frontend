@@ -159,11 +159,9 @@ export default function AccessPolicy() {
                   size="small"
                   onChangeItem={e => handleSearchTypeChange(e)}
                   items={ITEMS}
-                  value={searchFilterByType}
                   defaultValue={searchFilterByType}
                   disableClearable={true}
                   placeholder={t('content.consumeData.selectType')}
-                  hiddenLabel
                 />
               </Grid>
               <Grid item xs={4}>

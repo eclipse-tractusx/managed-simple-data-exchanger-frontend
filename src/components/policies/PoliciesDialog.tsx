@@ -171,7 +171,7 @@ export default function PoliciesDialog() {
         type: 'DURATION',
         typeOfAccess: duration,
         value: durationValue,
-        durationUnit: durationUnit,
+        durationUnit: durationUnit.value,
       },
       {
         type: 'ROLE',
@@ -267,7 +267,7 @@ export default function PoliciesDialog() {
         <UsagePolicy />
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
+        <Button variant="outlined" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
           {t('button.close')}
         </Button>
         <Button variant="contained" onClick={handleSubmitData} disabled={showError}>

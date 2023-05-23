@@ -20,7 +20,7 @@
 
 import { theme } from 'cx-portal-shared-components';
 
-import { IDefaultObject } from '../models/Common';
+import { IDefaultObject, ISelectList } from '../models/Common';
 
 const USER_GUIDE_URL = 'https://github.com/eclipse-tractusx/dft-frontend/blob/main/docs/user-guide/README.md';
 
@@ -42,7 +42,7 @@ const USER_TYPE_SWITCH: IDefaultObject = {
   consumer: 'provider',
 };
 
-const DURATION_UNITS = [
+const DURATION_UNITS: ISelectList[] = [
   {
     id: 0,
     title: 'Hour',
@@ -65,7 +65,7 @@ const DURATION_UNITS = [
   },
 ];
 
-const PURPOSE_VALUES = [
+const PURPOSE_VALUES: ISelectList[] = [
   {
     id: 0,
     title: 'ID 3.0 Trace',

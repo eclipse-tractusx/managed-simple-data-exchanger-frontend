@@ -399,8 +399,6 @@ export default function ConsumeData() {
             defaultValue={searchFilterByType}
             items={ITEMS}
             onChangeItem={e => handleSearchTypeChange(e)}
-            fullWidth
-            size="small"
             disableClearable={true}
           />
         </Grid>
@@ -498,8 +496,6 @@ export default function ConsumeData() {
                   label={t('content.consumeData.selectConnectors')}
                   placeholder={t('content.consumeData.selectConnectors')}
                   noOptionsText={t('content.consumeData.noConnectors')}
-                  fullWidth
-                  size="small"
                   defaultValue={filterSelectedConnector}
                   onChangeItem={e => dispatch(setFilterSelectedConnector(e))}
                   items={filterConnectors}

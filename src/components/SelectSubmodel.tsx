@@ -49,8 +49,6 @@ const SelectSubmodel = () => {
       keyTitle="title"
       label={t('content.provider.selectSubmodel')}
       defaultValue={selectedSubmodel}
-      fullWidth
-      size="small"
       onChangeItem={e => handleTypeChange(e)}
       items={submodelList}
       placeholder={t('content.provider.selectSubmodel')}

@@ -20,6 +20,7 @@
 
 import { Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack } from '@mui/material';
 import { Input, SelectList } from 'cx-portal-shared-components';
+import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 import { setDurationUnit, setPurposeValue } from '../../features/provider/policies/slice';
@@ -53,6 +54,8 @@ export default function UsagePolicyItem({
     if (constraintType === t('content.policies.duration')) {
       const result = ONLY_NUM_REGEX.test(inputFreeText);
       return !result;
+    } else if (constraintType === t('content.policies.purpose')) {
+      return isEmpty(purposeValue);
     } else if (restrictionType === 'RESTRICTED' && inputFreeText === '') {
       return true;
     }
@@ -94,14 +97,13 @@ export default function UsagePolicyItem({
                 <FormControl sx={{ minWidth: 150 }} size="small">
                   <SelectList
                     keyTitle="title"
-                    value={durationUnit}
-                    defaultValue={DURATION_UNITS[0]}
+                    defaultValue={durationUnit}
                     items={DURATION_UNITS}
                     label={t('content.policies.selectDuration')}
                     placeholder={t('content.policies.selectDuration')}
                     disableClearable={true}
                     onChangeItem={e => {
-                      dispatch(setDurationUnit(e.value));
+                      dispatch(setDurationUnit(e));
                     }}
                   />
                 </FormControl>
@@ -110,7 +112,6 @@ export default function UsagePolicyItem({
                 <FormControl sx={{ minWidth: 250 }} size="small">
                   <SelectList
                     keyTitle="title"
-                    value={purposeValue}
                     defaultValue={purposeValue}
                     items={PURPOSE_VALUES}
                     label={t('content.policies.purposeLabel')}

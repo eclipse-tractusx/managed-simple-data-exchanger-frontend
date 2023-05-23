@@ -22,4 +22,10 @@ interface IDefaultObject {
   [key: string]: string;
 }
 
-export type { IDefaultObject };
+interface ISelectList {
+  id: number;
+  title: string;
+  value: string;
+}
+
+export type { IDefaultObject, ISelectList };

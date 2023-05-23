@@ -17,11 +17,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-export interface ISelectList {
-  id: number;
-  title: string;
-  value: string;
-}
+import { ISelectList } from '../../../models/Common';
+
 export interface IAccessPolicyState {
   uploadUrl: string;
   uploadData: unknown;
@@ -39,6 +36,6 @@ export interface IAccessPolicyState {
   purposeValue: ISelectList;
   roleValue: string;
   customValue: string;
-  durationUnit: string;
+  durationUnit: ISelectList;
   showValidationError: boolean;
 }
