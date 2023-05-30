@@ -2,6 +2,18 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [Unreleased]
+
+### Added
+
+### Changes
+
+### Fixed
+
+- Export data issue in Provider & Consumer contracts fixed.
+- Select dropdown value persisting issue fixes everywhere.
+- Offer details popup: duration type added.
+- Error logs table row height fixes for larger data.
 ## [2.0.1] - 2023-05-23
 
 ### Added
@@ -37,12 +49,6 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Upload history page table component revamped.
 - Role, custom usage policies removed.
 - Table row design, titles and Status column design modified.
-
-### Changes
-
-- Upload history page table component revamped
-- Purpose, Role, custom usage policies removed
-- Table row design, titles and Status column design modified
 
 ### Fixed
 
