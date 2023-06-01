@@ -45,7 +45,7 @@ export default function CreateData() {
   return (
     <Box sx={{ flex: 1, p: 4 }}>
       <Typography variant="h3" mb={2}>
-        {t('pages.createData')}
+        {t('content.provider.heading')}
       </Typography>
       <Typography variant="body1">{t('content.provider.description_1')}</Typography>
       <Typography variant="body1">{t('content.provider.description_2')}</Typography>

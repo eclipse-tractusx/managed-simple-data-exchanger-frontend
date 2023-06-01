@@ -27,14 +27,14 @@ import { Trans } from 'react-i18next';
 import { useAppSelector } from '../features/store';
 
 export default function SubmodelInfo() {
-  const { previewTableHeadings, previewTableData, previewTableDescriptions, selectedSubmodel } = useAppSelector(
+  const { previewTableHeadings, previewTableData, previewTableDescriptions } = useAppSelector(
     state => state.submodelSlice,
   );
 
   return (
     <>
       <Typography variant="body1" fontWeight={'bold'} mb={2}>
-        <Trans i18nKey={'content.provider.previewTableTitle'} values={{ submodel: selectedSubmodel.title }} />
+        <Trans i18nKey={'content.provider.previewTableTitle'} />
       </Typography>
       <Box overflow={'scroll'} mb={3}>
         <table className="submodel-detail-table">
