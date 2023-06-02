@@ -64,7 +64,7 @@ SDE navigation is based on a header and a left-side menu.
 <img src="images/sde-header.png" alt="SDE header"/>
 
 1. On the left side on the header, there is the Simple Data Exchanger header text.
-2. On the right side of the header, there is the avatar of the logged-in user. When clicked, there are few information about the logged in user, Logout link and Language switching options will be visible.
+2. On the right side of the header, there is a help link. When clicked, it will redirect the user to simple data exchanger user guide. And there is avatar of the logged-in user. When clicked, there are few information about the logged in user, Logout link and Language switching options will be visible.
 
 ## **Left-side menu**
 
@@ -106,8 +106,8 @@ In this page, list of available submodels will be fetched dynamically and we can
 
 This dynamic UI implementation allows the flexibillity to support and manage multiple submodels in single SDE application and also eliminates the need of hard coded react components for the individual submodels.
 
-There are 3 data providing options in SDE i.e. CSV Upload, Tabular Upload and JSON upload.
-The top level Select submodel dropdown will be common for all of 3 tabs i.e. Upload File, Table, JSON. Based on the selected submodel user can download the respective CSV sample and template.
+There are 2 data providing options in SDE i.e. CSV Upload and Manual entry.
+The top level Select submodel dropdown will be common for all of 2 tabs i.e. Upload File, Manual entry. Based on the selected submodel user can download the respective CSV sample and template.
 
 This Create Data page combines all the Data provider options like
 
@@ -125,6 +125,7 @@ At the moment, Simple Data Exchanger supports data proving options for below lis
 - Part As Planned.
 - Single Level Bom As Planned.
 - Part Site Information As Planned.
+- Single Level Usage AsBuilt.
 
 You can click on the button "Choose a file" and select the proper CSV file present in your file system or you can just drag and drop your file in the drop area under upload file component.
 
@@ -171,7 +172,7 @@ This is the process of creating new data offer through SDE application by upload
 
 <img src="images/sde-single-level-usage-table.png" height="60%" width="60%" />
 
-You can add and submit multiple data offers via Tabular entry option for particular submodel by clicking on "Add Row" button to bulk upload the multiple data offers in one go. Once you enter details in all of the required fields for a particular row, you need to select which offers we need to upload by ticking the checkboxes for the respective rows and then we need to click on "NEXT STEP - CONFIGURE POLICIES" button to configure Access and Usage policies and then you need to click on Submit button from policy dialog to uplod the data. You can upload the data for multiple submodels by selecting the respective submodel from the top level Select submodel dropdwon.
+You can add and submit multiple data offers via Manual entry option for particular submodel by clicking on "Add Row" button to bulk upload the multiple data offers in one go. Once you enter details in all of the required fields for a particular row, you need to select which offers we need to upload by ticking the checkboxes for the respective rows and then we need to click on "NEXT STEP - CONFIGURE POLICIES" button to configure Access and Usage policies and then you need to click on Submit button from policy dialog to upload the data. You can upload the data for multiple submodels by selecting the respective submodel from the top level Select submodel dropdown.
 We also can delete multiple rows by selecting which rows we want to delete and then click on Delete Row(s) button.
 
 Then you need to configure Access and Usage policies by clicking on "NEXT STEP - CONFIGURE POLICIES" button and after successful configuration, click on Submit button from policy dialog to upload bulk data offers at once.
@@ -191,7 +192,7 @@ The table has the following columns:
 - Deleted(number of Successfully Deleted items)
 - Failed(number of failed items)
 - Status
-- Created Date
+- Start Date
 
 User can delete and download any uploaded data offer by clicking on the respective action icon present at the end of each row.
 The delete icon will only be visible if the Number of Deleted Items count is 0.
@@ -222,7 +223,7 @@ The table includes below columns:
 
 <img src="images/sde-help-page.png" height="60%" width="60%" />
 
-This dynamic help page provides the submodel informations of selected use case in the home page. if no use case selected, it will show all available submodels. User can see the the order of the fields and details of each field by hovering the info icon in each row. User can download the sample csv and csv template for any submodels as well from this page.
+This dynamic help page provides the submodel informations of selected use case in the home page. If no use case selected, it will show all available submodels. User can see the the order of the fields and details of each field by hovering the info icon in each row. User can download the sample csv and csv template for any submodels as well from this page.
 
 # **Consumer**
 
@@ -230,17 +231,14 @@ This dynamic help page provides the submodel informations of selected use case i
 
 <img src="images/sde-consume-data-page.png" height="60%" width="90%" />
 
-After clicking on the "Consume Data" link in the sidebar navigation menu, user will be redirected to this Consumer view page. On this page, we need to enter the URL of provider connector for which we need to search the already uploaded data or contract offers from provider view. After entering the provider URL, we need to click on "QUERY" button to search or fetch the list of contract offers catalogs. After the successful query operation, the below table will populate list of Contract offers. The table will show the basic meta data of the offers and include the below columns,
+After clicking on the "Consume Data" link in the sidebar navigation menu, user will be redirected to this Consumer view page. On this page, we need to enter the URL of provider connector for which we need to search the already uploaded data or contract offers from provider view. After entering the provider URL, we need to click on "Search" button to search or fetch the list of contract offers catalogs. After the successful query operation, the below table will populate list of Contract offers. The table will show the basic meta data of the offers and include the below columns,
 
 - Title (This is title of the data offer or name of the submodel);
 - Asset ID (ID of the Asset);
 - Created On (Created Date of the offer);
-- Publisher (Name of the provider or publisher organization);
-- Access Type (RESTRICTED or UNRESTRICTED);
-- BPN (Business Partner Number of the company which has access to the data offer);
 - Description (Description of the data offer);
 
-The table provides rich rest of convinient features like Filter by, Sorting, Global search, Pagination, Export.
+The table provides convinient features like Filter by, Sorting, Global search, Pagination, Export.
 
 <img src="images/offer-details-view-subscribe.png" height="40%" width="40%" />
 
