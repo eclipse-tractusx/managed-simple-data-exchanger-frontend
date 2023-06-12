@@ -33,7 +33,7 @@ export default function SubmodelInfo() {
 
   return (
     <>
-      <Typography variant="body1" fontWeight={'bold'} mb={2}>
+      <Typography variant="h5" fontWeight={'bold'} mb={2}>
         <Trans i18nKey={'content.provider.previewTableTitle'} />
       </Typography>
       <Box overflow={'scroll'} mb={3}>
