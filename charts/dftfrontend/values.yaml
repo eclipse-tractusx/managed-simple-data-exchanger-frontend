@@ -68,11 +68,11 @@ dft:
       path: /  
           
 ingresses:
-  - enabled: false
+  - enabled: "true"
     className: "nginx"
     annotations: 
      kubernetes.io/tls-acme: "true"
-    hostname: ""
+    hostname: dft.pen.int.demo.catena-x.net
     endpoints:
      - default
 
