@@ -20,10 +20,10 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/catenax-ng/tx-dft-frontend
+  repository: ghcr.io/catenax-ng/tx-managed-simple-data-exchanger-frontend
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "DST_PIP9_ITR3"
   
 serviceAccount:
   # Specifies whether a service account should be created
