@@ -21,8 +21,7 @@ import '../styles/submodelDetails.scss';
 
 import InfoIcon from '@mui/icons-material/Info';
 import { Box } from '@mui/material';
-import { Tooltips, Typography } from 'cx-portal-shared-components';
-import { Trans } from 'react-i18next';
+import { Tooltips } from 'cx-portal-shared-components';
 
 import { useAppSelector } from '../features/store';
 
@@ -33,10 +32,7 @@ export default function SubmodelInfo() {
 
   return (
     <>
-      <Typography variant="h5" fontWeight={'bold'} mb={2}>
-        <Trans i18nKey={'content.provider.previewTableTitle'} />
-      </Typography>
-      <Box overflow={'scroll'} mb={3}>
+      <Box overflow={'scroll'} mb={3} sx={{ background: 'white' }}>
         <table className="submodel-detail-table">
           <tbody>
             <tr>

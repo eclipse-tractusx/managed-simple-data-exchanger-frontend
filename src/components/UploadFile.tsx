@@ -102,7 +102,7 @@ export default function UploadFile() {
           {t('content.policies.configure')}
         </Button>
       </Box>
-      <Box sx={{ height: '60vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Box sx={{ mt: 3, mb: 4, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box {...getRootProps()}>
             <input {...getInputProps()} />

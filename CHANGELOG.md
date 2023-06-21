@@ -8,12 +8,14 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 
 ### Changes
 
+- Collapsible submodel info table section
 ### Fixed
 
 - Export data issue in Provider & Consumer contracts fixed.
 - Select dropdown value persisting issue fixes everywhere.
 - Offer details popup: duration type added.
 - Error logs table row height fixes for larger data.
+
 ## [2.0.1] - 2023-05-23
 
 ### Added
