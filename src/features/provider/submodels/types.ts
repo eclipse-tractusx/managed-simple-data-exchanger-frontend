@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 FEV Consulting GmbH
+ * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -36,6 +36,9 @@ export interface ISubmodelsSlice {
   selectionModel: GridSelectionModel;
   selectedRows: GridValidRowModel[];
   jsonInputData: string;
+  previewTableHeadings: string[];
+  previewTableDescriptions: string[];
+  previewTableData: string[][];
 }
 
 export interface HelpPageData {

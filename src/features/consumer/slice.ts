@@ -31,7 +31,7 @@ const initialState: IConsumerSlice = {
   selectedOffer: null,
   isMultipleContractSubscription: false,
   // search filter
-  searchFilterByType: '',
+  searchFilterByType: {},
   filterProviderUrl: '',
   filterCompanyOptions: [],
   filterCompanyOptionsLoading: false,
@@ -71,7 +71,7 @@ export const consumerSlice = createSlice({
     setIsMultipleContractSubscription: (state, action: PayloadAction<boolean>) => {
       state.isMultipleContractSubscription = action.payload;
     },
-    setSearchFilterByType: (state, action: PayloadAction<string>) => {
+    setSearchFilterByType: (state, action: PayloadAction<IntConnectorItem>) => {
       state.searchFilterByType = action.payload;
     },
     setFilterProviderUrl: (state, action: PayloadAction<string>) => {

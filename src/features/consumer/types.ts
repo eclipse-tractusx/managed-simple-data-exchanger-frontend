@@ -60,8 +60,8 @@ export interface ILegalentity {
   bpn?: string;
   identifiers?: unknown[];
   names?: ILegalEntityName[];
-  legalForm?: null | unknown;
-  status?: null | unknown;
+  legalForm?: unknown;
+  status?: unknown;
 }
 export interface ILegalEntityContent {
   score?: number;
@@ -104,12 +104,6 @@ export interface IContractAgreements {
   dateUpdated: number;
 }
 
-export interface IntOption {
-  _id: number | string;
-  bpn: string;
-  value: string;
-}
-
 export interface IntConnectorItem {
   id: number;
   value: string;
@@ -122,7 +116,7 @@ export interface IConsumerSlice {
   selectedOffersList: IConsumerDataOffers[];
   selectedOffer: IConsumerDataOffers;
   isMultipleContractSubscription: boolean;
-  searchFilterByType: string;
+  searchFilterByType: Partial<IntConnectorItem>;
   filterProviderUrl: string;
   filterCompanyOptions: IntOption[];
   filterCompanyOptionsLoading: boolean;

@@ -33,7 +33,7 @@ export default function UsagePolicy() {
 
   return (
     <>
-      <Typography>{t('content.policies.usagePolicy')}</Typography>
+      <Typography fontWeight={'bold'}>{t('content.policies.usagePolicy')}</Typography>
       <Box sx={{ mt: 2 }}>
         <UsagePolicyItem
           restrictionType={duration}

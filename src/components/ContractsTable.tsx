@@ -22,7 +22,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, Grid } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Tooltips, Typography } from 'cx-portal-shared-components';
-import _ from 'lodash';
+import { capitalize } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -46,7 +46,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
 
   const renderContractAgreementStatus = (params: GridRenderCellParams) => (
     <Typography color={STATUS_COLOR_MAPPING[params.value]} variant="body2">
-      {_.capitalize(params.value)}
+      {capitalize(params.value)}
     </Typography>
   );
 
@@ -220,6 +220,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                   toolbar: {
                     showQuickFilter: true,
                     quickFilterProps: { debounceMs: 500 },
+                    printOptions: { disableToolbarButton: true },
                   },
                 }}
                 disableColumnMenu

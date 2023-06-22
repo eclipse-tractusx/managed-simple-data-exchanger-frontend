@@ -30,7 +30,7 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import _ from 'lodash';
+import { inRange } from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -113,7 +113,7 @@ export default function AccessPolicy() {
   const [validateBpn, { isLoading, data }] = useValidateBpnMutation();
   const [addBpnPrompt, setAddBpnPrompt] = useState(false);
   const handleAddBpn = async () => {
-    if (_.inRange(inputBpn.length, 1, 16)) {
+    if (inRange(inputBpn.length, 1, 16)) {
       setbpnError(true);
     } else {
       setbpnError(false);
@@ -135,7 +135,7 @@ export default function AccessPolicy() {
 
   return (
     <>
-      <Typography>{t('content.policies.accessPolicy')}</Typography>
+      <Typography fontWeight={'bold'}>{t('content.policies.accessPolicy')}</Typography>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
@@ -159,11 +159,9 @@ export default function AccessPolicy() {
                   size="small"
                   onChangeItem={e => handleSearchTypeChange(e)}
                   items={ITEMS}
-                  value={searchFilterByType}
                   defaultValue={searchFilterByType}
                   disableClearable={true}
                   placeholder={t('content.consumeData.selectType')}
-                  hiddenLabel
                 />
               </Grid>
               <Grid item xs={4}>

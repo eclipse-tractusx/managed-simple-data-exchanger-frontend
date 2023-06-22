@@ -23,7 +23,7 @@ import '../styles/home.scss';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Avatar, Box, FormControl, Grid, Stack } from '@mui/material';
 import { Button, Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { DataExchangeStepper } from '../components/DataExchangeStepper';
@@ -35,8 +35,8 @@ import { ISubmodelList } from '../features/provider/submodels/types';
 import { removeSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
-
-const userGuideUrl = 'https://github.com/catenax-ng/tx-dft-frontend/tree/main/docs/user-guide';
+import { USER_GUIDE_URL } from '../utils/constants';
+import { openInNewTab } from '../utils/utils';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0);
@@ -48,41 +48,67 @@ export default function Home() {
     dispatch(fetchUseCases());
   }, [dispatch]);
 
-  const handleUseCaseChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Clearing all the ongoing uploads
-    dispatch(setSelectedSubmodel({} as ISubmodelList));
-    dispatch(setUploadStatus(true));
-    dispatch(clearRows());
-    dispatch(removeSelectedFiles());
+  const handleUseCaseChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      // Clearing all the ongoing uploads
+      dispatch(setSelectedSubmodel({} as ISubmodelList));
+      dispatch(setUploadStatus(true));
+      dispatch(clearRows());
+      dispatch(removeSelectedFiles());
 
-    const { value, checked } = event.target;
-    if (checked) {
-      dispatch(setSelectedUseCases([...selectedUseCases, value]));
-    } else {
-      dispatch(setSelectedUseCases(selectedUseCases.filter((e: string) => e !== value)));
-    }
-  };
+      const { value, checked } = event.target;
+      if (checked) {
+        dispatch(setSelectedUseCases([...selectedUseCases, value]));
+      } else {
+        dispatch(setSelectedUseCases(selectedUseCases.filter((e: string) => e !== value)));
+      }
+    },
+    [dispatch, selectedUseCases],
+  );
 
   const handleTabChange = (_event: SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
-  const openInNewTab = (url: string) => {
-    window.open(url, '_blank');
-  };
-
   return (
     <Box sx={{ flex: 1, p: 4 }}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={12}>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
           <Typography variant="h3">{t('content.home.header')}</Typography>
-          <Typography variant="body1" mt={2}>
+          <Typography variant="body1" my={2}>
             {loggedInUser.company}
           </Typography>
+          <Typography variant="h4" mb={1}>
+            {t('content.common.introduction')}
+          </Typography>
+          <Box>
+            <Typography>{t('content.home.sdeDescription')}</Typography>
+            <Button
+              variant="text"
+              size="medium"
+              onClick={() => openInNewTab(USER_GUIDE_URL)}
+              endIcon={<ArrowForwardIcon />}
+              sx={{
+                p: 0,
+                mt: 2,
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  textDecoration: 'underline',
+                },
+              }}
+            >
+              {t('content.home.accessDescription')}
+            </Button>
+          </Box>
+        </Grid>
+        <Grid item xs={6}>
+          <Box>
+            <img src="images/sde.png" width={'100%'} />
+          </Box>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h4" mb={1}>
-            {t('content.home.selectUsecasesHeader')}
+          <Typography variant="h4" mt={3} mb={1}>
+            {t('content.home.selectUsecasesHeader')} (optional)
           </Typography>
           <Typography variant="body1" maxWidth={1000}>
             {t('content.home.selectUsecasesSubheader')}
@@ -110,8 +136,13 @@ export default function Home() {
             </Stack>
           </FormControl>
         </Grid>
-        <Grid item xs={12} mt={5}>
-          <Typography variant="h4">{t('content.home.exchangeDataHeader')}</Typography>
+        <Grid item xs={12} my={5}>
+          <Typography variant="h4" mb={1}>
+            {t('content.home.exchangeDataHeader')}
+          </Typography>
+          <Typography variant="body1" maxWidth={1000}>
+            {t('content.home.exchangeDataDescription')}
+          </Typography>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
             <Tabs
               value={activeTab}
@@ -131,31 +162,6 @@ export default function Home() {
               <DataExchangeStepper data={consumeDataSteps} />
             </TabPanel>
           </Box>
-        </Grid>
-        <Grid item xs={12} mt={5}>
-          <Box mt={4} className="video-wrapper">
-            <img src="images/sde.png" width={700} />
-            <img src="images/play.png" className="playIcon" />
-          </Box>
-        </Grid>
-        <Grid item xs={6} pt={0}>
-          <Typography>{t('content.home.sdeDescription')}</Typography>
-          <Button
-            variant="text"
-            size="medium"
-            onClick={() => openInNewTab(userGuideUrl)}
-            endIcon={<ArrowForwardIcon />}
-            sx={{
-              p: 0,
-              mt: 2,
-              '&:hover': {
-                backgroundColor: 'transparent',
-                textDecoration: 'underline',
-              },
-            }}
-          >
-            {t('content.home.learnSde')}
-          </Button>
         </Grid>
       </Grid>
     </Box>

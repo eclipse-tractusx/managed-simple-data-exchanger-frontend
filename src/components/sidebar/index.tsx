@@ -48,13 +48,17 @@ export default function Sidebar() {
         }}
       >
         <Box>
-          {MenuItems.map((menuItem, index) => (
-            <Box key={index}>
+          {MenuItems.map(menuItem => (
+            <Box key={menuItem.text}>
               {/* Menu heading */}
-              {menuItem.isHeading ? <MenuItemHeading text={menuItem.text} /> : <MenuItem key={index} item={menuItem} />}
+              {menuItem.isHeading ? (
+                <MenuItemHeading text={menuItem.text} />
+              ) : (
+                <MenuItem key={menuItem.text} item={menuItem} />
+              )}
               {/* Menu children */}
-              {menuItem.childrens?.map((children, k) => (
-                <MenuItem key={k} item={children} />
+              {menuItem.childrens?.map(children => (
+                <MenuItem key={children.text} item={children} />
               ))}
             </Box>
           ))}

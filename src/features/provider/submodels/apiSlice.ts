@@ -17,14 +17,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import _ from 'lodash';
+import { indexOf } from 'lodash';
 
 import { apiSlice } from '../../app/apiSlice';
 import { setPageLoading } from '../../app/slice';
 
 export const helpApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getHelpPageData: builder.query({
       query: params => {
         return {
@@ -43,7 +42,7 @@ export const helpApiSlice = apiSlice.injectEndpoints({
             rows: Object.entries(submodel.items.properties).map(([key, value]: any, index) => ({
               id: index,
               name: key,
-              mandatory: _.indexOf(submodel.items.required, key) > -1 ? 'true' : 'false',
+              mandatory: indexOf(submodel.items.required, key) > -1 ? 'true' : 'false',
               order: index + 1,
               description: value.description,
             })),

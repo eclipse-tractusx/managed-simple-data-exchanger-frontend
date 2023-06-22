@@ -20,9 +20,12 @@
 
 import { theme } from 'cx-portal-shared-components';
 
-interface IDefaultObject {
-  [key: string]: string;
-}
+import { IDefaultObject, ISelectList } from '../models/Common';
+
+const USER_GUIDE_URL = 'https://github.com/eclipse-tractusx/dft-frontend/blob/main/docs/user-guide/README.md';
+
+const ONLY_NUM_REGEX = /^[1-9]\d*$/;
+
 const CONTRACT_STATES: string[] = ['CONFIRMED', 'DECLINED', 'ERROR'];
 
 const STATUS_COLOR_MAPPING: IDefaultObject = {
@@ -39,7 +42,7 @@ const USER_TYPE_SWITCH: IDefaultObject = {
   consumer: 'provider',
 };
 
-const DURATION_UNITS = [
+const DURATION_UNITS: ISelectList[] = [
   {
     id: 0,
     title: 'Hour',
@@ -62,7 +65,7 @@ const DURATION_UNITS = [
   },
 ];
 
-const PURPOSE_VALUES = [
+const PURPOSE_VALUES: ISelectList[] = [
   {
     id: 0,
     title: 'ID 3.0 Trace',
@@ -70,4 +73,12 @@ const PURPOSE_VALUES = [
   },
 ];
 
-export { CONTRACT_STATES, DURATION_UNITS, PURPOSE_VALUES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH };
+export {
+  CONTRACT_STATES,
+  DURATION_UNITS,
+  ONLY_NUM_REGEX,
+  PURPOSE_VALUES,
+  STATUS_COLOR_MAPPING,
+  USER_GUIDE_URL,
+  USER_TYPE_SWITCH,
+};

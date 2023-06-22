@@ -19,8 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Button, Dialog, DialogActions, DialogContent, DialogHeader } from 'cx-portal-shared-components';
-import _ from 'lodash';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
+import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -79,7 +79,7 @@ export default function PoliciesDialog() {
 
   useEffect(() => {
     const durationCheck = duration === 'RESTRICTED' && durationValue === '';
-    const purposeCheck = purpose === 'RESTRICTED' && _.isEmpty(purposeValue);
+    const purposeCheck = purpose === 'RESTRICTED' && isEmpty(purposeValue);
     const roleCheck = role === 'RESTRICTED' && roleValue === '';
     const customCheck = custom === 'RESTRICTED' && customValue === '';
     setshowError(() => durationCheck || purposeCheck || roleCheck || customCheck);
@@ -171,7 +171,7 @@ export default function PoliciesDialog() {
         type: 'DURATION',
         typeOfAccess: duration,
         value: durationValue,
-        durationUnit: durationUnit,
+        durationUnit: durationUnit.value,
       },
       {
         type: 'ROLE',
@@ -244,11 +244,30 @@ export default function PoliciesDialog() {
         title={t('content.policies.title')}
       />
       <DialogContent>
+        <Typography variant="body2">
+          <b>{t('content.policies.description')}</b>
+        </Typography>
+        <ol style={{ padding: '0 0 16px 16px' }}>
+          <li>
+            <Typography variant="body2">{t('content.policies.description_1')}</Typography>
+            <ul style={{ listStyleType: 'disc' }}>
+              <li>
+                <Typography variant="body2">{t('content.policies.description_1_1')}</Typography>
+              </li>
+              <li>
+                <Typography variant="body2">{t('content.policies.description_1_2')}</Typography>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <Typography variant="body2">{t('content.policies.description_2')}</Typography>
+          </li>
+        </ol>
         <AccessPolicy />
         <UsagePolicy />
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
+        <Button variant="outlined" sx={{ mr: 2 }} onClick={() => dispatch(handleDialogClose())}>
           {t('button.close')}
         </Button>
         <Button variant="contained" onClick={handleSubmitData} disabled={showError}>

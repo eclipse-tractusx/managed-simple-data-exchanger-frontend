@@ -38,7 +38,7 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import { debounce } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
@@ -61,13 +61,19 @@ import {
   setSelectedOffer,
   setSelectedOffersList,
 } from '../features/consumer/slice';
-import { IConnectorResponse, IConsumerDataOffers, ILegalEntityContent, IntOption } from '../features/consumer/types';
+import {
+  IConnectorResponse,
+  IConsumerDataOffers,
+  ILegalEntityContent,
+  IntConnectorItem,
+  IntOption,
+} from '../features/consumer/types';
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { arraysEqual, handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import ConsumerService from '../services/ConsumerService';
 
-const ITEMS = [
+const ITEMS: IntConnectorItem[] = [
   {
     id: 1,
     title: 'Company Name',
@@ -84,6 +90,15 @@ const ITEMS = [
     value: 'url',
   },
 ];
+
+function NoDataPlaceholder(text: string) {
+  const { t } = useTranslation();
+  return (
+    <Stack height="100%" alignItems="center" justifyContent="center">
+      {t(text)}
+    </Stack>
+  );
+}
 
 export default function ConsumeData() {
   const {
@@ -145,84 +160,58 @@ export default function ConsumeData() {
     }
   };
 
-  /**
-   * Handle offer details dialog action button event
-   * @param type: 'close', 'subscribe': type of button
-   */
-  const handleDetailsButtonEvent = (type: string) => {
-    if (type === 'close') {
-      toggleDialog(false);
-    } else if (type === 'subscribe') {
-      // open policy dialog
-      setIsOpenOfferConfirmDialog(true);
-    }
-  };
-
-  /**
-   * Toggle terms and condition confirm dialog
-   * @param flag: 'close', 'confirm': type of button
-   */
-  const handleConfirmTermDialog = async (flag: string) => {
-    if (flag === 'close') {
-      setIsOpenOfferConfirmDialog(false);
-    } else if (flag === 'confirm') {
-      try {
-        let payload;
-        const offersList: unknown[] = [];
-        // multiselect or single selecte
-        if (isMultipleContractSubscription) {
-          selectedOffersList.forEach((offer: IConsumerDataOffers) => {
-            offersList.push({
-              offerId: offer.offerId || '',
-              assetId: offer.assetId || '',
-              policyId: offer.policyId || '',
-            });
-          });
-          payload = {
-            connectorId: selectedOffersList[0].connectorId,
-            providerUrl:
-              searchFilterByType === 'company' || searchFilterByType === 'bpn'
-                ? filterSelectedConnector.value
-                : filterProviderUrl,
-            offers: offersList,
-            policies: selectedOffersList[0].usagePolicies,
-          };
-        } else {
-          const { usagePolicies, offerId, assetId, policyId, connectorId } = selectedOffer;
+  const handleConfirmTermDialog = async () => {
+    try {
+      let payload;
+      const offersList: unknown[] = [];
+      // multiselect or single selecte
+      if (isMultipleContractSubscription) {
+        selectedOffersList.forEach((offer: IConsumerDataOffers) => {
           offersList.push({
-            offerId: offerId || '',
-            assetId: assetId || '',
-            policyId: policyId || '',
+            offerId: offer.offerId || '',
+            assetId: offer.assetId || '',
+            policyId: offer.policyId || '',
           });
-          payload = {
-            connectorId: connectorId,
-            providerUrl:
-              searchFilterByType === 'company' || searchFilterByType === 'bpn'
-                ? filterSelectedConnector.value
-                : filterProviderUrl,
-            offers: offersList,
-            policies: usagePolicies,
-          };
-        }
-        setIsOfferSubLoading(true);
-        const response = await ConsumerService.getInstance().subscribeToOffers(payload);
-        setIsOfferSubLoading(false);
-        if (response.status == 200) {
-          dispatch(
-            setSnackbarMessage({
-              message: 'alerts.subscriptionSuccess',
-              type: 'success',
-            }),
-          );
-          setIsOpenOfferDialog(false);
-          setIsOpenOfferConfirmDialog(false);
-          dispatch(setIsMultipleContractSubscription(false));
-          dispatch(setSelectedOffer(null));
-          dispatch(setSelectedOffersList([]));
-          setSelectionModel([]);
-        }
-      } finally {
+        });
+        payload = {
+          connectorId: selectedOffersList[0].connectorId,
+          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
+          offers: offersList,
+          policies: selectedOffersList[0].usagePolicies,
+        };
+      } else {
+        const { usagePolicies, offerId, assetId, policyId, connectorId } = selectedOffer;
+        offersList.push({
+          offerId: offerId || '',
+          assetId: assetId || '',
+          policyId: policyId || '',
+        });
+        payload = {
+          connectorId: connectorId,
+          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
+          offers: offersList,
+          policies: usagePolicies,
+        };
       }
+      setIsOfferSubLoading(true);
+      const response = await ConsumerService.getInstance().subscribeToOffers(payload);
+      setIsOfferSubLoading(false);
+      if (response.status == 200) {
+        dispatch(
+          setSnackbarMessage({
+            message: 'alerts.subscriptionSuccess',
+            type: 'success',
+          }),
+        );
+        setIsOpenOfferDialog(false);
+        setIsOpenOfferConfirmDialog(false);
+        dispatch(setIsMultipleContractSubscription(false));
+        dispatch(setSelectedOffer(null));
+        dispatch(setSelectedOffersList([]));
+        setSelectionModel([]);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -234,7 +223,7 @@ export default function ConsumeData() {
   const fetchConsumerDataOffers = async () => {
     try {
       let providerUrl = '';
-      if (searchFilterByType === 'company' || searchFilterByType === 'bpn') {
+      if (searchFilterByType.value === 'company' || searchFilterByType.value === 'bpn') {
         providerUrl = filterSelectedConnector.value;
       } else {
         providerUrl = filterProviderUrl;
@@ -258,7 +247,7 @@ export default function ConsumeData() {
 
   // enter key fetch data
   const handleKeypress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.keyCode === 13 || e.code == 'Enter') {
+    if (['Enter', 'NumpadEnter'].includes(e.key)) {
       await fetchConsumerDataOffers();
     }
   };
@@ -316,7 +305,7 @@ export default function ConsumeData() {
   };
 
   // on change search type filter option
-  const handleSearchTypeChange = (value: string) => {
+  const handleSearchTypeChange = (value: IntConnectorItem) => {
     dispatch(setSearchFilterByType(value));
     dispatch(setSelectedFilterCompanyOption(null));
     dispatch(setFilterProviderUrl(''));
@@ -345,7 +334,8 @@ export default function ConsumeData() {
         });
         dispatch(setFilterConnectors(optionConnectors));
       }
-    } finally {
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -378,7 +368,7 @@ export default function ConsumeData() {
     dispatch(setSelectedOffer(null));
     dispatch(setSelectedOffersList([]));
     setSelectionModel([]);
-    dispatch(setSearchFilterByType('company'));
+    dispatch(setSearchFilterByType(ITEMS[0]));
     dispatch(setSelectedFilterCompanyOption(null));
     dispatch(setFilterCompanyOptions([]));
     dispatch(setFilterProviderUrl(''));
@@ -405,19 +395,15 @@ export default function ConsumeData() {
           <SelectList
             keyTitle="title"
             label={t('content.consumeData.selectType')}
-            fullWidth
-            size="small"
-            onChangeItem={e => handleSearchTypeChange(e ? e.value : '')}
-            items={ITEMS}
-            defaultValue={ITEMS[0]}
-            disableClearable={true}
             placeholder={t('content.consumeData.selectType')}
-            value={searchFilterByType}
-            hiddenLabel
+            defaultValue={searchFilterByType}
+            items={ITEMS}
+            onChangeItem={e => handleSearchTypeChange(e)}
+            disableClearable={true}
           />
         </Grid>
         <Grid item xs={6}>
-          {searchFilterByType === 'url' ? (
+          {searchFilterByType.value === 'url' ? (
             <Input
               value={filterProviderUrl}
               type="url"
@@ -431,7 +417,7 @@ export default function ConsumeData() {
           ) : (
             <Grid container spacing={1} alignItems="flex-end">
               <Grid item xs={7}>
-                {searchFilterByType === 'bpn' ? (
+                {searchFilterByType.value === 'bpn' ? (
                   <Input
                     value={filterSelectedBPN}
                     type="text"
@@ -460,7 +446,8 @@ export default function ConsumeData() {
                     }}
                     onInputChange={debounce(async (event, newInputValue) => {
                       await onChangeSearchInputValue(newInputValue);
-                    }, 1000)}
+                    })}
+                    onSelect={() => setSearchOpen(false)}
                     onBlur={() => setSearchOpen(false)}
                     onClose={() => setSearchOpen(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
@@ -504,13 +491,12 @@ export default function ConsumeData() {
               <Grid item xs={5}>
                 <SelectList
                   key={conKey}
-                  disabled={!Boolean(filterConnectors.length)}
+                  disabled={!filterConnectors.length}
                   keyTitle="title"
                   label={t('content.consumeData.selectConnectors')}
                   placeholder={t('content.consumeData.selectConnectors')}
                   noOptionsText={t('content.consumeData.noConnectors')}
-                  fullWidth
-                  size="small"
+                  defaultValue={filterSelectedConnector}
                   onChangeItem={e => dispatch(setFilterSelectedConnector(e))}
                   items={filterConnectors}
                 />
@@ -523,9 +509,7 @@ export default function ConsumeData() {
             <LoadingButton
               color="primary"
               variant="contained"
-              disabled={
-                filterSelectedConnector ? filterSelectedConnector.value === '' : false || filterProviderUrl.length === 0
-              }
+              disabled={isEmpty(filterSelectedConnector) && isEmpty(filterProviderUrl)}
               label={t('button.search')}
               loadIndicator={t('content.common.loading')}
               onButtonClick={fetchConsumerDataOffers}
@@ -566,16 +550,8 @@ export default function ConsumeData() {
             components={{
               Toolbar: GridToolbar,
               LoadingOverlay: LinearProgress,
-              NoRowsOverlay: () => (
-                <Stack height="100%" alignItems="center" justifyContent="center">
-                  {t('content.common.noData')}
-                </Stack>
-              ),
-              NoResultsOverlay: () => (
-                <Stack height="100%" alignItems="center" justifyContent="center">
-                  {t('content.common.noResults')}
-                </Stack>
-              ),
+              NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+              NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
             }}
             componentsProps={{
               toolbar: {
@@ -607,7 +583,8 @@ export default function ConsumeData() {
           <OfferDetailsDialog
             open={isOpenOfferDialog}
             offerObj={selectedOffersList[0]}
-            handleButtonEvent={handleDetailsButtonEvent}
+            handleConfirm={setIsOpenOfferConfirmDialog}
+            handleClose={toggleDialog}
             isMultiple
           />
           <ConfirmTermsDialog
@@ -618,7 +595,8 @@ export default function ConsumeData() {
             }}
             isProgress={isOfferSubLoading}
             open={isOpenOfferConfirmDialog}
-            handleButtonEvent={handleConfirmTermDialog}
+            handleConfirm={handleConfirmTermDialog}
+            handleClose={setIsOpenOfferConfirmDialog}
           />
         </>
       )}
@@ -627,7 +605,8 @@ export default function ConsumeData() {
           <OfferDetailsDialog
             open={isOpenOfferDialog}
             offerObj={selectedOffer}
-            handleButtonEvent={handleDetailsButtonEvent}
+            handleConfirm={setIsOpenOfferConfirmDialog}
+            handleClose={toggleDialog}
           />
           <ConfirmTermsDialog
             offerObj={{
@@ -637,7 +616,8 @@ export default function ConsumeData() {
             }}
             isProgress={isOfferSubLoading}
             open={isOpenOfferConfirmDialog}
-            handleButtonEvent={handleConfirmTermDialog}
+            handleConfirm={handleConfirmTermDialog}
+            handleClose={setIsOpenOfferConfirmDialog}
           />
         </>
       )}

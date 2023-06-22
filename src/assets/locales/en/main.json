@@ -14,9 +14,11 @@
   "content": {
     "home": {
       "header": "Home",
+      "accessDescription": "Access detailed user description",
       "selectUsecasesHeader": "Select your use cases",
       "selectUsecasesSubheader": "You may select one or more use cases that interest you. Only those submodels will be displayed in successive steps that are relevant for the selected use cases. When you don’t make a selection, all submodels will be displayed.",
       "exchangeDataHeader": "Exchange your data",
+      "exchangeDataDescription": "Below you see an overview of the steps you need to proceed in order to provide data or consume data. You can use the provided links to directly access the information or functions needed regarding the respective step.",
       "provideDataTab": "Provide data",
       "consumeDataTab": "Consume data",
       "provideDataStep": {
@@ -30,25 +32,40 @@
         "subscribeDataOffer": "Subscribe to data contract offer",
         "manageContracts": "View & manage contracts"
       },
-      "sdeDescription": "Simple Data Exchanger is your easy way to publish data in the Catena-X network. It makes your automotive data available to other participants respecting your individual access and usage rules. It allows you to discover data of other participants and to establish data contracts, so that you can access their data within the use cases that interest you.",
+      "sdeDescription": "Simple Data Exchanger is your easy way to provide and consume data within the Catena-X network. It makes your data available to other participants respecting your individual access and usage rules. It allows you to discover data of other participants and to establish data contracts, so that you can access their data within the use cases that interest you.",
       "learnSde": "Learn how it works"
     },
     "provider": {
-      "description": "Provide data to the Catena-X ecosystem in the format of digital twin submodels so that it can be found & accessed by other companies. The data will be uploaded and offered via the Eclipse Dataspace Connector (EDC) and the Digital Twin Registry (DTR). You can provide data via three different ways – upload as CSV file, enter in table or enter in JSON format.",
+      "description_1": "At first you need to select the data model you want to upload from 'Select Submodel'.",
+      "description_2": "As second step you must select the way of uploading data:",
+      "description_2_1": "Upload File (via .csv-upload)",
+      "description_2_2": "Manual Upload (via direct input in table-format)",
       "placeHolder": "Please select a submodel (use case) for creating data.",
       "selectSubmodel": "Select Submodel",
       "uploadFile": "Upload File",
-      "table": "Table",
+      "uploadedFile": "Uploaded File",
+      "table": "Manual entry",
       "json": "JSON",
       "uploadInstruction": "Upload your file by dropping it here.",
       "selectedFile": "Selected File",
       "dropFile": "Drop it like it's hot :)",
       "dropInstruction": "Upload your file by dropping it here.",
       "addRow": "Add row",
-      "deleteRow": "Delete row(s)"
+      "deleteRow": "Delete row(s)",
+      "previewTableTitle": "Preview of {{ submodel }} Submodel including help description",
+      "uploadStep_1": "1. Choose the file you want to upload.",
+      "uploadStep_2": "2. Click on “Next Step – Configure Policies” to manage with whom to share your data and register the digital twin(s)",
+      "manualStep_1": "1. For manual entries click 'add a row' and enter the values by clicking inside the respective fields.",
+      "manualInfo_1": "For creating new data leave the field 'UUID' empty.",
+      "manualInfo_2": "For updating existing data you need to enter the respective 'UUID' of the digital twin."
     },
     "policies": {
       "title": "Policies",
+      "description": "Here you can manage the access policies with which partner you want to share your data.",
+      "description_1": "Select with whom you want to share the uploaded data",
+      "description_1_1": "Unrestricted: everybody within the network can see the data",
+      "description_1_2": "Restricted: only visible to the selected companies (search by name or BPN)",
+      "description_2": "Select the duration for how long you want to share the data",
       "configure": "Next Step - Configure Policies",
       "accessPolicy": "Access Policy",
       "restricted": "Restricted",
@@ -138,6 +155,15 @@
         "state": "Status"
       }
     },
+    "dropzone": {
+      "title": "Drag & drop your files here",
+      "subTitle": "or %browse files% on your computer.",
+      "errorTitle": "Sorry",
+      "placeholder": "",
+      "uploadError": "Not Uploaded",
+      "uploadSuccess": "Uploaded",
+      "uploadProgess": "Uploaded % of % files"
+    },
     "common": {
       "loading": "Loading...",
       "downloading": "Downloading...",
@@ -151,7 +177,8 @@
       "enterValue": "Enter a value",
       "agree": "I agree",
       "ownConnector": "Connector of own organization:",
-      "collapseSidebar": "Collapse sidebar"
+      "collapseSidebar": "Collapse sidebar",
+      "introduction": "Introduction"
     }
   },
   "dialog": {

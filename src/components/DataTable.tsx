@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { addRows, deleteRows, setRows, setSelectionModel } from '../features/provider/submodels/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { schemaValidator } from '../helpers/SchemaValidator';
+import InfoSteps from './InfoSteps';
 
 export default function DataTable() {
   const { submodelDetails, columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
@@ -33,6 +34,11 @@ export default function DataTable() {
 
   return (
     <Box>
+      <InfoSteps
+        icon="info"
+        steps={['content.provider.manualStep_1', 'content.provider.uploadStep_2']}
+        sx={{ mb: 3 }}
+      />
       <Box display="flex" justifyContent="space-between" mb={3}>
         <Box>
           <Button variant="contained" size="small" onClick={() => dispatch(addRows())}>
@@ -43,20 +49,13 @@ export default function DataTable() {
             size="small"
             onClick={() => dispatch(deleteRows())}
             sx={{ ml: 2 }}
-            disabled={!Boolean(selectedRows.length)}
+            disabled={!selectedRows.length}
           >
             {t('content.provider.deleteRow')}
           </Button>
         </Box>
         <Box>
-          <Button
-            variant="contained"
-            size="small"
-            disabled={!Boolean(rows.length)}
-            onClick={() => {
-              schemaValidator(rows);
-            }}
-          >
+          <Button variant="contained" size="small" disabled={!rows.length} onClick={() => schemaValidator(rows)}>
             {t('content.policies.configure')}
           </Button>
         </Box>
@@ -101,6 +100,11 @@ export default function DataTable() {
             display: 'none',
           },
         }}
+      />
+      <InfoSteps
+        icon="tips"
+        steps={['content.provider.manualInfo_1', 'content.provider.manualInfo_2']}
+        sx={{ mt: 3 }}
       />
     </Box>
   );

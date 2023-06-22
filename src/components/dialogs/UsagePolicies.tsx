@@ -8,9 +8,9 @@ function UsagePolicies({ usagePolicies }: { usagePolicies: IUsageControl[] }) {
   const { t } = useTranslation();
   return (
     <>
-      {usagePolicies.map((item, index) => {
+      {usagePolicies.map(item => {
         return (
-          <Grid item xs={6} sx={{ mb: 1 }} key={index}>
+          <Grid item xs={6} sx={{ mb: 1 }} key={item.type}>
             <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
               {item.type.toLowerCase()}
             </Typography>
