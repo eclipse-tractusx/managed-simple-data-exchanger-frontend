@@ -19,7 +19,7 @@
  ********************************************************************************/
 import { Refresh } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, LinearProgress } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Tooltips, Typography } from 'cx-portal-shared-components';
 import { capitalize } from 'lodash';
@@ -32,6 +32,7 @@ import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH } from '../utils/constants';
 import { convertEpochToDate } from '../utils/utils';
+import NoDataPlaceholder from './NoDataPlaceholder';
 
 interface IContractsTable {
   type: string;
@@ -84,10 +85,10 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
       valueGetter: ({ row }) => row.contractAgreementInfo,
-      valueFormatter: ({ value }) => value.assetId,
+      valueFormatter: ({ value }) => value?.assetId,
       renderCell: ({ row }) => (
-        <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.contractAgreementInfo.assetId}>
-          <span>{row.contractAgreementInfo.assetId}</span>
+        <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row?.contractAgreementInfo?.assetId}>
+          <span>{handleBlankCellValues(row?.contractAgreementInfo?.assetId)}</span>
         </Tooltips>
       ),
     },
@@ -113,15 +114,18 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
       valueGetter: ({ row }) => row.contractAgreementInfo,
-      valueFormatter: ({ value }) => convertEpochToDate(value.contractSigningDate),
-      renderCell: ({ row }) => (
-        <Tooltips
-          tooltipPlacement="top"
-          tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate)}
-        >
-          <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
-        </Tooltips>
-      ),
+      valueFormatter: ({ value }) => convertEpochToDate(value?.contractSigningDate),
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.contractSigningDate ? (
+          <Tooltips
+            tooltipPlacement="top"
+            tooltipText={convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}
+          >
+            <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'contractEndDate',
@@ -130,10 +134,10 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
       valueGetter: ({ row }) => row.contractAgreementInfo,
-      valueFormatter: ({ value }) => convertEpochToDate(value.contractEndDate),
+      valueFormatter: ({ value }) => convertEpochToDate(value?.contractEndDate),
       renderCell: ({ row }) =>
-        row.contractAgreementInfo?.contractSigningDate ? (
-          <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo.contractEndDate)}>
+        row.contractAgreementInfo?.contractEndDate ? (
+          <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}>
             <span>{convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}</span>
           </Tooltips>
         ) : (
@@ -216,6 +220,9 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                 rowsPerPageOptions={[10, 25, 50, 100]}
                 components={{
                   Toolbar: GridToolbar,
+                  LoadingOverlay: LinearProgress,
+                  NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+                  NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
                 }}
                 componentsProps={{
                   toolbar: {

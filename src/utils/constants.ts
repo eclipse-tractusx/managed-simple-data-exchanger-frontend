@@ -22,16 +22,17 @@ import { theme } from 'cx-portal-shared-components';
 
 import { IDefaultObject, ISelectList } from '../models/Common';
 
-const USER_GUIDE_URL = 'https://github.com/eclipse-tractusx/dft-frontend/blob/main/docs/user-guide/README.md';
+const USER_GUIDE_URL = 'https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/blob/main/docs/user-guide/README.md';
 
 const ONLY_NUM_REGEX = /^[1-9]\d*$/;
 
-const CONTRACT_STATES: string[] = ['CONFIRMED', 'DECLINED', 'ERROR'];
+const CONTRACT_STATES: string[] = ['FINALIZED', 'DECLINED', 'TERMINATED', 'ERROR'];
 
 const STATUS_COLOR_MAPPING: IDefaultObject = {
   IN_PROGRESS: theme.palette.info.main,
-  CONFIRMED: theme.palette.success.main,
+  FINALIZED: theme.palette.success.main,
   COMPLETED: theme.palette.success.main,
+  TERMINATED: theme.palette.error.main,
   DECLINED: theme.palette.error.main,
   ERROR: theme.palette.error.main,
   FAILED: theme.palette.error.main,
