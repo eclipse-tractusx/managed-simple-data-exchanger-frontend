@@ -80,17 +80,16 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       ),
     },
     {
-      field: 'contractAgreementInfo.assetId',
+      field: 'assetId',
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
-      renderCell: ({ row }) =>
-        row.contractAgreementInfo?.assetId ? (
-          <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.contractAgreementInfo.assetId}>
-            <span>{row.contractAgreementInfo.assetId}</span>
-          </Tooltips>
-        ) : (
-          '-'
-        ),
+      valueGetter: ({ row }) => row.contractAgreementInfo,
+      valueFormatter: ({ value }) => value.assetId,
+      renderCell: ({ row }) => (
+        <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.contractAgreementInfo.assetId}>
+          <span>{row.contractAgreementInfo.assetId}</span>
+        </Tooltips>
+      ),
     },
     {
       field: 'counterPartyAddress',
@@ -108,29 +107,30 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       ),
     },
     {
-      field: 'contractAgreementInfo.contractSigningDate',
+      field: 'contractSigningDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractSigningDate'),
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
-      renderCell: ({ row }) =>
-        row.contractAgreementInfo?.contractSigningDate ? (
-          <Tooltips
-            tooltipPlacement="top"
-            tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate)}
-          >
-            <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
-          </Tooltips>
-        ) : (
-          '-'
-        ),
+      valueGetter: ({ row }) => row.contractAgreementInfo,
+      valueFormatter: ({ value }) => convertEpochToDate(value.contractSigningDate),
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top"
+          tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate)}
+        >
+          <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
+        </Tooltips>
+      ),
     },
     {
-      field: 'contractAgreementInfo.contractEndDate',
+      field: 'contractEndDate',
       flex: 1,
       headerName: t('content.contractHistory.columns.contractEndDate'),
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
+      valueGetter: ({ row }) => row.contractAgreementInfo,
+      valueFormatter: ({ value }) => convertEpochToDate(value.contractEndDate),
       renderCell: ({ row }) =>
         row.contractAgreementInfo?.contractSigningDate ? (
           <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo.contractEndDate)}>
@@ -155,6 +155,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       flex: 1,
       maxWidth: 80,
       sortable: false,
+      disableExport: true,
       renderCell: ({ row }) => {
         const checkState = CONTRACT_STATES.some(e => e === row.state);
         if (!checkState) {

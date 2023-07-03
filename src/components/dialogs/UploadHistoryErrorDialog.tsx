@@ -102,7 +102,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({ ope
               rows={errorsList}
               pageSize={pageSize}
               page={page}
-              rowHeight={100}
+              getRowHeight={() => 'auto'}
               onPageChange={newPage => setPage(newPage)}
               rowsPerPageOptions={[10, 15, 20, 100]}
               sx={{
