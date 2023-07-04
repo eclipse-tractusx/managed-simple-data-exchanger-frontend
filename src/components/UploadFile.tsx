@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
@@ -19,6 +20,7 @@
  ********************************************************************************/
 import { Box } from '@mui/material';
 import { Button, DropArea, DropPreview, UploadStatus } from 'cx-portal-shared-components';
+import { isEqual } from 'lodash';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 
@@ -34,15 +36,30 @@ import InfoSteps from './InfoSteps';
 
 export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.uploadFileSlice);
+  const { row } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
+  function csvValidation(file: File) {
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+      // Access to content with e.target.result
+      const fileData: any = e.target.result;
+      // seperate header from first row and columns from rest all
+      const [header] = fileData.split('\n').map((item: any) => item.trim().split(';'));
+      const validateHeaders = isEqual(header, Object.keys(row));
+      if (validateHeaders) dispatch(setSelectedFiles(file));
+      else dispatch(setSnackbarMessage({ type: 'error', message: 'alerts.incorrectColumns' }));
+    };
+    reader.readAsText(file);
+  }
 
   const handleFiles = (file: File) => {
     dispatch(setUploadStatus(false));
     dispatch(setPageLoading(false));
     const maxFileSize = parseInt(Config.REACT_APP_FILESIZE);
     if (file.size < maxFileSize) {
-      if (file.type === FileType.csv) dispatch(setSelectedFiles(file));
+      if (file.type === FileType.csv) csvValidation(file);
       else
         dispatch(
           setSnackbarMessage({

@@ -236,6 +236,7 @@
     "invalidData": "Invalid data! Enter required fields.",
     "deleteSuccess": "Deleted successfully!",
     "somethingWrong": "Something went wrong!",
-    "contractDeclined": "Contract declined successfully!"
+    "contractDeclined": "Contract declined successfully!",
+    "incorrectColumns": "Column name/s are not correct!"
   }
 }

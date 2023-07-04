@@ -22,7 +22,8 @@ import { theme } from 'cx-portal-shared-components';
 
 import { IDefaultObject, ISelectList } from '../models/Common';
 
-const USER_GUIDE_URL = 'https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/blob/main/docs/user-guide/README.md';
+const USER_GUIDE_URL =
+  'https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/blob/main/docs/user-guide/README.md';
 
 const ONLY_NUM_REGEX = /^[1-9]\d*$/;
 
