@@ -9,6 +9,9 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 ### Changes
 
 - Collapsible submodel info table section
+- Adapting latest EDC changes
+- Contact history new status name updates
+- CSV header validation while upload
 ### Fixed
 
 - Export data issue in Provider & Consumer contracts fixed.
