@@ -67,20 +67,6 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
 
   const columns: GridColDef[] = [
     {
-      field: 'contractAgreementId',
-      flex: 1,
-      headerName: t('content.contractHistory.columns.contractAgreementId'),
-      renderCell: ({ row }) => (
-        <Tooltips
-          tooltipPlacement="top-start"
-          tooltipArrow={false}
-          tooltipText={handleBlankCellValues(row.contractAgreementId)}
-        >
-          <span>{handleBlankCellValues(row.contractAgreementId)}</span>
-        </Tooltips>
-      ),
-    },
-    {
       field: 'assetId',
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
