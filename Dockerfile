@@ -6,38 +6,26 @@ WORKDIR /app
 
 COPY ./package.json .
 
+COPY .env . 
+
 COPY ./ .
 
 RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-FROM nginx:1.24.0-alpine3.17
-
-RUN apk update && apk add --no-cache bash
-
-RUN  addgroup nginx nginx
+FROM nginxinc/nginx-unprivileged:1.25.1-perl
 
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
-
+USER root 
 COPY ./conf /etc/nginx
-
-RUN chmod -R 777 /var/cache/nginx/ && chmod -R 777 /var/run
-
 # Static build
 COPY --from=builder /app/build /usr/share/nginx/html/
-
-RUN chmod -R 755 /usr/share/nginx/html/
-
+RUN chmod ugo+rwx /usr/share/nginx/html/
 WORKDIR /usr/share/nginx/html
-
 COPY ./env.sh .
-
-USER nginx
-
 EXPOSE 8080
-
+USER 101
 # Start Nginx server
-
-CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
