@@ -20,6 +20,7 @@
  ********************************************************************************/
 
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
+import i18next from 'i18next';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -236,7 +237,6 @@ export default function PoliciesDialog() {
   }
 
   return (
-    // Dialog width change is not available currently in cx-shared-components library
     <Dialog open={openDialog}>
       <DialogHeader
         closeWithIcon
@@ -250,17 +250,22 @@ export default function PoliciesDialog() {
         <ol style={{ padding: '0 0 16px 16px' }}>
           <li>
             <Typography variant="body2">{t('content.policies.description_1')}</Typography>
-            <ul style={{ listStyleType: 'disc' }}>
-              <li>
-                <Typography variant="body2">{t('content.policies.description_1_1')}</Typography>
-              </li>
-              <li>
-                <Typography variant="body2">{t('content.policies.description_1_2')}</Typography>
-              </li>
-            </ul>
+            {i18next.language === 'en' ? (
+              <ul style={{ listStyleType: 'disc' }}>
+                <li>
+                  <Typography variant="body2">{t('content.policies.description_1_1')}</Typography>
+                </li>
+                <li>
+                  <Typography variant="body2">{t('content.policies.description_1_2')}</Typography>
+                </li>
+              </ul>
+            ) : null}
           </li>
           <li>
             <Typography variant="body2">{t('content.policies.description_2')}</Typography>
+          </li>
+          <li>
+            <Typography variant="body2">{t('content.policies.description_3')}</Typography>
           </li>
         </ol>
         <AccessPolicy />

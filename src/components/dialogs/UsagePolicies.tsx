@@ -21,7 +21,10 @@ function UsagePolicies({ usagePolicies }: { usagePolicies: IUsageControl[] }) {
             {item.typeOfAccess.toLowerCase() !== 'unrestricted' && (
               <>
                 <Typography variant="body2">
-                  {t('dialog.offerDetails.value')}:<strong>{item.value || '-'}</strong>
+                  {t('dialog.offerDetails.value')}:
+                  <strong>
+                    {item.value || '-'} {item.durationUnit}
+                  </strong>
                 </Typography>
               </>
             )}
