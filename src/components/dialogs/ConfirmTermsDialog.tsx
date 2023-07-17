@@ -53,7 +53,7 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
 
   function splitWithFirstOcc(str: string) {
     const regX = /:(.*)/s;
-    return str.split(regX);
+    return str.split(regX) ? `${str.split(regX)[0]}.` : '-.';
   }
 
   return (
@@ -72,11 +72,7 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
               )}
               <Box>
                 {t('dialog.offerDetails.cofirmTermsSubtitle')}
-                {offerObj ? (
-                  <b style={{ margin: '0 5px' }}>{`${splitWithFirstOcc(offerObj.provider)[0]}.` || '-.'}</b>
-                ) : (
-                  '-.'
-                )}
+                {offerObj ? <b style={{ margin: '0 5px' }}>{splitWithFirstOcc(offerObj.provider)}</b> : '-.'}
               </Box>
               <Box>{t('dialog.offerDetails.confirmHeading')}</Box>
             </Box>
