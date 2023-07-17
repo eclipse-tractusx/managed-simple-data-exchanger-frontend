@@ -60,9 +60,7 @@ const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
     <Dialog open={open}>
       <DialogHeader closeWithIcon onCloseWithIcon={() => handleClose(false)} title={title} />
       <DialogContent dividers sx={{ py: 3 }}>
-        {children ? (
-          children
-        ) : (
+        {children || (
           <>
             <Box sx={{ mb: 1 }}>
               {offerObj?.offerCount !== 0 && (
