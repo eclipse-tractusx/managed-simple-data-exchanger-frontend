@@ -22,8 +22,9 @@ import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { fetchSubmodelDetails, fetchSubmodelList } from '../features/provider/submodels/actions';
-import { setSelectedSubmodel } from '../features/provider/submodels/slice';
+import { clearRows, setSelectedSubmodel } from '../features/provider/submodels/slice';
 import { ISubmodelList } from '../features/provider/submodels/types';
+import { removeSelectedFiles } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 
 const SelectSubmodel = () => {
@@ -36,6 +37,9 @@ const SelectSubmodel = () => {
     async (item: ISubmodelList) => {
       dispatch(setSelectedSubmodel(item));
       dispatch(fetchSubmodelDetails(item.value));
+      // clearing the selected files and rows
+      dispatch(clearRows());
+      dispatch(removeSelectedFiles());
     },
     [dispatch],
   );
