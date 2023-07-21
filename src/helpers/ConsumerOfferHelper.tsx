@@ -19,7 +19,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-export const handleBlankCellValues = (value: string) => (value ? value : '-');
+export const handleBlankCellValues = (value: string) => value || '-';
 
 export const objectsEqual = (o1: { [x: string]: any }, o2: { [x: string]: any }): any =>
   o1 && typeof o1 === 'object' && Object.keys(o1).length > 0
