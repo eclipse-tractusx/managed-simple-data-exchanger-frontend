@@ -210,16 +210,15 @@ User can see the detailed error logs during the upload data by clicking "View er
 
 <img src="images/sde-provider-contracts.png" height="60%" width="60%" />
 
-This page contains an overview of the data exchange contracts your organization has with other Catena-X members to provide data. User can decline the data except the contracts which have status CONFIRMED, DECLINED, ERROR. 
+This page contains an overview of the data exchange contracts your organization has with other Catena-X members to provide data. 
 
 The table includes below columns:
 
-- Contract Agreement ID (ID of the contract agreement);
 - Asset ID (ID of the Asset);
 - Consumer Counter Party Address (Counter party address of the contract agreement);
 - Signing Date (Signing date of the contract agreement);
-- End Date (End date of the contract agreement);
-- Status (FINALIZED or DECLINED or TERMINATED or ERROR);
+- End Date (End date of the contract agreement, if duration restriction under usage policies is unrestricted while creating data then there is no end date and its unlimited);
+- Status (FINALIZED or TERMINATED or ERROR or DECLINED);
 
 ## Help
 
@@ -262,11 +261,10 @@ This page contains an overview of the data exchange contracts your organization 
 
 The table includes below columns:
 
-- Contract Agreement ID (ID of the contract agreement);
 - Asset ID (ID of the Asset);
 - Provider Counter Party Address (Counter party address of the contract agreement);
 - Signing Date (Signing date of the contract agreement);
-- End Date (End date of the contract agreement);
-- Status (FINALIZED or DECLINED or TERMINATED or ERROR);
+- End Date (End date of the contract agreement, if duration restriction under usage policies is unrestricted while creating data then there is no end date and its unlimited);
+- Status (FINALIZED or TERMINATED or ERROR or DECLINED);
 
 [-- end of 'features' section --]: #
