@@ -589,7 +589,7 @@ export default function ConsumeData() {
           />
           <ConfirmTermsDialog
             offerObj={{
-              offers: selectedOffersList ? selectedOffersList : [],
+              offers: selectedOffersList || [],
               provider: selectedOffersList[0]?.publisher ? selectedOffersList[0].publisher : ' ',
               offerCount: selectedOffersList.length,
             }}
