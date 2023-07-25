@@ -45,7 +45,7 @@ abstract class HttpService {
         const errorMessage = error.response?.data?.msg;
         store.dispatch(
           setSnackbarMessage({
-            message: errorMessage ? errorMessage : 'alerts.somethingWrong',
+            message: errorMessage || 'alerts.somethingWrong',
             type: 'error',
           }),
         );
