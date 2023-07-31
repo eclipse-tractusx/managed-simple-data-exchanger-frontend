@@ -46,6 +46,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
       # Create SemVer or ref tags dependent of trigger event
       - name: Docker meta
         id: meta
