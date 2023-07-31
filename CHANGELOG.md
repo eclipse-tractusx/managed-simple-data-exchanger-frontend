@@ -2,7 +2,7 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
-## [2.0.3] - 2023-06-30
+## [2.0.8] - 2023-07-31
 ### Added
 - removed the older charts.
 
@@ -12,14 +12,13 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 ## [2.0.2] - 2023-06-30
 
 ### Added
--  German text updation.
+- German text updation.
+- Collapsible submodel info table section.
+- Adapting latest EDC changes.
+- Contact history new status name updates.
+- CSV header validation while upload.
 
-- Collapsible submodel info table section
-- Adapting latest EDC changes
-- Contact history new status name updates
-- CSV header validation while upload
 ### Fixed
-
 - Export data issue in Provider & Consumer contracts fixed.
 - Select dropdown value persisting issue fixes everywhere.
 - Offer details popup: duration type added.
@@ -157,8 +156,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.3...main
-[2.0.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.2...dftfrontend-2.0.3
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.8...main
+[2.0.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.2...dftfrontend-2.0.8
 [2.0.2]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.1...dftfrontend-2.0.2
 [2.0.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.0...dftfrontend-2.0.1
 [2.0.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...dftfrontend-2.0.0
