@@ -67,6 +67,13 @@ const DURATION_UNITS: ISelectList[] = [
   },
 ];
 
+const DURATION_UNIT_MAPPING = {
+  HOUR: 'hours',
+  DAY: 'days',
+  MONTH: 'months',
+  YEAR: 'years',
+};
+
 const PURPOSE_VALUES: ISelectList[] = [
   {
     id: 0,
@@ -77,6 +84,7 @@ const PURPOSE_VALUES: ISelectList[] = [
 
 export {
   CONTRACT_STATES,
+  DURATION_UNIT_MAPPING,
   DURATION_UNITS,
   ONLY_NUM_REGEX,
   PURPOSE_VALUES,

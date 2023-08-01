@@ -22,7 +22,8 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, Grid, LinearProgress } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Tooltips, Typography } from 'cx-portal-shared-components';
-import { capitalize } from 'lodash';
+import { capitalize, find } from 'lodash';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -30,8 +31,9 @@ import { setPageLoading } from '../features/app/slice';
 import { useDeleteContractMutation, useGetContractsQuery } from '../features/provider/contracts/apiSlice';
 import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH } from '../utils/constants';
-import { convertEpochToDate } from '../utils/utils';
+import { IDefaultObject } from '../models/Common';
+import { CONTRACT_STATES, DURATION_UNIT_MAPPING, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH } from '../utils/constants';
+import { convertEpochToDate, epochToDate } from '../utils/utils';
 import NoDataPlaceholder from './NoDataPlaceholder';
 
 interface IContractsTable {
@@ -60,6 +62,16 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
   });
 
   const [deleteContract, { isLoading: isDeleting }] = useDeleteContractMutation({});
+
+  function calculateEndDate(policies: IDefaultObject[], signingDate: number) {
+    if (policies?.length) {
+      const { durationUnit, value } = find(policies, e => e.type === 'DURATION');
+      const startDate = epochToDate(signingDate);
+      if (durationUnit) {
+        return moment(startDate).add(value, Object(DURATION_UNIT_MAPPING)[durationUnit]).format('DD/MM/YYYY HH:mm:ss');
+      } else return '-';
+    } else return '-';
+  }
 
   useEffect(() => {
     dispatch(setPageLoading(isLoading));
@@ -120,15 +132,20 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
       valueGetter: ({ row }) => row.contractAgreementInfo,
-      valueFormatter: ({ value }) => convertEpochToDate(value?.contractEndDate),
-      renderCell: ({ row }) =>
-        row.contractAgreementInfo?.contractEndDate ? (
-          <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}>
-            <span>{convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}</span>
-          </Tooltips>
-        ) : (
-          '-'
-        ),
+      valueFormatter: ({ value }) => calculateEndDate(value?.policies, value?.contractSigningDate),
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top"
+          tooltipText={calculateEndDate(
+            row.contractAgreementInfo?.policies,
+            row.contractAgreementInfo?.contractSigningDate,
+          )}
+        >
+          <span>
+            {calculateEndDate(row.contractAgreementInfo?.policies, row.contractAgreementInfo?.contractSigningDate)}
+          </span>
+        </Tooltips>
+      ),
     },
     {
       field: 'state',
