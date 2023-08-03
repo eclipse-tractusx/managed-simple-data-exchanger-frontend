@@ -2,9 +2,13 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
-## [2.0.8] - 2023-07-31
+## [2.0.8] - 2023-08-03
 ### Added
 - removed the older charts.
+- contract end date from usage policy duration.
+- updated the document.
+- chart releaser workflow update.
+- dockerhub image push workflow update.
 
 ### Fixed
 - sonarcloud reliability bug fix.

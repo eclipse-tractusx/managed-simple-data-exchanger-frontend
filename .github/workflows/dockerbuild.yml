@@ -18,12 +18,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 ################################################################################
-name: Build - Docker image (SemVer)
+name: dockerbuild
 
 on:
   push:
     branches:
-      - 'DST_PIP9_ITR5'
+      - 'main'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
@@ -33,7 +33,7 @@ on:
 
 env:
    IMAGE_NAMESPACE: "tractusx"
-   IMAGE_NAME: "SDE-frontend"
+   IMAGE_NAME: "sdefrontend"
 
 jobs:
   docker:
@@ -79,6 +79,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
            context: .
+           file: ./Dockerfile
            # Build image for verification purposes on every trigger event. Only push if event is not a PR
            push: ${{ github.event_name != 'pull_request' }}
            tags: ${{ steps.meta.outputs.tags }}
