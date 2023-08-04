@@ -62,7 +62,7 @@ export default function DownloadCSV({ submodel }: { submodel: string }) {
   }
 
   return (
-    <Stack direction={'row'} spacing={1}>
+    <Stack direction={'row'} spacing={2}>
       <LoadingButton
         endIcon={<FileDownloadIcon />}
         label={t('content.common.sampleCsv')}
@@ -70,7 +70,7 @@ export default function DownloadCSV({ submodel }: { submodel: string }) {
         loading={downloadingSample}
         onButtonClick={() => download('sample')}
         size="small"
-        variant="text"
+        variant="outlined"
       />
       <LoadingButton
         endIcon={<FileDownloadIcon />}
@@ -79,7 +79,7 @@ export default function DownloadCSV({ submodel }: { submodel: string }) {
         loading={downloadingTemplate}
         onButtonClick={() => download('template')}
         size="small"
-        variant="text"
+        variant="outlined"
       />
     </Stack>
   );

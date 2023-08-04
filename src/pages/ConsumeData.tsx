@@ -18,7 +18,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { Autocomplete, Box, Grid, LinearProgress, Stack } from '@mui/material';
+import { Autocomplete, Box, Grid, LinearProgress } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -45,6 +45,7 @@ import { v4 as uuid } from 'uuid';
 
 import ConfirmTermsDialog from '../components/dialogs/ConfirmTermsDialog';
 import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
+import NoDataPlaceholder from '../components/NoDataPlaceholder';
 import Permissions from '../components/Permissions';
 import {
   setContractOffers,
@@ -90,15 +91,6 @@ const ITEMS: IntConnectorItem[] = [
     value: 'url',
   },
 ];
-
-function NoDataPlaceholder(text: string) {
-  const { t } = useTranslation();
-  return (
-    <Stack height="100%" alignItems="center" justifyContent="center">
-      {t(text)}
-    </Stack>
-  );
-}
 
 export default function ConsumeData() {
   const {
