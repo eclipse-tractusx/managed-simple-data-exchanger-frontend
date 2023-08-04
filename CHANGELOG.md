@@ -15,7 +15,6 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 -  German text updation.
 
 ### Fixed
-
 - Export data issue in Provider & Consumer contracts fixed.
 - Select dropdown value persisting issue fixes everywhere.
 - Offer details popup: duration type added.
