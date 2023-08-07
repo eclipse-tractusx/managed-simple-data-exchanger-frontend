@@ -236,6 +236,7 @@
     "invalidData": "Ungültige Eingabe, Bitte die Pflichtfelder ausfüllen!",
     "deleteSuccess": "Erfolgreich gelöscht!",
     "somethingWrong": "Fehler, Es ist etwas schief gegangen!",
-    "contractDeclined": "Vertrag erfolgreich abgelehnt!"
+    "contractDeclined": "Vertrag erfolgreich abgelehnt!",
+    "incorrectColumns": "Spaltenname/n sind nicht korrekt!"
   }
 }

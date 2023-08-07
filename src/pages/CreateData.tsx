@@ -20,7 +20,7 @@
  ********************************************************************************/
 
 import { Box, Grid } from '@mui/material';
-import { Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
+import { CustomAccordion, Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
 import { isEmpty } from 'lodash';
 import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,7 +69,22 @@ export default function CreateData() {
       </Grid>
       {!isEmpty(selectedSubmodel) ? (
         <Box>
-          <SubmodelInfo />
+          <CustomAccordion
+            items={[
+              {
+                children: <SubmodelInfo />,
+                color: 'background.background07',
+                expanded: false,
+                icon: null,
+                id: 'panel-1',
+                onChange: () => {},
+                title: t('content.provider.previewTableTitle'),
+                sx: {
+                  marginTop: 30,
+                },
+              },
+            ]}
+          />
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={activeTab} onChange={handleChange} aria-label="upload types: tabs" sx={{ pt: 0 }}>
               <Tab label={t('content.provider.uploadFile')} />

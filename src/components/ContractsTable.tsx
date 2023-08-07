@@ -19,10 +19,11 @@
  ********************************************************************************/
 import { Refresh } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, LinearProgress } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Tooltips, Typography } from 'cx-portal-shared-components';
-import { capitalize } from 'lodash';
+import { capitalize, find } from 'lodash';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -30,8 +31,10 @@ import { setPageLoading } from '../features/app/slice';
 import { useDeleteContractMutation, useGetContractsQuery } from '../features/provider/contracts/apiSlice';
 import { useAppDispatch } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import { CONTRACT_STATES, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH } from '../utils/constants';
-import { convertEpochToDate } from '../utils/utils';
+import { IDefaultObject } from '../models/Common';
+import { CONTRACT_STATES, DURATION_UNIT_MAPPING, STATUS_COLOR_MAPPING, USER_TYPE_SWITCH } from '../utils/constants';
+import { convertEpochToDate, epochToDate } from '../utils/utils';
+import NoDataPlaceholder from './NoDataPlaceholder';
 
 interface IContractsTable {
   type: string;
@@ -60,34 +63,30 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
 
   const [deleteContract, { isLoading: isDeleting }] = useDeleteContractMutation({});
 
+  function calculateEndDate(policies: IDefaultObject[], signingDate: number) {
+    if (policies?.length) {
+      const { durationUnit, value } = find(policies, e => e.type === 'DURATION');
+      const startDate = epochToDate(signingDate);
+      if (durationUnit) {
+        return moment(startDate).add(value, Object(DURATION_UNIT_MAPPING)[durationUnit]).format('DD/MM/YYYY HH:mm:ss');
+      } else return '-';
+    } else return '-';
+  }
+
   useEffect(() => {
     dispatch(setPageLoading(isLoading));
   }, [dispatch, isLoading, isDeleting]);
 
   const columns: GridColDef[] = [
     {
-      field: 'contractAgreementId',
-      flex: 1,
-      headerName: t('content.contractHistory.columns.contractAgreementId'),
-      renderCell: ({ row }) => (
-        <Tooltips
-          tooltipPlacement="top-start"
-          tooltipArrow={false}
-          tooltipText={handleBlankCellValues(row.contractAgreementId)}
-        >
-          <span>{handleBlankCellValues(row.contractAgreementId)}</span>
-        </Tooltips>
-      ),
-    },
-    {
       field: 'assetId',
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
       valueGetter: ({ row }) => row.contractAgreementInfo,
-      valueFormatter: ({ value }) => value.assetId,
+      valueFormatter: ({ value }) => value?.assetId,
       renderCell: ({ row }) => (
-        <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.contractAgreementInfo.assetId}>
-          <span>{row.contractAgreementInfo.assetId}</span>
+        <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row?.contractAgreementInfo?.assetId}>
+          <span>{handleBlankCellValues(row?.contractAgreementInfo?.assetId)}</span>
         </Tooltips>
       ),
     },
@@ -113,15 +112,18 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
       valueGetter: ({ row }) => row.contractAgreementInfo,
-      valueFormatter: ({ value }) => convertEpochToDate(value.contractSigningDate),
-      renderCell: ({ row }) => (
-        <Tooltips
-          tooltipPlacement="top"
-          tooltipText={convertEpochToDate(row.contractAgreementInfo.contractSigningDate)}
-        >
-          <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
-        </Tooltips>
-      ),
+      valueFormatter: ({ value }) => convertEpochToDate(value?.contractSigningDate),
+      renderCell: ({ row }) =>
+        row.contractAgreementInfo?.contractSigningDate ? (
+          <Tooltips
+            tooltipPlacement="top"
+            tooltipText={convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}
+          >
+            <span>{convertEpochToDate(row.contractAgreementInfo?.contractSigningDate)}</span>
+          </Tooltips>
+        ) : (
+          '-'
+        ),
     },
     {
       field: 'contractEndDate',
@@ -130,15 +132,20 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
       valueGetter: ({ row }) => row.contractAgreementInfo,
-      valueFormatter: ({ value }) => convertEpochToDate(value.contractEndDate),
-      renderCell: ({ row }) =>
-        row.contractAgreementInfo?.contractSigningDate ? (
-          <Tooltips tooltipPlacement="top" tooltipText={convertEpochToDate(row.contractAgreementInfo.contractEndDate)}>
-            <span>{convertEpochToDate(row.contractAgreementInfo?.contractEndDate)}</span>
-          </Tooltips>
-        ) : (
-          '-'
-        ),
+      valueFormatter: ({ value }) => calculateEndDate(value?.policies, value?.contractSigningDate),
+      renderCell: ({ row }) => (
+        <Tooltips
+          tooltipPlacement="top"
+          tooltipText={calculateEndDate(
+            row.contractAgreementInfo?.policies,
+            row.contractAgreementInfo?.contractSigningDate,
+          )}
+        >
+          <span>
+            {calculateEndDate(row.contractAgreementInfo?.policies, row.contractAgreementInfo?.contractSigningDate)}
+          </span>
+        </Tooltips>
+      ),
     },
     {
       field: 'state',
@@ -216,6 +223,9 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
                 rowsPerPageOptions={[10, 25, 50, 100]}
                 components={{
                   Toolbar: GridToolbar,
+                  LoadingOverlay: LinearProgress,
+                  NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+                  NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
                 }}
                 componentsProps={{
                   toolbar: {

@@ -15,9 +15,9 @@
     - [Create Data](#create-data)
       - [Upload File](#upload-file)
       - [Manual Entry](#manual-entry)
-        - [Serial Part Typization](#serial-part-typization)
+        - [Serial Part](#serial-part-typization)
         - [Batch](#batch)
-        - [Assembly Part Relationship](#assembly-part-relationship)
+        - [Single Level BoM As Built](#single-level-bom-asbuilt)
         - [Part As Planned](#part-as-planned)
         - [Single Level Bom As Planned](#single-level-bom-as-planned)
         - [Part Site Information As Planned](#part-site-information-as-planned)
@@ -109,7 +109,9 @@ This dynamic UI implementation allows the flexibillity to support and manage mul
 There are 2 data providing options in SDE i.e. CSV Upload and Manual entry.
 The top level Select submodel dropdown will be common for all of 2 tabs i.e. Upload File, Manual entry. Based on the selected submodel user can download the respective CSV sample and template.
 
-This Create Data page combines all the Data provider options like
+Preview of submodel including help description is provided as collapsible view.
+
+This Create Data page combines all the Data provider options like:-
 
 - ### Upload File
 
@@ -119,32 +121,32 @@ You can upload CSV files of various supported Submodels.
 
 At the moment, Simple Data Exchanger supports data proving options for below list of submodels,
 
-- Serial Part Typization.
-- Assembly Part Relationship.
+- Serial Part.
+- Single Level Bom AsBuilt.
 - Batch.
-- Part As Planned.
-- Single Level Bom As Planned.
-- Part Site Information As Planned.
+- Part AsPlanned.
+- Single Level Bom AsPlanned.
+- Part Site Information AsPlanned.
 - Single Level Usage AsBuilt.
 
 You can click on the button "Choose a file" and select the proper CSV file present in your file system or you can just drag and drop your file in the drop area under upload file component.
 
 <img src="images/sde-configure-policy.png" height="60%" width="60%" />
 
-After successful file upload of the supported file format i.e. CSV, the button "NEXT STEP - CONFIGURE POLICIES" will be enabled and after clicking on the same, Policy selection dialog will be shown where we need to configure Access and Usage policy.
+After successful file upload of the supported file format i.e. CSV, the button "Next Step - Configure Policies" will be enabled and after clicking on the same, Policy selection dialog will be shown where we need to configure Access and Usage policy.
 
-Access policy can either be unrestricted or restricted to some Business Partner Numbers. The default company BPN number will be present by default in the list and can not be deleted when we selected Restricted Access Policy option. We can add BPN numbers by entering number and clicking on Add button.
+Access policy can either be unrestricted or restricted to some Business Partner Numbers. Your own organization will always be allowed to access the data.  We can add BPN numbers by selecting Company Name or entering Business Partner Number   and clicking on Add button.
 
 There are 4 types of Usage Policies we can configure namely Duration, Purpose, Role and Custom Restriction.
 For every usage policy we have restricted and unrestricted options.
-If we selected Restricted option for any usage policy, then we need to enter respective valid free text value.
+If we selected Restricted option for any usage policy, then we need to enter or select any respective valid text value.
 
 Once configuring both the policies, we need to click on "SUBMIT" button and wait for upload to finish.
 This is the process of creating new data offer through SDE application by uploading CSV file.
 
 - ### Manual entry
 
-#### Serial Part Typization
+#### Serial Part
 
 <img src="images/sde-serial-part-tabular.png" height="60%" width="60%" />
 
@@ -152,30 +154,30 @@ This is the process of creating new data offer through SDE application by upload
 
 <img src="images/sde-batch-tabular.png" height="60%" width="60%" />
 
-#### Assembly Part Relationship
+#### Single Level BoM AsBuilt
 
 <img src="images/sde-assembly-tabular.png" height="60%" width="60%" />
 
-#### Part As Planned
+#### Part AsPlanned
 
 <img src="images/sde-part-planned-tabular.png" height="60%" width="60%" />
 
-#### Single Level Bom As Planned
+#### Single Level Bom AsPlanned
 
 <img src="images/sde-single-bom-tabular.png" height="60%" width="60%" />
 
-#### Part Site Information As Planned
+#### Part Site Information AsPlanned
 
 <img src="images/sde-part-site-info-tabular.png" height="60%" width="60%" />
 
-#### Single Level Usage As Built
+#### Single Level Usage AsBuilt
 
 <img src="images/sde-single-level-usage-table.png" height="60%" width="60%" />
 
-You can add and submit multiple data offers via Manual entry option for particular submodel by clicking on "Add Row" button to bulk upload the multiple data offers in one go. Once you enter details in all of the required fields for a particular row, you need to select which offers we need to upload by ticking the checkboxes for the respective rows and then we need to click on "NEXT STEP - CONFIGURE POLICIES" button to configure Access and Usage policies and then you need to click on Submit button from policy dialog to upload the data. You can upload the data for multiple submodels by selecting the respective submodel from the top level Select submodel dropdown.
+You can add and submit multiple data offers via Manual entry option for particular submodel by clicking on "Add Row" button to bulk upload the multiple data offers in one go. Once you enter details in all of the required fields for a particular row, you need to select which offers we need to upload by ticking the checkboxes for the respective rows and then we need to click on "Next Step - Configure Policies" button to configure Access and Usage policies and then you need to click on Submit button from policy dialog to upload the data. You can upload the data for multiple submodels by selecting the respective submodel from the top level Select submodel dropdown.
 We also can delete multiple rows by selecting which rows we want to delete and then click on Delete Row(s) button.
 
-Then you need to configure Access and Usage policies by clicking on "NEXT STEP - CONFIGURE POLICIES" button and after successful configuration, click on Submit button from policy dialog to upload bulk data offers at once.
+Then you need to configure Access and Usage policies by clicking on "Next Step - Configure Policies" button and after successful configuration, click on Submit button from policy dialog to upload bulk data offers at once.
 
 ## Upload history
 
@@ -208,16 +210,15 @@ User can see the detailed error logs during the upload data by clicking "View er
 
 <img src="images/sde-provider-contracts.png" height="60%" width="60%" />
 
-This page contains an overview of the data exchange contracts your organization has with other Catena-X members to provide data. User can decline the data except the contracts which have status CONFIRMED, DECLINED, ERROR. 
+This page contains an overview of the data exchange contracts your organization has with other Catena-X members to provide data. 
 
 The table includes below columns:
 
-- Contract Agreement ID (ID of the contract agreement);
 - Asset ID (ID of the Asset);
 - Consumer Counter Party Address (Counter party address of the contract agreement);
 - Signing Date (Signing date of the contract agreement);
-- End Date (End date of the contract agreement);
-- Status (CONFIRMED or DECLINED or ERROR );
+- End Date (End date of the contract agreement, if duration restriction under usage policies is unrestricted while creating data then there is no end date and its unlimited);
+- Status (FINALIZED or TERMINATED or ERROR or DECLINED);
 
 ## Help
 
@@ -231,7 +232,7 @@ This dynamic help page provides the submodel informations of selected use case i
 
 <img src="images/sde-consume-data-page.png" height="60%" width="90%" />
 
-After clicking on the "Consume Data" link in the sidebar navigation menu, user will be redirected to this Consumer view page. On this page, we need to enter the URL of provider connector for which we need to search the already uploaded data or contract offers from provider view. After entering the provider URL, we need to click on "Search" button to search or fetch the list of contract offers catalogs. After the successful query operation, the below table will populate list of Contract offers. The table will show the basic meta data of the offers and include the below columns,
+After clicking on the "Consume Data" link in the sidebar navigation menu, user will be redirected to this Consumer view page. On this page, we need to select search type as Company Name or Business Partner Number or Connector URL(For select search type as Connector URL we have to enter connector URL manually). After entering the Company Name or Business Partner Number select connector dropdown will show the available connectors to select. After selecting connector,Search button will get enabled, we need to click on "Search" button to search or fetch the list of contract offers catalogs.  After the successful query operation, the below table will populate list of Contract offers. The table will show the basic meta data of the offers and include the below columns,
 
 - Title (This is title of the data offer or name of the submodel);
 - Asset ID (ID of the Asset);
@@ -260,11 +261,10 @@ This page contains an overview of the data exchange contracts your organization 
 
 The table includes below columns:
 
-- Contract Agreement ID (ID of the contract agreement);
 - Asset ID (ID of the Asset);
 - Provider Counter Party Address (Counter party address of the contract agreement);
 - Signing Date (Signing date of the contract agreement);
-- End Date (End date of the contract agreement);
-- Status (CONFIRMED or DECLINED or ERROR );
+- End Date (End date of the contract agreement, if duration restriction under usage policies is unrestricted while creating data then there is no end date and its unlimited);
+- Status (FINALIZED or TERMINATED or ERROR or DECLINED);
 
 [-- end of 'features' section --]: #
