@@ -31,7 +31,6 @@ description: SDE Frontend
 # a dependency of application charts to inject those utilities and functions into the rendering
 # pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
-
 sources:
   - https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend
 # This is the chart version. This version number should be incremented each time you make changes
