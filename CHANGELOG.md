@@ -2,6 +2,10 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.0.9] - 2023-08-08
+### Fixed
+- license dependency update.
+
 ## [2.0.8] - 2023-08-03
 ### Added
 - removed the older charts.
