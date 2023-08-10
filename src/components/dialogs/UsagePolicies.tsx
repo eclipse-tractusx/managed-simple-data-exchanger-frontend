@@ -8,8 +8,8 @@ function UsagePolicies({ usagePolicies }: { usagePolicies: IUsageControl[] }) {
   const { t } = useTranslation();
   return (
     <>
-      {usagePolicies.map(item => {
-        return (
+      {usagePolicies.length ? (
+        usagePolicies.map(item => (
           <Grid item xs={6} sx={{ mb: 1 }} key={item.type}>
             <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
               {item.type.toLowerCase()}
@@ -29,8 +29,10 @@ function UsagePolicies({ usagePolicies }: { usagePolicies: IUsageControl[] }) {
               </>
             )}
           </Grid>
-        );
-      })}
+        ))
+      ) : (
+        <Typography variant="body2">Not Available</Typography>
+      )}
     </>
   );
 }
