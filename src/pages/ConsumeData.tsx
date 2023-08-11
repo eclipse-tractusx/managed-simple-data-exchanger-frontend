@@ -249,11 +249,18 @@ export default function ConsumeData() {
   };
 
   const checkoutSelectedOffers = () => {
+    if (selectedOffersList.length === 1) {
+      dispatch(setSelectedOffer(selectedOffersList[0]));
+      toggleDialog(true);
+      return;
+    }
     let isUsagePoliciesEqual = false;
     const useCasesList: any[] = [];
     selectedOffersList.forEach((offer: IConsumerDataOffers) => {
       if (offer.usagePolicies.length > 0) {
         useCasesList.push(offer.usagePolicies);
+      } else {
+        useCasesList.push([]);
       }
     });
     useCasesList.forEach(useCase => {
