@@ -114,6 +114,8 @@ export default function ConsumeData() {
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [conKey, setConKey] = useState(uuid());
+  const [bpnError, setbpnError] = useState(false);
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -332,6 +334,8 @@ export default function ConsumeData() {
           };
         });
         dispatch(setFilterConnectors(optionConnectors));
+      } else {
+        dispatch(setSnackbarMessage({ message: 'alerts.noConnector', type: 'error' }));
       }
     } catch (e) {
       console.log(e);
@@ -347,13 +351,13 @@ export default function ConsumeData() {
     }
   };
 
-  const onBlurBPN = async () => {
-    if (filterSelectedBPN.length > 3) {
-      await getConnectorByBPN(filterSelectedBPN);
-    } else {
-      dispatch(setFilterConnectors([]));
-    }
-  };
+  // const onBlurBPN = async () => {
+  //   if (filterSelectedBPN.length > 3) {
+  //     debounce(() => getConnectorByBPN(filterSelectedBPN), 2000);
+  //   } else {
+  //     dispatch(setFilterConnectors([]));
+  //   }
+  // };
 
   const handleSelectionModel = (newSelectionModel: GridSelectionModel) => {
     const selectedIDs = new Set(newSelectionModel);
@@ -380,6 +384,22 @@ export default function ConsumeData() {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleBPNchange = (e: ChangeEvent<HTMLInputElement>) => {
+    const regex = /[a-zA-Z0-9]$/;
+    const { value } = e.target;
+    if (value === '' || regex.test(value)) {
+      dispatch(setFilterSelectedBPN(value));
+      if (value.length == 16) {
+        getConnectorByBPN(value);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (filterSelectedBPN.length == 16 || filterSelectedBPN.length == 0) setbpnError(false);
+    else setbpnError(true);
+  }, [filterSelectedBPN]);
 
   return (
     <Box sx={{ flex: 1, p: 4 }}>
@@ -420,18 +440,14 @@ export default function ConsumeData() {
                   <Input
                     value={filterSelectedBPN}
                     type="text"
-                    onBlur={() => onBlurBPN()}
                     fullWidth
                     size="small"
                     label={t('content.consumeData.enterBPN')}
                     placeholder={t('content.consumeData.enterBPN')}
                     inputProps={{ maxLength: 16 }}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                      const regex = /[a-zA-Z0-9]$/;
-                      if (e.target.value === '' || regex.test(e.target.value)) {
-                        dispatch(setFilterSelectedBPN(e.target.value));
-                      }
-                    }}
+                    error={bpnError}
+                    onChange={handleBPNchange}
+                    helperText={t('alerts.bpnValidation')}
                   />
                 ) : (
                   <Autocomplete
