@@ -351,14 +351,6 @@ export default function ConsumeData() {
     }
   };
 
-  // const onBlurBPN = async () => {
-  //   if (filterSelectedBPN.length > 3) {
-  //     debounce(() => getConnectorByBPN(filterSelectedBPN), 2000);
-  //   } else {
-  //     dispatch(setFilterConnectors([]));
-  //   }
-  // };
-
   const handleSelectionModel = (newSelectionModel: GridSelectionModel) => {
     const selectedIDs = new Set(newSelectionModel);
     const selectedRowData = contractOffers.filter((row: GridValidRowModel) => selectedIDs.has(row.id));
