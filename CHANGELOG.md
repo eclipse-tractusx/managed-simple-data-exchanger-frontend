@@ -2,6 +2,12 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [Unreleased]
+
+### Fixed
+- BPN validation enhancements in cosume data page.
+- Add BPN flow enhancement in provider, access policy section.
+
 ## [2.0.9] - 2023-08-11
 ### Fixed
 - license dependency update.
