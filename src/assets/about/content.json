@@ -1,0 +1,9 @@
+{
+    "name": "managed-simple-data-exchanger-frontend",
+    "repositoryPath": "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend",
+    "license": "Apache-2.0",
+    "licensePath": "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/blob/2.0.9/LICENSE",
+    "noticePath": "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/blob/2.0.9/NOTICE.md",
+    "sourcePath": "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/tree/2.0.9",
+    "commitId": "2cd1db3f218abe41889ed68f0bcf25b7375c8aeb"
+}
