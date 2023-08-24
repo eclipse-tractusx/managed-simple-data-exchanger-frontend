@@ -27,6 +27,7 @@ const Logout = lazy(() => import('../pages/Logout'));
 const PageNotFound = lazy(() => import('../pages/PageNotFound'));
 const ProviderContracts = lazy(() => import('../pages/ProviderContracts'));
 const UploadHistoryNew = lazy(() => import('../pages/UploadHistoryNew'));
+const About = lazy(() => import('../pages/About'));
 
 export interface IRoutes {
   key?: string;
@@ -39,6 +40,10 @@ export const ROUTES: IRoutes[] = [
   {
     path: '/',
     element: <Home />,
+  },
+  {
+    path: '/about',
+    element: <About />,
   },
   {
     path: '*',

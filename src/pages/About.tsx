@@ -18,28 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Typography } from 'cx-portal-shared-components';
-import { useTranslation } from 'react-i18next';
+import { Box } from '@mui/material';
+import { AboutCard, Typography } from 'cx-portal-shared-components';
+import { t } from 'i18next';
 
-import { useAppSelector } from '../../features/store';
+import aboutContent from '../assets/about/content.json';
 
-const MenuItemHeading = ({ text }: { text: string }) => {
-  const { t } = useTranslation();
-  const { sidebarExpanded } = useAppSelector(state => state.appSlice);
+function About() {
   return (
-    <Typography
-      variant="body1"
-      sx={{
-        display: !sidebarExpanded ? 'hidden' : 'flex',
-        justifyContent: 'space-between',
-        textAlign: 'center',
-        px: 2.4,
-        py: 1,
-      }}
-    >
-      {sidebarExpanded ? t(text) : t(text).charAt(0)}
-    </Typography>
+    <Box sx={{ flex: 1, p: 4 }}>
+      <Typography variant="h3" mb={3}>
+        {t('pages.about')}
+      </Typography>
+      <AboutCard {...aboutContent} />
+    </Box>
   );
-};
+}
 
-export default MenuItemHeading;
+export default About;
