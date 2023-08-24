@@ -59,6 +59,13 @@ export const MenuItems: IntMenu[] = [
     isHeading: false,
   },
   {
+    text: 'pages.about',
+    menuIcon: 'BusinessIcon',
+    to: '/about',
+    dataId: 'aboutPage',
+    isHeading: false,
+  },
+  {
     text: 'pages.provider',
     isHeading: true,
     childrens: [
@@ -114,12 +121,5 @@ export const MenuItems: IntMenu[] = [
         permissions: ['consumer_view_contract_agreement'],
       },
     ],
-  },
-  {
-    text: 'pages.about',
-    menuIcon: 'BusinessIcon',
-    to: '/about',
-    dataId: 'aboutPage',
-    isHeading: false,
   },
 ];
