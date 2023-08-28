@@ -22,7 +22,7 @@ name: sdebuild
 on:
   push:
     branches:
-      - 'main'
+      - 'legal-dynamic-about-content-2.0.10'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
@@ -30,6 +30,10 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  # variables needed for scripts/legal-notice.sh
+  SERVER_URL: '${{ github.server_url }}'
+  REPOSITORY: '${{ github.repository }}'
+  REF_NAME: '${{ github.ref_name }}'
 
 jobs:
   build-and-push-image:

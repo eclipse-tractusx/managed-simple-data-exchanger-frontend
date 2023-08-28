@@ -33,6 +33,10 @@ on:
 env:
    IMAGE_NAMESPACE: "tractusx"
    IMAGE_NAME: "sdefrontend"
+   # variables needed for scripts/legal-notice.sh
+   SERVER_URL: "${{ github.server_url }}"
+   REPOSITORY: "${{ github.repository }}"
+   REF_NAME: "${{ github.ref_name }}"
 
 jobs:
   docker:
