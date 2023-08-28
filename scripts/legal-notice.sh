@@ -77,4 +77,4 @@ check_substitution "$legal_notice_ref" "$ref_anchor"
 echo "Replaced ref name"
 
 # Write the final result to legal-notice.json
-echo "$legal_notice_ref" > src/assets/about/content.json
+echo "$(cat src/assets/about/content.json)"
