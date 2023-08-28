@@ -42,5 +42,7 @@ legal_notice_json='{
   "commitId": "'$commit_id'"
 }'
 
+echo "Final json '$legal_notice_json'" 
+
 # Write the final result to legal-notice.json
 echo "$legal_notice_json" >src/assets/about/legal-notice.json
