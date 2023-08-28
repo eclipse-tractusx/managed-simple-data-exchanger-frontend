@@ -37,10 +37,10 @@ commit_id=$(git rev-parse HEAD)
 
 # Get GitHub context from environment variables
 server_url=$SERVER_URL
-repository=$IMAGE_NAME
+repository=$REPOSITORY
 ref=$REF_NAME
 
-# Read legal-notice.json as reference
+# Read content.json as reference
 legal_notice_reference=$(cat src/assets/about/content.json)
 
 # Function to check if placeholder substitution was successful
@@ -66,7 +66,7 @@ echo "Replaced commit ID"
 
 legal_notice_server_url="${legal_notice_commit//$server_url_anchor/$server_url}"
 check_substitution "$legal_notice_server_url" "$server_url_anchor"
-echo "Replaced server URL"
+echo "$legal_notice_server_url"
 
 legal_notice_repository="${legal_notice_server_url//$repository_anchor/$repository}"
 check_substitution "$legal_notice_repository" "$repository_anchor"
@@ -76,5 +76,5 @@ legal_notice_ref="${legal_notice_repository//$ref_anchor/$ref}"
 check_substitution "$legal_notice_ref" "$ref_anchor"
 echo "Replaced ref name"
 
-# Write the final result to legal-notice.json
-echo "$(cat src/assets/about/content.json)"
+# Write the final result to content.json
+echo "$legal_notice_ref" > src/assets/about/content.json
