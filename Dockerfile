@@ -22,6 +22,8 @@ FROM node:18.12.1-alpine3.15 as builder
 
 WORKDIR /app
 
+RUN apk update && apk add --no-cache jq
+
 COPY ./package.json .
 
 COPY .env . 
@@ -46,4 +48,5 @@ RUN chmod ug+rwx /usr/share/nginx/html/
 EXPOSE 8080
 USER 101
 # Start Nginx server
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
+#CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
