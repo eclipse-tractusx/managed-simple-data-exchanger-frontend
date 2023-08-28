@@ -32,7 +32,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   # variables needed for scripts/legal-notice.sh
   SERVER_URL: '${{ github.server_url }}'
-  REPOSITORY: '${{ github.repository }}'
   REF_NAME: '${{ github.ref_name }}'
 
 jobs:
@@ -48,6 +47,9 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+
+      - name: Add content to Legal Notice
+        run: npm run build:legal-notice
 
       - name: Build
         run: npm run build

@@ -37,7 +37,7 @@ commit_id=$(git rev-parse HEAD)
 
 # Get GitHub context from environment variables
 server_url=$SERVER_URL
-repository=$REPOSITORY
+repository=$IMAGE_NAME
 ref=$REF_NAME
 
 # Read legal-notice.json as reference
