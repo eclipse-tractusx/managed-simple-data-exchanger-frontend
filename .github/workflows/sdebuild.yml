@@ -86,5 +86,5 @@ jobs:
           # build tag :main
           tags: ${{ steps.meta.outputs.tags }}
           # build tag :latest
-          # tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:2.1.0
           labels: ${{ steps.meta.outputs.labels }}
