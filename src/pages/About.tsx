@@ -22,7 +22,7 @@ import { Box } from '@mui/material';
 import { AboutCard, Typography } from 'cx-portal-shared-components';
 import { t } from 'i18next';
 
-import aboutContent from '../assets/about/content.json';
+import aboutContent from '../assets/about/legal-notice.json';
 
 function About() {
   return (

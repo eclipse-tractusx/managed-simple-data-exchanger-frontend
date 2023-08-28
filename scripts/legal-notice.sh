@@ -20,14 +20,6 @@
 # SPDX-License-Identifier: Apache-2.0
 ################################################################################
 
-# Define placeholders from legal-notice.json
-name_anchor='NAME_PLACEHOLDER'
-license_anchor='LICENSE_PLACEHOLDER'
-commit_id_anchor='COMMIT_ID_PLACEHOLDER'
-server_url_anchor='SERVER_URL_PLACEHOLDER'
-repository_anchor='REPOSITORY_PLACEHOLDER'
-ref_anchor='REF_PLACEHOLDER'
-
 # Read values from package.json using jq
 name=$(jq -r '.name' package.json)
 license=$(jq -r '.license' package.json)
@@ -40,41 +32,15 @@ server_url=$SERVER_URL
 repository=$REPOSITORY
 ref=$REF_NAME
 
-# Read content.json as reference
-legal_notice_reference=$(cat src/assets/about/content.json)
+legal_notice_json='{
+  "name": "'$name'",
+  "repositoryPath": "'$server_url'/'$repository'",
+  "license": "'$license'",
+  "licensePath": "'$server_url'/'$repository'/blob/'$ref'/LICENSE",
+  "noticePath": "'$server_url'/'$repository'/blob/'$ref'/NOTICE.md",
+  "sourcePath": "'$server_url'/'$repository'/tree/'$ref'",
+  "commitId": "'$commit_id'"
+}'
 
-# Function to check if placeholder substitution was successful
-check_substitution() {
-  if [[ $1 = *"$2"* ]]; then
-    echo "Error: Failed to replace $2"
-    exit 1
-  fi
-}
-
-# Replace placeholders with actual values
-legal_notice_name="${legal_notice_reference/$name_anchor/$name}"
-check_substitution "$legal_notice_name" "$name_anchor"
-echo "Replaced name"
-
-legal_notice_license="${legal_notice_name/$license_anchor/$license}"
-check_substitution "$legal_notice_license" "$license_anchor"
-echo "Replaced license"
-
-legal_notice_commit="${legal_notice_license/$commit_id_anchor/$commit_id}"
-check_substitution "$legal_notice_commit" "$commit_id_anchor"
-echo "Replaced commit ID"
-
-legal_notice_server_url="${legal_notice_commit//$server_url_anchor/$server_url}"
-check_substitution "$legal_notice_server_url" "$server_url_anchor"
-echo "$legal_notice_server_url"
-
-legal_notice_repository="${legal_notice_server_url//$repository_anchor/$repository}"
-check_substitution "$legal_notice_repository" "$repository_anchor"
-echo "Replaced repository"
-
-legal_notice_ref="${legal_notice_repository//$ref_anchor/$ref}"
-check_substitution "$legal_notice_ref" "$ref_anchor"
-echo "Replaced ref name"
-
-# Write the final result to content.json
-echo "$legal_notice_ref" > src/assets/about/content.json
+# Write the final result to legal-notice.json
+echo "$legal_notice_json" >src/assets/about/legal-notice.json
