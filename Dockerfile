@@ -22,6 +22,8 @@ FROM node:18.12.1-alpine3.15 as builder
 
 WORKDIR /app
 
+RUN apk update && apk add --no-cache jq
+
 COPY ./package.json .
 
 COPY .env . 

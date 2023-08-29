@@ -1,7 +1,12 @@
 {
-  "name": "sde-app",
+  "name": "managed-simple-data-exchanger-frontend",
   "version": "2.0.10",
-  "private": true,
+  "description": "Managed Simple Data Exchanger Frontend",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend"
+  },
   "dependencies": {
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.3",
@@ -62,7 +67,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "lint-fix": "eslint src --quiet --fix",
-    "format": "prettier --config .prettierrc --write \"src/**/*.{js,ts,json,md,css,html,tsx,jsx}\""
+    "format": "prettier --config .prettierrc --write \"src/**/*.{js,ts,json,md,css,html,tsx,jsx}\"",
+    "build:legal-notice": "bash scripts/legal-notice.sh"
   },
   "eslintConfig": {
     "extends": [
