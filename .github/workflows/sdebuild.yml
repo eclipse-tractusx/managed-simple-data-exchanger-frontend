@@ -22,7 +22,7 @@ name: sdebuild
 on:
   push:
     branches:
-      - 'main'
+      - 'v2.1.0'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
@@ -71,9 +71,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},value=v2.1.0
           flavor: |
               latest=true
 
