@@ -169,7 +169,7 @@ npm/npmjs/-/cssom/0.3.8, MIT, approved, clearlydefined
 npm/npmjs/-/cssom/0.4.4, MIT, approved, clearlydefined
 npm/npmjs/-/cssstyle/2.3.0, MIT, approved, clearlydefined
 npm/npmjs/-/csstype/3.1.1, MIT, approved, clearlydefined
-npm/npmjs/-/cx-portal-shared-components/1.5.0, Apache-2.0 AND (Apache-2.0 AND LicenseRef-scancode-unknown) AND CC-BY-4.0 AND OFL-1.1, restricted, #10235
+npm/npmjs/-/cx-portal-shared-components/1.5.0, Apache-2.0 AND CC-BY-4.0 AND MIT AND OFL-1.1, approved, #10235
 npm/npmjs/-/damerau-levenshtein/1.0.8, BSD-2-Clause, approved, clearlydefined
 npm/npmjs/-/data-urls/2.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/date-fns/2.29.3, MIT, approved, clearlydefined
