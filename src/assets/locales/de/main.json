@@ -73,7 +73,7 @@
       "unrestricted": "uneingeschränkt",
       "note": "Hinweis: Ihre Organisation gehört stets zu den berechtigten Empfängern.",
       "unAccess": "Uneingeschränkter Zugang!",
-      "warningText": "Warnung! Durch diese Option werden Ihre Daten dem gesamten Catena-X Netzwerk uneingeschränkt zur Verfügung stehen. Sind sie sicher?",
+      "warningText": "Wenn Sie keine BPN vergeben, können die Daten nur von Ihnen eingesehen werden.",
       "usagePolicy": "Nutzungsrichtlinien",
       "duration": "Nutzungsdauer",
       "durationNote": "Erlaubte Nutzungsdauer ab Vertragsstart",
