@@ -2,6 +2,15 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.0.10] - 2023-08-24
+### Added
+- About page added.
+- script added to generate values in about page.
+### Fixed
+- BPN validation enhancements in consumer data page.
+- Add BPN flow enhancement in provider, access policy section.
+- Documentation updated.
+
 ## [2.0.9] - 2023-08-11
 ### Fixed
 - license dependency update.
@@ -165,7 +174,9 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.8...main
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.10...main
+[2.0.10]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.9...dftfrontend-2.0.10
+[2.0.9]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.8...dftfrontend-2.0.9
 [2.0.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.2...dftfrontend-2.0.8
 [2.0.2]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.1...dftfrontend-2.0.2
 [2.0.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.0...dftfrontend-2.0.1

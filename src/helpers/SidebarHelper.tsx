@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import BusinessIcon from '@mui/icons-material/Business';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import HistoryIcon from '@mui/icons-material/History';
@@ -32,6 +33,7 @@ export const icons = {
   ManageSearchIcon,
   HomeOutlinedIcon,
   FormatListBulletedIcon,
+  BusinessIcon,
 };
 
 export interface IntMenuItem {
@@ -54,6 +56,13 @@ export const MenuItems: IntMenu[] = [
     menuIcon: 'HomeOutlinedIcon',
     to: '/',
     dataId: 'homePage',
+    isHeading: false,
+  },
+  {
+    text: 'pages.about',
+    menuIcon: 'BusinessIcon',
+    to: '/about',
+    dataId: 'aboutPage',
     isHeading: false,
   },
   {

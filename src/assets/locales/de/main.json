@@ -9,7 +9,8 @@
     "help": "Hilfe",
     "consumer": "Datenempfänger",
     "consumeData": "Suche Daten",
-    "contracts": "Verträge"
+    "contracts": "Verträge",
+    "about": "About"
   },
   "content": {
     "home": {
@@ -237,6 +238,7 @@
     "deleteSuccess": "Erfolgreich gelöscht!",
     "somethingWrong": "Fehler, Es ist etwas schief gegangen!",
     "contractDeclined": "Vertrag erfolgreich abgelehnt!",
-    "incorrectColumns": "Spaltenname/n sind nicht korrekt!"
+    "incorrectColumns": "Spaltenname/n sind nicht korrekt!",
+    "bpnValidation": "BPN sollte 16 Zeichen lang sein!"
   }
 }

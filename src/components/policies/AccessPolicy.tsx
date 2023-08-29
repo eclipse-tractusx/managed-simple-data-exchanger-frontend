@@ -30,9 +30,10 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import { inRange } from 'lodash';
+import { inRange, isEmpty } from 'lodash';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuid } from 'uuid';
 
 import { setFfilterCompanyOptionsLoading, setFilterCompanyOptions } from '../../features/consumer/slice';
 import { ILegalEntityContent, IntConnectorItem, IntOption } from '../../features/consumer/types';
@@ -41,7 +42,6 @@ import { useValidateBpnMutation } from '../../features/provider/policies/apiSlic
 import { addBpn, deleteBpn, setAccessType, setInputBpn } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
 import ConsumerService from '../../services/ConsumerService';
-
 const ITEMS = [
   {
     id: 1,
@@ -66,6 +66,7 @@ export default function AccessPolicy() {
   const [dialogOpen, setdialogOpen] = useState(false);
   const [searchPopup, setsearchPopup] = useState(false);
   const [bpnError, setbpnError] = useState(false);
+  const [conKey, setConKey] = useState(uuid());
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -118,6 +119,7 @@ export default function AccessPolicy() {
     } else {
       setbpnError(false);
       await validateBpn(inputBpn);
+      setConKey(uuid());
     }
   };
 
@@ -183,6 +185,7 @@ export default function AccessPolicy() {
                   />
                 ) : (
                   <Autocomplete
+                    key={conKey}
                     open={searchPopup}
                     options={filterCompanyOptions}
                     includeInputInList
@@ -234,6 +237,7 @@ export default function AccessPolicy() {
                   onButtonClick={handleAddBpn}
                   loadIndicator={t('content.common.loading')}
                   loading={isLoading}
+                  disabled={isEmpty(inputBpn) || isEmpty(filterCompanyOptions)}
                 />
               </Grid>
             </Grid>

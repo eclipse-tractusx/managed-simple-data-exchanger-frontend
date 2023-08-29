@@ -9,7 +9,8 @@
     "help": "Help",
     "consumer": "Consumer",
     "consumeData": "Consume Data",
-    "contracts": "Contracts"
+    "contracts": "Contracts",
+    "about": "About"
   },
   "content": {
     "home": {
@@ -237,6 +238,7 @@
     "deleteSuccess": "Deleted successfully!",
     "somethingWrong": "Something went wrong!",
     "contractDeclined": "Contract declined successfully!",
-    "incorrectColumns": "Column name/s are not correct!"
+    "incorrectColumns": "Column name/s are not correct!",
+    "bpnValidation": "BPN should be 16 characters!"
   }
 }

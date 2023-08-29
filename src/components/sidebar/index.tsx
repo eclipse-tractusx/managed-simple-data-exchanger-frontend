@@ -18,7 +18,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { Box, List, useTheme } from '@mui/material';
+import { Box, Divider, List, useTheme } from '@mui/material';
 
 import { useAppSelector } from '../../features/store';
 import { MenuItems } from '../../helpers/SidebarHelper';
@@ -54,12 +54,21 @@ export default function Sidebar() {
               {menuItem.isHeading ? (
                 <MenuItemHeading text={menuItem.text} />
               ) : (
-                <MenuItem key={menuItem.text} item={menuItem} />
+                <>
+                  <MenuItem key={menuItem.text} item={menuItem} />
+                  <Divider />
+                </>
               )}
               {/* Menu children */}
-              {menuItem.childrens?.map(children => (
-                <MenuItem key={children.text} item={children} />
-              ))}
+              {menuItem.childrens ? (
+                <>
+                  <Divider />
+                  {menuItem.childrens.map(children => (
+                    <MenuItem key={children.text} item={children} />
+                  ))}
+                  <Divider />
+                </>
+              ) : null}
             </Box>
           ))}
         </Box>

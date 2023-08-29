@@ -1,13 +1,19 @@
 # Simple Data Exchanger
 
+## NOTICE
+
+This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0).
+
+- SPDX-License-Identifier: Apache-2.0
+- SPDX-FileCopyrightText: 2021,2022,2023 T-Systems International GmbH
+- SPDX-FileCopyrightText: 2022,2023 Contributors to the Eclipse Foundation
+- Source URL: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend
+
 ## Table of contents
 
 - [Simple Data Exchanger](#simple-data-exchanger)
 - [Introduction and Goals](#introduction-and-goals)
     - [Requirements Overview](#requirements-overview)
-        - [What is SDE?](#what-is-sde)
-        - [Essential Features](#essential-features)
-        - [Further key information](#further-key-information)
     - [Quality Goals](#quality-goals)
     - [Stakeholders](#stakeholders)
 - [Architecture Constraints](#architecture-constraints)
@@ -18,17 +24,6 @@
 - [Building Block View](#building-block-view)
     - [Interfaces or Apis](#interfaces-or-apis)
     - [Data processing pipelines](#data-processing-pipelines)
-        - [Serial Part Typization](#serial-part-typization)
-        - [Assembly Part Relationship](#assembly-part-relationship)
-        - [Batch](#batch)
-        - [BoM As-Planned - PartAsPlanned](#bom-as-planned---partasplanned)
-        - [BoM As-Planned - SingleLevelBoMAsPlanned](#bom-as-planned---singlelevelbomasplanned)
-        - [BoM As-Planned - PartSiteInformationAsPlanned](#bom-as-planned---partsiteinformationasplanned)
-    - [Whitebox Overall System](#whitebox-overall-system)
-        - [App routing](#app-routing)
-        - [Frontend folder structure](#frontend-folder-structure)
-        - [Frontend dependencies](#frontend-dependencies)
-        - [Important Interfaces](#important-interfaces)
 - [Deployment View](#deployment-view)
 - [Quality Requirements](#quality-requirements)
 - [Glossary](#glossary)
@@ -119,11 +114,12 @@ The following table illustrates the stakeholders of SDE and their respective int
 
 ### **Business Context**
 
-| Business / Technical 	| Name                           	| Interface 	|
-|----------------------	|--------------------------------	|-----------	|
-| Business             	| User via Webapp to upload file 	| Webapp    	|
-| Technical            	| Digital twin registry          	| Https     	|
-| Technical            	| BPN Discovery                   	| Https     	|
+| Business / Technical 	 | Name                           	   | Interface 	|
+|------------------------|------------------------------------|-----------	|
+| Business             	 | User via Webapp to upload file 	   | Webapp    	|
+| Technical            	 | Digital twin registry          	   | Https     	|
+| Technical            	 | Portal Service         	           | Https      |
+| Technical            	 | BPN Discovery                   	   | Https      |
 
 <br />
 
@@ -168,13 +164,14 @@ Its having 2 components:
 
 <br /><br /><img src="images/building-block-view.png" height="60%" width="60%" /><br /><br />
 
-| SubSystem     	| Short description                                                                                               	|
-|---------------	|-----------------------------------------------------------------------------------------------------------------	|
-| Frontend      	| Provide a friendly interface to the user to support the csv file upload or sub model creation                   	|
-| Backend       	| Service that contains the REST api to support the Frontend and the execution pipeline to process the sub models 	|
-| EDC           	| Eclipse data connector acting as data provider and data consumer to retrieve sub model's details                	|
-| Digital Twins 	| Rest API that allows to register a sub model                                                                    	|
-| BPN Discovery 	| Rest API that allows to push and search Key value for DT shell lookup details.                                                                    	|
+| SubSystem     	| Short description                                                                                               	 |
+|---------------	|-------------------------------------------------------------------------------------------------------------------|
+| Frontend      	| Provide a friendly interface to the user to support the csv file upload or sub model creation                   	 |
+| Backend       	| Service that contains the REST api to support the Frontend and the execution pipeline to process the sub models 	 |
+| EDC           	| Eclipse data connector acting as data provider and data consumer to retrieve sub model's details                	 |
+| Digital Twins 	| Rest API that allows to register a sub model                                                                    	 |
+| Portal           | Rest API that allows to get validate companies BPN's and get list of companies connector URL                       |
+| BPN Discovery 	| Rest API that allows to push and search Key value for DT shell lookup details.                                     |
 
 <br />
 
@@ -182,7 +179,7 @@ Its having 2 components:
 
 SDE does not expose interfaces for other applications or components to call (i.e. no "external interfaces").
 
-SDE does call interfaces of other components as by the picture above (i.e. of EDC, Digital Twin Registry).
+SDE does call interfaces of other components as by the picture above (i.e. of EDC, Digital Twin Registry, Portal).
 
 There is a web interface between frontend and backend.<br /><br />
 
@@ -190,8 +187,10 @@ Detailed API specs available under:
 
 [https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml](https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml)
 
+[https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
 
-Backend API Swagger-ui : (https://[domain_name]/api/swagger-ui/index.html)
+Backend API Swagger-ui : [https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html](https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
+
 <br />
 
 ### **Data processing pipelines**
@@ -266,17 +265,18 @@ Backend API Swagger-ui : (https://[domain_name]/api/swagger-ui/index.html)
 <br /><br /><img src="images/single_level_bom_as_planned.png" height="60%" width="60%" /><br /><br />
 
 | Module                                	| Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    	| Execution order 	|
-|---------------------------------------	|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|-----------------	|
+|---------------------------------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|-----------------	|
 | CreateSingleLevelBoMAsPlanned         	| Used when Single Level BoM As - Planned is created on the frontend using the table or submit the <br>json request with the content.<br>It set the row position and process id in each item.                                                                                                                                                                                                                                                                                                                                                    	| 0               	|
 | MapToSingleLevelBoMAsPlanned          	| Convert the string that came on the uploaded CSV file to an SingleLevelBoMAsPlanned dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                           	| 1               	|
 | MapFromSingleLevelBoMAsPlannedRequest 	| Convert from the SingleLevelBoMAsPlanned Request object to an SingleLevelBoMAsPlanned dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                         	| 1               	|
 | GenerateUUId                          	| Check if SingleLevelBoMAsPlanned have a non null and non blank uuid. <br><br>If not it will generate one UUID with the defined prefix "urn:uuid:".                                                                                                                                                                                                                                                                                                                                                                                             	| 2               	|
-| DigitalTwinsSingleLevelBoMAsPlanned   	| Do the interface in the Digital Twins registry.<br><br> - It will lookup for shells and if no shell is found it will create one;<br> - If a single shell exists for the given key it will use that shell;<br> - If multiple shell are found it will throw an exception;<br> - It will lookup for sub models. <br> - If no sub model is found it will create one;<br> - If a sub model is found it will set the SingleLevelBoMAsPlanned with that sub model id;<br><br>Please note that a shell can only have two sub models at the time being. 	| 3               	|
+| DigitalTwinsSingleLevelBoMAsPlanned   	| Do the interface in the Digital Twins registry.<br><br> - It will lookup for shells and if no shell is found it will create one;<br> - If a single shell exists for the given key it will use that shell;<br> - If multiple shell are found it will throw an exception;<br> - It will lookup for sub models. If no sub model is found it will create one;<br> - If a sub model is found it will set the SingleLevelBoMAsPlanned with that sub model id;<br><br>Please note that a shell can only have two sub models at the time being. 	| 3               	|
 | EDCSingleLevelBoMAsPlanned            	| Do the interface in the Eclipse Data Connector (EDC)<br><br> - It will lookup for a previous asset registry;<br> - If no asset registry is found it will create an asset with a applied OR default policy and contract definition;                                                                                                                                                                                                                                                                                                                                    	| 4               	|
 | StoreSingleLevelBoMAsPlanned          	| Store the SingleLevelBoMAsPlanned in the SDE database.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	| 5               	|
 <br />
 
 #### **BoM As-Planned - PartSiteInformationAsPlanned**
+<br /><br /><img src="images/part_site_information_as_planned.png" height="60%" width="60%" /><br /><br />
 
 | Module                                     	| Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	| Execution order 	|
 |--------------------------------------------	|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|-----------------	|
@@ -289,51 +289,64 @@ Backend API Swagger-ui : (https://[domain_name]/api/swagger-ui/index.html)
 | StorePartSiteInformationAsPlanned          	| Store the PartSiteInformationAsPlanned in the SDE database.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	| 5               	|
 <br />
 
+#### **BoM As-Built - SingleLevelUsageAsBuilt**
+<br /><br /><img src="images/single_level_usage_as_built.png" height="60%" width="60%" /><br /><br />
+
+| Module                                     	      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	                                                                                                            | Execution order 	|
+|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------	|
+| CreateSingleLevelUsageAsBuilt         	           | Used when Single Level BoM As - Built is created on the frontend using the table or submit the <br>json request with the content.<br>It sets the row position and process id in each item.                                                                                                                                                                                                                                                                                                                                                        	                                                                                                              | 0               	|
+| MapToSingleLevelUsageAsBuilt          	           | Convert the string that came on the uploaded CSV file to Single Level Usage As Built dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                              	                                                                                                             | 1               	|
+| MapFromSingleLevelUsageAsBuiltRequest 	           | Convert from the SingleLevelUsageAsBuiltRequest object to Single Level Usage As Built dto.<br><br>It also validate the mandatory fields are fulfilled.                                                                                                                                                                                                                                                                                                                                                                                        	                                                                                                                  | 1               	|
+| FetchCatenaXId                                    | Check if Single Level Usage As Built  have a non null and non blank parent uuid and child uuid. <br><br> -If parent and child are found both uuid will be set on the Single Level Usage As Built. <br> -If parent or child are not found an exception will be thrown                                                                                                                                                                                                                                                                                                                                                                                           	 | 2               	|
+| DigitalTwinsSingleLevelUsageAsBuilt   	           | Do the interface in the Digital Twins registry.<br><br> - It will lookup for shells and if no shell is found it will create one;<br> - If a single shell exists for the given key it will use that shell;<br> - If multiple shell are found it will throw an exception;<br> - It will lookup for sub models. If no sub model is found it will create one; <br> - If a sub model is found it will set the Single Level Usage As Built  with that sub model id;<br><br>Please note that a shell can only have two sub models at the time being. 	                                                                                                                  | 3               	|
+| EDCSingleLevelUsageAsBuilt            	           | Do the interface in the Eclipse Data Connector (EDC)<br><br> - It will lookup for a previous asset registry;<br> - If no asset registry is found it will create an asset with a applied OR default policy and contract definition;                                                                                                                                                                                                                                                                                                                                         	                                                                                     | 4               	|
+| StoreSingleLevelUsageAsBuilt          	           | Store the Single Level Usage As Built in the SDE database.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      	                                                                                                                | 5               	|
+<br />
+
 ### **Whitebox Overall System**
 
 #### **App routing**
 
-| Route               	        | Description                                                      	| Type 	|
-|--------------------	        |------------------------------------------------------------------	|------	|
-| /login                        | Keycloak Authentication                                          	| Main 	|
-| /                  	        | Home page for use case selection and app overview                 | Main 	|
-| /provider/create-data      	| Create data using a CSV file, table or submit JSON data directly 	| Sub  	|
-| /provider/upload-history      | Upload history table                                             	| Sub  	|
-| /provider/contracts          	| Data provider contracts                                           | Sub  	|
-| /provider/help             	| Help guide, CSV rules and samples                                	| Sub  	|
-| /consumer/consume-data     	| Get list of data offer by selected providers                     	| Sub  	|
-| /consumer/contracts 	        | Data consumer contracts                                           | Sub  	|
+| Route               	 | Description                                                      	  | Type 	|
+|-----------------------|---------------------------------------------------------------------|------	|
+| /login                | Keycloak Authentication                                             | Main 	|
+ | /logout               | Keycloak logout                                                     |       |
+| /                  	  | Home page for use case selection and app overview                   | Main 	|
+| /create-data      	   | Create data using a CSV file, table or submit JSON data directly 	  | Sub  	|
+| /upload-history       | Upload history table                                             	  | Sub  	|
+| /help          	      | Help guide, CSV rules and samples                                   | Sub  	|
+| /consume-data     	   | Get list of data offer by selected providers                     	  | Sub  	|
+| /contracts-history 	  | Contracts history table                                             | Sub  	|
 
 <br />
 
 #### **Frontend folder structure**
 
-| Folder name 	| Description                                            	|
-|-------------	|--------------------------------------------------------	|
-| components  	| React components                                       	|
-| features  	| business logics of a particular feature with its store, service classes, actions and html	|
-| helpers     	| Constants and configurations                           	|
-| models      	| Interfaces                                             	|
-| modules     	| Custom hooks and routing configuration                 	|
-| pages       	| App pages                                              	|
-| services    	| Frontend service classes (ex: SDEService, UserService) 	|
-| store       	| Redux store to manage global state                     	|
-| tests       	| Unit tests                                             	|
-| utils       	| Auxiliary functions (ex: formatDate)                   	|
+| Folder name 	  | Description                                            	|
+|----------------|--------------------------------------------------------	|
+| components  	  | React components                                       	|
+| helpers     	  | Constants and configurations                           	|
+| models      	  | Interfaces                                             	|
+| features       | app features                                            |
+| pages       	  | App pages                                              	|
+| services    	  | Frontend service classes (ex: SDEService, UserService) 	|
+| store       	  | Redux store to manage global state                     	|
+| tests       	  | Unit tests                                             	|
+| utils       	  | Auxiliary functions (ex: formatDate)                   	|
 
 <br />
 
 #### **Frontend dependencies**
 
-| Library                    	| Description                                           	| Link                                                     	|
-|----------------------------	|-------------------------------------------------------	|----------------------------------------------------------	|
-| axios                      	| Promise based HTTP Client for the browser and node.js 	| https://www.npmjs.com/package/axios                      	|
-| cx-portal-shared-components 	| Contains the shared UI components that are used to build the Catena-X Portal Frontend | https://www.npmjs.com/package/cx-portal-shared-components	|
-| redux                      	| State management for react application                  	| https://www.npmjs.com/package/redux         	|
-| @reduxjs/toolkit             	| React toolkit for state manangement                     	| https://www.npmjs.com/package/@reduxjs/toolkit          	|
-| ajv                       	| Schema validator                                       	| https://www.npmjs.com/package/ajv                           	|
-| uuid                       	| Used to generate uuid (dynamic table)                 	| https://www.npmjs.com/package/uuid                       	|
-| @mui/material              	| Based components and based styles                     	| https://www.npmjs.com/package/@mui/material              	|
+| Library                    	  | Description                                           	                               | Link                                                     	 |
+|-------------------------------|---------------------------------------------------------------------------------------|------------------------------------------------------------|
+| axios                      	  | Promise based HTTP Client for the browser and node.js 	                               | https://www.npmjs.com/package/axios                      	 |
+| cx-portal-shared-components 	 | Contains the shared UI components that are used to build the Catena-X Portal Frontend | https://www.npmjs.com/package/cx-portal-shared-components	 |
+| redux                      	  | State management for react application                  	                             | https://www.npmjs.com/package/redux         	             |
+| @reduxjs/toolkit              | React toolkit for state manangement                     	                             | https://www.npmjs.com/package/@reduxjs/toolkit          	     |
+| ajv                       	   | Schema validator                                       	                              | https://www.npmjs.com/package/ajv                        |
+| @mui/material                 | React components with Google's material design                                        | https://www.npmjs.com/package/@mui/material                   |
+| uuid              	           | Used to generate uuid (dynamic table)                   	                             | https://www.npmjs.com/package/uuid              	         |
 
 
 <br />

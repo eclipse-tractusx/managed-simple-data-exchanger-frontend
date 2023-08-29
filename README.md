@@ -1,58 +1,58 @@
-## Getting Started with Create React App
+# Managed Simple Data Exchanger
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains the frontend code for the Managed Simple Data Exchanger written in React and Typescript.
 
-## Available Scripts
+The Managed Simple Data Exchanger application consists of
 
-In the project directory, you can run:
+- [managed-simple-data-exchanger-frontend](https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend)
+- [managed-simple-data-exchanger-backend](https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend)
 
-### `npm start`
+![Tag](https://img.shields.io/static/v1?label=&message=LeadingRepository&color=green&style=flat) The helm chart for installing the Managed Simple Data Exchanger is available in [managed-simple-data-exchanger](https://github.com/eclipse-tractusx/managed-simple-data-exchanger).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The Managed Simple Data Exchanger is designed to work with the [IAM](https://github.com/eclipse-tractusx/portal-iam).
 
-The page will reload if you make edits\
-You will also see any lint errors in the console.
+Note: if you'd like to know more about what Managed Simple Data Exchanger contains and what the application does, then please checkout the [user-guide](https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/blob/main/docs/user-guide/README.md).
 
-### `npm test`
+## Run locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Here are the two ways to run the application locally on http://localhost:3000/
 
-### `npm build`
+### Local build & run
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    npm install
+    npm run build
+    npm start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Running the image from GitHub container registry
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    export IMAGE=tractusx/sdefrontend:latest
+    docker pull $IMAGE
+    docker run --rm -d -p 3001:8080 --name sdefrontend $IMAGE
 
-## `npm eject`
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Notice for Docker image
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This application provides container images for demonstration purposes.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+DockerHub: https://hub.docker.com/r/tractusx/sdefrontend
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Eclipse Tractus-X product(s) installed within the image:
 
-### Learn More
+- GitHub: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend
+- Project home: https://projects.eclipse.org/projects/automotive.tractusx
+- Dockerfile: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/blob/main/Dockerfile
+- Project license: [Apache License, Version 2.0] https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/blob/main/LICENSE
 
-### `Build docker image`
+**Used base image**
+- [nginxinc/nginx-unprivileged:1.25.1-perl]
+- Dockerfile: [nginxinc/nginx-unprivileged:alpine](https://github.com/nginxinc/docker-nginx-unprivileged/blob/main/Dockerfile-alpine.template)
+- GitHub project: [https://github.com/nginxinc/docker-nginx-unprivileged](https://github.com/nginxinc/docker-nginx-unprivileged)
+- DockerHub: [https://hub.docker.com/r/nginxinc/nginx-unprivileged](https://hub.docker.com/r/nginxinc/nginx-unprivileged)
 
-```shell
-docker build . -t webapp:01
-```
+As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
 
-### `Run docker container`
+As for any pre-built image usage, it is the image user's responsibility to ensure that any use of this image complies with any relevant licenses for all software contained within.
 
-```shell
-docker run -it --rm -d -p 8080:80/tcp --name app web
+## License
 
-
-docker run -p 3000:8081 -t webapp:01
-
-
-```
+Distributed under the Apache 2.0 License.
+See [LICENSE](./LICENSE) for more information.
