@@ -5,6 +5,7 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 ## [2.0.10] - 2023-08-24
 ### Added
 - About page added.
+- script added to generate values in about page.
 ### Fixed
 - BPN validation enhancements in consumer data page.
 - Add BPN flow enhancement in provider, access policy section.
