@@ -73,7 +73,7 @@
       "unrestricted": "uneingeschränkt",
       "note": "Hinweis: Ihre Organisation gehört stets zu den berechtigten Empfängern.",
       "unAccess": "Uneingeschränkter Zugang!",
-      "warningText": "Wenn Sie keine BPN vergeben, können die Daten nur von Ihnen eingesehen werden.",
+      "warningText": "Wenn Sie keine BPN vergeben, sind die Daten nur für Sie zugänglich.",
       "usagePolicy": "Nutzungsrichtlinien",
       "duration": "Nutzungsdauer",
       "durationNote": "Erlaubte Nutzungsdauer ab Vertragsstart",
