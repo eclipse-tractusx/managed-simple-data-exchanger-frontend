@@ -1,5 +1,5 @@
 {
-  "title": "Catena-X SDE",
+  "title": "Simple Data Exchanger",
   "logo": "Simple Data Exchanger",
   "pages": {
     "home": "Home",
@@ -73,7 +73,7 @@
       "unrestricted": "Unrestricted",
       "note": "Note: Your own organization will always be allowed to access the data",
       "unAccess": "Unrestricted Access!",
-      "warningText": "Warning! Selecting this option will make your data available to every company in the Catena-X network. Are you sure?",
+      "warningText": "If you do not assign a BPN, the data can only be accessible to you.",
       "usagePolicy": "Usage Policies",
       "duration": "Duration restriction",
       "durationNote": "Usage allowed from contract start",
