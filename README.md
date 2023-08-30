@@ -33,7 +33,7 @@ Here are the two ways to run the application locally on http://localhost:3000/
 
 This application provides container images for demonstration purposes.
 
-DockerHub: https://hub.docker.com/r/tractusx/sdefrontend
+DockerHub: https://hub.docker.com/r/tractusx/managed-simple-data-exchanger-frontend 
 
 Eclipse Tractus-X product(s) installed within the image:
 
