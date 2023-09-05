@@ -26,3 +26,4 @@ window._env_ = {
   REACT_APP_KEYCLOAK_URL: '',
   REACT_APP_KEYCLOAK_REALM: '',
 };
+
