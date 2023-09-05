@@ -2,6 +2,18 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.1.0] - 2023-08-30
+### Added
+- warning text in access policy section.
+### Fixed
+- warning text updates.
+- removed catena -x from browser title.
+- jar file added for dependencies check workflow.
+
+## [2.0.11] - 2023-08-29
+### Changed 
+- Docker image name changed.
+
 ## [2.0.10] - 2023-08-24
 ### Added
 - About page added.
@@ -174,10 +186,12 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.10...main
-[2.0.10]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.9...dftfrontend-2.0.10
-[2.0.9]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.8...dftfrontend-2.0.9
-[2.0.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.2...dftfrontend-2.0.8
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.0...main
+[2.1.0]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.0.10...v2.0.11
+[2.0.11]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.0.10...v2.0.11
+[2.0.10]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/2.0.9...v2.0.10
+[2.0.9]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/2.0.8...2.0.9
+[2.0.8]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.2...2.0.8
 [2.0.2]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.1...dftfrontend-2.0.2
 [2.0.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/dftfrontend-2.0.0...dftfrontend-2.0.1
 [2.0.0]: https://github.com/eclipse-tractusx/dft-frontend/compare/dft-frontend-1.9.0...dftfrontend-2.0.0

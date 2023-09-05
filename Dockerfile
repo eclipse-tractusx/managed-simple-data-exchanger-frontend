@@ -34,7 +34,7 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-FROM nginxinc/nginx-unprivileged:alpine
+FROM nginxinc/nginx-unprivileged:1.25.1-perl
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 USER root 
@@ -48,5 +48,4 @@ RUN chmod ug+rwx /usr/share/nginx/html/
 EXPOSE 8080
 USER 101
 # Start Nginx server
-#CMD ["nginx", "-g", "daemon off;"]
 CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
