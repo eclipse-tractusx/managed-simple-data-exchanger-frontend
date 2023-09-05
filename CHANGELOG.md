@@ -9,6 +9,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - warning text updates.
 - removed catena -x from browser title.
 - jar file added for dependencies check workflow.
+- restricted, unrestricted notes removed from heading.
+- german text updates.
 
 ## [2.0.11] - 2023-08-29
 ### Changed 

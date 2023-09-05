@@ -112,6 +112,12 @@ export default function AccessPolicy() {
       setConKey(uuid());
     }
   };
+  const handleEnterBpn = (e: ChangeEvent<HTMLInputElement>) => {
+    const regex = /[a-zA-Z0-9]$/;
+    if (e.target.value === '' || regex.test(e.target.value)) {
+      dispatch(setInputBpn(e.target.value));
+    }
+  };
 
   useEffect(() => {
     if (data?.bpnStatus === 'FULL_PARTNER') {
@@ -150,14 +156,7 @@ export default function AccessPolicy() {
               size="small"
               value={inputBpn}
               inputProps={{ maxLength: 16 }}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                console.log(e);
-                const regex = /[a-zA-Z0-9]$/;
-                if (e.target.value === '' || regex.test(e.target.value)) {
-                  console.log('asdfsaf');
-                  dispatch(setInputBpn(e.target.value));
-                }
-              }}
+              onChange={handleEnterBpn}
               error={bpnError}
               helperText="Incorrect BPN"
             />

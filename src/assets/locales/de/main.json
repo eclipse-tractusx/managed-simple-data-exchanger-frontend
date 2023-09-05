@@ -62,7 +62,7 @@
     "policies": {
       "title": "Policies",
       "description": "Hier legen Sie fest mit wem sie die Daten teilen möchten (via „Access Policies“) und mit welchen Einschränkungen (via „Usage Policies“).",
-      "description_1": "Wählen Sie die Geschäftspartner aus, mit denen die Daten geteilt werden sollen (Suche via BPN oder über Name) / Alternativ können Sie die Daten „uneingeschränkt“ im Netzwerk zur Verfügung stellen",
+      "description_1": "Wählen Sie die Geschäftspartner aus, mit denen die Daten geteilt werden sollen (Suche via BPN oder über Name).",
       "description_1_1": "Uneingeschränkt: Jeder im Netzwerk kann die Daten sehen",
       "description_1_2": "Eingeschränkt: nur für die ausgewählten Unternehmen sichtbar (Suche nach Name oder BPN)",
       "description_2": "Legen Sie fest für welche Dauer die Daten eingesehen werden dürfen (optional)",
