@@ -48,4 +48,4 @@ RUN chmod ug+rwx /usr/share/nginx/html/
 EXPOSE 8080
 USER 101
 # Start Nginx server
-CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
