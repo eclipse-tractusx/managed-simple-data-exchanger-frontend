@@ -87,6 +87,6 @@
     "lint-fix": "eslint src --quiet --fix",
     "format": "prettier --config .prettierrc --write \"src/**/*.{js,ts,json,md,css,html,tsx,jsx}\"",
     "build:legal-notice": "bash scripts/legal-notice.sh",
-    "check:dependencies": "java -jar ./scripts/download/org.eclipse.dash.licenses-1.0.2.jar ./package-lock.json -project automotive.tractusx -summary DEPENDENCIES || true"
+    "check:dependencies": "java -jar ./scripts/download/org.eclipse.dash.licenses.jar ./package-lock.json -project automotive.tractusx -summary DEPENDENCIES || true"
   }
 }
