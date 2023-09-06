@@ -43,6 +43,7 @@ import { useValidateBpnMutation } from '../../features/provider/policies/apiSlic
 import { addBpn, deleteBpn, setInputBpn } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
 import ConsumerService from '../../services/ConsumerService';
+import { ALPHA_NUM_REGEX } from '../../utils/constants';
 const ITEMS = [
   {
     id: 1,
@@ -103,6 +104,7 @@ export default function AccessPolicy() {
 
   const [validateBpn, { isLoading, data }] = useValidateBpnMutation();
   const [addBpnPrompt, setAddBpnPrompt] = useState(false);
+
   const handleAddBpn = async () => {
     if (inRange(inputBpn.length, 1, 16)) {
       setbpnError(true);
@@ -113,8 +115,7 @@ export default function AccessPolicy() {
     }
   };
   const handleEnterBpn = (e: ChangeEvent<HTMLInputElement>) => {
-    const regex = /[a-zA-Z0-9]$/;
-    if (e.target.value === '' || regex.test(e.target.value)) {
+    if (e.target.value === '' || ALPHA_NUM_REGEX.test(e.target.value)) {
       dispatch(setInputBpn(e.target.value));
     }
   };
