@@ -22,6 +22,7 @@ import '../styles/submodelDetails.scss';
 import InfoIcon from '@mui/icons-material/Info';
 import { Box } from '@mui/material';
 import { Tooltips } from 'cx-portal-shared-components';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useAppSelector } from '../features/store';
 
@@ -36,21 +37,21 @@ export default function SubmodelInfo() {
         <table className="submodel-detail-table">
           <tbody>
             <tr>
-              {previewTableHeadings.map((title: string, index: number) => (
-                <th key={index + title}>{title}</th>
+              {previewTableHeadings.map((title: string) => (
+                <th key={uuidv4()}>{title}</th>
               ))}
             </tr>
-            {previewTableData.map((data: string[], i: number) => (
-              <tr key={i}>
-                {data.map((e: string, index: number) => (
-                  <td key={index + e}>{e}</td>
+            {previewTableData.map((data: string[]) => (
+              <tr key={uuidv4()}>
+                {data.map((e: string) => (
+                  <td key={uuidv4()}>{e}</td>
                 ))}
               </tr>
             ))}
             <tr>
               <td>Description</td>
-              {previewTableDescriptions.map((desc: string, index: number) => (
-                <td key={index + desc}>
+              {previewTableDescriptions.map((desc: string) => (
+                <td key={uuidv4()}>
                   <Tooltips tooltipPlacement="top" tooltipText={desc}>
                     <span>
                       <InfoIcon color="primary" />
