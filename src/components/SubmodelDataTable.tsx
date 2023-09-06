@@ -62,7 +62,7 @@ export default function DataTable() {
       </Box>
       <Table
         title={submodelDetails.title}
-        getRowId={row => row.id}
+        getRowId={row => row.rowId}
         autoHeight
         rows={rows}
         columns={columns}

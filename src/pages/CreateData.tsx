@@ -25,10 +25,10 @@ import { isEmpty } from 'lodash';
 import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import DataTable from '../components/DataTable';
 import DownloadCSV from '../components/DownloadCSV';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
+import SubmodelDataTable from '../components/SubmodelDataTable';
 import SubmodelInfo from '../components/SubmodelInfo';
 import UploadFile from '../components/UploadFile';
 import { useAppSelector } from '../features/store';
@@ -96,7 +96,7 @@ export default function CreateData() {
               <UploadFile />
             </TabPanel>
             <TabPanel value={activeTab} index={1}>
-              <DataTable />
+              <SubmodelDataTable />
             </TabPanel>
           </Box>
         </Box>
