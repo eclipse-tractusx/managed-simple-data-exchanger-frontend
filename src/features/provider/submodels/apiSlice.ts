@@ -59,7 +59,16 @@ export const helpApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    downloadSample: builder.mutation({
+      query: ({ submodel, type }) => {
+        return {
+          method: 'GET',
+          url: `/submodels/csvfile/${submodel}?type=${type}`,
+          responseHandler: response => response.blob(),
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetHelpPageDataQuery } = helpApiSlice;
+export const { useGetHelpPageDataQuery, useDownloadSampleMutation } = helpApiSlice;

@@ -46,7 +46,17 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    downloadHistory: builder.mutation({
+      query: ({ csvType, processId }) => {
+        return {
+          method: 'GET',
+          url: `/${csvType}/download/${processId}/csv`,
+          responseHandler: response => response.blob(),
+        };
+      },
+    }),
   }),
+  overrideExisting: false,
 });
 
-export const { useGetHistoryQuery, useDeleteHistoryMutation } = providerHistorySlice;
+export const { useGetHistoryQuery, useDeleteHistoryMutation, useDownloadHistoryMutation } = providerHistorySlice;

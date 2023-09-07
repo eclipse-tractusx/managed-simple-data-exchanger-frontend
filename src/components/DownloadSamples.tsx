@@ -23,13 +23,14 @@ import { LoadingButton } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useDownloadSampleMutation } from '../features/provider/submodels/apiSlice';
 import { csvFileDownload } from '../helpers/FileDownloadHelper';
-import AppService from '../services/appService';
 
 export default function DownloadSamples({ submodel }: { submodel: string }) {
   const [downloadingSample, setdownloadingSample] = useState(false);
   const [downloadingTemplate, setdownloadingTemplate] = useState(false);
   const { t } = useTranslation();
+  const [downloadSample] = useDownloadSampleMutation();
 
   async function download(type: string) {
     if (type === 'sample') {
@@ -37,16 +38,18 @@ export default function DownloadSamples({ submodel }: { submodel: string }) {
     } else if (type === 'template') {
       setdownloadingTemplate(true);
     }
-    try {
-      const { data } = await AppService.getInstance().downloadCSV(submodel, type);
-      if (data) {
+
+    await downloadSample({ submodel, type })
+      .unwrap()
+      .then(res => {
         const fileName = `${type}-${submodel}`;
-        csvFileDownload(data, fileName);
-      }
-    } finally {
-      setdownloadingSample(false);
-      setdownloadingTemplate(false);
-    }
+        csvFileDownload(res, fileName);
+      })
+      .catch(e => console.error(e))
+      .finally(() => {
+        setdownloadingSample(false);
+        setdownloadingTemplate(false);
+      });
   }
 
   return (

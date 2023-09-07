@@ -30,13 +30,16 @@ import { useTranslation } from 'react-i18next';
 import UploadHistoryErrorDialog from '../components/dialogs/UploadHistoryErrorDialog';
 import Permissions from '../components/Permissions';
 import { Status } from '../enums';
-import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
+import {
+  useDeleteHistoryMutation,
+  useDownloadHistoryMutation,
+  useGetHistoryQuery,
+} from '../features/provider/history/apiSlice';
 import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
 import { useAppDispatch } from '../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import { csvFileDownload } from '../helpers/FileDownloadHelper';
 import { ProcessReport } from '../models/ProcessReport';
-import AppService from '../services/appService';
 import ProviderService from '../services/ProviderService';
 import { STATUS_COLOR_MAPPING } from '../utils/constants';
 import { formatDate } from '../utils/utils';
@@ -51,18 +54,16 @@ function UploadHistoryNew() {
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
   const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
+  const [downloadHistory] = useDownloadHistoryMutation();
 
-  async function download(subModel: ProcessReport) {
-    try {
-      const { csvType, processId } = subModel;
-      const response = await AppService.getInstance().downloadHistory(csvType, processId);
-      if (response) {
+  async function download({ csvType, processId }: Partial<ProcessReport>) {
+    await downloadHistory({ csvType, processId })
+      .unwrap()
+      .then(res => {
         const fileName = `${csvType}-${processId}`;
-        csvFileDownload(response.data, fileName);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+        csvFileDownload(res, fileName);
+      })
+      .catch(e => console.error(e));
   }
 
   const showUploadErrors = async (subModel: ProcessReport) => {
