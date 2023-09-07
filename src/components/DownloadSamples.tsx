@@ -23,37 +23,25 @@ import { LoadingButton } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { setSnackbarMessage } from '../features/notifiication/slice';
-import { useAppDispatch } from '../features/store';
+import { csvFileDownload } from '../helpers/FileDownloadHelper';
 import AppService from '../services/appService';
 
-export default function DownloadCSV({ submodel }: { submodel: string }) {
+export default function DownloadSamples({ submodel }: { submodel: string }) {
   const [downloadingSample, setdownloadingSample] = useState(false);
   const [downloadingTemplate, setdownloadingTemplate] = useState(false);
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   async function download(type: string) {
+    if (type === 'sample') {
+      setdownloadingSample(true);
+    } else if (type === 'template') {
+      setdownloadingTemplate(true);
+    }
     try {
-      if (type === 'sample') {
-        setdownloadingSample(true);
-      } else {
-        setdownloadingTemplate(true);
-      }
       const { data } = await AppService.getInstance().downloadCSV(submodel, type);
       if (data) {
-        const url = window.URL.createObjectURL(new Blob([data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${type}-${submodel}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.downloadSuccess',
-            type: 'success',
-          }),
-        );
+        const fileName = `${type}-${submodel}`;
+        csvFileDownload(data, fileName);
       }
     } finally {
       setdownloadingSample(false);
