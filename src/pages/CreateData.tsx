@@ -25,7 +25,7 @@ import { isEmpty } from 'lodash';
 import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import DownloadCSV from '../components/DownloadCSV';
+import DownloadSamples from '../components/DownloadSamples';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
 import SubmodelDataTable from '../components/SubmodelDataTable';
@@ -63,7 +63,7 @@ export default function CreateData() {
         </Grid>
         {!isEmpty(selectedSubmodel) ? (
           <Grid item xs={6}>
-            <DownloadCSV submodel={selectedSubmodel.value} />
+            <DownloadSamples submodel={selectedSubmodel.value} />
           </Grid>
         ) : null}
       </Grid>
