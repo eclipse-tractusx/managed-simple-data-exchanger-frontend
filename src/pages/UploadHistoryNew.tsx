@@ -58,7 +58,7 @@ function UploadHistoryNew() {
       const response = await AppService.getInstance().downloadHistory(csvType, processId);
       if (response) {
         const fileName = `${csvType}-${processId}`;
-        csvFileDownload(data, fileName);
+        csvFileDownload(response.data, fileName);
       }
     } catch (e) {
       console.log(e);
