@@ -41,7 +41,9 @@ export default function AppLayout(props: any) {
         <Nav />
         <Box sx={{ display: 'flex', mt: 8, height: 'calc(100vh - 64px)', overflow: 'hidden' }}>
           <Sidebar />
-          <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>{props.children}</Box>
+          <Box sx={{ width: '100%', height: '100%', overflowY: 'scroll' }}>
+            <Box sx={{ flex: 1, p: 4 }}>{props.children}</Box>
+          </Box>
         </Box>
       </Box>
     </Box>

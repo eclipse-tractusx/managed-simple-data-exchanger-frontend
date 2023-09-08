@@ -43,7 +43,7 @@ export default function CreateData() {
   };
 
   return (
-    <Box sx={{ flex: 1, p: 4 }}>
+    <>
       <Typography variant="h3" mb={2}>
         {t('content.provider.heading')}
       </Typography>
@@ -106,6 +106,6 @@ export default function CreateData() {
         </Box>
       )}
       <PoliciesDialog />
-    </Box>
+    </>
   );
 }

@@ -18,7 +18,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Box } from '@mui/material';
 import { AboutCard, Typography } from 'cx-portal-shared-components';
 import { t } from 'i18next';
 
@@ -26,12 +25,12 @@ import aboutContent from '../assets/about/legal-notice.json';
 
 function About() {
   return (
-    <Box sx={{ flex: 1, p: 4 }}>
+    <>
       <Typography variant="h3" mb={3}>
         {t('pages.about')}
       </Typography>
       <AboutCard {...aboutContent} />
-    </Box>
+    </>
   );
 }
 
