@@ -211,7 +211,7 @@ function UploadHistoryNew() {
 
   if (isSuccess) {
     return (
-      <Box sx={{ flex: 1, p: 4 }}>
+      <>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={9}>
             <Typography variant="h3" mb={1}>
@@ -261,7 +261,7 @@ function UploadHistoryNew() {
         <Box>
           <UploadHistoryErrorDialog open={showErrorLogsDialog} handleDialogClose={handleErrorDialogClose} />
         </Box>
-      </Box>
+      </>
     );
   } else return null;
 }

@@ -19,7 +19,7 @@
  ********************************************************************************/
 
 import InfoIcon from '@mui/icons-material/Info';
-import { Box, Card, CardContent, Grid } from '@mui/material';
+import { Card, CardContent, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
@@ -74,7 +74,7 @@ export default function Help() {
 
   if (isSuccess) {
     return (
-      <Box sx={{ flex: 1, p: 4 }}>
+      <>
         <Typography variant="h3" mb={1}>
           {t('pages.help')}
         </Typography>
@@ -119,7 +119,7 @@ export default function Help() {
             </ul>
           </CardContent>
         </Card>
-      </Box>
+      </>
     );
   } else return null;
 }

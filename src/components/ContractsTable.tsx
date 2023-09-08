@@ -187,7 +187,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
 
   if (isSuccess) {
     return (
-      <Box sx={{ flex: 1, p: 4 }}>
+      <>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={9}>
             <Typography variant="h3">{title}</Typography>
@@ -250,7 +250,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
             </Box>
           </Grid>
         </Grid>
-      </Box>
+      </>
     );
   } else return null;
 }
