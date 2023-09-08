@@ -46,7 +46,7 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    downloadHistory: builder.mutation({
+    downloadCsv: builder.mutation({
       query: ({ csvType, processId }) => {
         return {
           method: 'GET',
@@ -59,4 +59,4 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetHistoryQuery, useDeleteHistoryMutation, useDownloadHistoryMutation } = providerHistorySlice;
+export const { useGetHistoryQuery, useDeleteHistoryMutation, useDownloadCsvMutation } = providerHistorySlice;

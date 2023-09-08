@@ -32,7 +32,7 @@ import Permissions from '../components/Permissions';
 import { Status } from '../enums';
 import {
   useDeleteHistoryMutation,
-  useDownloadHistoryMutation,
+  useDownloadCsvMutation,
   useGetHistoryQuery,
 } from '../features/provider/history/apiSlice';
 import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
@@ -54,10 +54,10 @@ function UploadHistoryNew() {
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
   const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
-  const [downloadHistory] = useDownloadHistoryMutation();
+  const [downloadCsv] = useDownloadCsvMutation();
 
   async function download({ csvType, processId }: Partial<ProcessReport>) {
-    await downloadHistory({ csvType, processId })
+    await downloadCsv({ csvType, processId })
       .unwrap()
       .then(res => {
         const fileName = `${csvType}-${processId}`;
