@@ -20,7 +20,7 @@
 
 import { useTranslation } from 'react-i18next';
 
-import ContractsTable from '../components/ContractsTable';
+import ContractsTable from '../../components/ContractsTable';
 
 const ConsumerContracts = () => {
   const { t } = useTranslation();

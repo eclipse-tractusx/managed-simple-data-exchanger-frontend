@@ -31,6 +31,8 @@ const ALPHA_NUM_REGEX = /[a-zA-Z0-9]$/;
 
 const SPACE_CHECK_REGEX = /^\S*$/;
 
+const DATE_TIME_FORMAT = 'DD-MM-YYYY H:mm:ss';
+
 const CONTRACT_STATES: string[] = ['FINALIZED', 'DECLINED', 'TERMINATED', 'ERROR'];
 
 const STATUS_COLOR_MAPPING: IDefaultObject = {
@@ -89,6 +91,7 @@ const PURPOSE_VALUES: ISelectList[] = [
 export {
   ALPHA_NUM_REGEX,
   CONTRACT_STATES,
+  DATE_TIME_FORMAT,
   DURATION_UNIT_MAPPING,
   DURATION_UNITS,
   ONLY_NUM_REGEX,

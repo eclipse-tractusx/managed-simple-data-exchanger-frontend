@@ -10,7 +10,8 @@
     "consumer": "Datenempfänger",
     "consumeData": "Suche Daten",
     "contracts": "Verträge",
-    "about": "About"
+    "about": "About",
+    "offerDownloadHistory": "Verlauf herunterladen"
   },
   "content": {
     "home": {
@@ -155,6 +156,10 @@
         "contractEndDate": "Ablaufdatum",
         "state": "Status"
       }
+    },
+    "offerDownloadHistory": {
+      "description": "Dieser Verlauf gibt einen Überblick über die heruntergeladenen Daten Ihres Unternehmens aus dem Catena-X-Ökosystem. Alle Aktivitäten sind hier aufgelistet. Aus dieser Verlaufsliste können Sie die Daten erneut herunterladen.",
+      "detailDialogTitle": "Angebotsdetails"
     },
     "dropzone": {
       "title": "Dateien hierher ziehen",

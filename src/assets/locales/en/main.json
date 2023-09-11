@@ -10,7 +10,8 @@
     "consumer": "Consumer",
     "consumeData": "Consume Data",
     "contracts": "Contracts",
-    "about": "About"
+    "about": "About",
+    "offerDownloadHistory": "Download History"
   },
   "content": {
     "home": {
@@ -155,6 +156,10 @@
         "contractEndDate": "End Date",
         "state": "Status"
       }
+    },
+    "offerDownloadHistory": {
+      "description": "This history overviews your company's downloaded data from the Catena-X ecosystem. All activities are listed here. You can download the data again from this history list.",
+      "detailDialogTitle": "Offer details"
     },
     "dropzone": {
       "title": "Drag & drop your files here",

@@ -43,10 +43,11 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid } from 'uuid';
 
-import ConfirmTermsDialog from '../components/dialogs/ConfirmTermsDialog';
-import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
-import NoDataPlaceholder from '../components/NoDataPlaceholder';
-import Permissions from '../components/Permissions';
+import ConfirmTermsDialog from '../../components/dialogs/ConfirmTermsDialog';
+import OfferDetailsDialog from '../../components/dialogs/OfferDetailsDialog';
+import NoDataPlaceholder from '../../components/NoDataPlaceholder';
+import Permissions from '../../components/Permissions';
+import { useSubscribeAndDownloadMutation } from '../../features/consumer/apiSlice';
 import {
   setContractOffers,
   setFfilterCompanyOptionsLoading,
@@ -61,18 +62,18 @@ import {
   setSelectedFilterCompanyOption,
   setSelectedOffer,
   setSelectedOffersList,
-} from '../features/consumer/slice';
+} from '../../features/consumer/slice';
 import {
   IConnectorResponse,
   IConsumerDataOffers,
   ILegalEntityContent,
   IntConnectorItem,
   IntOption,
-} from '../features/consumer/types';
-import { setSnackbarMessage } from '../features/notifiication/slice';
-import { useAppDispatch, useAppSelector } from '../features/store';
-import { arraysEqual, handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
-import ConsumerService from '../services/ConsumerService';
+} from '../../features/consumer/types';
+import { setSnackbarMessage } from '../../features/notifiication/slice';
+import { useAppDispatch, useAppSelector } from '../../features/store';
+import { arraysEqual, handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../../helpers/ConsumerOfferHelper';
+import ConsumerService from '../../services/ConsumerService';
 
 const ITEMS: IntConnectorItem[] = [
   {
@@ -154,6 +155,8 @@ export default function ConsumeData() {
     }
   };
 
+  const [subscribeAndDownload, { data }] = useSubscribeAndDownloadMutation();
+
   const handleConfirmTermDialog = async () => {
     try {
       let payload;
@@ -188,9 +191,9 @@ export default function ConsumeData() {
         };
       }
       setIsOfferSubLoading(true);
-      const response = await ConsumerService.getInstance().subscribeToOffers(payload);
+      await subscribeAndDownload(payload);
       setIsOfferSubLoading(false);
-      if (response.status == 200) {
+      if (data) {
         dispatch(
           setSnackbarMessage({
             message: 'alerts.subscriptionSuccess',
@@ -394,7 +397,7 @@ export default function ConsumeData() {
   }, [filterSelectedBPN]);
 
   return (
-    <Box sx={{ flex: 1, p: 4 }}>
+    <>
       <Typography variant="h3" mb={1}>
         {t('pages.consumeData')}
       </Typography>
@@ -637,6 +640,6 @@ export default function ConsumeData() {
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </>
   );
 }
