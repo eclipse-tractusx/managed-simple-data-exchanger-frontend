@@ -31,6 +31,7 @@ This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LIC
         - [Single Level Bom As Planned](#single-level-bom-as-planned)
         - [Part Site Information As Planned](#part-site-information-as-planned)
         - [Single Level Usage As Built](#single-level-usage-as-built)
+        - [Product Carbon Footprint](#product-carbon-footprint)
     - [Upload history](#upload-history)
     - [Contracts](#provider-contracts)
     - [Help](#help)
@@ -137,6 +138,7 @@ At the moment, Simple Data Exchanger supports data proving options for below lis
 - Single Level Bom AsPlanned.
 - Part Site Information AsPlanned.
 - Single Level Usage AsBuilt.
+- Product Carbon Footprint
 
 You can click on the button "Choose a file" and select the proper CSV file present in your file system or you can just drag and drop your file in the drop area under upload file component.
 
@@ -182,6 +184,10 @@ This is the process of creating new data offer through SDE application by upload
 #### Single Level Usage AsBuilt
 
 <img src="images/sde-single-level-usage-table.png" height="60%" width="60%" />
+
+#### Product Carbon Footprint
+
+<img src="images/sde-product-carbon-footprint.png" height="60%" width="60%" />
 
 You can add and submit multiple data offers via Manual entry option for particular submodel by clicking on "Add Row" button to bulk upload the multiple data offers in one go. Once you enter details in all of the required fields for a particular row, you need to select which offers we need to upload by ticking the checkboxes for the respective rows and then we need to click on "Next Step - Configure Policies" button to configure Access and Usage policies and then you need to click on Submit button from policy dialog to upload the data. You can upload the data for multiple submodels by selecting the respective submodel from the top level Select submodel dropdown.
 We also can delete multiple rows by selecting which rows we want to delete and then click on Delete Row(s) button.
