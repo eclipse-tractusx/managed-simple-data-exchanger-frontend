@@ -18,13 +18,24 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Box } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Box, capitalize } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Table } from 'cx-portal-shared-components';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  Table,
+  Typography,
+} from 'cx-portal-shared-components';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IDefaultObject } from '../../models/Common';
+import { STATUS_COLOR_MAPPING } from '../../utils/constants';
 
 interface IDownloadHistoryErrorDialog {
   open: boolean;
@@ -41,54 +52,45 @@ const DownloadHistoryErrorDialog: React.FC<IDownloadHistoryErrorDialog> = ({
   const [page, setPage] = useState<number>(0);
   const [pageSize] = useState<number>(10);
 
-  const handleColumnValue = (value: string) => (value.length ? 'yes' : 'no');
+  const handleColumnValue = (value: string) =>
+    value.length ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />;
   const columns: GridColDef[] = [
     {
       field: 'offerId',
       headerName: 'Offer Id',
-      flex: 1.5,
-      valueFormatter: ({ value }) => handleColumnValue(value),
+      flex: 1,
+      renderCell: ({ row }) => handleColumnValue(row.offerId),
       sortable: false,
     },
     {
       field: 'assetId',
       headerName: 'Asset Id',
-      flex: 1.5,
-      valueFormatter: ({ value }) => handleColumnValue(value),
+      flex: 1,
+      renderCell: ({ row }) => handleColumnValue(row.assetId),
       sortable: false,
     },
     {
       field: 'policyId',
       headerName: 'Policy Id',
-      flex: 1.5,
-      valueFormatter: ({ value }) => handleColumnValue(value),
+      flex: 1,
+      renderCell: ({ row }) => handleColumnValue(row.policyId),
       sortable: false,
     },
     {
-      field: 'agreementId',
-      headerName: 'Agreement Id',
-      flex: 1.5,
-      valueFormatter: ({ value }) => handleColumnValue(value),
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
       sortable: false,
-    },
-    {
-      field: 'expirationDate',
-      headerName: 'Expiry Date',
-      flex: 1.5,
-      valueFormatter: ({ value }) => handleColumnValue(value),
-      sortable: false,
-    },
-    {
-      field: 'transferProcessId',
-      headerName: 'Transfer Process Id',
-      flex: 1.5,
-      valueFormatter: ({ value }) => handleColumnValue(value),
-      sortable: false,
+      renderCell: ({ row }) => (
+        <Typography color={STATUS_COLOR_MAPPING[row.status]} variant="body2">
+          {capitalize(row.status)}
+        </Typography>
+      ),
     },
     {
       field: 'downloadErrorMsg',
       sortable: false,
-      headerName: 'Error',
+      headerName: 'Error Message',
       flex: 5,
       align: 'center',
       headerAlign: 'center',

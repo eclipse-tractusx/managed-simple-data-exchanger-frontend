@@ -159,7 +159,7 @@
     },
     "offerDownloadHistory": {
       "description": "Dieser Verlauf gibt einen Überblick über die heruntergeladenen Daten Ihres Unternehmens aus dem Catena-X-Ökosystem. Alle Aktivitäten sind hier aufgelistet. Aus dieser Verlaufsliste können Sie die Daten erneut herunterladen.",
-      "detailDialogTitle": "Angebotsdetails"
+      "detailDialogTitle": "Fehlerdetails"
     },
     "dropzone": {
       "title": "Dateien hierher ziehen",
@@ -232,7 +232,7 @@
     "uploadSuccess": "Hochladen abgeschlossen!",
     "uploadWarning": "Hochladen abgeschlossen - mit Fehlermeldungen!",
     "uploadError": "Hochladen fehlgeschlagen!",
-    "subscriptionSuccess": "Abonnieren der Vertragsangebote initiiert!",
+    "subscriptionSuccess": "Vertragsangebote-Abonnement erfolgreich gestartet und heruntergeladen!!",
     "subscriptionError": "Abonnieren der Vertragsangebote fehlgeschlagen!",
     "noConnector": "Connector nicht vergübar!",
     "submodelDeleteSuccess": "Submodell erfolgreich gelöscht!",

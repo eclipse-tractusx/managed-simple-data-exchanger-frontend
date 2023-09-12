@@ -18,15 +18,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { LinearProgress } from '@mui/material';
-import { GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
 import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import { capitalize } from 'lodash';
 import moment from 'moment';
 import { useState } from 'react';
 
 import DownloadHistoryErrorDialog from '../../components/dialogs/DownloadHistoryErrorDialog';
-import NoDataPlaceholder from '../../components/NoDataPlaceholder';
 import PageHeading from '../../components/PageHeading';
 import { Status } from '../../enums';
 import { useOffersDownloadHistoryQuery } from '../../features/consumer/offersDownloadHistory/apiSlice';
@@ -46,7 +44,7 @@ function OffersDownloadHistory() {
   });
   const handleErrorDialog = () => setShowErrorDialog(prev => !prev);
   const renderStatusCell = (row: ProcessReport) => {
-    if (row.status === Status.completed && row.numberOfFailedItems > 0) {
+    if (row.status === Status.failed) {
       return (
         <Typography
           color={STATUS_COLOR_MAPPING.ERROR}
@@ -98,12 +96,12 @@ function OffersDownloadHistory() {
       flex: 1,
     },
     {
-      field: 'numberOfSucceededItems',
+      field: 'downloadSuccessed',
       headerName: 'Success',
       flex: 1,
     },
     {
-      field: 'numberOfFailedItems',
+      field: 'downloadFailed',
       headerName: 'Failed',
       flex: 1,
     },
@@ -163,12 +161,6 @@ function OffersDownloadHistory() {
           page={page}
           onPageChange={setPage}
           rowsPerPageOptions={[10, 15, 20, 100]}
-          components={{
-            Toolbar: GridToolbar,
-            LoadingOverlay: LinearProgress,
-            NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
-            NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
-          }}
           sx={{
             '& .MuiDataGrid-columnHeaderTitle': {
               textOverflow: 'clip',

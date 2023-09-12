@@ -38,4 +38,5 @@ export interface ProcessReport {
   duration?: string;
   actions?: unknown;
   offers?: IDefaultObject[];
+  downloadFailed?: number;
 }

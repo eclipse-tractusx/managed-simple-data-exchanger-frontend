@@ -43,6 +43,7 @@ const STATUS_COLOR_MAPPING: IDefaultObject = {
   DECLINED: theme.palette.error.main,
   ERROR: theme.palette.error.main,
   FAILED: theme.palette.error.main,
+  PARTIALLY_FAILED: theme.palette.error.main,
 };
 
 const USER_TYPE_SWITCH: IDefaultObject = {

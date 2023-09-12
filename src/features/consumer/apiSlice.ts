@@ -48,6 +48,7 @@ export const consumerApiSlice = apiSlice.injectEndpoints({
           url: '/subscribe-download-data-offers',
           method: 'POST',
           body,
+          responseHandler: res => res.blob(),
         };
       },
       extraOptions: { showNotification: true, message: 'alerts.subscriptionSuccess', type: 'success' },

@@ -38,6 +38,7 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
+import saveAs from 'file-saver';
 import { debounce, isEmpty } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -110,7 +111,6 @@ export default function ConsumeData() {
   } = useAppSelector(state => state.consumerSlice);
   const [isOpenOfferDialog, setIsOpenOfferDialog] = useState<boolean>(false);
   const [isOpenOfferConfirmDialog, setIsOpenOfferConfirmDialog] = useState<boolean>(false);
-  const [isOfferSubLoading, setIsOfferSubLoading] = useState<boolean>(false);
   const [pageSize, setPageSize] = useState<number>(10);
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -155,61 +155,53 @@ export default function ConsumeData() {
     }
   };
 
-  const [subscribeAndDownload, { data }] = useSubscribeAndDownloadMutation();
+  const [subscribeAndDownload, { isLoading }] = useSubscribeAndDownloadMutation();
 
   const handleConfirmTermDialog = async () => {
-    try {
-      let payload;
-      const offersList: unknown[] = [];
-      // multiselect or single selecte
-      if (isMultipleContractSubscription) {
-        selectedOffersList.forEach((offer: IConsumerDataOffers) => {
-          offersList.push({
-            offerId: offer.offerId || '',
-            assetId: offer.assetId || '',
-            policyId: offer.policyId || '',
-          });
-        });
-        payload = {
-          connectorId: selectedOffersList[0].connectorId,
-          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
-          offers: offersList,
-          policies: selectedOffersList[0].usagePolicies,
-        };
-      } else {
-        const { usagePolicies, offerId, assetId, policyId, connectorId } = selectedOffer;
+    let payload;
+    const offersList: unknown[] = [];
+    // multiselect or single selected
+    if (isMultipleContractSubscription) {
+      selectedOffersList.forEach((offer: IConsumerDataOffers) => {
         offersList.push({
-          offerId: offerId || '',
-          assetId: assetId || '',
-          policyId: policyId || '',
+          offerId: offer.offerId || '',
+          assetId: offer.assetId || '',
+          policyId: offer.policyId || '',
         });
-        payload = {
-          connectorId: connectorId,
-          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
-          offers: offersList,
-          policies: usagePolicies,
-        };
-      }
-      setIsOfferSubLoading(true);
-      await subscribeAndDownload(payload);
-      setIsOfferSubLoading(false);
-      if (data) {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.subscriptionSuccess',
-            type: 'success',
-          }),
-        );
+      });
+      payload = {
+        connectorId: selectedOffersList[0].connectorId,
+        providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
+        offers: offersList,
+        policies: selectedOffersList[0].usagePolicies,
+      };
+    } else {
+      const { usagePolicies, offerId, assetId, policyId, connectorId } = selectedOffer;
+      offersList.push({
+        offerId: offerId || '',
+        assetId: assetId || '',
+        policyId: policyId || '',
+      });
+      payload = {
+        connectorId: connectorId,
+        providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
+        offers: offersList,
+        policies: usagePolicies,
+      };
+    }
+
+    await subscribeAndDownload(payload)
+      .unwrap()
+      .then(res => {
+        saveAs(new Blob([res]), 'download.zip');
         setIsOpenOfferDialog(false);
         setIsOpenOfferConfirmDialog(false);
         dispatch(setIsMultipleContractSubscription(false));
         dispatch(setSelectedOffer(null));
         dispatch(setSelectedOffersList([]));
         setSelectionModel([]);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+      })
+      .catch(e => console.log(e));
   };
 
   const onRowClick = (params: any) => {
@@ -603,7 +595,7 @@ export default function ConsumeData() {
               provider: selectedOffersList[0]?.publisher ? selectedOffersList[0].publisher : ' ',
               offerCount: selectedOffersList.length,
             }}
-            isProgress={isOfferSubLoading}
+            isProgress={isLoading}
             open={isOpenOfferConfirmDialog}
             handleConfirm={handleConfirmTermDialog}
             handleClose={setIsOpenOfferConfirmDialog}
@@ -624,7 +616,7 @@ export default function ConsumeData() {
               provider: selectedOffer ? selectedOffer.publisher : ' ',
               offerCount: 0,
             }}
-            isProgress={isOfferSubLoading}
+            isProgress={isLoading}
             open={isOpenOfferConfirmDialog}
             handleConfirm={handleConfirmTermDialog}
             handleClose={setIsOpenOfferConfirmDialog}

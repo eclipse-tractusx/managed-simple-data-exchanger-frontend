@@ -159,7 +159,7 @@
     },
     "offerDownloadHistory": {
       "description": "This history overviews your company's downloaded data from the Catena-X ecosystem. All activities are listed here. You can download the data again from this history list.",
-      "detailDialogTitle": "Offer details"
+      "detailDialogTitle": "Error details"
     },
     "dropzone": {
       "title": "Drag & drop your files here",
@@ -232,7 +232,7 @@
     "uploadSuccess": "Upload completed!",
     "uploadWarning": "Upload completed with warnings!",
     "uploadError": "Upload failed!",
-    "subscriptionSuccess": "Contract offers subscription successfully initiated!",
+    "subscriptionSuccess": "Contract offers subscription successfully initiated and downloaded!",
     "subscriptionError": "Contract offers subscription failed!",
     "noConnector": "Connector not available!",
     "submodelDeleteSuccess": "Submodel deleted successfully!",
