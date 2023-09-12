@@ -125,7 +125,7 @@ export const MenuItems: IntMenu[] = [
         menuIcon: 'HistoryIcon',
         to: '/consumer/offers-download-history',
         dataId: 'offersDownloadHistoryMenu',
-        permissions: ['consumer_download_history'],
+        permissions: ['consumer_view_download_history'],
       },
     ],
   },

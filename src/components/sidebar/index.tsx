@@ -32,7 +32,7 @@ export default function Sidebar() {
   return (
     <Box
       sx={{
-        width: sidebarExpanded ? 200 : 56,
+        width: sidebarExpanded ? 210 : 56,
         height: '100vh',
         overflow: 'hidden',
         borderRight: `1px solid ${theme.palette.grey[300]}`,

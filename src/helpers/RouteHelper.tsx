@@ -97,5 +97,6 @@ export const ROUTES: IRoutes[] = [
   {
     path: '/consumer/offers-download-history',
     element: <OffersDownloadHistory />,
+    permissions: ['consumer_view_download_history'],
   },
 ];
