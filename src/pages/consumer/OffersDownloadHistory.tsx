@@ -48,7 +48,7 @@ function OffersDownloadHistory() {
   const { data, isSuccess, isFetching, refetch } = useOffersDownloadHistoryQuery({
     pageSize: MAX_CONTRACTS_AGREEMENTS,
   });
-  const [downloadDataOffers, { isSuccess: downloadSuccess }] = useDownloadDataOffersMutation();
+  const [downloadDataOffers] = useDownloadDataOffersMutation();
 
   const handleErrorDialog = () => setShowErrorDialog(prev => !prev);
   const renderStatusCell = (row: ProcessReport) => {
@@ -78,8 +78,7 @@ function OffersDownloadHistory() {
     await downloadDataOffers({ processId })
       .unwrap()
       .then(res => {
-        console.log(downloadSuccess);
-        if (downloadSuccess) saveAs(new Blob([res]), `${processId}.zip`);
+        saveAs(new Blob([res]), `${processId}.zip`);
       })
       .catch(e => console.error(e));
   }
