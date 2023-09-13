@@ -154,13 +154,6 @@ function UploadHistoryNew() {
       flex: 1,
     },
     {
-      field: 'status',
-      headerName: 'Status',
-      minWidth: 150,
-      sortable: false,
-      renderCell: ({ row }) => renderStatusCell(row),
-    },
-    {
       field: 'startDate',
       headerName: 'Start Date',
       minWidth: 200,
@@ -170,6 +163,13 @@ function UploadHistoryNew() {
           <span>{formatDate(row.startDate)}</span>
         </Tooltips>
       ),
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      minWidth: 150,
+      sortable: false,
+      renderCell: ({ row }) => renderStatusCell(row),
     },
     {
       field: 'actions',

@@ -54,6 +54,14 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
           responseHandler: response => response.blob(),
         };
       },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setPageLoading(true));
+          await queryFulfilled;
+        } finally {
+          dispatch(setPageLoading(false));
+        }
+      },
     }),
   }),
   overrideExisting: false,

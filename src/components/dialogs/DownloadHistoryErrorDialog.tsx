@@ -20,22 +20,13 @@
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, capitalize } from '@mui/material';
+import { Box } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogHeader,
-  Table,
-  Typography,
-} from 'cx-portal-shared-components';
+import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Table } from 'cx-portal-shared-components';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IDefaultObject } from '../../models/Common';
-import { STATUS_COLOR_MAPPING } from '../../utils/constants';
 
 interface IDownloadHistoryErrorDialog {
   open: boolean;
@@ -53,44 +44,32 @@ const DownloadHistoryErrorDialog: React.FC<IDownloadHistoryErrorDialog> = ({
   const [pageSize] = useState<number>(10);
 
   const handleColumnValue = (value: string) =>
-    value.length ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />;
+    value?.length ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />;
   const columns: GridColDef[] = [
-    {
-      field: 'offerId',
-      headerName: 'Offer Id',
-      flex: 1,
-      renderCell: ({ row }) => handleColumnValue(row.offerId),
-      sortable: false,
-    },
     {
       field: 'assetId',
       headerName: 'Asset Id',
-      flex: 1,
-      renderCell: ({ row }) => handleColumnValue(row.assetId),
+      flex: 1.5,
       sortable: false,
     },
     {
-      field: 'policyId',
-      headerName: 'Policy Id',
+      field: 'agreementId',
+      headerName: 'Contract negotiated',
       flex: 1,
-      renderCell: ({ row }) => handleColumnValue(row.policyId),
+      renderCell: ({ row }) => handleColumnValue(row.agreementId),
       sortable: false,
     },
     {
-      field: 'status',
-      headerName: 'Status',
-      flex: 1,
+      field: 'transferProcessId',
+      headerName: 'Data transfer initiated',
+      flex: 1.5,
+      renderCell: ({ row }) => handleColumnValue(row.transferProcessId),
       sortable: false,
-      renderCell: ({ row }) => (
-        <Typography color={STATUS_COLOR_MAPPING[row.status]} variant="body2">
-          {capitalize(row.status)}
-        </Typography>
-      ),
     },
     {
       field: 'downloadErrorMsg',
       sortable: false,
-      headerName: 'Error Message',
+      headerName: 'Reason',
       flex: 5,
       align: 'center',
       headerAlign: 'center',

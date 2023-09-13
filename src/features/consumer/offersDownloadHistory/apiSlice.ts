@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { apiSlice } from '../../app/apiSlice';
+import { setPageLoading } from '../../app/slice';
 
 export const offersDownloadHistoryApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -29,8 +30,28 @@ export const offersDownloadHistoryApiSlice = apiSlice.injectEndpoints({
           params,
         };
       },
+      providesTags: ['DownloadHistoryList'],
+    }),
+    downloadDataOffers: builder.mutation({
+      query: params => {
+        return {
+          method: 'GET',
+          url: '/download-data-offers',
+          params,
+          responseHandler: response => response.blob(),
+        };
+      },
+      invalidatesTags: ['DownloadHistoryList'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setPageLoading(true));
+          await queryFulfilled;
+        } finally {
+          dispatch(setPageLoading(false));
+        }
+      },
     }),
   }),
 });
 
-export const { useOffersDownloadHistoryQuery } = offersDownloadHistoryApiSlice;
+export const { useOffersDownloadHistoryQuery, useDownloadDataOffersMutation } = offersDownloadHistoryApiSlice;

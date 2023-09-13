@@ -18,16 +18,22 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import DownloadIcon from '@mui/icons-material/Download';
 import { GridColDef } from '@mui/x-data-grid';
-import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import { IconButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import saveAs from 'file-saver';
 import { capitalize } from 'lodash';
 import moment from 'moment';
 import { useState } from 'react';
 
 import DownloadHistoryErrorDialog from '../../components/dialogs/DownloadHistoryErrorDialog';
 import PageHeading from '../../components/PageHeading';
+import Permissions from '../../components/Permissions';
 import { Status } from '../../enums';
-import { useOffersDownloadHistoryQuery } from '../../features/consumer/offersDownloadHistory/apiSlice';
+import {
+  useDownloadDataOffersMutation,
+  useOffersDownloadHistoryQuery,
+} from '../../features/consumer/offersDownloadHistory/apiSlice';
 import { MAX_CONTRACTS_AGREEMENTS } from '../../helpers/ConsumerOfferHelper';
 import { IDefaultObject } from '../../models/Common';
 import { ProcessReport } from '../../models/ProcessReport';
@@ -42,6 +48,8 @@ function OffersDownloadHistory() {
   const { data, isSuccess, isFetching, refetch } = useOffersDownloadHistoryQuery({
     pageSize: MAX_CONTRACTS_AGREEMENTS,
   });
+  const [downloadDataOffers, { isSuccess: downloadSuccess }] = useDownloadDataOffersMutation();
+
   const handleErrorDialog = () => setShowErrorDialog(prev => !prev);
   const renderStatusCell = (row: ProcessReport) => {
     if (row.status === Status.failed) {
@@ -55,7 +63,7 @@ function OffersDownloadHistory() {
             handleErrorDialog();
           }}
         >
-          View details
+          View errors
         </Typography>
       );
     } else {
@@ -66,6 +74,15 @@ function OffersDownloadHistory() {
       );
     }
   };
+  async function download({ processId }: Partial<ProcessReport>) {
+    await downloadDataOffers({ processId })
+      .unwrap()
+      .then(res => {
+        console.log(downloadSuccess);
+        if (downloadSuccess) saveAs(new Blob([res]), `${processId}.zip`);
+      })
+      .catch(e => console.error(e));
+  }
 
   const columns: GridColDef[] = [
     {
@@ -73,10 +90,25 @@ function OffersDownloadHistory() {
       headerName: 'Process Id',
       minWidth: 200,
       flex: 1,
+      sortable: false,
       renderCell: ({ row }) => (
-        <Tooltips tooltipPlacement="top-start" tooltipText={row.processId}>
-          <span>{row.processId}</span>
-        </Tooltips>
+        <>
+          {row.referenceProcessId ? (
+            <Tooltips
+              tooltipPlacement="top-start"
+              tooltipArrow={false}
+              tooltipText={`${row.processId} (Downloaded from ${row.referenceProcessId})`}
+            >
+              <span>
+                {row.processId} (Downloaded from <span style={{ color: 'red' }}>{row.referenceProcessId}</span>)
+              </span>
+            </Tooltips>
+          ) : (
+            <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.processId}>
+              <span>{row.processId}</span>
+            </Tooltips>
+          )}
+        </>
       ),
     },
     {
@@ -84,8 +116,9 @@ function OffersDownloadHistory() {
       headerName: 'Provider URL',
       minWidth: 100,
       flex: 1,
+      sortable: false,
       renderCell: ({ row }) => (
-        <Tooltips tooltipPlacement="top-start" tooltipText={row.providerUrl}>
+        <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row.providerUrl}>
           <span>{row.providerUrl}</span>
         </Tooltips>
       ),
@@ -94,22 +127,26 @@ function OffersDownloadHistory() {
       field: 'numberOfItems',
       headerName: 'Total items',
       flex: 1,
+      sortable: false,
     },
     {
       field: 'downloadSuccessed',
       headerName: 'Success',
       flex: 1,
+      sortable: false,
     },
     {
       field: 'downloadFailed',
       headerName: 'Failed',
       flex: 1,
+      sortable: false,
     },
     {
       field: 'startDate',
       headerName: 'Start Date',
       minWidth: 200,
       flex: 1,
+      sortable: false,
       renderCell: ({ row }) => (
         <Tooltips tooltipPlacement="top" tooltipText={moment(row.startDate).format(DATE_TIME_FORMAT)}>
           <span>{moment(row.startDate).format(DATE_TIME_FORMAT)}</span>
@@ -121,6 +158,7 @@ function OffersDownloadHistory() {
       headerName: 'End Date',
       minWidth: 200,
       flex: 1,
+      sortable: false,
       renderCell: ({ row }) => (
         <Tooltips tooltipPlacement="top" tooltipText={moment(row.endDate).format(DATE_TIME_FORMAT)}>
           <span>{moment(row.endDate).format(DATE_TIME_FORMAT)}</span>
@@ -133,6 +171,27 @@ function OffersDownloadHistory() {
       minWidth: 150,
       sortable: false,
       renderCell: ({ row }) => renderStatusCell(row),
+    },
+    {
+      field: 'actions',
+      headerName: '',
+      align: 'center',
+      headerAlign: 'center',
+      sortable: false,
+      flex: 1,
+      renderCell: ({ row }) => {
+        return (
+          <Permissions values={['consumer_download_data_offer']}>
+            <Tooltips tooltipPlacement="bottom" tooltipText="Download">
+              <span>
+                <IconButton aria-label="download" size="small" onClick={() => download(row)}>
+                  <DownloadIcon color="primary" fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltips>
+          </Permissions>
+        );
+      },
     },
   ];
 
