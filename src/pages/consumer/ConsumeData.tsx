@@ -545,7 +545,7 @@ export default function ConsumeData() {
             checkboxSelection
             pagination
             pageSize={pageSize}
-            onPageSizeChange={(newPageSize: number) => setPageSize(newPageSize)}
+            onPageSizeChange={setPageSize}
             rowsPerPageOptions={[10, 25, 50, 100]}
             onSelectionModelChange={newSelectionModel => handleSelectionModel(newSelectionModel)}
             selectionModel={selectionModel}

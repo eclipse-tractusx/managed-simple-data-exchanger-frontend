@@ -20,7 +20,7 @@
 import { Refresh } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, LinearProgress } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import { capitalize } from 'lodash';
@@ -28,6 +28,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import UploadHistoryErrorDialog from '../components/dialogs/UploadHistoryErrorDialog';
+import NoDataPlaceholder from '../components/NoDataPlaceholder';
 import Permissions from '../components/Permissions';
 import { Status } from '../enums';
 import {
@@ -46,7 +47,7 @@ import { formatDate } from '../utils/utils';
 
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
-  const [pageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(10);
   const [showErrorLogsDialog, setShowErrorLogsDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -244,9 +245,15 @@ function UploadHistoryNew() {
             columns={columns}
             rows={data.items}
             pageSize={pageSize}
+            onPageSizeChange={setPageSize}
             page={page}
             onPageChange={setPage}
             rowsPerPageOptions={[10, 15, 20, 100]}
+            components={{
+              LoadingOverlay: LinearProgress,
+              NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+              NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
+            }}
             sx={{
               '& .MuiDataGrid-columnHeaderTitle': {
                 textOverflow: 'clip',

@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import DownloadIcon from '@mui/icons-material/Download';
+import { LinearProgress } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import saveAs from 'file-saver';
@@ -27,6 +28,7 @@ import moment from 'moment';
 import { useState } from 'react';
 
 import DownloadHistoryErrorDialog from '../../components/dialogs/DownloadHistoryErrorDialog';
+import NoDataPlaceholder from '../../components/NoDataPlaceholder';
 import PageHeading from '../../components/PageHeading';
 import Permissions from '../../components/Permissions';
 import {
@@ -40,7 +42,7 @@ import { DATE_TIME_FORMAT, STATUS_COLOR_MAPPING } from '../../utils/constants';
 
 function OffersDownloadHistory() {
   const [page, setPage] = useState<number>(0);
-  const [pageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(10);
   const [showErrorDialog, setShowErrorDialog] = useState<boolean>(false);
   const [errorTableData, setErrorTableData] = useState<IDefaultObject[]>([]);
 
@@ -215,6 +217,7 @@ function OffersDownloadHistory() {
           columns={columns}
           rows={data.items}
           pageSize={pageSize}
+          onPageSizeChange={setPageSize}
           page={page}
           onPageChange={setPage}
           rowsPerPageOptions={[10, 15, 20, 100]}
@@ -226,6 +229,11 @@ function OffersDownloadHistory() {
               lineHeight: 1.4,
             },
             '& .MuiBox-root': { display: 'none' },
+          }}
+          components={{
+            LoadingOverlay: LinearProgress,
+            NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+            NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
           }}
         />
         <DownloadHistoryErrorDialog
