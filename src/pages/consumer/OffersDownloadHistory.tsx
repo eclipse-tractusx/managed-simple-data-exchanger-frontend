@@ -29,7 +29,6 @@ import { useState } from 'react';
 import DownloadHistoryErrorDialog from '../../components/dialogs/DownloadHistoryErrorDialog';
 import PageHeading from '../../components/PageHeading';
 import Permissions from '../../components/Permissions';
-import { Status } from '../../enums';
 import {
   useDownloadDataOffersMutation,
   useOffersDownloadHistoryQuery,
@@ -52,7 +51,7 @@ function OffersDownloadHistory() {
 
   const handleErrorDialog = () => setShowErrorDialog(prev => !prev);
   const renderStatusCell = (row: ProcessReport) => {
-    if (row.status === Status.failed) {
+    if (row.downloadFailed > 0) {
       return (
         <Typography
           color={STATUS_COLOR_MAPPING.ERROR}

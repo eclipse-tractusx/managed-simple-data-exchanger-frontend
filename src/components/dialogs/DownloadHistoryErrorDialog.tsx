@@ -20,9 +20,10 @@
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box } from '@mui/material';
+import { Box, List, ListItem } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Table } from 'cx-portal-shared-components';
+import { isEmpty } from 'lodash';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -43,8 +44,18 @@ const DownloadHistoryErrorDialog: React.FC<IDownloadHistoryErrorDialog> = ({
   const [page, setPage] = useState<number>(0);
   const [pageSize] = useState<number>(10);
 
-  const handleColumnValue = (value: string) =>
-    value?.length ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />;
+  const handleStatusIcon = (val: string | boolean) => {
+    return val ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />;
+  };
+  const handleColumnValue = (row: IDefaultObject) => (
+    <>
+      <List>
+        <ListItem sx={{ pl: 0 }}>Contract Negotiated: {handleStatusIcon(row?.agreementId)}</ListItem>
+        <ListItem sx={{ pl: 0 }}>Data tranfer Initiated: {handleStatusIcon(row?.transferProcessId)}</ListItem>
+        <ListItem sx={{ pl: 0 }}>Download status: {handleStatusIcon(isEmpty(row?.downloadErrorMsg))}</ListItem>
+      </List>
+    </>
+  );
   const columns: GridColDef[] = [
     {
       field: 'assetId',
@@ -53,17 +64,10 @@ const DownloadHistoryErrorDialog: React.FC<IDownloadHistoryErrorDialog> = ({
       sortable: false,
     },
     {
-      field: 'agreementId',
-      headerName: 'Contract negotiated',
-      flex: 1,
-      renderCell: ({ row }) => handleColumnValue(row.agreementId),
-      sortable: false,
-    },
-    {
-      field: 'transferProcessId',
-      headerName: 'Data transfer initiated',
-      flex: 1.5,
-      renderCell: ({ row }) => handleColumnValue(row.transferProcessId),
+      field: 'details',
+      headerName: 'Details',
+      flex: 2,
+      renderCell: ({ row }) => handleColumnValue(row),
       sortable: false,
     },
     {
@@ -73,7 +77,7 @@ const DownloadHistoryErrorDialog: React.FC<IDownloadHistoryErrorDialog> = ({
       flex: 5,
       align: 'center',
       headerAlign: 'center',
-      valueFormatter: ({ value }) => (value.length ? value : 'No Errors'),
+      valueFormatter: ({ value }) => (value?.length ? value : '-'),
     },
   ];
 
