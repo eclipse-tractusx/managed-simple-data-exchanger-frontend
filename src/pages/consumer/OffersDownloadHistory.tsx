@@ -79,7 +79,8 @@ function OffersDownloadHistory() {
     await downloadDataOffers({ processId })
       .unwrap()
       .then(res => {
-        saveAs(new Blob([res]), `${processId}.zip`);
+        const blob = new Blob([res]);
+        if (blob.size) saveAs(blob, `${processId}.zip`);
       })
       .catch(e => console.error(e));
   }

@@ -193,13 +193,16 @@ export default function ConsumeData() {
     await subscribeAndDownload(payload)
       .unwrap()
       .then(res => {
-        saveAs(new Blob([res]), 'download.zip');
-        setIsOpenOfferDialog(false);
-        setIsOpenOfferConfirmDialog(false);
-        dispatch(setIsMultipleContractSubscription(false));
-        dispatch(setSelectedOffer(null));
-        dispatch(setSelectedOffersList([]));
-        setSelectionModel([]);
+        const blob = new Blob([res]);
+        if (blob.size) {
+          saveAs(new Blob([res]), 'download.zip');
+          setIsOpenOfferDialog(false);
+          setIsOpenOfferConfirmDialog(false);
+          dispatch(setIsMultipleContractSubscription(false));
+          dispatch(setSelectedOffer(null));
+          dispatch(setSelectedOffersList([]));
+          setSelectionModel([]);
+        }
       })
       .catch(e => console.log(e));
   };
@@ -560,6 +563,7 @@ export default function ConsumeData() {
                 showQuickFilter: true,
                 quickFilterProps: { debounceMs: 500 },
                 printOptions: { disableToolbarButton: true },
+                csvOptions: { disableToolbarButton: true },
               },
             }}
             disableColumnMenu
