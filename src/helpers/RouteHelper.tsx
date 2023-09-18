@@ -18,16 +18,22 @@
  ********************************************************************************/
 import { lazy, ReactElement } from 'react';
 
-const ConsumeData = lazy(() => import('../pages/ConsumeData'));
-const ConsumerContracts = lazy(() => import('../pages/ConsumerContracts'));
-const CreateData = lazy(() => import('../pages/CreateData'));
+// General Pages
 const Help = lazy(() => import('../pages/Help'));
 const Home = lazy(() => import('../pages/Home'));
 const Logout = lazy(() => import('../pages/Logout'));
 const PageNotFound = lazy(() => import('../pages/PageNotFound'));
+const About = lazy(() => import('../pages/About'));
+
+// Provider Pages
 const ProviderContracts = lazy(() => import('../pages/ProviderContracts'));
 const UploadHistoryNew = lazy(() => import('../pages/UploadHistoryNew'));
-const About = lazy(() => import('../pages/About'));
+
+// Consumer Pages
+const ConsumeData = lazy(() => import('../pages/consumer/ConsumeData'));
+const ConsumerContracts = lazy(() => import('../pages/consumer/ConsumerContracts'));
+const CreateData = lazy(() => import('../pages/CreateData'));
+const OffersDownloadHistory = lazy(() => import('../pages/consumer/OffersDownloadHistory'));
 
 export interface IRoutes {
   key?: string;
@@ -87,5 +93,10 @@ export const ROUTES: IRoutes[] = [
     path: '/consumer/contracts',
     element: <ConsumerContracts />,
     permissions: ['consumer_view_contract_agreement'],
+  },
+  {
+    path: '/consumer/offers-download-history',
+    element: <OffersDownloadHistory />,
+    permissions: ['consumer_view_download_history'],
   },
 ];

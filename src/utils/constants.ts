@@ -27,6 +27,12 @@ const USER_GUIDE_URL =
 
 const ONLY_NUM_REGEX = /^[1-9]\d*$/;
 
+const ALPHA_NUM_REGEX = /[a-zA-Z0-9]$/;
+
+const SPACE_CHECK_REGEX = /^\S*$/;
+
+const DATE_TIME_FORMAT = 'DD-MM-YYYY H:mm:ss';
+
 const CONTRACT_STATES: string[] = ['FINALIZED', 'DECLINED', 'TERMINATED', 'ERROR'];
 
 const STATUS_COLOR_MAPPING: IDefaultObject = {
@@ -37,6 +43,7 @@ const STATUS_COLOR_MAPPING: IDefaultObject = {
   DECLINED: theme.palette.error.main,
   ERROR: theme.palette.error.main,
   FAILED: theme.palette.error.main,
+  PARTIALLY_FAILED: theme.palette.error.main,
 };
 
 const USER_TYPE_SWITCH: IDefaultObject = {
@@ -83,11 +90,14 @@ const PURPOSE_VALUES: ISelectList[] = [
 ];
 
 export {
+  ALPHA_NUM_REGEX,
   CONTRACT_STATES,
+  DATE_TIME_FORMAT,
   DURATION_UNIT_MAPPING,
   DURATION_UNITS,
   ONLY_NUM_REGEX,
   PURPOSE_VALUES,
+  SPACE_CHECK_REGEX,
   STATUS_COLOR_MAPPING,
   USER_GUIDE_URL,
   USER_TYPE_SWITCH,

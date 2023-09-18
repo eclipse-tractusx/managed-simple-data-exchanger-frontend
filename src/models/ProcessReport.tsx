@@ -20,6 +20,7 @@
  ********************************************************************************/
 
 import { Status } from '../enums';
+import { IDefaultObject } from './Common';
 
 export interface ProcessReport {
   processId: string;
@@ -36,4 +37,6 @@ export interface ProcessReport {
   endDate?: string;
   duration?: string;
   actions?: unknown;
+  offers?: IDefaultObject[];
+  downloadFailed?: number;
 }

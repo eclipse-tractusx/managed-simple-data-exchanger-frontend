@@ -25,10 +25,10 @@ import { isEmpty } from 'lodash';
 import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import DataTable from '../components/DataTable';
-import DownloadCSV from '../components/DownloadCSV';
+import DownloadSamples from '../components/DownloadSamples';
 import PoliciesDialog from '../components/policies/PoliciesDialog';
 import SelectSubmodel from '../components/SelectSubmodel';
+import SubmodelDataTable from '../components/SubmodelDataTable';
 import SubmodelInfo from '../components/SubmodelInfo';
 import UploadFile from '../components/UploadFile';
 import { useAppSelector } from '../features/store';
@@ -43,7 +43,7 @@ export default function CreateData() {
   };
 
   return (
-    <Box sx={{ flex: 1, p: 4 }}>
+    <>
       <Typography variant="h3" mb={2}>
         {t('content.provider.heading')}
       </Typography>
@@ -63,7 +63,7 @@ export default function CreateData() {
         </Grid>
         {!isEmpty(selectedSubmodel) ? (
           <Grid item xs={6}>
-            <DownloadCSV submodel={selectedSubmodel.value} />
+            <DownloadSamples submodel={selectedSubmodel.value} />
           </Grid>
         ) : null}
       </Grid>
@@ -96,7 +96,7 @@ export default function CreateData() {
               <UploadFile />
             </TabPanel>
             <TabPanel value={activeTab} index={1}>
-              <DataTable />
+              <SubmodelDataTable />
             </TabPanel>
           </Box>
         </Box>
@@ -106,6 +106,6 @@ export default function CreateData() {
         </Box>
       )}
       <PoliciesDialog />
-    </Box>
+    </>
   );
 }

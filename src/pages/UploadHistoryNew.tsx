@@ -20,7 +20,7 @@
 import { Refresh } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, LinearProgress } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import { capitalize } from 'lodash';
@@ -28,21 +28,26 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import UploadHistoryErrorDialog from '../components/dialogs/UploadHistoryErrorDialog';
+import NoDataPlaceholder from '../components/NoDataPlaceholder';
 import Permissions from '../components/Permissions';
 import { Status } from '../enums';
-import { setSnackbarMessage } from '../features/notifiication/slice';
-import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
+import {
+  useDeleteHistoryMutation,
+  useDownloadCsvMutation,
+  useGetHistoryQuery,
+} from '../features/provider/history/apiSlice';
 import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
 import { useAppDispatch } from '../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
+import { csvFileDownload } from '../helpers/FileDownloadHelper';
 import { ProcessReport } from '../models/ProcessReport';
-import AppService from '../services/appService';
 import ProviderService from '../services/ProviderService';
 import { STATUS_COLOR_MAPPING } from '../utils/constants';
 import { formatDate } from '../utils/utils';
+
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
-  const [pageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(10);
   const [showErrorLogsDialog, setShowErrorLogsDialog] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -50,28 +55,16 @@ function UploadHistoryNew() {
   const { data, isSuccess, isFetching, refetch } = useGetHistoryQuery({ pageSize: MAX_CONTRACTS_AGREEMENTS });
   const [deleteHistory] = useDeleteHistoryMutation();
   const handleErrorDialogClose = () => setShowErrorLogsDialog(false);
+  const [downloadCsv] = useDownloadCsvMutation();
 
-  async function download(subModel: ProcessReport) {
-    try {
-      const { csvType, processId } = subModel;
-      const response = await AppService.getInstance().downloadHistory(csvType, processId);
-      if (response) {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${csvType}-${processId}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.downloadSuccess',
-            type: 'success',
-          }),
-        );
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  async function download({ csvType, processId }: Partial<ProcessReport>) {
+    await downloadCsv({ csvType, processId })
+      .unwrap()
+      .then(res => {
+        const fileName = `${csvType}-${processId}`;
+        csvFileDownload(res, fileName);
+      })
+      .catch(e => console.error(e));
   }
 
   const showUploadErrors = async (subModel: ProcessReport) => {
@@ -162,13 +155,6 @@ function UploadHistoryNew() {
       flex: 1,
     },
     {
-      field: 'status',
-      headerName: 'Status',
-      minWidth: 150,
-      sortable: false,
-      renderCell: ({ row }) => renderStatusCell(row),
-    },
-    {
       field: 'startDate',
       headerName: 'Start Date',
       minWidth: 200,
@@ -178,6 +164,13 @@ function UploadHistoryNew() {
           <span>{formatDate(row.startDate)}</span>
         </Tooltips>
       ),
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      minWidth: 150,
+      sortable: false,
+      renderCell: ({ row }) => renderStatusCell(row),
     },
     {
       field: 'actions',
@@ -219,7 +212,7 @@ function UploadHistoryNew() {
 
   if (isSuccess) {
     return (
-      <Box sx={{ flex: 1, p: 4 }}>
+      <>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={9}>
             <Typography variant="h3" mb={1}>
@@ -252,9 +245,15 @@ function UploadHistoryNew() {
             columns={columns}
             rows={data.items}
             pageSize={pageSize}
+            onPageSizeChange={setPageSize}
             page={page}
             onPageChange={setPage}
             rowsPerPageOptions={[10, 15, 20, 100]}
+            components={{
+              LoadingOverlay: LinearProgress,
+              NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+              NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
+            }}
             sx={{
               '& .MuiDataGrid-columnHeaderTitle': {
                 textOverflow: 'clip',
@@ -269,7 +268,7 @@ function UploadHistoryNew() {
         <Box>
           <UploadHistoryErrorDialog open={showErrorLogsDialog} handleDialogClose={handleErrorDialogClose} />
         </Box>
-      </Box>
+      </>
     );
   } else return null;
 }

@@ -297,6 +297,7 @@ npm/npmjs/-/faye-websocket/0.11.4, Apache-2.0, approved, clearlydefined
 npm/npmjs/-/fb-watchman/2.0.2, MIT AND Apache-2.0, approved, #5379
 npm/npmjs/-/file-entry-cache/6.0.1, MIT, approved, clearlydefined
 npm/npmjs/-/file-loader/6.2.0, MIT, approved, clearlydefined
+npm/npmjs/-/file-saver/2.0.5, MIT, approved, clearlydefined
 npm/npmjs/-/file-selector/0.6.0, MIT, approved, #3230
 npm/npmjs/-/filelist/1.0.4, Apache-2.0, approved, clearlydefined
 npm/npmjs/-/filesize/8.0.7, BSD-3-Clause, approved, #2965
@@ -1230,6 +1231,7 @@ npm/npmjs/@types/estree/0.0.51, MIT, approved, clearlydefined
 npm/npmjs/@types/estree/1.0.0, MIT, approved, #8266
 npm/npmjs/@types/express-serve-static-core/4.17.31, MIT, approved, #6020
 npm/npmjs/@types/express/4.17.14, MIT, approved, #5760
+npm/npmjs/@types/file-saver/2.0.5, MIT, approved, clearlydefined
 npm/npmjs/@types/graceful-fs/4.1.5, MIT, approved, clearlydefined
 npm/npmjs/@types/history/4.7.11, MIT, approved, clearlydefined
 npm/npmjs/@types/hoist-non-react-statics/3.3.1, MIT, approved, clearlydefined

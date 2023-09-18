@@ -71,99 +71,97 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ flex: 1, p: 4 }}>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Typography variant="h3">{t('content.home.header')}</Typography>
-          <Typography variant="body1" my={2}>
-            {loggedInUser.company}
-          </Typography>
-          <Typography variant="h4" mb={1}>
-            {t('content.common.introduction')}
-          </Typography>
-          <Box>
-            <Typography>{t('content.home.sdeDescription')}</Typography>
-            <Button
-              variant="text"
-              size="medium"
-              onClick={() => openInNewTab(USER_GUIDE_URL)}
-              endIcon={<ArrowForwardIcon />}
-              sx={{
-                p: 0,
-                mt: 2,
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-            >
-              {t('content.home.accessDescription')}
-            </Button>
-          </Box>
-        </Grid>
-        <Grid item xs={6}>
-          <Box>
-            <img src="images/sde.png" width={'100%'} />
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h4" mt={3} mb={1}>
-            {t('content.home.selectUsecasesHeader')} (optional)
-          </Typography>
-          <Typography variant="body1" maxWidth={1000}>
-            {t('content.home.selectUsecasesSubheader')}
-          </Typography>
-          <FormControl component="fieldset" variant="standard">
-            <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
-              {useCases.map((item: IUseCase) => (
-                <Box className="usecase-tile" key={item.id}>
-                  <input
-                    type="checkbox"
-                    name={item.title}
-                    value={item.id}
-                    id={item.id}
-                    onChange={handleUseCaseChange}
-                    checked={selectedUseCases.includes(item.id)}
-                  />
-                  <label className="usecase-tile-content" htmlFor={item.id}>
-                    <Stack className="usecase-tile-content-wrapper" spacing={2}>
-                      <Avatar src={`images/${item.id}.png`} sx={{ width: 60, height: 60 }} />
-                      <Typography variant="subtitle1">{item.title}</Typography>
-                    </Stack>
-                  </label>
-                </Box>
-              ))}
-            </Stack>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} my={5}>
-          <Typography variant="h4" mb={1}>
-            {t('content.home.exchangeDataHeader')}
-          </Typography>
-          <Typography variant="body1" maxWidth={1000}>
-            {t('content.home.exchangeDataDescription')}
-          </Typography>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
-            <Tabs
-              value={activeTab}
-              onChange={(_event: SyntheticEvent, newValue: number) => handleTabChange(_event, newValue)}
-              aria-label="Connector views: tabs"
-              sx={{ pt: 0 }}
-            >
-              <Tab label={t('content.home.provideDataTab')} />
-              <Tab label={t('content.home.consumeDataTab')} />
-            </Tabs>
-          </Box>
-          <Box>
-            <TabPanel value={activeTab} index={0}>
-              <DataExchangeStepper data={provideDataSteps} />
-            </TabPanel>
-            <TabPanel value={activeTab} index={1}>
-              <DataExchangeStepper data={consumeDataSteps} />
-            </TabPanel>
-          </Box>
-        </Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={6}>
+        <Typography variant="h3">{t('content.home.header')}</Typography>
+        <Typography variant="body1" my={2}>
+          {loggedInUser.company}
+        </Typography>
+        <Typography variant="h4" mb={1}>
+          {t('content.common.introduction')}
+        </Typography>
+        <Box>
+          <Typography>{t('content.home.sdeDescription')}</Typography>
+          <Button
+            variant="text"
+            size="medium"
+            onClick={() => openInNewTab(USER_GUIDE_URL)}
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              p: 0,
+              mt: 2,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            {t('content.home.accessDescription')}
+          </Button>
+        </Box>
       </Grid>
-    </Box>
+      <Grid item xs={6}>
+        <Box>
+          <img src="images/sde.png" width={'100%'} />
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h4" mt={3} mb={1}>
+          {t('content.home.selectUsecasesHeader')} (optional)
+        </Typography>
+        <Typography variant="body1" maxWidth={1000}>
+          {t('content.home.selectUsecasesSubheader')}
+        </Typography>
+        <FormControl component="fieldset" variant="standard">
+          <Stack direction="row" spacing={1} mt={3} sx={{ flexWrap: 'wrap', gap: 1 }}>
+            {useCases.map((item: IUseCase) => (
+              <Box className="usecase-tile" key={item.id}>
+                <input
+                  type="checkbox"
+                  name={item.title}
+                  value={item.id}
+                  id={item.id}
+                  onChange={handleUseCaseChange}
+                  checked={selectedUseCases.includes(item.id)}
+                />
+                <label className="usecase-tile-content" htmlFor={item.id}>
+                  <Stack className="usecase-tile-content-wrapper" spacing={2}>
+                    <Avatar src={`images/${item.id}.png`} sx={{ width: 60, height: 60 }} />
+                    <Typography variant="subtitle1">{item.title}</Typography>
+                  </Stack>
+                </label>
+              </Box>
+            ))}
+          </Stack>
+        </FormControl>
+      </Grid>
+      <Grid item xs={12} my={5}>
+        <Typography variant="h4" mb={1}>
+          {t('content.home.exchangeDataHeader')}
+        </Typography>
+        <Typography variant="body1" maxWidth={1000}>
+          {t('content.home.exchangeDataDescription')}
+        </Typography>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }} mt={4} className="exchange-data-wrapper">
+          <Tabs
+            value={activeTab}
+            onChange={(_event: SyntheticEvent, newValue: number) => handleTabChange(_event, newValue)}
+            aria-label="Connector views: tabs"
+            sx={{ pt: 0 }}
+          >
+            <Tab label={t('content.home.provideDataTab')} />
+            <Tab label={t('content.home.consumeDataTab')} />
+          </Tabs>
+        </Box>
+        <Box>
+          <TabPanel value={activeTab} index={0}>
+            <DataExchangeStepper data={provideDataSteps} />
+          </TabPanel>
+          <TabPanel value={activeTab} index={1}>
+            <DataExchangeStepper data={consumeDataSteps} />
+          </TabPanel>
+        </Box>
+      </Grid>
+    </Grid>
   );
 }

@@ -10,7 +10,8 @@
     "consumer": "Consumer",
     "consumeData": "Consume Data",
     "contracts": "Contracts",
-    "about": "About"
+    "about": "About",
+    "offerDownloadHistory": "Download History"
   },
   "content": {
     "home": {
@@ -156,6 +157,10 @@
         "state": "Status"
       }
     },
+    "offerDownloadHistory": {
+      "description": "This history overviews your company's downloaded data from the Catena-X ecosystem. All activities are listed here. You can download the data again from this history list.",
+      "detailDialogTitle": "Error details"
+    },
     "dropzone": {
       "title": "Drag & drop your files here",
       "subTitle": "or %browse files% on your computer.",
@@ -217,7 +222,7 @@
     "confirm": "Confirm",
     "submit": "Submit",
     "okay": "Okay",
-    "subscribeSelected": "Subscribe to selected",
+    "subscribeSelected": "Subscribe and download",
     "subscribe": "Subscribe",
     "declineContract": "Decline Contract"
   },
@@ -227,7 +232,7 @@
     "uploadSuccess": "Upload completed!",
     "uploadWarning": "Upload completed with warnings!",
     "uploadError": "Upload failed!",
-    "subscriptionSuccess": "Contract offers subscription successfully initiated!",
+    "subscriptionSuccess": "Contract offers subscription successfully initiated and downloaded!",
     "subscriptionError": "Contract offers subscription failed!",
     "noConnector": "Connector not available!",
     "submodelDeleteSuccess": "Submodel deleted successfully!",

@@ -10,7 +10,8 @@
     "consumer": "Datenempfänger",
     "consumeData": "Suche Daten",
     "contracts": "Verträge",
-    "about": "About"
+    "about": "About",
+    "offerDownloadHistory": "Verlauf herunterladen"
   },
   "content": {
     "home": {
@@ -156,6 +157,10 @@
         "state": "Status"
       }
     },
+    "offerDownloadHistory": {
+      "description": "Dieser Verlauf gibt einen Überblick über die heruntergeladenen Daten Ihres Unternehmens aus dem Catena-X-Ökosystem. Alle Aktivitäten sind hier aufgelistet. Aus dieser Verlaufsliste können Sie die Daten erneut herunterladen.",
+      "detailDialogTitle": "Fehlerdetails"
+    },
     "dropzone": {
       "title": "Dateien hierher ziehen",
       "subTitle": "oder %wähle eine Datei% direkt aus.",
@@ -217,7 +222,7 @@
     "confirm": "Bestätigen",
     "submit": "Senden",
     "okay": "Okay",
-    "subscribeSelected": "Auswahl abonnieren",
+    "subscribeSelected": "Abonnieren und herunterladen",
     "subscribe": "Abonnieren",
     "declineContract": "Vertrag ablehnen"
   },
@@ -227,7 +232,7 @@
     "uploadSuccess": "Hochladen abgeschlossen!",
     "uploadWarning": "Hochladen abgeschlossen - mit Fehlermeldungen!",
     "uploadError": "Hochladen fehlgeschlagen!",
-    "subscriptionSuccess": "Abonnieren der Vertragsangebote initiiert!",
+    "subscriptionSuccess": "Vertragsangebote-Abonnement erfolgreich gestartet und heruntergeladen!!",
     "subscriptionError": "Abonnieren der Vertragsangebote fehlgeschlagen!",
     "noConnector": "Connector nicht vergübar!",
     "submodelDeleteSuccess": "Submodell erfolgreich gelöscht!",

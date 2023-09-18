@@ -46,7 +46,25 @@ export const providerHistorySlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    downloadCsv: builder.mutation({
+      query: ({ csvType, processId }) => {
+        return {
+          method: 'GET',
+          url: `/${csvType}/download/${processId}/csv`,
+          responseHandler: response => response.blob(),
+        };
+      },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setPageLoading(true));
+          await queryFulfilled;
+        } finally {
+          dispatch(setPageLoading(false));
+        }
+      },
+    }),
   }),
+  overrideExisting: false,
 });
 
-export const { useGetHistoryQuery, useDeleteHistoryMutation } = providerHistorySlice;
+export const { useGetHistoryQuery, useDeleteHistoryMutation, useDownloadCsvMutation } = providerHistorySlice;
