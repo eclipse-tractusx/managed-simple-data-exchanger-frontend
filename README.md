@@ -43,7 +43,7 @@ Eclipse Tractus-X product(s) installed within the image:
 - Project license: [Apache License, Version 2.0] https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/blob/main/LICENSE
 
 **Used base image**
-- [nginxinc/nginx-unprivileged:1.25.1-perl]
+- [nginxinc/nginx-unprivileged:alpine3.18-perl]
 - Dockerfile: [nginxinc/nginx-unprivileged:alpine](https://github.com/nginxinc/docker-nginx-unprivileged/blob/main/Dockerfile-alpine.template)
 - GitHub project: [https://github.com/nginxinc/docker-nginx-unprivileged](https://github.com/nginxinc/docker-nginx-unprivileged)
 - DockerHub: [https://hub.docker.com/r/nginxinc/nginx-unprivileged](https://hub.docker.com/r/nginxinc/nginx-unprivileged)
