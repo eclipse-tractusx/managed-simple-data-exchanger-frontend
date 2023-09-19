@@ -45,8 +45,19 @@ class ConsumerService extends HttpService {
   public async subscribeToOffers(offers: unknown) {
     const res = await this.instance({
       method: 'POST',
-      url: '/subscribe-data-offers',
+      url: '/subscribe-download-data-offers',
       data: offers,
+      responseType: 'blob',
+    });
+    return res;
+  }
+
+  public async downloadDataOffers(params: unknown) {
+    const res = await this.instance({
+      method: 'GET',
+      url: '/download-data-offers',
+      params,
+      responseType: 'blob',
     });
     return res;
   }
@@ -68,14 +79,6 @@ class ConsumerService extends HttpService {
       data: payload,
     });
     return res.data;
-  }
-
-  public async getContractAgreementsList(type: string, offSet: number, maxLimit: number) {
-    const res = await this.instance({
-      method: 'GET',
-      url: `/contract-agreements?type=${type}&offset=${offSet}&limit=${maxLimit}`,
-    });
-    return res;
   }
 }
 

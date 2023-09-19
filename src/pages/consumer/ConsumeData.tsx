@@ -48,7 +48,6 @@ import ConfirmTermsDialog from '../../components/dialogs/ConfirmTermsDialog';
 import OfferDetailsDialog from '../../components/dialogs/OfferDetailsDialog';
 import NoDataPlaceholder from '../../components/NoDataPlaceholder';
 import Permissions from '../../components/Permissions';
-import { useSubscribeAndDownloadMutation } from '../../features/consumer/apiSlice';
 import {
   setContractOffers,
   setFfilterCompanyOptionsLoading,
@@ -116,6 +115,7 @@ export default function ConsumeData() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [conKey, setConKey] = useState(uuid());
   const [bpnError, setbpnError] = useState(false);
+  const [offerSubLoading, setIsOfferSubLoading] = useState(false);
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -154,10 +154,7 @@ export default function ConsumeData() {
       dispatch(setSelectedOffer(null));
     }
   };
-
-  const [subscribeAndDownload, { isLoading }] = useSubscribeAndDownloadMutation();
-
-  const handleConfirmTermDialog = async () => {
+  const preparePayload = () => {
     let payload;
     const offersList: unknown[] = [];
     // multiselect or single selected
@@ -189,13 +186,22 @@ export default function ConsumeData() {
         policies: usagePolicies,
       };
     }
+    return payload;
+  };
 
-    await subscribeAndDownload(payload)
-      .unwrap()
-      .then(res => {
-        const blob = new Blob([res]);
-        if (blob.size) {
-          saveAs(new Blob([res]), 'download.zip');
+  const handleConfirmTermDialog = async () => {
+    setIsOfferSubLoading(true);
+    await ConsumerService.getInstance()
+      .subscribeToOffers(preparePayload)
+      .then(response => {
+        if (response.status == 200) {
+          saveAs(new Blob([response.data]), 'data-offer.zip');
+          dispatch(
+            setSnackbarMessage({
+              message: 'alerts.subscriptionSuccess',
+              type: 'success',
+            }),
+          );
           setIsOpenOfferDialog(false);
           setIsOpenOfferConfirmDialog(false);
           dispatch(setIsMultipleContractSubscription(false));
@@ -204,7 +210,8 @@ export default function ConsumeData() {
           setSelectionModel([]);
         }
       })
-      .catch(e => console.log(e));
+      .catch(error => console.log('err', error))
+      .finally(() => setIsOfferSubLoading(false));
   };
 
   const onRowClick = (params: any) => {
@@ -599,7 +606,7 @@ export default function ConsumeData() {
               provider: selectedOffersList[0]?.publisher ? selectedOffersList[0].publisher : ' ',
               offerCount: selectedOffersList.length,
             }}
-            isProgress={isLoading}
+            isProgress={offerSubLoading}
             open={isOpenOfferConfirmDialog}
             handleConfirm={handleConfirmTermDialog}
             handleClose={setIsOpenOfferConfirmDialog}
@@ -620,7 +627,7 @@ export default function ConsumeData() {
               provider: selectedOffer ? selectedOffer.publisher : ' ',
               offerCount: 0,
             }}
-            isProgress={isLoading}
+            isProgress={offerSubLoading}
             open={isOpenOfferConfirmDialog}
             handleConfirm={handleConfirmTermDialog}
             handleClose={setIsOpenOfferConfirmDialog}

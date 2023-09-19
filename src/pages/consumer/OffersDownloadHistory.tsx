@@ -31,13 +31,14 @@ import DownloadHistoryErrorDialog from '../../components/dialogs/DownloadHistory
 import NoDataPlaceholder from '../../components/NoDataPlaceholder';
 import PageHeading from '../../components/PageHeading';
 import Permissions from '../../components/Permissions';
-import {
-  useDownloadDataOffersMutation,
-  useOffersDownloadHistoryQuery,
-} from '../../features/consumer/offersDownloadHistory/apiSlice';
+import { setPageLoading } from '../../features/app/slice';
+import { useOffersDownloadHistoryQuery } from '../../features/consumer/offersDownloadHistory/apiSlice';
+import { setSnackbarMessage } from '../../features/notifiication/slice';
+import { useAppDispatch } from '../../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../../helpers/ConsumerOfferHelper';
 import { IDefaultObject } from '../../models/Common';
 import { ProcessReport } from '../../models/ProcessReport';
+import ConsumerService from '../../services/ConsumerService';
 import { DATE_TIME_FORMAT, STATUS_COLOR_MAPPING } from '../../utils/constants';
 
 function OffersDownloadHistory() {
@@ -49,7 +50,7 @@ function OffersDownloadHistory() {
   const { data, isSuccess, isFetching, refetch } = useOffersDownloadHistoryQuery({
     pageSize: MAX_CONTRACTS_AGREEMENTS,
   });
-  const [downloadDataOffers] = useDownloadDataOffersMutation();
+  const dispatch = useAppDispatch();
 
   const handleErrorDialog = () => setShowErrorDialog(prev => !prev);
   const renderStatusCell = (row: ProcessReport) => {
@@ -76,13 +77,23 @@ function OffersDownloadHistory() {
     }
   };
   async function download({ processId }: Partial<ProcessReport>) {
-    await downloadDataOffers({ processId })
-      .unwrap()
-      .then(res => {
-        const blob = new Blob([res]);
-        if (blob.size) saveAs(blob, `${processId}.zip`);
+    dispatch(setPageLoading(true));
+    await ConsumerService.getInstance()
+      .downloadDataOffers({ processId })
+      .then(async response => {
+        if (response.status === 200) {
+          saveAs(new Blob([response.data]), 'data-offer.zip');
+          dispatch(
+            setSnackbarMessage({
+              message: 'alerts.downloadSuccess',
+              type: 'success',
+            }),
+          );
+          await refetch();
+        }
       })
-      .catch(e => console.error(e));
+      .catch(async error => console.log(error))
+      .finally(() => dispatch(setPageLoading(false)));
   }
 
   const columns: GridColDef[] = [
