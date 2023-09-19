@@ -24,7 +24,13 @@ WORKDIR /app
 
 RUN apk update && apk add --no-cache jq
 
+COPY ./package.json .
+
+COPY .env . 
+
 COPY ./ .
+
+RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
