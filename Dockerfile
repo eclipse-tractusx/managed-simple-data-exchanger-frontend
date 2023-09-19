@@ -24,6 +24,8 @@ WORKDIR /app
 
 RUN apk update && apk add --no-cache jq
 
+COPY ./ .
+
 #### Stage 2: Serve the application from Nginx
 
 FROM nginxinc/nginx-unprivileged:alpine3.18-perl
@@ -41,5 +43,5 @@ EXPOSE 8080
 USER 101
 # Start Nginx server
 
-#CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+#CMD ["nginx", "-g", "daemon off;"]
