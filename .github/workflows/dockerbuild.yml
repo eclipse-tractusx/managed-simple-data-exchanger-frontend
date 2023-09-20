@@ -48,9 +48,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: npm install
-
       - name: Add content to Legal Notice
         run: npm run build:legal-notice
 
@@ -78,7 +75,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .

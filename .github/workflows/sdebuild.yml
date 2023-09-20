@@ -46,9 +46,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Dependencies
-        run: npm install
-
       - name: Add content to Legal Notice
         run: npm run build:legal-notice
 
