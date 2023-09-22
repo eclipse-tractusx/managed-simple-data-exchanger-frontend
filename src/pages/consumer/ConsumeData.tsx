@@ -192,7 +192,7 @@ export default function ConsumeData() {
   const handleConfirmTermDialog = async () => {
     setIsOfferSubLoading(true);
     await ConsumerService.getInstance()
-      .subscribeToOffers(preparePayload)
+      .subscribeToOffers(preparePayload())
       .then(response => {
         if (response.status == 200) {
           saveAs(new Blob([response.data]), 'data-offer.zip');
