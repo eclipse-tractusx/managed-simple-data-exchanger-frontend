@@ -38,7 +38,6 @@ import {
   SelectList,
   Typography,
 } from 'cx-portal-shared-components';
-import saveAs from 'file-saver';
 import { debounce, isEmpty } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -195,7 +194,6 @@ export default function ConsumeData() {
       .subscribeToOffers(preparePayload())
       .then(response => {
         if (response.status == 200) {
-          saveAs(new Blob([response.data]), 'data-offer.zip');
           dispatch(
             setSnackbarMessage({
               message: 'alerts.subscriptionSuccess',
@@ -539,7 +537,7 @@ export default function ConsumeData() {
             onClick={checkoutSelectedOffers}
             disabled={!selectedOffersList.length}
           >
-            {t('button.subscribeSelected')}
+            {t('button.subscribe')}
           </Button>
         </Permissions>
       </Box>

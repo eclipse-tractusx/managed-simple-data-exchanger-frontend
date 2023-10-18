@@ -114,13 +114,6 @@ export const MenuItems: IntMenu[] = [
         ],
       },
       {
-        text: 'pages.offerDownloadHistory',
-        menuIcon: 'HistoryIcon',
-        to: '/consumer/offers-download-history',
-        dataId: 'offersDownloadHistoryMenu',
-        permissions: ['consumer_view_download_history'],
-      },
-      {
         text: 'pages.contracts',
         menuIcon: 'FormatListBulletedIcon',
         to: '/consumer/contracts',

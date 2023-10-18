@@ -232,7 +232,7 @@
     "uploadSuccess": "Upload completed!",
     "uploadWarning": "Upload completed with warnings!",
     "uploadError": "Upload failed!",
-    "subscriptionSuccess": "Contract offers subscription successfully initiated and downloaded!",
+    "subscriptionSuccess": "Contract offers subscription successfully initiated!",
     "subscriptionError": "Contract offers subscription failed!",
     "noConnector": "Connector not available!",
     "submodelDeleteSuccess": "Submodel deleted successfully!",

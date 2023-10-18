@@ -232,7 +232,7 @@
     "uploadSuccess": "Hochladen abgeschlossen!",
     "uploadWarning": "Hochladen abgeschlossen - mit Fehlermeldungen!",
     "uploadError": "Hochladen fehlgeschlagen!",
-    "subscriptionSuccess": "Vertragsangebote-Abonnement erfolgreich gestartet und heruntergeladen!!",
+    "subscriptionSuccess": "Vertragsangebote-Abonnement erfolgreich gestartet!",
     "subscriptionError": "Abonnieren der Vertragsangebote fehlgeschlagen!",
     "noConnector": "Connector nicht vergübar!",
     "submodelDeleteSuccess": "Submodell erfolgreich gelöscht!",

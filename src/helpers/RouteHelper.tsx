@@ -33,7 +33,6 @@ const UploadHistoryNew = lazy(() => import('../pages/UploadHistoryNew'));
 const ConsumeData = lazy(() => import('../pages/consumer/ConsumeData'));
 const ConsumerContracts = lazy(() => import('../pages/consumer/ConsumerContracts'));
 const CreateData = lazy(() => import('../pages/CreateData'));
-const OffersDownloadHistory = lazy(() => import('../pages/consumer/OffersDownloadHistory'));
 
 export interface IRoutes {
   key?: string;
@@ -93,10 +92,5 @@ export const ROUTES: IRoutes[] = [
     path: '/consumer/contracts',
     element: <ConsumerContracts />,
     permissions: ['consumer_view_contract_agreement'],
-  },
-  {
-    path: '/consumer/offers-download-history',
-    element: <OffersDownloadHistory />,
-    permissions: ['consumer_view_download_history'],
   },
 ];

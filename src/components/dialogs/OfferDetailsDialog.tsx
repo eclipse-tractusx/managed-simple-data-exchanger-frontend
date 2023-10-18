@@ -152,7 +152,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleConfirm, handleClose, isMult
         </Button>
         <Permissions values={['consumer_subscribe_download_data_offers']}>
           <Button variant="contained" onClick={() => handleConfirm(true)}>
-            {t('button.subscribeSelected')}
+            {t('button.subscribe')}
           </Button>
         </Permissions>
       </DialogActions>
