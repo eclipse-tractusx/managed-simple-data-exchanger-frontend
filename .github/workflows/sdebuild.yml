@@ -22,7 +22,7 @@ name: sdebuild
 on:
   push:
     branches:
-      - 'DST_PIP10_ITR3'
+      - 'v2.1.2'
     tags:
       - 'v*.*.*'
       - 'v*.*.*-*'
@@ -63,14 +63,9 @@ jobs:
           images: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},value=v2.1.2
           flavor: |
               latest=true
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
