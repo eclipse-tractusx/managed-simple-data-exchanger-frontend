@@ -530,7 +530,7 @@ export default function ConsumeData() {
         </Grid>
       </Grid>
       <Box display="flex" justifyContent="flex-end" my={3}>
-        <Permissions values={['consumer_subscribe_download_data_offers']}>
+        <Permissions values={['consumer_establish_contract_agreement']}>
           <Button
             variant="contained"
             size="small"
