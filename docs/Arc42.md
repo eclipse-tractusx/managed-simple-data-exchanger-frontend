@@ -41,7 +41,7 @@ In order to allow Data Providers and Data Consumers to easily participate in rel
 - SDE is short for **S**imple **D**ata **E**xchanger.
 - It is a standalone service which can be self-hosted.
 - It enables companies to provide their data in the Catena-X network via an EDC.
-- Data is uploaded via CSV-files/Manual Entry/Json format.
+- Data is uploaded via CSV-files/Manual Entry/Recurring Upload.
 - The SDE registers the data in the Digital Twin Registry and makes it accessible via an EDC.
 - It is validate the CX network company BPN's to allow data as consumer. 
 - SDE also act as a Data Consumer.
@@ -52,9 +52,10 @@ In order to allow Data Providers and Data Consumers to easily participate in rel
 #### **Essential Features**
 
 - Compliance with Catena-X Guidelines.
-- Parsing of CSV file/manual Entry for Parts and Relationships.
+- Parsing of CSV file/Manual Entry/Recurring Upload for Parts and Relationships.
 - Integration with Digital Twin registry.
 - Utilization of EDC to provide data and consume data.
+- Integration with simple policies management.
 - Integration with Portal Service to validate BPN's Numbers as well as get the Connectors URL details of companies.
 - Integration Keycloak authentication for security.
 - Integration BPN Discovery service to support decentralized DTR.
@@ -125,25 +126,26 @@ The following table illustrates the stakeholders of SDE and their respective int
 
 ### **Technical Context**
 
-| Name                                     	| Interface      	|
-|------------------------------------------	|----------------	|
-| EDC connector for external communication 	| EDC/IDS        	|
-| Digital twin registry                    	| HTTPs          	|
-| Portal Service                        	| HTTPs          	|
-| BPN Discovery                         	| HTTPs          	|
-| File Upload (CSV)                        	| HTTPs endpoint 	|
+| Name                                     	                               | Interface      	|
+|--------------------------------------------------------------------------|----------------	|
+| EDC connector for external communication 	                               | EDC/IDS        	|
+| Digital twin registry                    	                               | HTTPs          	|
+| Portal Service                        	                                  | HTTPs          	|
+| BPN Discovery                         	                                  | HTTPs          	|
+| File Upload (CSV/Manual Entry/Recurring-Upload)                        	 | HTTPs endpoint 	|
 
 <br />
 
 ## **Solution Strategy**
 
-| Quality Goal                         	| Matching approaches in the solution                                                 	|
-|--------------------------------------	|-------------------------------------------------------------------------------------	|
-| Integration into Catena-X Network    	| Usage of Catena-X services like the Digital Twin Registry and EDC for data exchange 	|
-| CSV input files with clear structure 	| Definition of a CSV file, which can be used for data upload                         	|
-| Lightweight service                  	|                                                                                     	|
-| Docker Container                     	|                                                                                     	|
-| Integrate EDC in deployment          	|                                                                                     	|
+| Quality Goal                         	 | Matching approaches in the solution                                                 	|
+|---------------------------------------|-------------------------------------------------------------------------------------	|
+| Integration into Catena-X Network    	 | Usage of Catena-X services like the Digital Twin Registry and EDC for data exchange 	|
+| CSV input files with clear structure 	 | Definition of a CSV file, which can be used for data upload                         	|
+ | Recurring-Upload                      | Usage/Support of SFTP and MINIO storage. |
+| Lightweight service                  	 |                                                                                     	|
+| Docker Container                     	 |                                                                                     	|
+| Integrate EDC in deployment          	 |                                                                                     	|
 
 <br />
 The SDE is divided into two components: Frontend and Backend. The frontend is very minimal with only the basic functionality.<br />
@@ -179,7 +181,9 @@ Its having 2 components:
 
 SDE does not expose interfaces for other applications or components to call (i.e. no "external interfaces").
 
-SDE does call interfaces of other components as by the picture above (i.e. of EDC, Digital Twin Registry, Portal).
+SDE does call interfaces of other components as by the picture above (i.e. of EDC, Digital Twin Registry, Portal, BPN Discovery).
+
+SDE Dose support Recurring/Scheduler upload via SFTP/ Minio storage.
 
 There is a web interface between frontend and backend.<br /><br />
 
@@ -189,7 +193,7 @@ Detailed API specs available under:
 
 [https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
 
-Backend API Swagger-ui : [https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html](https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
+Backend API Swagger-ui : [https://dft-api.int.demo.catena-x.net/backend/api/swagger-ui/index.html](https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
 
 <br />
 
