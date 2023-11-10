@@ -142,7 +142,7 @@ The following table illustrates the stakeholders of SDE and their respective int
 |---------------------------------------|-------------------------------------------------------------------------------------	|
 | Integration into Catena-X Network    	 | Usage of Catena-X services like the Digital Twin Registry and EDC for data exchange 	|
 | CSV input files with clear structure 	 | Definition of a CSV file, which can be used for data upload                         	|
- | Recurring-Upload                      | Usage/Support of SFTP and MINIO storage. |
+ | Recurring-Upload                      |  |
 | Lightweight service                  	 |                                                                                     	|
 | Docker Container                     	 |                                                                                     	|
 | Integrate EDC in deployment          	 |                                                                                     	|
@@ -183,7 +183,7 @@ SDE does not expose interfaces for other applications or components to call (i.e
 
 SDE does call interfaces of other components as by the picture above (i.e. of EDC, Digital Twin Registry, Portal, BPN Discovery).
 
-SDE Dose support Recurring/Scheduler upload via SFTP/ Minio storage.
+SDE Dose support Recurring/Scheduler upload..
 
 There is a web interface between frontend and backend.<br /><br />
 
