@@ -18,7 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
 import { store } from '../features/store';
@@ -40,9 +40,10 @@ abstract class HttpService {
       (response: AxiosResponse) => {
         return response;
       },
-      (error: AxiosError) => {
+      async error => {
+        // in order to get the error message from blob type response, it should be parsed
+        const errorMessage = await error.response.data.msg;
         // Need to remove this store usage to avoid circlular dependecy issues
-        const errorMessage = error.response?.data?.msg;
         store.dispatch(
           setSnackbarMessage({
             message: errorMessage || 'alerts.somethingWrong',
