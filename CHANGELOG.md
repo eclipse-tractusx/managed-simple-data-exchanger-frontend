@@ -4,9 +4,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 
 ## [2.3.0] - 2023-11-21
 ### Fixed
-- permissions updated.
+- Code optimisation.
 - trivy workflow updated.
-- bug fixes.
 - version bump for chart release.
 
 ## [2.1.1] - 2023-08-30
