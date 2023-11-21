@@ -47,7 +47,6 @@ RUN chown 101:101 /usr/share/nginx/html/
 RUN chmod ug+rwx /usr/share/nginx/html/
 EXPOSE 8080
 USER 101
-# Start Nginx server
 
+# Start Nginx server
 CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
-#CMD ["nginx", "-g", "daemon off;"]

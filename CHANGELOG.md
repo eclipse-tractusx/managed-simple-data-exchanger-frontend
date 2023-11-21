@@ -2,6 +2,13 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.3.0] - 2023-11-21
+### Fixed
+- permissions updated.
+- trivy workflow updated.
+- bug fixes.
+- version bump for chart release.
+
 ## [2.1.1] - 2023-08-30
 ### Fixed
 - docker base image changed .
@@ -192,7 +199,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.1...main
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.0...main
+[2.3.0]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.1...v2.3.0
 [2.1.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.0.10...v2.0.11
 [2.0.11]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.0.10...v2.0.11
