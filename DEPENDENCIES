@@ -964,7 +964,7 @@ npm/npmjs/-/yocto-queue/0.1.0, MIT, approved, clearlydefined
 npm/npmjs/@adobe/css-tools/4.0.1, MIT, approved, #6345
 npm/npmjs/@ampproject/remapping/2.2.0, Apache-2.0, approved, clearlydefined
 npm/npmjs/@apideck/better-ajv-errors/0.3.6, MIT, approved, clearlydefined
-npm/npmjs/@babel/code-frame/7.23.4, , restricted, clearlydefined
+npm/npmjs/@babel/code-frame/7.23.4, MIT AND (BSD-2-Clause AND ISC AND MIT) AND BSD-2-Clause AND BSD-3-Clause, approved, #11659
 npm/npmjs/@babel/compat-data/7.20.1, MIT, approved, #4653
 npm/npmjs/@babel/core/7.20.2, MIT, approved, #4666
 npm/npmjs/@babel/eslint-parser/7.19.1, MIT, approved, clearlydefined
@@ -989,12 +989,12 @@ npm/npmjs/@babel/helper-replace-supers/7.19.1, MIT, approved, clearlydefined
 npm/npmjs/@babel/helper-simple-access/7.20.2, MIT, approved, #4672
 npm/npmjs/@babel/helper-skip-transparent-expression-wrappers/7.20.0, MIT, approved, clearlydefined
 npm/npmjs/@babel/helper-split-export-declaration/7.22.6, MIT, approved, #8938
-npm/npmjs/@babel/helper-string-parser/7.23.4, , restricted, clearlydefined
+npm/npmjs/@babel/helper-string-parser/7.23.4, MIT AND (BSD-2-Clause AND ISC AND MIT) AND BSD-2-Clause AND BSD-3-Clause, approved, #11660
 npm/npmjs/@babel/helper-validator-identifier/7.22.20, MIT, approved, #8955
 npm/npmjs/@babel/helper-validator-option/7.18.6, MIT, approved, clearlydefined
 npm/npmjs/@babel/helper-wrap-function/7.19.0, MIT, approved, clearlydefined
 npm/npmjs/@babel/helpers/7.20.1, MIT, approved, #4646
-npm/npmjs/@babel/highlight/7.23.4, , restricted, clearlydefined
+npm/npmjs/@babel/highlight/7.23.4, MIT AND (BSD-2-Clause AND ISC AND MIT) AND BSD-2-Clause AND BSD-3-Clause, approved, #11658
 npm/npmjs/@babel/parser/7.23.4, MIT AND (BSD-2-Clause AND ISC AND MIT) AND BSD-2-Clause AND BSD-3-Clause, approved, #10663
 npm/npmjs/@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression/7.18.6, MIT, approved, clearlydefined
 npm/npmjs/@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining/7.18.9, MIT, approved, clearlydefined
