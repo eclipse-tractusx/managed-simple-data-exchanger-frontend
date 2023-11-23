@@ -41,7 +41,7 @@ USER root
 COPY ./conf /etc/nginx
 # Static build
 WORKDIR /usr/share/nginx/html
-COPY LICENCE NOTICE.md DEPENDECIES SECURITY.md  ./
+COPY LICENSE NOTICE.md DEPENDENCIES SECURITY.md  ./
 COPY --from=builder /app/build .
 COPY ./env.sh .
 RUN chown 101:101 /usr/share/nginx/html/
