@@ -83,7 +83,6 @@ const update = () => {
 const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) => {
   KC.init({
     onLoad: 'login-required',
-    silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
     pkceMethod: 'S256',
   })
     .then(authenticated => {
