@@ -2,6 +2,14 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.1.4] - 2023-11-28
+### Fixed
+- Data table pagination not working - fixed
+- Veracode vulnerability fixes
+- Missing license headers added 
+- legal information added to docker image.
+- trivy workflow steps updated.
+
 ## [2.1.3] - non-released
 ### Fixed
 - PCF Documentation update
@@ -205,7 +213,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.1...main
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.4...main
+[2.1.4]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.1...v2.1.4
 [2.1.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.0.10...v2.0.11
 [2.0.11]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.0.10...v2.0.11

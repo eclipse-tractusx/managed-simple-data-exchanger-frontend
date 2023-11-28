@@ -44,7 +44,7 @@ interface UploadHistoryErrorDialogProps {
 const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({ open = false, handleDialogClose }) => {
   const { t } = useTranslation();
   const [page, setPage] = useState<number>(0);
-  const [pageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(10);
   const { errorsList, isLoading, currentProcessId } = useAppSelector(state => state.uploadHistorySlice);
   const handleClose = () => {
     handleDialogClose();
@@ -101,6 +101,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({ ope
               columns={columns}
               rows={errorsList}
               pageSize={pageSize}
+              onPageSizeChange={setPageSize}
               page={page}
               getRowHeight={() => 'auto'}
               onPageChange={newPage => setPage(newPage)}
