@@ -54,9 +54,6 @@ jobs:
       - name: Add content to Legal Notice
         run: npm run build:legal-notice
 
-      - name: Build
-        run: npm run build
-
       # Create SemVer or ref tags dependent of trigger event
       - name: Docker meta
         id: meta
