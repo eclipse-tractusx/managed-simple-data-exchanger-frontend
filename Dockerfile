@@ -41,6 +41,7 @@ USER root
 COPY ./conf /etc/nginx
 # Static build
 WORKDIR /usr/share/nginx/html
+COPY LICENSE NOTICE.md DEPENDENCIES SECURITY.md  ./
 COPY --from=builder /app/build .
 COPY ./env.sh .
 RUN chown 101:101 /usr/share/nginx/html/
@@ -48,5 +49,4 @@ RUN chmod ug+rwx /usr/share/nginx/html/
 EXPOSE 8080
 USER 101
 # Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
-#CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
+CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
