@@ -7,7 +7,7 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - PCF Documentation update
 
 ## [2.1.2] - non-released
-### Fixed
+### Changed
 - Download file functions code optimisations. 
 - Page layout css fixes.
 
