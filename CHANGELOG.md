@@ -2,6 +2,11 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.1.2] - non-released
+### Changed
+- Download file functions code optimisations. 
+- Page layout css fixes.
+
 ## [2.1.1] - non-released
 ### Added
 - PCF Submodel support added

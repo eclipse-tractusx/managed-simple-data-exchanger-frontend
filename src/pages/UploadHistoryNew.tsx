@@ -30,16 +30,17 @@ import { useTranslation } from 'react-i18next';
 import UploadHistoryErrorDialog from '../components/dialogs/UploadHistoryErrorDialog';
 import Permissions from '../components/Permissions';
 import { Status } from '../enums';
-import { setSnackbarMessage } from '../features/notifiication/slice';
 import { useDeleteHistoryMutation, useGetHistoryQuery } from '../features/provider/history/apiSlice';
 import { setCurrentProcessId, setErrorsList, setIsLoding } from '../features/provider/history/slice';
 import { useAppDispatch } from '../features/store';
 import { MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
+import { csvFileDownload } from '../helpers/FileDownloadHelper';
 import { ProcessReport } from '../models/ProcessReport';
 import AppService from '../services/appService';
 import ProviderService from '../services/ProviderService';
 import { STATUS_COLOR_MAPPING } from '../utils/constants';
 import { formatDate } from '../utils/utils';
+
 function UploadHistoryNew() {
   const [page, setPage] = useState<number>(0);
   const [pageSize] = useState<number>(10);
@@ -56,18 +57,8 @@ function UploadHistoryNew() {
       const { csvType, processId } = subModel;
       const response = await AppService.getInstance().downloadHistory(csvType, processId);
       if (response) {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `${csvType}-${processId}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.downloadSuccess',
-            type: 'success',
-          }),
-        );
+        const fileName = `${csvType}-${processId}`;
+        csvFileDownload(response.data, fileName);
       }
     } catch (e) {
       console.log(e);
@@ -219,7 +210,7 @@ function UploadHistoryNew() {
 
   if (isSuccess) {
     return (
-      <Box sx={{ flex: 1, p: 4 }}>
+      <>
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={9}>
             <Typography variant="h3" mb={1}>
@@ -269,7 +260,7 @@ function UploadHistoryNew() {
         <Box>
           <UploadHistoryErrorDialog open={showErrorLogsDialog} handleDialogClose={handleErrorDialogClose} />
         </Box>
-      </Box>
+      </>
     );
   } else return null;
 }

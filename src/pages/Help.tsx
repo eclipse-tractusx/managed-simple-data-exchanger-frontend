@@ -19,12 +19,12 @@
  ********************************************************************************/
 
 import InfoIcon from '@mui/icons-material/Info';
-import { Box, Card, CardContent, Grid } from '@mui/material';
+import { Card, CardContent, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
-import DownloadCSV from '../components/DownloadCSV';
+import DownloadSamples from '../components/DownloadSamples';
 import { useGetHelpPageDataQuery } from '../features/provider/submodels/apiSlice';
 import { HelpPageData } from '../features/provider/submodels/types';
 import { useAppSelector } from '../features/store';
@@ -74,7 +74,7 @@ export default function Help() {
 
   if (isSuccess) {
     return (
-      <Box sx={{ flex: 1, p: 4 }}>
+      <>
         <Typography variant="h3" mb={1}>
           {t('pages.help')}
         </Typography>
@@ -105,7 +105,7 @@ export default function Help() {
               <Typography variant="body1" mb={4}>
                 {table.description}
               </Typography>
-              <DownloadCSV submodel={table.id} />
+              <DownloadSamples submodel={table.id} />
             </Grid>
           </Grid>
         ))}
@@ -119,7 +119,7 @@ export default function Help() {
             </ul>
           </CardContent>
         </Card>
-      </Box>
+      </>
     );
   } else return null;
 }
