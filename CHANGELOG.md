@@ -2,6 +2,12 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.1.4] - 2023-11-28
+### Fixed
+- Data table pagination not working - fixed
+- Veracode vulnerability fixes
+- Missing license headers added 
+
 ## [2.1.3] - non-released
 ### Fixed
 - PCF Documentation update
