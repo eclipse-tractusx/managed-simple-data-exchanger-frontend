@@ -2,6 +2,10 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [2.1.1] - non-released
+### Added
+- PCF Submodel support added
+
 ## [2.1.0] - 2023-08-30
 ### Fixed
 - docker base image changed .

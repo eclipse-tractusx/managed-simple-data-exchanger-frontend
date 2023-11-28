@@ -20,7 +20,7 @@
  ********************************************************************************/
 import { GridSelectionModel, GridValidRowModel } from '@mui/x-data-grid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { indexOf } from 'lodash';
+import { includes, indexOf } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 
 import { fetchSubmodelDetails, fetchSubmodelList } from './actions';
@@ -60,11 +60,12 @@ export const submodelSlice = createSlice({
       state.selectedSubmodel = action.payload;
     },
     addRows: state => {
-      state.rows = state.rows.concat({ id: state.rows.length, ...state.row, uuid: `urn:uuid:${uuidv4()}` });
+      const genUUID = () => (includes(Object.keys(state.row), 'uuid') ? { uuid: `urn:uuid:${uuidv4()}` } : {});
+      state.rows = state.rows.concat({ rowId: state.rows.length, ...state.row, ...genUUID() });
     },
     deleteRows: state => {
       const selectedIDs = new Set(state.selectionModel);
-      state.rows = state.rows.filter(x => !selectedIDs.has(x.id));
+      state.rows = state.rows.filter(x => !selectedIDs.has(x.rowId));
     },
     setRows: (state, action: PayloadAction<GridValidRowModel>) => {
       const { id, field, value, isEditable } = action.payload;
@@ -77,7 +78,7 @@ export const submodelSlice = createSlice({
     setSelectionModel: (state, action: PayloadAction<GridSelectionModel>) => {
       state.selectionModel = action.payload;
       const selectedIDs = new Set(state.selectionModel);
-      state.selectedRows = state.rows.filter(row => selectedIDs.has(row.id));
+      state.selectedRows = state.rows.filter(row => selectedIDs.has(row.rowId));
     },
     setJsonInputData: (state, action: PayloadAction<string>) => {
       state.jsonInputData = action.payload;
