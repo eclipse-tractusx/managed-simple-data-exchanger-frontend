@@ -2,7 +2,7 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
-## [2.3.3] -  2023-12-01
+## [2.3.3] -  2023-12-06
 ### Changed
 - build base image security fix.
 
