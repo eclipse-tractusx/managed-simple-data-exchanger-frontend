@@ -6,10 +6,10 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 ### Changed
 - build base image security fix.
 ### Known defects
-- Duration restriction need to get removed, this is not a valid policy rule
-- Purpose policy rule wrong. Instead of “ID 3.0 Trace” it must be “ID 3.1 Trace”
-- Usage Policy is missing the framework agreement which is mandatorily needed for UseCase specific data offers
-- Help link navigates to GitHub docu “main”. Shall be linked to the release tag
+- Duration restriction need to be removed, this is not a valid policy rule.
+- Purpose policy rule wrong. Instead of “ID 3.0 Trace” it must be “ID 3.1 Trace”.
+- Usage Policy is missing the framework agreement, which is mandatorily needed for UseCase specific data offers.
+- Help link navigates to GitHub documentation of the “main” branch. Shall be linked to the release tag.
 
 ## [2.3.2] -  2023-12-01
 ### Changed
