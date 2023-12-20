@@ -81,8 +81,8 @@ const DURATION_UNIT_MAPPING = {
 const PURPOSE_VALUES: ISelectList[] = [
   {
     id: 0,
-    title: 'ID 3.0 Trace',
-    value: 'ID 3.0 Trace',
+    title: 'ID 3.1 Trace',
+    value: 'ID 3.1 Trace',
   },
 ];
 
