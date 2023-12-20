@@ -4,6 +4,7 @@
   "license": "Apache-2.0",
   "licensePath": "//blob//LICENSE",
   "noticePath": "//blob//NOTICE.md",
+  "readmePath": "//blob//docs/user-guide/README.md",
   "sourcePath": "//tree/",
   "commitId": "9d2eee5ec7dbdce76e62d5a23e6b0dc9a1946f0f"
 }

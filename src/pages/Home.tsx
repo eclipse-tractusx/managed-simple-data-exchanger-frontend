@@ -26,6 +26,7 @@ import { Button, Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-compon
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import legalNoticeContent from '../assets/about/legal-notice.json';
 import { DataExchangeStepper } from '../components/DataExchangeStepper';
 import { fetchUseCases } from '../features/app/actions';
 import { setSelectedUseCases } from '../features/app/slice';
@@ -35,7 +36,6 @@ import { ISubmodelList } from '../features/provider/submodels/types';
 import { removeSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { consumeDataSteps, provideDataSteps } from '../models/Home';
-import { USER_GUIDE_URL } from '../utils/constants';
 import { openInNewTab } from '../utils/utils';
 
 export default function Home() {
@@ -85,7 +85,7 @@ export default function Home() {
           <Button
             variant="text"
             size="medium"
-            onClick={() => openInNewTab(USER_GUIDE_URL)}
+            onClick={() => openInNewTab(legalNoticeContent.readmePath)}
             endIcon={<ArrowForwardIcon />}
             sx={{
               p: 0,
