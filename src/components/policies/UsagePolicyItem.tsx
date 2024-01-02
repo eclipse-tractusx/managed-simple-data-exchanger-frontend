@@ -23,9 +23,9 @@ import { Input, SelectList } from 'cx-portal-shared-components';
 import { isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
-import { setDurationUnit, setPurposeValue } from '../../features/provider/policies/slice';
+import { setPurposeValue } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
-import { DURATION_UNITS, ONLY_NUM_REGEX, PURPOSE_VALUES } from '../../utils/constants';
+import { ONLY_NUM_REGEX, PURPOSE_VALUES } from '../../utils/constants';
 
 interface FreeTextProps {
   restrictionType: string;
@@ -46,7 +46,7 @@ export default function UsagePolicyItem({
   labelText,
   setInputFreeText,
 }: FreeTextProps) {
-  const { durationUnit, purposeValue } = useAppSelector(state => state.accessUsagePolicySlice);
+  const { purposeValue } = useAppSelector(state => state.accessUsagePolicySlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -92,21 +92,6 @@ export default function UsagePolicyItem({
                   }}
                   sx={{ minWidth: 250 }}
                 />
-              )}
-              {constraintType === t('content.policies.duration') && (
-                <FormControl sx={{ minWidth: 150 }} size="small">
-                  <SelectList
-                    keyTitle="title"
-                    defaultValue={durationUnit}
-                    items={DURATION_UNITS}
-                    label={t('content.policies.selectDuration')}
-                    placeholder={t('content.policies.selectDuration')}
-                    disableClearable={true}
-                    onChangeItem={e => {
-                      dispatch(setDurationUnit(e));
-                    }}
-                  />
-                </FormControl>
               )}
               {constraintType === t('content.policies.purpose') && (
                 <FormControl sx={{ minWidth: 250 }} size="small">

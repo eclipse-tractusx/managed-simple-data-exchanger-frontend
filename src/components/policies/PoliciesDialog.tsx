@@ -60,9 +60,6 @@ export default function PoliciesDialog() {
     uploadUrl,
     uploadData,
     uploadType,
-    duration,
-    durationValue,
-    durationUnit,
     purpose,
     purposeValue,
     role,
@@ -78,13 +75,12 @@ export default function PoliciesDialog() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const durationCheck = duration === 'RESTRICTED' && durationValue === '';
     const purposeCheck = purpose === 'RESTRICTED' && isEmpty(purposeValue);
     const roleCheck = role === 'RESTRICTED' && roleValue === '';
     const customCheck = custom === 'RESTRICTED' && customValue === '';
-    setshowError(() => durationCheck || purposeCheck || roleCheck || customCheck);
+    setshowError(() => purposeCheck || roleCheck || customCheck);
     return () => {};
-  }, [duration, durationValue, purpose, purposeValue, role, roleValue, custom, customValue]);
+  }, [purpose, purposeValue, role, roleValue, custom, customValue]);
 
   const clearUpload = () => {
     dispatch(setPageLoading(false));
@@ -167,12 +163,6 @@ export default function PoliciesDialog() {
     type_of_access: accessType,
     row_data: uploadData,
     usage_policies: [
-      {
-        type: 'DURATION',
-        typeOfAccess: duration,
-        value: durationValue,
-        durationUnit: durationUnit.value,
-      },
       {
         type: 'ROLE',
         typeOfAccess: role,
