@@ -16,6 +16,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+
 import { ReactElement } from 'react';
 
 import About from '../pages/About';
