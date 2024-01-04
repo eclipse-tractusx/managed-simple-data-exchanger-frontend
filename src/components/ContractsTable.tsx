@@ -82,7 +82,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       field: 'assetId',
       flex: 1,
       headerName: t('content.contractHistory.columns.assetId'),
-      valueGetter: ({ row }) => row.contractAgreementInfo,
+      valueGetter: ({ row }) => row?.contractAgreementInfo?.assetId,
       valueFormatter: ({ value }) => value?.assetId,
       renderCell: ({ row }) => (
         <Tooltips tooltipPlacement="top-start" tooltipArrow={false} tooltipText={row?.contractAgreementInfo?.assetId}>
@@ -111,7 +111,7 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
       headerName: t('content.contractHistory.columns.contractSigningDate'),
       sortingOrder: ['asc', 'desc'],
       sortComparator: (v1, v2, param1: GridValidRowModel, param2: GridValidRowModel) => param2.id - param1.id,
-      valueGetter: ({ row }) => row.contractAgreementInfo,
+      valueGetter: ({ row }) => convertEpochToDate(row.contractAgreementInfo?.contractSigningDate),
       valueFormatter: ({ value }) => convertEpochToDate(value?.contractSigningDate),
       renderCell: ({ row }) =>
         row.contractAgreementInfo?.contractSigningDate ? (
