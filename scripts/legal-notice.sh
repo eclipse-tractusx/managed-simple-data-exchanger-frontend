@@ -38,6 +38,7 @@ legal_notice_json='{
   "license": "'$license'",
   "licensePath": "'$server_url'/'$repository'/blob/'$ref'/LICENSE",
   "noticePath": "'$server_url'/'$repository'/blob/'$ref'/NOTICE.md",
+  "readmePath": "'$server_url'/'$repository'/blob/'$ref'/docs/user-guide/README.md",
   "sourcePath": "'$server_url'/'$repository'/tree/'$ref'",
   "commitId": "'$commit_id'"
 }'
