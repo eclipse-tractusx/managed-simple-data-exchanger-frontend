@@ -22,29 +22,18 @@ import { Box } from '@mui/material';
 import { Typography } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
-import { setDuration, setDurationValue, setPurpose } from '../../features/provider/policies/slice';
+import { setPurpose } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
 import UsagePolicyItem from './UsagePolicyItem';
 
 export default function UsagePolicy() {
-  const { duration, durationValue, purpose } = useAppSelector(state => state.accessUsagePolicySlice);
+  const { purpose } = useAppSelector(state => state.accessUsagePolicySlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   return (
     <>
       <Typography fontWeight={'bold'}>{t('content.policies.usagePolicy')}</Typography>
-      <Box sx={{ mt: 2 }}>
-        <UsagePolicyItem
-          restrictionType={duration}
-          setRestrictionType={e => dispatch(setDuration(e))}
-          constraintType={t('content.policies.duration')}
-          displayText={t('content.policies.durationNote')}
-          labelText={t('content.common.enterValue')}
-          inputFreeText={durationValue}
-          setInputFreeText={e => dispatch(setDurationValue(e))}
-        />
-      </Box>
       <Box sx={{ mt: 4 }}>
         <UsagePolicyItem
           restrictionType={purpose}
