@@ -17,25 +17,11 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { ISelectList } from '../../../models/Common';
+import { PolicyModel } from '../../../models/RecurringUpload.models';
 
 export interface IAccessPolicyState {
-  uploadUrl: string;
-  uploadData: unknown;
-  uploadType: string;
   openDialog: boolean;
-  accessType: string;
-  bpnList: Array<string>;
-  inputBpn: string;
-  companyBpn: string;
-  duration: string;
-  purpose: string;
-  role: string;
-  custom: string;
-  durationValue: string;
-  purposeValue: ISelectList;
-  roleValue: string;
-  customValue: string;
-  durationUnit: ISelectList;
-  showValidationError: boolean;
+  policyData: PolicyModel;
+  policyDialog: boolean;
+  policyDialogType: string;
 }
