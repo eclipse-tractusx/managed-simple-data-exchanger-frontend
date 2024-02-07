@@ -20,7 +20,7 @@
 
 import { theme } from 'cx-portal-shared-components';
 
-import { IDefaultObject } from '../models/Common';
+import { IDefaultObject, ISelectList } from '../models/Common';
 import { PolicyModel } from '../models/RecurringUpload.models';
 import { Config } from './config';
 
@@ -51,6 +51,36 @@ const STATUS_COLOR_MAPPING: IDefaultObject = {
 const USER_TYPE_SWITCH: IDefaultObject = {
   provider: 'consumer',
   consumer: 'provider',
+};
+
+const DURATION_UNITS: ISelectList[] = [
+  {
+    id: 0,
+    title: 'Hour',
+    value: 'HOUR',
+  },
+  {
+    id: 1,
+    title: 'Day',
+    value: 'DAY',
+  },
+  {
+    id: 2,
+    title: 'Month',
+    value: 'MONTH',
+  },
+  {
+    id: 3,
+    title: 'Year',
+    value: 'YEAR',
+  },
+];
+
+const DURATION_UNIT_MAPPING = {
+  HOUR: 'hours',
+  DAY: 'days',
+  MONTH: 'months',
+  YEAR: 'years',
 };
 
 const BPN_TYPE_FIELDS = [
@@ -166,6 +196,8 @@ export {
   CHECKBOXES,
   CONTRACT_STATES,
   DEFAULT_POLICY_DATA,
+  DURATION_UNIT_MAPPING,
+  DURATION_UNITS,
   FRAMEWORKS,
   MAX_CONTRACTS_AGREEMENTS,
   ONLY_NUM_REGEX,
