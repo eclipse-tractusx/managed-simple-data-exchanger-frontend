@@ -2,6 +2,13 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [Unreleased]
+### Fixed
+- Axios library issue resolved
+
+### Changed
+- Policy hub api support added
+
 ## [2.3.3] -  2023-12-06
 ### Changed
 - build base image security fix.
