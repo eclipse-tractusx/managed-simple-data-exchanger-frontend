@@ -5,6 +5,9 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 ## [Unreleased]
 ### Changed
 - New access and usage policies added
+- Documents updated
+### Fixed
+- Axios library issue fixed
 
 ## [2.3.3] -  2023-12-06
 ### Changed

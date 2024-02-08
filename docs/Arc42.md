@@ -55,9 +55,11 @@ In order to allow Data Providers and Data Consumers to easily participate in rel
 - Parsing of CSV file/manual Entry for Parts and Relationships.
 - Integration with Digital Twin registry.
 - Utilization of EDC to provide data and consume data.
+- Integration with simple policies management.
 - Integration with Portal Service to validate BPN's Numbers as well as get the Connectors URL details of companies.
 - Integration Keycloak authentication for security.
 - Integration BPN Discovery service to support decentralized DTR.
+- Integration Policy-hub for Policy management.
 
 <br />
 
@@ -114,24 +116,26 @@ The following table illustrates the stakeholders of SDE and their respective int
 
 ### **Business Context**
 
-| Business / Technical 	 | Name                           	   | Interface 	|
-|------------------------|------------------------------------|-----------	|
-| Business             	 | User via Webapp to upload file 	   | Webapp    	|
-| Technical            	 | Digital twin registry          	   | Https     	|
-| Technical            	 | Portal Service         	           | Https      |
-| Technical            	 | BPN Discovery                   	   | Https      |
+| Business / Technical 	 | Name                           	  | Interface 	|
+|------------------------|-----------------------------------|-----------	|
+| Business             	 | User via Webapp to upload file 	  | Webapp    	|
+| Technical            	 | Digital twin registry          	  | Https     	|
+| Technical            	 | Portal Service         	          | Https      |
+| Technical            	 | BPN Discovery                   	 | Https      |
+| Technical            	 | Policy-Hub                   	    | Https      |
 
 <br />
 
 ### **Technical Context**
 
-| Name                                     	| Interface      	|
-|------------------------------------------	|----------------	|
-| EDC connector for external communication 	| EDC/IDS        	|
-| Digital twin registry                    	| HTTPs          	|
-| Portal Service                        	| HTTPs          	|
-| BPN Discovery                         	| HTTPs          	|
-| File Upload (CSV)                        	| HTTPs endpoint 	|
+| Name                                     	              | Interface      	|
+|---------------------------------------------------------|----------------	|
+| EDC connector for external communication 	              | EDC/IDS        	|
+| Digital twin registry                    	              | HTTPs          	|
+| Portal Service                        	                 | HTTPs          	|
+| BPN Discovery                         	                 | HTTPs          	|
+| Policy-Hub                        	                     | HTTPs          	|
+| File Upload (CSV/Manual Entry)                        	 | HTTPs endpoint 	|
 
 <br />
 
@@ -164,14 +168,16 @@ Its having 2 components:
 
 <br /><br /><img src="images/building-block-view.png" height="60%" width="60%" /><br /><br />
 
-| SubSystem     	| Short description                                                                                               	 |
-|---------------	|-------------------------------------------------------------------------------------------------------------------|
-| Frontend      	| Provide a friendly interface to the user to support the csv file upload or sub model creation                   	 |
-| Backend       	| Service that contains the REST api to support the Frontend and the execution pipeline to process the sub models 	 |
-| EDC           	| Eclipse data connector acting as data provider and data consumer to retrieve sub model's details                	 |
-| Digital Twins 	| Rest API that allows to register a sub model                                                                    	 |
-| Portal           | Rest API that allows to get validate companies BPN's and get list of companies connector URL                       |
-| BPN Discovery 	| Rest API that allows to push and search Key value for DT shell lookup details.                                     |
+| SubSystem     	 | Short description                                                                                               	 |
+|-----------------|-------------------------------------------------------------------------------------------------------------------|
+| Frontend      	 | Provide a friendly interface to the user to support the csv file upload or sub model creation                   	 |
+| Backend       	 | Service that contains the REST api to support the Frontend and the execution pipeline to process the sub models 	 |
+| EDC           	 | Eclipse data connector acting as data provider and data consumer to retrieve sub model's details                	 |
+| Digital Twins 	 | Rest API that allows to register a sub model                                                                    	 |
+| Portal          | Rest API that allows to get validate companies BPN's and get list of companies connector URL                      |
+| BPN Discovery 	 | Rest API that allows to push and search Key value for DT shell lookup details.                                    |
+| Policy-Hub 	    | Rest API that allows to get policy type and policy content.                                                       |
+
 
 <br />
 
