@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,14 +19,14 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Help } from '@mui/icons-material';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import UploadFile from '../components/UploadFile';
-import { handleDialogOpen } from '../features/provider/policies/slice';
+import { setPolicyDialog } from '../features/provider/policies/slice';
 import { store } from '../features/store';
 import CreateData from '../pages/CreateData';
-import Help from '../pages/Help';
 import UploadHistoryNew from '../pages/UploadHistoryNew';
 import { ReduxWrapper } from '../utils/testUtils';
 
@@ -59,7 +59,7 @@ describe('Dashboard', () => {
       </MemoryRouter>,
       { wrapper: ReduxWrapper },
     );
-    store?.dispatch(handleDialogOpen(true));
+    store?.dispatch(setPolicyDialog(true));
     expect(screen.queryByText('Policies')).toBeInTheDocument();
   });
 });

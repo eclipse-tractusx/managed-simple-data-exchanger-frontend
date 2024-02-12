@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -26,7 +26,7 @@ import { SyntheticEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DownloadSamples from '../components/DownloadSamples';
-import PoliciesDialog from '../components/policies/PoliciesDialog';
+import AddEditPolicy from '../components/policies/AddEditPolicy';
 import SelectSubmodel from '../components/SelectSubmodel';
 import SubmodelDataTable from '../components/SubmodelDataTable';
 import SubmodelInfo from '../components/SubmodelInfo';
@@ -105,7 +105,7 @@ export default function CreateData() {
           <Typography variant="body1">{t('content.provider.selectSubmodel')}</Typography>
         </Box>
       )}
-      <PoliciesDialog />
+      <AddEditPolicy />
     </>
   );
 }

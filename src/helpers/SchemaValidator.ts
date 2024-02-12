@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,8 +23,9 @@ import { DefinedError } from 'ajv/dist/core';
 import addFormats from 'ajv-formats';
 
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { handleDialogOpen } from '../features/provider/policies/slice';
+import { setPolicyData, setPolicyDialog, setPolicyDialogType } from '../features/provider/policies/slice';
 import { store } from '../features/store';
+import { DEFAULT_POLICY_DATA } from '../utils/constants';
 
 export const schemaValidator = async (data: GridValidRowModel[]) => {
   const ajv = new Ajv2019();
@@ -50,6 +51,8 @@ export const schemaValidator = async (data: GridValidRowModel[]) => {
     }
   });
   if (!result.includes(false)) {
-    store.dispatch(handleDialogOpen({ data: data, url: submodelSlice.selectedSubmodel.value, type: 'json' }));
+    store.dispatch(setPolicyDialogType('TableWithPolicy'));
+    store.dispatch(setPolicyData(DEFAULT_POLICY_DATA));
+    store.dispatch(setPolicyDialog(true));
   }
 };

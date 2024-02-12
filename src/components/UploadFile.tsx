@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -27,10 +27,11 @@ import { useTranslation } from 'react-i18next';
 import { FileSize, FileType } from '../enums';
 import { setPageLoading } from '../features/app/slice';
 import { setSnackbarMessage } from '../features/notifiication/slice';
-import { handleDialogOpen } from '../features/provider/policies/slice';
+import { setPolicyData, setPolicyDialog, setPolicyDialogType } from '../features/provider/policies/slice';
 import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { Config } from '../utils/config';
+import { DEFAULT_POLICY_DATA } from '../utils/constants';
 import { trimText } from '../utils/utils';
 import InfoSteps from './InfoSteps';
 
@@ -114,7 +115,11 @@ export default function UploadFile() {
           disabled={!selectedFiles.length}
           size="small"
           variant="contained"
-          onClick={() => dispatch(handleDialogOpen({ type: 'file' }))}
+          onClick={() => {
+            dispatch(setPolicyDialogType('FileWithPolicy'));
+            dispatch(setPolicyData(DEFAULT_POLICY_DATA));
+            dispatch(setPolicyDialog(true));
+          }}
         >
           {t('content.policies.configure')}
         </Button>

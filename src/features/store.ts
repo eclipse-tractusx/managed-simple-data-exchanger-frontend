@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -28,11 +28,13 @@ import consumerSlice from './consumer/slice';
 import notificationSlice from './notifiication/slice';
 import uploadHistorySlice from './provider/history/slice';
 import accessUsagePolicySlice from './provider/policies/slice';
+import policySlice from './provider/policies/slice';
 import submodelSlice from './provider/submodels/slice';
 import uploadFileSlice from './provider/upload/slice';
 
 export const reducers = {
   appSlice: appSlice,
+  policySlice: policySlice,
   accessUsagePolicySlice: accessUsagePolicySlice,
   uploadFileSlice: uploadFileSlice,
   consumerSlice: consumerSlice,
