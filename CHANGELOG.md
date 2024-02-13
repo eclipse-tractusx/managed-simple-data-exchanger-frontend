@@ -8,6 +8,11 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Documents updated
 ### Fixed
 - Axios library issue fixed
+- Duration restriction removed.
+- Purpose policy “ID 3.1 Trace” updated.
+- Framework agreement added in Usage Policy.
+- Help link linked to the release tag.
+- Page blank issue during navigation fixed.
 
 ## [2.3.3] -  2023-12-06
 ### Changed
