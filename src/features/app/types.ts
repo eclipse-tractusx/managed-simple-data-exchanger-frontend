@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -41,9 +41,18 @@ export interface IAppSlice {
 export interface IUseCase {
   id: string;
   title: string;
+  checked?: boolean;
 }
 export interface IExtraOptions {
   showNotification?: boolean;
   message?: string;
   type?: IAlertColors;
+}
+
+export class UseCaseSelectionModel {
+  static create(useCase: IUseCase[]) {
+    return useCase.map(item => {
+      return { id: item.id, title: item.title, checked: false };
+    });
+  }
 }
