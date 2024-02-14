@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,8 +19,8 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { filter } from 'lodash';
 
-import { fetchUseCases, fetchUserPermissions } from './actions';
 import { IAppSlice, IUser } from './types';
 
 const initialState: IAppSlice = {
@@ -53,27 +53,15 @@ export const appSlice = createSlice({
     setSidebarExpanded: state => {
       state.sidebarExpanded = !state.sidebarExpanded;
     },
-    setSelectedUseCases: (state, action: PayloadAction<string[]>) => {
-      state.selectedUseCases = action.payload;
+    setUseCases: (state, { payload }) => {
+      state.useCases = payload;
+      state.selectedUseCases = filter(payload, 'checked').map(e => e.id);
     },
-  },
-  extraReducers: builder => {
-    builder.addCase(fetchUserPermissions.pending, state => {
-      state.pageLoading = true;
-    });
-    builder.addCase(fetchUserPermissions.fulfilled, (state, action) => {
-      state.permissions = action.payload;
-      state.pageLoading = false;
-    });
-    builder.addCase(fetchUseCases.pending, state => {
-      state.pageLoading = true;
-    });
-    builder.addCase(fetchUseCases.fulfilled, (state, action) => {
-      state.useCases = action.payload;
-      state.pageLoading = false;
-    });
+    setPermissions: (state, { payload }) => {
+      state.permissions = payload;
+    },
   },
 });
 
-export const { setPageLoading, setLoggedInUser, setSelectedUseCases, setSidebarExpanded } = appSlice.actions;
+export const { setPageLoading, setLoggedInUser, setUseCases, setPermissions, setSidebarExpanded } = appSlice.actions;
 export default appSlice.reducer;
