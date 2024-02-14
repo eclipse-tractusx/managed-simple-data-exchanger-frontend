@@ -114,7 +114,7 @@ export default function ConsumeData() {
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [conKey, setConKey] = useState(uuid());
-  const [bpnError, setbpnError] = useState(false);
+  const [bpnError, setBpnError] = useState(false);
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -379,8 +379,8 @@ export default function ConsumeData() {
   };
 
   useEffect(() => {
-    if (filterSelectedBPN.length == 16 || filterSelectedBPN.length == 0) setbpnError(false);
-    else setbpnError(true);
+    if (filterSelectedBPN.length == 16 || filterSelectedBPN.length == 0) setBpnError(false);
+    else setBpnError(true);
   }, [filterSelectedBPN]);
 
   return (

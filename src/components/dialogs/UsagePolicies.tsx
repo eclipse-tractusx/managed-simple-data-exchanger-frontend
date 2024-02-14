@@ -29,7 +29,7 @@ function UsagePolicies({ usagePolicies }: any) {
     <>
       {!isEmpty(usagePolicies) ? (
         usagePolicies.map((policy: any, index: Key) => (
-          <Grid item xs={6} sx={{ mb: 1 }} key={index}>
+          <Grid item xs={6} sx={{ mb: 1 }} key={policy.technicalKey + index}>
             <Typography variant="body2">
               <b>{policy.technicalKey} :</b> {policy.value[0]}
             </Typography>
