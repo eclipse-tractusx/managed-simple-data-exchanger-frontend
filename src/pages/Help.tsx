@@ -18,10 +18,12 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import InfoIcon from '@mui/icons-material/Info';
-import { Card, CardContent, Grid } from '@mui/material';
+import { Box, Card, CardContent, Grid } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import { Button, IconButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DownloadSamples from '../components/DownloadSamples';
@@ -72,10 +74,16 @@ export default function Help() {
   const { t } = useTranslation();
   const { selectedUseCases } = useAppSelector(state => state.appSlice);
   const { isSuccess, data } = useGetHelpPageDataQuery({ usecases: selectedUseCases });
+  const refScrollUp = useRef(null);
+
+  const handleScrollUp = () => {
+    refScrollUp.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   if (isSuccess) {
     return (
       <>
+        <Box ref={refScrollUp}> </Box>
         <Typography variant="h3" mb={1}>
           {t('pages.help')}
         </Typography>
@@ -83,33 +91,43 @@ export default function Help() {
         <Typography variant="body1" mb={2}>
           {t('content.help.description')}
         </Typography>
+        <Box mb={3} position={'sticky'}>
+          Quick links:
+          {data.map((table: HelpPageData) => (
+            <Button variant="text" size="small" sx={{ mr: 2 }} key={table.id} href={`#${table.id}`}>
+              {table.name}
+            </Button>
+          ))}
+        </Box>
         {data.map((table: HelpPageData) => (
-          <Grid key={table.id} container spacing={4} display={'flex'} alignItems={'center'}>
-            <Grid item xs={8} mb={4}>
-              <Table
-                title={table.name}
-                getRowId={row => row.id}
-                autoHeight
-                hideFooter={true}
-                columns={columns}
-                rows={table.rows}
-                sx={{
-                  '& .MuiDataGrid-cellCheckbox': {
-                    padding: '0 30px',
-                  },
-                  '& h5.MuiTypography-root.MuiTypography-h5 span': {
-                    display: 'none',
-                  },
-                }}
-              />
+          <section key={table.id} id={table.id}>
+            <Grid key={table.id} container spacing={4} display={'flex'} alignItems={'center'}>
+              <Grid item xs={8} mb={4}>
+                <Table
+                  title={table.name}
+                  getRowId={row => row.id}
+                  autoHeight
+                  hideFooter={true}
+                  columns={columns}
+                  rows={table.rows}
+                  sx={{
+                    '& .MuiDataGrid-cellCheckbox': {
+                      padding: '0 30px',
+                    },
+                    '& h5.MuiTypography-root.MuiTypography-h5 span': {
+                      display: 'none',
+                    },
+                  }}
+                />
+              </Grid>
+              <Grid item xs={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+                <Typography variant="body1" mb={4}>
+                  {table.description}
+                </Typography>
+                <DownloadSamples submodel={table.id} />
+              </Grid>
             </Grid>
-            <Grid item xs={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-              <Typography variant="body1" mb={4}>
-                {table.description}
-              </Typography>
-              <DownloadSamples submodel={table.id} />
-            </Grid>
-          </Grid>
+          </section>
         ))}
         <Card variant="outlined">
           <CardContent>
@@ -121,6 +139,13 @@ export default function Help() {
             </ul>
           </CardContent>
         </Card>
+        <IconButton
+          color="secondary"
+          onClick={() => handleScrollUp()}
+          sx={{ position: 'fixed', bottom: '30px', right: '30px' }}
+        >
+          <ArrowUpwardIcon />
+        </IconButton>
       </>
     );
   } else return null;
