@@ -1,6 +1,6 @@
 /*********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -25,6 +25,7 @@ import { Table, Tooltips, Typography } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
 import DownloadSamples from '../components/DownloadSamples';
+import SelectedUseCases from '../components/SelectedUseCases';
 import { useGetHelpPageDataQuery } from '../features/provider/submodels/apiSlice';
 import { HelpPageData } from '../features/provider/submodels/types';
 import { useAppSelector } from '../features/store';
@@ -78,7 +79,8 @@ export default function Help() {
         <Typography variant="h3" mb={1}>
           {t('pages.help')}
         </Typography>
-        <Typography variant="body1" mb={4}>
+        <SelectedUseCases />
+        <Typography variant="body1" mb={2}>
           {t('content.help.description')}
         </Typography>
         {data.map((table: HelpPageData) => (
