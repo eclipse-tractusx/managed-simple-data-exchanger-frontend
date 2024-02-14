@@ -24,7 +24,6 @@ This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LIC
 - [Building Block View](#building-block-view)
     - [Interfaces or Apis](#interfaces-or-apis)
     - [Data processing pipelines](#data-processing-pipelines)
-- [Deployment View](#deployment-view)
 - [Quality Requirements](#quality-requirements)
 - [Glossary](#glossary)
 
