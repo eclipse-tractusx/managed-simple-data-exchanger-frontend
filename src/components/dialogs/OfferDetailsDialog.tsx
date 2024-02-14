@@ -37,7 +37,14 @@ interface IntDialogProps {
 
 const OfferDetailsDialog = ({ open, offerObj, handleConfirm, handleClose, isMultiple }: IntDialogProps) => {
   const [offer] = useState(offerObj);
-  const { title, created, description, publisher, usagePolicies, fileContentType } = offer;
+  const {
+    title,
+    created,
+    description,
+    publisher,
+    policy: { usage_policies: usagePolicies },
+    fileContentType,
+  } = offer;
   const { t } = useTranslation();
 
   function splitWithFirstOcc(str: string) {

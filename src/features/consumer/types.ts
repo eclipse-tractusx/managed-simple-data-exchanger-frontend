@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
@@ -46,6 +47,7 @@ export interface IConsumerDataOffers {
   contractInfo?: string;
   offerId?: string;
   // end offerId
+  policy?: any;
   usagePolicies: IUsageControl[];
   fileName?: string;
   fileContentType?: string;
