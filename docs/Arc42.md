@@ -372,18 +372,6 @@ Backend API Swagger-ui : [https://dft-api.int.demo.catena-x.net/api/swagger-ui/i
 
 <br />
 
-## **Deployment View**
-
-<br />
-In deployment we are using [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Helm. The Helm configuration can be found in folder "helm" in respective repositories.
-
-We have 2 applications on ArgoCD , one for frontend and one for backend. Both applications have auto-sync enabled.
-
-<img src="images/argocd-apps.svg" height="60%" width="60%" /><br />
-<img src="images/argocd-sync-policy.svg" height="30%" width="50%" /><br /><br />
-
-<br />
-
 ## **Quality Requirements**
 
 <br />
