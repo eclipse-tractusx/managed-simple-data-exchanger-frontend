@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 
 import DownloadSamples from '../components/DownloadSamples';
 import AddEditPolicy from '../components/policies/AddEditPolicy';
+import SelectedUseCases from '../components/SelectedUseCases';
 import SelectSubmodel from '../components/SelectSubmodel';
 import SubmodelDataTable from '../components/SubmodelDataTable';
 import SubmodelInfo from '../components/SubmodelInfo';
@@ -44,9 +45,10 @@ export default function CreateData() {
 
   return (
     <>
-      <Typography variant="h3" mb={2}>
+      <Typography variant="h3" mb={1}>
         {t('content.provider.heading')}
       </Typography>
+      <SelectedUseCases />
       <Typography variant="body1">{t('content.provider.description_1')}</Typography>
       <Typography variant="body1">{t('content.provider.description_2')}</Typography>
       <ul style={{ margin: 0 }}>
