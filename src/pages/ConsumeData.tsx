@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -114,7 +114,7 @@ export default function ConsumeData() {
   const [selectionModel, setSelectionModel] = React.useState<GridSelectionModel>([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const [conKey, setConKey] = useState(uuid());
-  const [bpnError, setbpnError] = useState(false);
+  const [bpnError, setBpnError] = useState(false);
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -154,56 +154,46 @@ export default function ConsumeData() {
     }
   };
 
+  const preparePayload = () => {
+    const selectedList = isMultipleContractSubscription ? selectedOffersList : [selectedOffer];
+    const offersList = selectedList.map((offer: any) => ({
+      connectorId: offer.connectorId,
+      connectorOfferUrl: offer.connectorOfferUrl,
+      offerId: offer.offerId || '',
+      assetId: offer.assetId || '',
+      policyId: offer.policyId || '',
+    }));
+    return {
+      offers: offersList,
+      usage_policies: selectedList[0].policy.usage_policies,
+    };
+  };
+
   const handleConfirmTermDialog = async () => {
     try {
-      let payload;
-      const offersList: unknown[] = [];
-      // multiselect or single selecte
-      if (isMultipleContractSubscription) {
-        selectedOffersList.forEach((offer: IConsumerDataOffers) => {
-          offersList.push({
-            offerId: offer.offerId || '',
-            assetId: offer.assetId || '',
-            policyId: offer.policyId || '',
-          });
-        });
-        payload = {
-          connectorId: selectedOffersList[0].connectorId,
-          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
-          offers: offersList,
-          policies: selectedOffersList[0].usagePolicies,
-        };
-      } else {
-        const { usagePolicies, offerId, assetId, policyId, connectorId } = selectedOffer;
-        offersList.push({
-          offerId: offerId || '',
-          assetId: assetId || '',
-          policyId: policyId || '',
-        });
-        payload = {
-          connectorId: connectorId,
-          providerUrl: searchFilterByType.value === 'url' ? filterProviderUrl : filterSelectedConnector.value,
-          offers: offersList,
-          policies: usagePolicies,
-        };
-      }
       setIsOfferSubLoading(true);
-      const response = await ConsumerService.getInstance().subscribeToOffers(payload);
-      setIsOfferSubLoading(false);
-      if (response.status == 200) {
-        dispatch(
-          setSnackbarMessage({
-            message: 'alerts.subscriptionSuccess',
-            type: 'success',
-          }),
-        );
+
+      const handleSuccess = () => {
         setIsOpenOfferDialog(false);
         setIsOpenOfferConfirmDialog(false);
         dispatch(setIsMultipleContractSubscription(false));
         dispatch(setSelectedOffer(null));
         dispatch(setSelectedOffersList([]));
         setSelectionModel([]);
+      };
+
+      const response = await ConsumerService.getInstance().subscribeToOffers(preparePayload());
+
+      if (response.status === 200) {
+        dispatch(setSnackbarMessage({ message: 'alerts.subscriptionSuccess', type: 'success' }));
+        handleSuccess();
       }
+      setIsOpenOfferDialog(false);
+      setIsOpenOfferConfirmDialog(false);
+      dispatch(setIsMultipleContractSubscription(false));
+      dispatch(setSelectedOffer(null));
+      dispatch(setSelectedOffersList([]));
+      setSelectionModel([]);
     } catch (e) {
       console.log(e);
     }
@@ -389,8 +379,8 @@ export default function ConsumeData() {
   };
 
   useEffect(() => {
-    if (filterSelectedBPN.length == 16 || filterSelectedBPN.length == 0) setbpnError(false);
-    else setbpnError(true);
+    if (filterSelectedBPN.length == 16 || filterSelectedBPN.length == 0) setBpnError(false);
+    else setBpnError(true);
   }, [filterSelectedBPN]);
 
   return (
@@ -516,7 +506,7 @@ export default function ConsumeData() {
             <LoadingButton
               color="primary"
               variant="contained"
-              disabled={isEmpty(filterSelectedConnector) && isEmpty(filterProviderUrl)}
+              disabled={!isEmpty(filterSelectedConnector) && !isEmpty(filterProviderUrl)}
               label={t('button.search')}
               loadIndicator={t('content.common.loading')}
               onButtonClick={fetchConsumerDataOffers}
