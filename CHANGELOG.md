@@ -2,6 +2,18 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [Unreleased]
+### Changed
+- New access and usage policies added
+- Documents updated
+### Fixed
+- Axios library issue fixed
+- Duration restriction removed.
+- Purpose policy “ID 3.1 Trace” updated.
+- Framework agreement added in Usage Policy.
+- Help link linked to the release tag.
+- Page blank issue during navigation fixed.
+
 ## [2.3.3] -  2023-12-06
 ### Changed
 - build base image security fix.
@@ -12,6 +24,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Help link navigates to GitHub documentation of the “main” branch. Shall be linked to the release tag.
 
 ## [2.3.2] -  2023-12-01
+### Fixed
+- Axios library issue fixed
 ### Changed
 - Bumped version to 2.3.2 for helm charts to match with backend release.
 
