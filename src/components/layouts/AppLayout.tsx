@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2021,2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,9 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { Box } from '@mui/material';
-import { useEffect } from 'react';
 
-import { fetchUserPermissions } from '../../features/app/actions';
+import { useGetPermissionsQuery, useGetUseCasesQuery } from '../../features/app/apiSlice';
 import { setLoggedInUser } from '../../features/app/slice';
 import { useAppDispatch } from '../../features/store';
 import Nav from '../Nav';
@@ -28,12 +27,11 @@ import Sidebar from '../sidebar';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function AppLayout(props: any) {
+  useGetUseCasesQuery({});
+  useGetPermissionsQuery({});
+
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchUserPermissions());
-    dispatch(setLoggedInUser(props.loggedUser));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  dispatch(setLoggedInUser(props.loggedUser));
 
   return (
     <Box sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden', height: '100vh' }}>
