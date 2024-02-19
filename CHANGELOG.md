@@ -3,6 +3,9 @@
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
 ## [Unreleased]
+### Added
+- Selected use cases section in manual upload and help page
+- Sub-model links in help page
 ### Changed
 - New access and usage policies added
 - Documents updated
