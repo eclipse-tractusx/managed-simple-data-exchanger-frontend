@@ -20,6 +20,7 @@ This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LIC
     - [Main navigation](#left-side-menu)
 - [Features](#features)
   - [Home](#home)
+  - [About](#about)
   - [Provider](#provider)
     - [Create Data](#create-data)
       - [Upload File](#upload-file)
@@ -83,6 +84,7 @@ SDE navigation is based on a header and a left-side menu.
 On the left side menu, it is possible to navigate the Simple Data Exchanger application by choosing each the following options / features:
 
 - Home
+- About
 
 **Provider**
 
@@ -108,11 +110,17 @@ After successful login, user will be redirected to this page by default in the S
 
 Submodels in the Create Data page will be filtered out based on the usecase selection by user.
 
+# **About**
+
+<img src="images/sde-about.svg" height="60%" width="60%" />
+
+In this page you can find the source links of License, Notice, Base Repository and Git-hub Commit ID of the latest version.
+
 # **Provider**
 
 ## Create Data
 
-In this page, list of available submodels will be fetched dynamically and we can select any submodel to generate the table or json of that selected submodel based on the schema provided by backend API.
+In this page, list of available submodels will be fetched dynamically on basis of use-case selections, and we can select any submodel to generate the table of that selected submodel based on the schema provided by backend API.
 
 This dynamic UI implementation allows the flexibillity to support and manage multiple submodels in single SDE application and also eliminates the need of hard coded react components for the individual submodels.
 
@@ -146,11 +154,9 @@ You can click on the button "Choose a file" and select the proper CSV file prese
 
 After successful file upload of the supported file format i.e. CSV, the button "Next Step - Configure Policies" will be enabled and after clicking on the same, Policy selection dialog will be shown where we need to configure Access and Usage policy.
 
-Access policy can either be unrestricted or restricted to some Business Partner Numbers. Your own organization will always be allowed to access the data.  We can add BPN numbers by selecting Company Name or entering Business Partner Number   and clicking on Add button.
+User can configure access policy accordingly and select company name or bpn number to add.
 
-There are 4 types of Usage Policies we can configure namely Duration, Purpose, Role and Custom Restriction.
-For every usage policy we have restricted and unrestricted options.
-If we selected Restricted option for any usage policy, then we need to enter or select any respective valid text value.
+User can add usage policy accordingly and select framework.
 
 Once configuring both the policies, we need to click on "SUBMIT" button and wait for upload to finish.
 This is the process of creating new data offer through SDE application by uploading CSV file.

@@ -2,12 +2,16 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
-## [Unreleased]
+## [2.3.5] - 2024-02-19
+### Added
+- Selected use cases section in manual upload and help page.
+- Sub-model links in help page.
 ### Changed
-- New access and usage policies added
-- Documents updated
+- New access and usage policies added.
+- Documents updated.
+- Bumped version to 2.3.5 for helm charts to match with backend release.
 ### Fixed
-- Axios library issue fixed
+- Axios library issue fixed.
 - Duration restriction removed.
 - Purpose policy “ID 3.1 Trace” updated.
 - Framework agreement added in Usage Policy.
@@ -248,7 +252,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.3...main
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.5...main
+[2.3.5]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.3...v2.3.5
 [2.3.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.0...v2.3.1
