@@ -194,7 +194,7 @@ Detailed API specs available under:
 
 [https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
 
-Backend API Swagger-ui Ex: [https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html](https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
+Backend API Swagger-ui Ex: [https://domain_url/api/swagger-ui/index.html](https://domain_url/api/swagger-ui/index.html)
 
 <br />
 
