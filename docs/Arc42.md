@@ -5,8 +5,8 @@
 This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 - SPDX-License-Identifier: Apache-2.0
-- SPDX-FileCopyrightText: 2021,2022,2023 T-Systems International GmbH
-- SPDX-FileCopyrightText: 2022,2023 Contributors to the Eclipse Foundation
+- SPDX-FileCopyrightText: 2021,2024 T-Systems International GmbH
+- SPDX-FileCopyrightText: 2022,2024 Contributors to the Eclipse Foundation
 - Source URL: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend
 
 ## Table of contents
@@ -190,11 +190,11 @@ There is a web interface between frontend and backend.<br /><br />
 
 Detailed API specs available under:
 
-[https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml](https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml)
+[https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml](https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/blob/main/modules/sde-core/src/main/resources/sde-open-api.yml)
 
-[https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/catenax-ng/tx-managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
+[https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger](https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/tree/main#restful-apis-of-dft-simple-data-exchanger)
 
-Backend API Swagger-ui : [https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html](https://dft-api.int.demo.catena-x.net/api/swagger-ui/index.html)
+Backend API Swagger-ui Ex: [https://domain_url/api/swagger-ui/index.html](https://domain_url/api/swagger-ui/index.html)
 
 <br />
 

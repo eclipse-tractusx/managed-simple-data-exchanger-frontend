@@ -23,9 +23,9 @@ Here are the two ways to run the application locally on http://localhost:3000/
     npm run build
     npm start
 
-### Running the image from GitHub container registry
+### Running the image 
 
-    export IMAGE=tractusx/sdefrontend:latest
+    export IMAGE=tractusx/managed-simple-data-exchanger-frontend:latest
     docker pull $IMAGE
     docker run --rm -d -p 3001:8080 --name sdefrontend $IMAGE
 
