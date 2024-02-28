@@ -33,7 +33,7 @@
         "subscribeDataOffer": "Datenangebot abonnieren",
         "manageContracts": "Verträge einsehen und verwalten"
       },
-      "sdeDescription": "Der “Simple Data Exchanger” ist simpler Weg um Daten im Catena-X Netzwerk bereitzustellen oder zu konsumieren. Er macht Ihre Daten für andere Teilnehmer im Netzwerk verfügbar, berücksichtigt dabei aber auch Ihre individuellen Anforderungen was den Zugriff und die Nutzung der Daten angeht. Der SDE ermöglicht zusätzlich die verfügbaren Datenangebote anderer Teilnehmer zu durchsuchen und entsprechende Datenverträge mit den Anbietern zu schließen.",
+      "sdeDescription": "Der “{{ title }}” ist simpler Weg um Daten im Catena-X Netzwerk bereitzustellen oder zu konsumieren. Er macht Ihre Daten für andere Teilnehmer im Netzwerk verfügbar, berücksichtigt dabei aber auch Ihre individuellen Anforderungen was den Zugriff und die Nutzung der Daten angeht. Der SDE ermöglicht zusätzlich die verfügbaren Datenangebote anderer Teilnehmer zu durchsuchen und entsprechende Datenverträge mit den Anbietern zu schließen.",
       "learnSde": "Wie funktioniert das genau?"
     },
     "provider": {
@@ -61,6 +61,9 @@
     },
     "policies": {
       "title": "Policies",
+      "subtitle": "Auf dieser Seite müssen Sie die 'Policy' (Richtlinie) festlegen, die Sie für Ihren 'Recurring Upload' -Prozess (automatische upload von CSv-Files) verwenden möchten. Der Name dieser Richtlinie sollte in Ihrer Upload-Datei enthalten sein und muss eindeutig sein. Bitte verwenden Sie keine kurzen Begriffe wie 'sh' oder 'pa', die in einem neutralen Dateinamen vorkommen könnten.",
+      "addPolicy": "Richtlinie hinzufügen",
+      "EditPolicy": "Richtlinie bearbeiten",
       "description": "Hier legen Sie fest mit wem sie die Daten teilen möchten (via „Access Policies“) und mit welchen Einschränkungen (via „Usage Policies“).",
       "description_1": "Wählen Sie die Geschäftspartner aus, mit denen die Daten geteilt werden sollen (Suche via BPN oder über Name).",
       "description_1_1": "Uneingeschränkt: Jeder im Netzwerk kann die Daten sehen",
@@ -71,7 +74,7 @@
       "accessPolicy": "Zugriffsrichtlinien",
       "restricted": "eingeschränkt",
       "unrestricted": "uneingeschränkt",
-      "note": "Hinweis: Ihre Organisation gehört stets zu den berechtigten Empfängern.",
+      "note": "Hinweis: Wenn Sie keine BPN vergeben, sind die Daten nur für Ihre Organisation zugänglich.",
       "unAccess": "Uneingeschränkter Zugang!",
       "warningText": "Wenn Sie keine BPN vergeben, sind die Daten nur für Sie zugänglich.",
       "usagePolicy": "Nutzungsrichtlinien",
@@ -179,7 +182,8 @@
       "agree": "Ich stimme zu",
       "ownConnector": "Connector der eigenen Organisation:",
       "collapseSidebar": "Seitenleiste einklappen",
-      "introduction": "Einleitung"
+      "introduction": "Einleitung",
+      "moreSubmodelInfo": "Weitere Informationen zu Untermodellen"
     }
   },
   "dialog": {
