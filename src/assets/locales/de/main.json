@@ -33,7 +33,7 @@
         "subscribeDataOffer": "Datenangebot abonnieren",
         "manageContracts": "Verträge einsehen und verwalten"
       },
-      "sdeDescription": "Der “{{ title }}” ist simpler Weg um Daten im Catena-X Netzwerk bereitzustellen oder zu konsumieren. Er macht Ihre Daten für andere Teilnehmer im Netzwerk verfügbar, berücksichtigt dabei aber auch Ihre individuellen Anforderungen was den Zugriff und die Nutzung der Daten angeht. Der SDE ermöglicht zusätzlich die verfügbaren Datenangebote anderer Teilnehmer zu durchsuchen und entsprechende Datenverträge mit den Anbietern zu schließen.",
+      "sdeDescription": "Der “Simple Data Exchanger” ist simpler Weg um Daten im Catena-X Netzwerk bereitzustellen oder zu konsumieren. Er macht Ihre Daten für andere Teilnehmer im Netzwerk verfügbar, berücksichtigt dabei aber auch Ihre individuellen Anforderungen was den Zugriff und die Nutzung der Daten angeht. Der SDE ermöglicht zusätzlich die verfügbaren Datenangebote anderer Teilnehmer zu durchsuchen und entsprechende Datenverträge mit den Anbietern zu schließen.",
       "learnSde": "Wie funktioniert das genau?"
     },
     "provider": {
