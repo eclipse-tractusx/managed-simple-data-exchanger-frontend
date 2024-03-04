@@ -240,7 +240,7 @@ function ValidateBpn({ control, resetField, getValues, setValue, inputBpn }: any
       </Grid>
       <Box sx={{ my: 2 }}>
         <Typography variant="body2" mb={2}>
-          <i> {t('content.policies.note')}</i>
+          {t('content.policies.note')}
         </Typography>
         <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', gap: 1 }}>
           {getValues('access_policies.bpn_numbers.value')?.map((bpnNum: string) => (
