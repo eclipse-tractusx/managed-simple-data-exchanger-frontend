@@ -2,6 +2,15 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [Unreleased]
+### Added
+- Policy overlay descriptions.
+### Known defects
+- Policy table misses details of the usage policies.
+- Data provider contracts: overview is missing important data; what kind of contracts are this, description; poilicies; who is the consumer?
+- Data consumer contracts:overview is missing important data; what kind of contracts are this, description; under which poilicies do I consume?; who is the provider?
+
+
 ## [2.3.5] - 2024-02-19
 ### Added
 - Selected use cases section in manual upload and help page.
