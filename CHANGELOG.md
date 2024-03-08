@@ -49,27 +49,6 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 ### Changed
 - Bumped version to 2.3.0 for helm charts to match with backend release.
 
-## [2.1.4] -  non-released
-### Fixed
-- Data table pagination not working - fixed
-- Veracode vulnerability fixes
-- Missing license headers added 
-- legal information added to docker image.
-- trivy workflow steps updated.
-
-## [2.1.3] - non-released
-### Fixed
-- PCF Documentation update
-
-## [2.1.2] - non-released
-### Changed
-- Download file functions code optimisations. 
-- Page layout css fixes.
-
-## [2.1.1] - non-released
-### Added
-- PCF Submodel support added
-
 ## [2.1.0] - 2023-08-30
 ### Fixed
 - docker base image changed .
