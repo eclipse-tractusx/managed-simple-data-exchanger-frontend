@@ -7,9 +7,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Policy overlay descriptions.
 ### Known defects
 - Policy table misses details of the usage policies.
-- Data provider contracts: overview is missing important data; what kind of contracts are this, description; poilicies; who is the consumer?
-- Data consumer contracts:overview is missing important data; what kind of contracts are this, description; under which poilicies do I consume?; who is the provider?
-
+- Data provider contracts overview should contain this information: kind of contracts, description, policies, information about the consumer.
+- Data consumer contracts overview should contain this information: kind of contracts, description, policies, information about the provider.
 
 ## [2.3.5] - 2024-02-19
 ### Added
@@ -49,27 +48,6 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 ## [2.3.0] -  2023-11-29
 ### Changed
 - Bumped version to 2.3.0 for helm charts to match with backend release.
-
-## [2.1.4] -  non-released
-### Fixed
-- Data table pagination not working - fixed
-- Veracode vulnerability fixes
-- Missing license headers added 
-- legal information added to docker image.
-- trivy workflow steps updated.
-
-## [2.1.3] - non-released
-### Fixed
-- PCF Documentation update
-
-## [2.1.2] - non-released
-### Changed
-- Download file functions code optimisations. 
-- Page layout css fixes.
-
-## [2.1.1] - non-released
-### Added
-- PCF Submodel support added
 
 ## [2.1.0] - 2023-08-30
 ### Fixed
