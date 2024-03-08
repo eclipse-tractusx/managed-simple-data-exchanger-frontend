@@ -2,9 +2,20 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
-## [2.3.6] - 2024-03-06
+## [2.3.6] - 2024-03-08
 ### Added
 - Policy overlay descriptions.
+- PCF Submodel support added
+### Fixed
+ - Data table pagination not working - fixed
+ - Veracode vulnerability fixes
+ - Missing license headers added 
+ - legal information added to docker image.
+ - trivy workflow steps updated.
+ - PCF Documentation update
+ - Download file functions code optimisations. 
+ - Page layout css fixes.
+ 
 ### Known defects
 - Policy table misses details of the usage policies.
 - Data provider contracts overview should contain this information: kind of contracts, description, policies, information about the consumer.
