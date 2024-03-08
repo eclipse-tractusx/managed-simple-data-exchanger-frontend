@@ -7,9 +7,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Policy overlay descriptions.
 ### Known defects
 - Policy table misses details of the usage policies.
-- Data provider contracts: overview is missing important data; what kind of contracts are this, description; poilicies; who is the consumer?
-- Data consumer contracts:overview is missing important data; what kind of contracts are this, description; under which poilicies do I consume?; who is the provider?
-
+- Data provider contracts overview should contain this information: kind of contracts, description, policies, information about the consumer.
+- Data consumer contracts overview should contain this information: kind of contracts, description, policies, information about the provider.
 
 ## [2.3.5] - 2024-02-19
 ### Added
