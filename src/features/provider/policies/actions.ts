@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
- * Copyright (c) 2024 T-Systems International GmbH
- * Copyright (c) 2024 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 T-Systems International GmbH
+ * Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,147 +19,102 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { omit } from 'lodash';
 
-import { Status } from '../../../enums';
-import { ProcessReport } from '../../../models/ProcessReport';
+import { PolicyHubModel } from '../../../models/Polices.models';
 import ProviderService from '../../../services/ProviderService';
-import { setPageLoading } from '../../app/slice';
 import { setSnackbarMessage } from '../../notifiication/slice';
 import { RootState } from '../../store';
 import { clearRows } from '../submodels/slice';
-import { removeSelectedFiles, setUploadData, setUploadStatus } from '../upload/slice';
-import { handleDialogClose } from './slice';
+import { removeSelectedFiles } from '../upload/slice';
+import { handleDialogClose, setPolicyFormData } from './slice';
+import { PolicyHubResponse } from './types';
 
-const defaultUploadData: ProcessReport = {
-  processId: '',
-  referenceProcessId: '',
-  csvType: '',
-  numberOfItems: 0,
-  numberOfCreatedItems: 0,
-  numberOfUpdatedItems: 0,
-  numberOfDeletedItems: 0,
-  numberOfFailedItems: 0,
-  numberOfSucceededItems: 0,
-  status: Status.inProgress,
-  startDate: '',
-  endDate: undefined,
-};
-
-const clearUpload = createAsyncThunk('/clear-upload', async (arg, { dispatch }) => {
-  dispatch(setPageLoading(false));
-  dispatch(setUploadStatus(true));
+const clearUpload = createAsyncThunk('/clear-upload', (_arg, { dispatch }) => {
   dispatch(clearRows());
   dispatch(handleDialogClose());
   dispatch(removeSelectedFiles());
-});
-
-const handleAlerts = createAsyncThunk('/handle-alerts', (data: ProcessReport, { dispatch }) => {
-  if (data?.status === Status.completed && data?.numberOfFailedItems === 0) {
-    dispatch(
-      setSnackbarMessage({
-        message: 'alerts.uploadSuccess',
-        type: 'success',
-      }),
-    );
-  } else if (data?.status === Status.completed && data?.numberOfFailedItems > 0) {
-    dispatch(
-      setSnackbarMessage({
-        message: 'alerts.uploadWarning',
-        type: 'error', //warning
-      }),
-    );
-  } else {
-    dispatch(
-      setSnackbarMessage({
-        message: 'alerts.uploadError',
-        type: 'error',
-      }),
-    );
-  }
-});
-
-const processingReport = createAsyncThunk('/process-report', async (arg: any, { dispatch }) => {
-  dispatch(setUploadData(arg.data));
-  if (arg?.data?.status !== Status.completed && arg?.data?.status !== Status.failed) {
-    // if status !== 'COMPLETED' && status !== 'FAILED' -> repeat in interval with 2 seconds to refresh data
-    const interval = setInterval(
-      () =>
-        ProviderService.getInstance()
-          .getReportById(arg.processId)
-          .then(result => {
-            dispatch(setUploadData(result.data));
-            if (result?.data?.status === Status.completed || result.data.status === Status.failed) {
-              clearInterval(interval);
-              dispatch(clearUpload());
-              dispatch(handleAlerts(result.data));
-            }
-          }),
-      2000,
-    );
-  } else {
-    dispatch(clearUpload());
-    dispatch(setUploadData(defaultUploadData));
-    dispatch(handleAlerts(arg.data));
-  }
-});
-
-// Get process id
-const getProcessId = createAsyncThunk('/get-process-id', async (processId: string, { dispatch }) => {
-  setTimeout(async () => {
-    ProviderService.getInstance()
-      .getReportById(processId)
-      .then(response => {
-        // if process id is ready - upload the data
-        dispatch(processingReport({ response, processId }));
-      })
-      .catch(error => {
-        // if process id not ready - repeat request
-        if (error.response.status === 404) {
-          dispatch(getProcessId(processId));
-        }
-      });
-  }, 2000);
+  dispatch(
+    setSnackbarMessage({
+      message: 'alerts.uploadSuccess',
+      type: 'success',
+    }),
+  );
 });
 
 const uploadFileWithPolicy = createAsyncThunk('/upload-file-with-policy', async (data: any, { dispatch, getState }) => {
   const state = getState() as RootState;
+  const { selectedFiles } = state.uploadFileSlice;
+  const { selectedSubmodel } = state.submodelSlice;
+
   const formData = new FormData();
-  formData.append('file', state.uploadFileSlice.selectedFiles[0]);
-  formData.append('meta_data', JSON.stringify(data));
-  formData.append('submodel', state.submodelSlice.selectedSubmodel.value);
+  formData.append('file', selectedFiles[0]);
+  formData.append('meta_data', JSON.stringify({ ...omit(data, 'lastUpdatedTime'), type: 'NEW' }));
 
   try {
-    dispatch(setPageLoading(true));
-    const response = await ProviderService.getInstance().uploadData(
-      state.submodelSlice.selectedSubmodel.value,
-      formData,
-    );
-    const uploadSubmodelData = response?.data;
-    // first call
-    if (uploadSubmodelData) dispatch(getProcessId(uploadSubmodelData));
+    await ProviderService.getInstance()
+      .uploadData(selectedSubmodel.value, formData)
+      .then(res => {
+        if (res) {
+          dispatch(clearUpload());
+        } else {
+          dispatch(
+            setSnackbarMessage({
+              message: 'alerts.uploadError',
+              type: 'error',
+            }),
+          );
+        }
+      });
   } catch (error) {
-    dispatch(setUploadData({ ...state.uploadFileSlice.currentUploadData, status: Status.failed }));
-    clearUpload();
+    console.log(error);
   }
 });
 
 const uploadTableWithPolicy = createAsyncThunk(
   'upload-table-with-policy',
-  async (data: any, { dispatch, getState }) => {
+  async (formData: any, { dispatch, getState }) => {
     const state = getState() as RootState;
+    const { selectedSubmodel, rows } = state.submodelSlice;
+
     try {
-      dispatch(setPageLoading(true));
-      const response = await ProviderService.getInstance().submitSubmodalData(
-        state.submodelSlice.selectedSubmodel.value,
-        data,
-      );
-      const submitSubmodelData = response?.data;
-      if (submitSubmodelData) dispatch(getProcessId(submitSubmodelData));
+      await ProviderService.getInstance()
+        .submitSubmodalData(selectedSubmodel.value, {
+          ...omit(formData, 'lastUpdatedTime'),
+          row_data: rows,
+          type: 'NEW',
+        })
+        .then(res => {
+          if (res) {
+            dispatch(clearUpload());
+          } else {
+            dispatch(
+              setSnackbarMessage({
+                message: 'alerts.uploadError',
+                type: 'error',
+              }),
+            );
+          }
+        });
     } catch (error: any) {
-      dispatch(setUploadData({ ...state.uploadFileSlice.currentUploadData, status: Status.failed }));
-      clearUpload();
+      console.log(error);
     }
   },
 );
 
-export { uploadFileWithPolicy, uploadTableWithPolicy };
+const prepareFormData = createAsyncThunk(
+  'transform-policy-hub-data',
+  ({ data, edit }: { data: PolicyHubResponse[]; edit?: boolean }, { getState, dispatch }) => {
+    const state = getState() as RootState;
+    const { selectedUseCases } = state.appSlice;
+    const { policyData, policyDialogType } = state.policySlice;
+    const isEdit = policyDialogType === 'Edit';
+    if (isEdit || edit) {
+      dispatch(setPolicyFormData(PolicyHubModel.prepareEditData(policyData, data)));
+    } else {
+      dispatch(setPolicyFormData(PolicyHubModel.usecaseFilter(data, selectedUseCases)));
+    }
+  },
+);
+
+export { prepareFormData, uploadFileWithPolicy, uploadTableWithPolicy };

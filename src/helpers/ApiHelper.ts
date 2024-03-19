@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,6 +18,18 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { setPageLoading } from '../features/app/slice';
 import { Config } from '../utils/config';
 
 export const HOST = Config.REACT_APP_API_URL;
+
+// Reusable loading state handler
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function setLoadingHandler(_: any, { dispatch, queryFulfilled }: any) {
+  try {
+    dispatch(setPageLoading(true));
+    await queryFulfilled;
+  } finally {
+    dispatch(setPageLoading(false));
+  }
+}

@@ -21,7 +21,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { filter } from 'lodash';
 
-import { IAppSlice, IUser } from './types';
+import { IAppSlice, IUseCase, IUser } from './types';
 
 const initialState: IAppSlice = {
   pageLoading: false,
@@ -38,6 +38,7 @@ const initialState: IAppSlice = {
   permissions: [],
   useCases: [],
   sidebarExpanded: true,
+  useCaseNames: [],
   selectedUseCases: [],
 };
 export const appSlice = createSlice({
@@ -55,7 +56,8 @@ export const appSlice = createSlice({
     },
     setUseCases: (state, { payload }) => {
       state.useCases = payload;
-      state.selectedUseCases = filter(payload, 'checked').map(e => e.id);
+      state.useCaseNames = payload?.map((e: IUseCase) => e.title.split(' ').join(''));
+      state.selectedUseCases = filter(payload, 'checked').map((e: IUseCase) => e.id);
     },
     setPermissions: (state, { payload }) => {
       state.permissions = payload;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
@@ -17,11 +18,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { PolicyModel } from '../../../models/RecurringUpload.models';
+import { Key } from 'react';
 
 export interface IAccessPolicyState {
   openDialog: boolean;
-  policyData: PolicyModel;
+  policyData: any;
   policyDialog: boolean;
   policyDialogType: string;
+  policyFormData: any;
+}
+export interface PolicyHubResponse {
+  technicalKey: string;
+  type: string[];
+  description: string;
+  useCase: string[];
+  attribute: { key: string; value: string; id?: Key }[];
+  technicalEnforced: boolean;
+  value: string;
 }

@@ -18,6 +18,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { setLoadingHandler } from '../../../helpers/ApiHelper';
 import { apiSlice } from '../../app/apiSlice';
 
 export const policiesApiSlice = apiSlice.injectEndpoints({
@@ -29,7 +30,16 @@ export const policiesApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    getPolicyTemplate: builder.query({
+      query: params => {
+        return {
+          url: '/policy-hub/policy-types',
+          params,
+        };
+      },
+      onQueryStarted: setLoadingHandler,
+    }),
   }),
 });
 
-export const { useValidateBpnMutation } = policiesApiSlice;
+export const { useValidateBpnMutation, useGetPolicyTemplateQuery } = policiesApiSlice;

@@ -19,56 +19,27 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Box, Divider, FormControl, FormControlLabel } from '@mui/material';
-import {
-  Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogHeader,
-  Input,
-  SelectList,
-  Typography,
-} from 'cx-portal-shared-components';
-import { useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Dialog, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
 import { uploadFileWithPolicy, uploadTableWithPolicy } from '../../features/provider/policies/actions';
 import { setPolicyDialog } from '../../features/provider/policies/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
-import { PolicyModel, PolicyPayload } from '../../models/RecurringUpload.models';
-import { CHECKBOXES, FRAMEWORKS } from '../../utils/constants';
-import ValidateBpn from './ValidateBpn';
+import PolicyHub from '../../pages/PolicyHub';
 
-function AddEditPolicy() {
+function AddEditPolicyNew() {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { policyDialog, policyDialogType, policyData } = useAppSelector(state => state.policySlice);
-  const { rows } = useAppSelector(state => state.submodelSlice);
+  const { policyDialog, policyDialogType } = useAppSelector(state => state.policySlice);
 
-  const { control, handleSubmit, watch, resetField, getValues, setValue, reset } = useForm<PolicyModel>({
-    mode: 'onSubmit',
-  });
-
-  useEffect(() => {
-    reset(policyData);
-  }, [policyData, reset]);
-
-  const inputBpn = watch('inputBpn');
-
-  const showPolicyName = policyDialogType === 'Add' || policyDialogType === 'Edit';
-
-  const onSubmit = async (data: PolicyModel) => {
-    const payload = new PolicyPayload(data);
+  const onSubmit = async (formData: any) => {
     try {
       switch (policyDialogType) {
         case 'FileWithPolicy':
-          await dispatch(uploadFileWithPolicy(payload));
+          await dispatch(uploadFileWithPolicy(formData));
           break;
         case 'TableWithPolicy':
-          await dispatch(uploadTableWithPolicy({ ...payload, row_data: rows }));
+          await dispatch(uploadTableWithPolicy(formData));
           break;
         default:
           break;
@@ -85,119 +56,20 @@ function AddEditPolicy() {
         title={t(policyDialogType === 'Edit' ? 'content.policies.editPolicy' : 'content.policies.addPolicy')}
       />
       <DialogContent>
-        <Typography variant="body2" fontWeight={'bold'}>
-          {t('content.policies.description')}
+        <Typography variant="body2">
+          <b>{t('content.policies.description')}</b>
         </Typography>
         <ol style={{ padding: '0 0 0 16px' }}>
-          <li>
-            <Typography variant="body2">{t('content.policies.description_1')}</Typography>
-          </li>
-          <li>
-            <Typography variant="body2">{t('content.policies.description_2')}</Typography>
-            <Typography variant="body2">{t('content.policies.description_3')}</Typography>
-            <Typography variant="body2">{t('content.policies.description_4')}</Typography>
-          </li>
+          {[1, 2, 3, 4].map(e => (
+            <li key={e}>
+              <Typography variant="body2">{t(`content.policies.description_${e}`)}</Typography>
+            </li>
+          ))}
         </ol>
-        <form>
-          {showPolicyName && (
-            <FormControl sx={{ mb: 3, width: 300 }}>
-              <Controller
-                name="policy_name"
-                control={control}
-                rules={{
-                  required: showPolicyName,
-                }}
-                render={({ field, fieldState: { error } }) => (
-                  <Input
-                    {...field}
-                    variant="filled"
-                    label={'Policy name'}
-                    placeholder={'Enter policy name'}
-                    type={'text'}
-                    error={!!error}
-                  />
-                )}
-              />
-            </FormControl>
-          )}
-          {/* access policy starts */}
-          <Typography fontWeight={'bold'} variant="body2">
-            {t('content.policies.accessPolicy')}
-          </Typography>
-          <Divider sx={{ mt: 1 }} />
-          <ValidateBpn
-            control={control}
-            watch={watch}
-            resetField={resetField}
-            getValues={getValues}
-            inputBpn={inputBpn}
-            setValue={setValue}
-          />
-          {CHECKBOXES.map((item: any) => (
-            <FormControl fullWidth key={item.name}>
-              <Controller
-                name={`access_policies.${item.name}.value`}
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label={item.title} />
-                )}
-              />
-            </FormControl>
-          ))}
-          {/* access policy ends */}
-          {/* usage policy starts */}
-          <Typography fontWeight={'bold'} variant="body2" mt={3}>
-            {t('content.policies.usagePolicy')}
-          </Typography>
-          <Divider sx={{ my: 1 }} />
-          {CHECKBOXES.map((item: any) => (
-            <FormControl fullWidth key={item.name}>
-              <Controller
-                name={`usage_policies.${item.name}.value`}
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel control={<Checkbox {...field} checked={field.value} />} label={item.title} />
-                )}
-              />
-            </FormControl>
-          ))}
-          {FRAMEWORKS.map((item: any) => (
-            <Box key={item.name}>
-              <FormControl sx={{ width: 300 }}>
-                <Controller
-                  name={`usage_policies.${item.name}.value`}
-                  control={control}
-                  render={({ field, fieldState: { error } }) => (
-                    <SelectList
-                      keyTitle="value"
-                      defaultValue={field.value}
-                      items={item.values}
-                      {...field}
-                      variant="filled"
-                      label={item.title}
-                      placeholder="Select a version"
-                      type={'text'}
-                      error={!!error}
-                      onChangeItem={e => field.onChange(e)}
-                    />
-                  )}
-                />
-              </FormControl>
-            </Box>
-          ))}
-          {/* usage policy ends */}
-        </form>
+        <PolicyHub onSubmit={onSubmit} />
       </DialogContent>
-      <DialogActions>
-        <Button variant="contained" sx={{ mr: 2 }} onClick={() => dispatch(setPolicyDialog(false))}>
-          {t('button.close')}
-        </Button>
-        <Button variant="contained" type="submit" onClick={handleSubmit(onSubmit)}>
-          {t('button.submit')}
-        </Button>
-      </DialogActions>
     </Dialog>
   );
 }
 
-export default AddEditPolicy;
+export default AddEditPolicyNew;
