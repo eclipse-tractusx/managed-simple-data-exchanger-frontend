@@ -2,6 +2,19 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+## [Unreleased]
+### Added
+- Dedicated page to manage policies.
+- Policies will be dynamically fetched from policy hub based on the selected/available use-cases.
+- Frontend components will be dynamically rendered based on the policy type.
+- New policies can be created and already created policies will be selected and modified while uploading a data.
+- Re-usable page loading handlers for api calls.
+- Notes and info texts added in create data page.
+- Policy related documentations updated.
+
+### Changed
+- Upload data api implemetation moved to RTK query for better performance.
+
 ## [2.3.6] - 2024-03-08
 ### Added
 - Policy overlay descriptions.
