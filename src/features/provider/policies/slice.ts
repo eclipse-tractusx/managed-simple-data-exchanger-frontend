@@ -22,6 +22,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isArray } from 'lodash';
 
+import { NEW_POLICY_ITEM } from '../../../constants/policies';
+import { ISelectList } from '../../../models/Common';
 import { IAccessPolicyState } from './types';
 
 const initialState: IAccessPolicyState = {
@@ -30,6 +32,7 @@ const initialState: IAccessPolicyState = {
   policyDialog: false,
   policyDialogType: '',
   policyFormData: {},
+  selectedPolicy: NEW_POLICY_ITEM,
 };
 
 export const policySlice = createSlice({
@@ -46,6 +49,9 @@ export const policySlice = createSlice({
       state.policyDialogType = action.payload;
     },
     handleDialogClose: state => Object.assign(state, initialState),
+    setSelectedPolicy: (state, action: PayloadAction<ISelectList>) => {
+      state.selectedPolicy = action.payload;
+    },
     setPolicyFormData: (state, action: PayloadAction<any>) => {
       state.policyFormData = action.payload;
     },
@@ -76,6 +82,7 @@ export const {
   handleDialogClose,
   setPolicyFormData,
   handlePolicyFormData,
+  setSelectedPolicy,
 } = policySlice.actions;
 
 export default policySlice.reducer;

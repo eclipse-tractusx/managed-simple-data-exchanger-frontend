@@ -165,7 +165,7 @@ export default function ConsumeData() {
     }));
     return {
       offers: offersList,
-      usage_policies: selectedList[0].policy.usage_policies,
+      usage_policies: selectedList[0].policy.Usage,
     };
   };
 

@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -26,6 +26,7 @@ import { addRows, deleteRows, setRows, setSelectionModel } from '../features/pro
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { schemaValidator } from '../helpers/SchemaValidator';
 import InfoSteps from './InfoSteps';
+import UploadInfo from './provider/UploadInfo';
 
 export default function DataTable() {
   const { submodelDetails, columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
@@ -34,12 +35,8 @@ export default function DataTable() {
 
   return (
     <Box>
-      <InfoSteps
-        icon="info"
-        steps={['content.provider.manualStep_1', 'content.provider.uploadStep_2']}
-        sx={{ mb: 3 }}
-      />
-      <Box display="flex" justifyContent="space-between" mb={3}>
+      <UploadInfo />
+      <Box display="flex" justifyContent="space-between" my={3}>
         <Box>
           <Button variant="contained" size="small" onClick={() => dispatch(addRows())}>
             {t('content.provider.addRow')}

@@ -1,7 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2022,2024 T-Systems International GmbH
- * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
- *
+ * Copyright (c) 2024 T-Systems International GmbH
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -21,44 +20,31 @@
 import { setLoadingHandler } from '../../../helpers/ApiHelper';
 import { apiSlice } from '../../app/apiSlice';
 
-export const policiesApiSlice = apiSlice.injectEndpoints({
+export const uploadApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    getPolicies: builder.query({
-      query: params => {
+    uploadFile: builder.mutation({
+      query: ({ submodel, data }) => {
         return {
-          url: '/policy',
-          params,
+          method: 'POST',
+          url: `${submodel}/upload`,
+          body: data,
         };
       },
-      providesTags: ['Policies'],
+      invalidatesTags: ['Policies'],
       onQueryStarted: setLoadingHandler,
     }),
-    getSinglePolicy: builder.mutation({
-      query: uuid => {
+    uploadManualEntry: builder.mutation({
+      query: ({ submodel, data }) => {
         return {
-          url: `/policy/${uuid}`,
+          method: 'POST',
+          url: `${submodel}/manualentry`,
+          body: data,
         };
       },
-      onQueryStarted: setLoadingHandler,
-    }),
-    validateBpn: builder.mutation({
-      query: bpn => {
-        return {
-          url: `/unified-bpn-validation/${bpn}`,
-        };
-      },
-    }),
-    getPolicyTemplate: builder.query({
-      query: params => {
-        return {
-          url: '/policy-hub/policy-types',
-          params,
-        };
-      },
+      invalidatesTags: ['Policies'],
       onQueryStarted: setLoadingHandler,
     }),
   }),
 });
 
-export const { useValidateBpnMutation, useGetPolicyTemplateQuery, useGetPoliciesQuery, useGetSinglePolicyMutation } =
-  policiesApiSlice;
+export const { useUploadFileMutation, useUploadManualEntryMutation } = uploadApiSlice;

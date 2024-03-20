@@ -55,6 +55,7 @@
       "previewTableTitle": "Vorschau des semantischen Modells inkl. Beschreibung",
       "uploadStep_1": "1. Wählen Sie die Datei aus, welche hochgeladen werden soll",
       "uploadStep_2": "2. Klicken Sie auf „Nächster Schritt – Policies konfigurieren“ um festzulegen wer die Daten (ggf. mit Einschränkungen) sehen darf und um die entsprechenden „Digitalen Zwillinge“ zu erzeugen/registrieren.",
+      "uploadStep_3": "3. Erstellen Sie eine neue Richtlinie oder verwenden Sie eine bereits erstellte.",
       "manualStep_1": "1. Klicken Sie auf „Zeile einfügen“ um die Daten für eine neue Zeile erfassen zu können. Zur Eingabe müssen Sie das entsprechende Feld anklicken",
       "manualInfo_1": "Um einen neuen Datensatz (Digitalen Zwilling) anzulegen, lassen Sie das Feld UUID bitte leer",
       "manualInfo_2": "Um einen bestehenden Datensatz zu aktualisieren, geben Sie bitte die UUID dieses Datensatzes (Digitaler Zwilling) an."

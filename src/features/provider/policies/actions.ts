@@ -22,10 +22,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { omit } from 'lodash';
 
 import { PolicyHubModel } from '../../../models/Polices.models';
-import ProviderService from '../../../services/ProviderService';
 import { setSnackbarMessage } from '../../notifiication/slice';
 import { RootState } from '../../store';
 import { clearRows } from '../submodels/slice';
+import { uploadApiSlice } from '../upload/apiSlice';
 import { removeSelectedFiles } from '../upload/slice';
 import { handleDialogClose, setPolicyFormData } from './slice';
 import { PolicyHubResponse } from './types';
@@ -46,14 +46,20 @@ const uploadFileWithPolicy = createAsyncThunk('/upload-file-with-policy', async 
   const state = getState() as RootState;
   const { selectedFiles } = state.uploadFileSlice;
   const { selectedSubmodel } = state.submodelSlice;
+  const { selectedPolicy } = state.policySlice;
 
   const formData = new FormData();
   formData.append('file', selectedFiles[0]);
-  formData.append('meta_data', JSON.stringify({ ...omit(data, 'lastUpdatedTime'), type: 'NEW' }));
+  formData.append('meta_data', JSON.stringify({ ...omit(data, 'lastUpdatedTime'), type: selectedPolicy.value }));
 
   try {
-    await ProviderService.getInstance()
-      .uploadData(selectedSubmodel.value, formData)
+    await dispatch(
+      uploadApiSlice.endpoints.uploadFile.initiate({
+        submodel: selectedSubmodel.value,
+        data: formData,
+      }),
+    )
+      .unwrap()
       .then(res => {
         if (res) {
           dispatch(clearUpload());
@@ -76,14 +82,20 @@ const uploadTableWithPolicy = createAsyncThunk(
   async (formData: any, { dispatch, getState }) => {
     const state = getState() as RootState;
     const { selectedSubmodel, rows } = state.submodelSlice;
+    const { selectedPolicy } = state.policySlice;
 
     try {
-      await ProviderService.getInstance()
-        .submitSubmodalData(selectedSubmodel.value, {
-          ...omit(formData, 'lastUpdatedTime'),
-          row_data: rows,
-          type: 'NEW',
-        })
+      await dispatch(
+        uploadApiSlice.endpoints.uploadManualEntry.initiate({
+          submodel: selectedSubmodel.value,
+          data: {
+            ...omit(formData, 'lastUpdatedTime'),
+            row_data: rows,
+            type: selectedPolicy.value,
+          },
+        }),
+      )
+        .unwrap()
         .then(res => {
           if (res) {
             dispatch(clearUpload());

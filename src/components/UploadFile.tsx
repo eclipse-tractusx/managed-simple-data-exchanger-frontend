@@ -33,7 +33,7 @@ import { useAppDispatch, useAppSelector } from '../features/store';
 import { Config } from '../utils/config';
 import { DEFAULT_POLICY_DATA } from '../utils/constants';
 import { trimText } from '../utils/utils';
-import InfoSteps from './InfoSteps';
+import UploadInfo from './provider/UploadInfo';
 
 export default function UploadFile() {
   const { selectedFiles, uploadStatus } = useAppSelector(state => state.uploadFileSlice);
@@ -160,7 +160,7 @@ export default function UploadFile() {
           )}
         </Box>
       </Box>
-      <InfoSteps icon="info" steps={['content.provider.uploadStep_1', 'content.provider.uploadStep_2']} />
+      <UploadInfo />
     </>
   );
 }

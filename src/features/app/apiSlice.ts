@@ -89,7 +89,7 @@ export const apiSlice = createApi({
       },
     }),
   }),
-  tagTypes: ['UploadHistory', 'DeleteContract'],
+  tagTypes: ['UploadHistory', 'DeleteContract', 'Policies'],
 });
 
 export const { useGetUseCasesQuery, useGetPermissionsQuery } = apiSlice;

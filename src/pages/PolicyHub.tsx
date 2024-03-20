@@ -27,6 +27,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import FormLabelDescription from '../components/policies/FormLabelDescription';
+import PolicySelection from '../components/policies/PolicySelection';
 import { SELECT_POLICY_TYPES } from '../constants/policies';
 import { prepareFormData } from '../features/provider/policies/actions';
 import { useGetPolicyTemplateQuery } from '../features/provider/policies/apiSlice';
@@ -112,6 +113,7 @@ const PolicyHub = ({ onSubmit }: any) => {
     const policyTypes = keys(pickBy(policyFormData, isArray));
     return (
       <form>
+        <PolicySelection data={data} />
         <FormControl sx={{ mb: 3, width: 300 }}>
           <Controller
             name="policy_name"

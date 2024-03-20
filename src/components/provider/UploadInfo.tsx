@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
- * Copyright (c) 2022,2024 T-Systems International GmbH
- * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
+ * Copyright (c) 2024 T-Systems International GmbH
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
+ *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -18,24 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Key } from 'react';
+import InfoSteps from '../InfoSteps';
 
-import { ISelectList } from '../../../models/Common';
+function UploadInfo() {
+  return (
+    <InfoSteps
+      icon="tips"
+      steps={['content.provider.uploadStep_1', 'content.provider.uploadStep_2', 'content.provider.uploadStep_3']}
+    />
+  );
+}
 
-export interface IAccessPolicyState {
-  openDialog: boolean;
-  policyData: any;
-  policyDialog: boolean;
-  policyDialogType: string;
-  policyFormData: any;
-  selectedPolicy: ISelectList;
-}
-export interface PolicyHubResponse {
-  technicalKey: string;
-  type: string[];
-  description: string;
-  useCase: string[];
-  attribute: { key: string; value: string; id?: Key }[];
-  technicalEnforced: boolean;
-  value: string;
-}
+export default UploadInfo;
