@@ -20,6 +20,8 @@
 
 import { setLoadingHandler } from '../../../helpers/ApiHelper';
 import { apiSlice } from '../../app/apiSlice';
+import { setPageLoading } from '../../app/slice';
+import { setPolicyDialog } from './slice';
 
 export const policiesApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -31,6 +33,57 @@ export const policiesApiSlice = apiSlice.injectEndpoints({
         };
       },
       providesTags: ['Policies'],
+      onQueryStarted: setLoadingHandler,
+    }),
+    createPolicy: builder.mutation({
+      query: body => {
+        return {
+          url: '/policy',
+          method: 'POST',
+          body,
+        };
+      },
+      extraOptions: { showNotification: true, message: 'Policy created successfully!' },
+      invalidatesTags: ['Policies'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setPageLoading(true));
+          await queryFulfilled;
+          dispatch(setPolicyDialog(false));
+        } finally {
+          dispatch(setPageLoading(false));
+        }
+      },
+    }),
+    updatePolicy: builder.mutation({
+      query: body => {
+        return {
+          url: `/policy/${body.uuid}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      extraOptions: { showNotification: true, message: 'Policy updated successfully!' },
+      invalidatesTags: ['Policies'],
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          dispatch(setPageLoading(true));
+          await queryFulfilled;
+          dispatch(setPolicyDialog(false));
+        } finally {
+          dispatch(setPageLoading(false));
+        }
+      },
+    }),
+    deletePolicy: builder.mutation({
+      query: uuid => {
+        return {
+          url: `/policy/${uuid}`,
+          method: 'DELETE',
+        };
+      },
+      extraOptions: { showNotification: true, message: 'Policy deleted successfully!' },
+      invalidatesTags: ['Policies'],
       onQueryStarted: setLoadingHandler,
     }),
     getSinglePolicy: builder.mutation({
@@ -60,5 +113,12 @@ export const policiesApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useValidateBpnMutation, useGetPolicyTemplateQuery, useGetPoliciesQuery, useGetSinglePolicyMutation } =
-  policiesApiSlice;
+export const {
+  useValidateBpnMutation,
+  useGetPolicyTemplateQuery,
+  useGetPoliciesQuery,
+  useGetSinglePolicyMutation,
+  useCreatePolicyMutation,
+  useUpdatePolicyMutation,
+  useDeletePolicyMutation,
+} = policiesApiSlice;
