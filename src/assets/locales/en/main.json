@@ -55,6 +55,7 @@
       "previewTableTitle": "Preview of Submodel including help description",
       "uploadStep_1": "1. Choose the file you want to upload.",
       "uploadStep_2": "2. Click on “Next Step – Configure Policies” to manage with whom to share your data and register the digital twin(s)",
+      "uploadStep_3": "3. Create a new policy or use and already created one",
       "manualStep_1": "1. For manual entries click 'add a row' and enter the values by clicking inside the respective fields.",
       "manualInfo_1": "For creating new data leave the field 'UUID' empty.",
       "manualInfo_2": "For updating existing data you need to enter the respective 'UUID' of the digital twin."

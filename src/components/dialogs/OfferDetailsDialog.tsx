@@ -42,7 +42,7 @@ const OfferDetailsDialog = ({ open, offerObj, handleConfirm, handleClose, isMult
     created,
     description,
     publisher,
-    policy: { usage_policies: usagePolicies },
+    policy: { Usage: usagePolicies },
     fileContentType,
   } = offer;
   const { t } = useTranslation();
