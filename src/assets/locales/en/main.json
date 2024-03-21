@@ -65,7 +65,10 @@
     },
     "policies": {
       "title": "Policies",
-      "subtitle": "On this page, you need to define the policy to be used for your 'Recurring Upload' process. The policy name should be included in your upload file, and it must be unique. Please refrain from using short phrases like 'sh' or 'pa' that could be part of a generic file name.",
+      "subtitle": "On this page the definition of policies for 'Manual Upload' process is possible. Please follow these guidelines for effective policy creation:",
+      "page_description_1": "The policy name must be distinctive and unique to prevent conflicts.",
+      "page_description_2": "Avoid the use of short, generic phrases like 'sh' or 'pa' to enhance specificity.",
+      "page_note": "For 'Recurring Upload' policies incorporate the policy name within the recurring upload files",
       "addPolicy": "Add Policy",
       "editPolicy": "Edit Policy",
       "description": "Here you can manage the access policies with which partner you want to share your data.",
@@ -80,25 +83,7 @@
       "note": "Note: If you do not assign a BPN, the data can only be accessible to your own organisation.",
       "unAccess": "Unrestricted Access!",
       "warningText": "If you do not assign a BPN, the data can only be accessible to you.",
-      "usagePolicy": "Usage Policies",
-      "duration": "Duration restriction",
-      "durationNote": "Usage allowed from contract start",
-      "selectDuration": "Select Duration",
-      "durationValues": {
-        "hour": "Hour",
-        "day": "Day",
-        "month": "Month",
-        "year": "Year"
-      },
-      "purpose": "Purpose restriction",
-      "purposeNote": "Usage allowed only for the purpose",
-      "role": "Role restriction",
-      "roleNote": "Usage allowed only by individuals with the following roles/characteristics",
-      "custom": "Custom restriction",
-      "customNote": "Usage must comply to the following additional conditions",
-      "purposeLabel": "Select the purpose",
-      "roleLabel": "Enter a role/characteristic",
-      "customLabel": "Enter your custom conditions"
+      "usagePolicy": "Usage Policies"
     },
     "uploadHistory": {
       "description": "This is an overview of your company's data delivery to the Catena-X ecosystem. All activities are listed here, i.e. creation, updates, deletion of data. Past versions of the provided data can be downloaded.",

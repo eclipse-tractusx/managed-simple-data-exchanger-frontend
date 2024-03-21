@@ -27,6 +27,7 @@ import Help from '../pages/Help';
 import Home from '../pages/Home';
 import Logout from '../pages/Logout';
 import PageNotFound from '../pages/PageNotFound';
+import Policies from '../pages/Policies';
 import ProviderContracts from '../pages/ProviderContracts';
 import UploadHistoryNew from '../pages/UploadHistoryNew';
 
@@ -59,6 +60,11 @@ export const ROUTES: IRoutes[] = [
     path: '/provider/create-data',
     element: <CreateData />,
     permissions: ['provider_create_contract_offer'],
+  },
+  {
+    path: '/provider/policies',
+    element: <Policies />,
+    permissions: ['policy_management'],
   },
   {
     path: 'provider/upload-history',

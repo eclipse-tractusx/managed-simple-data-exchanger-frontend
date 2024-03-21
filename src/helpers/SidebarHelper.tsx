@@ -25,6 +25,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import HistoryIcon from '@mui/icons-material/History';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 export const icons = {
   AddCircleOutlineIcon,
@@ -34,6 +35,7 @@ export const icons = {
   HomeOutlinedIcon,
   FormatListBulletedIcon,
   BusinessIcon,
+  TextSnippetIcon,
 };
 
 export interface IntMenuItem {
@@ -75,6 +77,13 @@ export const MenuItems: IntMenu[] = [
         to: '/provider/create-data',
         dataId: 'uploadFileMenu',
         permissions: ['provider_create_contract_offer'],
+      },
+      {
+        text: 'content.policies.title',
+        menuIcon: 'TextSnippetIcon',
+        to: '/provider/policies',
+        dataId: 'policies',
+        permissions: ['policy_management'],
       },
       {
         text: 'pages.uploadHistory',

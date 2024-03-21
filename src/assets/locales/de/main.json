@@ -62,7 +62,10 @@
     },
     "policies": {
       "title": "Policies",
-      "subtitle": "Auf dieser Seite müssen Sie die 'Policy' (Richtlinie) festlegen, die Sie für Ihren 'Recurring Upload' -Prozess (automatische upload von CSv-Files) verwenden möchten. Der Name dieser Richtlinie sollte in Ihrer Upload-Datei enthalten sein und muss eindeutig sein. Bitte verwenden Sie keine kurzen Begriffe wie 'sh' oder 'pa', die in einem neutralen Dateinamen vorkommen könnten.",
+      "subtitle": "Auf dieser Seite ist die Definition von Richtlinien für die Prozesse 'Manueller Upload' möglich. Bitte befolgen Sie diese Vorgaben zur effektiven Erstellung von Richtlinien:",
+      "page_description_1": "Der Richtlinienname muss eindeutig und einzigartig sein, um Konflikte zu vermeiden.",
+      "page_description_2": "Vermeiden Sie die Verwendung kurzer, generischer Phrasen wie 'sh' oder 'pa', um die Spezifität zu erhöhen.",
+      "page_note": "Bei Wiederkehrender Upload-Richtlinien integrieren Sie den Richtliniennamen in die wiederkehrenden Upload-Dateien.",
       "addPolicy": "Richtlinie hinzufügen",
       "EditPolicy": "Richtlinie bearbeiten",
       "description": "Hier legen Sie fest mit wem sie die Daten teilen möchten (via „Access Policies“) und mit welchen Einschränkungen (via „Usage Policies“).",
@@ -77,25 +80,7 @@
       "note": "Hinweis: Wenn Sie keine BPN vergeben, sind die Daten nur für Ihre Organisation zugänglich.",
       "unAccess": "Uneingeschränkter Zugang!",
       "warningText": "Wenn Sie keine BPN vergeben, sind die Daten nur für Sie zugänglich.",
-      "usagePolicy": "Nutzungsrichtlinien",
-      "duration": "Nutzungsdauer",
-      "durationNote": "Erlaubte Nutzungsdauer ab Vertragsstart",
-      "selectDuration": "Wähle Dauer",
-      "durationValues": {
-        "hour": "Stunde",
-        "day": "Tag",
-        "month": "Monat",
-        "year": "Jahr"
-      },
-      "purpose": "Nutzungszweck",
-      "purposeNote": "Nutzung nur für nachfolgenden Zweck zugelassen",
-      "role": "Rolle",
-      "roleNote": "Nutzung nur für Individuen mit Rolle/Eigenschaft zugelassen",
-      "custom": "Nutzerdefinierte Bedingung",
-      "customNote": "Folgende Regel(n) gelten weiterhin für die Nutzung",
-      "purposeLabel": "Wählen Sie den Zweck aus",
-      "roleLabel": "Bitte fügen sie eine Rolle ein",
-      "customLabel": "Bitte geben Sie Ihre benutzerdefinierten Bedingungen ein"
+      "usagePolicy": "Nutzungsrichtlinien"
     },
     "uploadHistory": {
       "description": "Dies ist ein Überblick über die Datenbereitstellung ihres Unternehmens an das Catena-X Ökosystem. Alle Aktivitäten werden hier gelistet, d.h. die Erstellung, Updates, Löschung von Daten. Vergangene Versionen der bereitgestellten Daten können heruntergeladen werden.",
