@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -54,4 +54,9 @@ export function trimText(string: string, length: number) {
 
 export const openInNewTab = (url: string) => {
   window.open(url, '_blank');
+};
+
+export const toReadableCapitalizedCase = (input: string): string => {
+  const parts = input.replace(/\./g, ' ').split(' ');
+  return parts.map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
 };

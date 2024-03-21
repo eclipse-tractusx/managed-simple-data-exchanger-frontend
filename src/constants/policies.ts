@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2022,2024 T-Systems International GmbH
- * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
+ * Copyright (c) 2024 T-Systems International GmbH
+ * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,28 +18,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { setLoadingHandler } from '../../../helpers/ApiHelper';
-import { apiSlice } from '../../app/apiSlice';
+const SELECT_POLICY_TYPES = ['Brands', 'Version', 'Static', 'DynamicValue'];
 
-export const policiesApiSlice = apiSlice.injectEndpoints({
-  endpoints: builder => ({
-    validateBpn: builder.mutation({
-      query: bpn => {
-        return {
-          url: `/unified-bpn-validation/${bpn}`,
-        };
-      },
-    }),
-    getPolicyTemplate: builder.query({
-      query: params => {
-        return {
-          url: '/policy-hub/policy-types',
-          params,
-        };
-      },
-      onQueryStarted: setLoadingHandler,
-    }),
-  }),
-});
+const ADD_POLICY_DIALOG_TYPES = ['Add', 'FileWithPolicy', 'TableWithPolicy'];
 
-export const { useValidateBpnMutation, useGetPolicyTemplateQuery } = policiesApiSlice;
+const NEW_POLICY_ITEM = { id: 0, title: 'Create New Policy', value: 'NEW' };
+
+export { ADD_POLICY_DIALOG_TYPES, NEW_POLICY_ITEM, SELECT_POLICY_TYPES };

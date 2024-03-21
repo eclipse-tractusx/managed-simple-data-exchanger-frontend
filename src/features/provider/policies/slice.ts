@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
@@ -19,23 +20,24 @@
  ********************************************************************************/
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { isArray } from 'lodash';
 
-import { PolicyModel } from '../../../models/RecurringUpload.models';
 import { IAccessPolicyState } from './types';
 
 const initialState: IAccessPolicyState = {
   openDialog: false,
-  policyData: {} as PolicyModel,
+  policyData: {},
   policyDialog: false,
   policyDialogType: '',
+  policyFormData: {},
 };
 
 export const policySlice = createSlice({
   name: 'policySlice',
   initialState,
   reducers: {
-    setPolicyData: (state, action: PayloadAction<PolicyModel>) => {
-      state.policyData = new PolicyModel(action.payload);
+    setPolicyData: (state, action: PayloadAction<any>) => {
+      state.policyData = action.payload;
     },
     setPolicyDialog: (state, action: PayloadAction<boolean>) => {
       state.policyDialog = action.payload;
@@ -44,9 +46,36 @@ export const policySlice = createSlice({
       state.policyDialogType = action.payload;
     },
     handleDialogClose: state => Object.assign(state, initialState),
+    setPolicyFormData: (state, action: PayloadAction<any>) => {
+      state.policyFormData = action.payload;
+    },
+    handlePolicyFormData: (state, action: PayloadAction<any>) => {
+      const { value, type, key } = action.payload;
+      const updatedFormData = { ...state.policyFormData };
+      const policies = updatedFormData[type];
+      // if its a valid policy not a custom values
+      if (isArray(policies)) {
+        // Find the object in the policies array with the given technicalKey
+        const policyToUpdate = policies.find((policy: any) => policy.technicalKey === key);
+        // If the policyToUpdate is found, update its value
+        if (policyToUpdate) {
+          policyToUpdate.value = value || '';
+        }
+      } else {
+        updatedFormData[key] = value || '';
+      }
+      state.policyFormData = updatedFormData;
+    },
   },
 });
 
-export const { setPolicyData, setPolicyDialog, setPolicyDialogType, handleDialogClose } = policySlice.actions;
+export const {
+  setPolicyData,
+  setPolicyDialog,
+  setPolicyDialogType,
+  handleDialogClose,
+  setPolicyFormData,
+  handlePolicyFormData,
+} = policySlice.actions;
 
 export default policySlice.reducer;
