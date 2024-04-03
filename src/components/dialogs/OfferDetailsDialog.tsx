@@ -20,41 +20,50 @@
 
 import { Divider, Grid } from '@mui/material';
 import { Button, Dialog, DialogActions, DialogContent, DialogHeader, Typography } from 'cx-portal-shared-components';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Permissions from '../../components/Permissions';
+import { setOpenOfferConfirmDialog, setOpenOfferDetailsDialog } from '../../features/consumer/slice';
 import { IConsumerDataOffers } from '../../features/consumer/types';
+import { useAppDispatch, useAppSelector } from '../../features/store';
 import UsagePolicies from './UsagePolicies';
 
 interface IntDialogProps {
-  open: boolean;
   offerObj?: IConsumerDataOffers;
-  handleConfirm?: (state: boolean) => void;
-  handleClose?: (state: boolean) => void;
   isMultiple?: boolean;
 }
 
-const OfferDetailsDialog = ({ open, offerObj, handleConfirm, handleClose, isMultiple }: IntDialogProps) => {
-  const [offer] = useState(offerObj);
+const OfferDetailsDialog = ({ offerObj, isMultiple }: IntDialogProps) => {
   const {
     title,
-    created,
     description,
+    sematicVersion,
     publisher,
+    connectorOfferUrl,
     policy: { Usage: usagePolicies },
-    fileContentType,
-  } = offer;
-  const { t } = useTranslation();
+  } = offerObj ?? ({} as IConsumerDataOffers);
 
-  function splitWithFirstOcc(str: string) {
-    const regX = /:(.*)/s;
-    return str.split(regX);
-  }
+  const { t } = useTranslation();
+  const { openOfferDetailsDialog } = useAppSelector(state => state.consumerSlice);
+
+  const dispatch = useAppDispatch();
+
+  const renderDetailItem = (label: string, value: string) => (
+    <Grid item xs={6} sx={{ mb: 1 }}>
+      <Typography variant="body2">{label}</Typography>
+      <Typography variant="body2">
+        <strong>{value || '-'}</strong>
+      </Typography>
+    </Grid>
+  );
 
   return (
-    <Dialog open={open}>
-      <DialogHeader closeWithIcon onCloseWithIcon={() => handleClose(false)} title={t('dialog.offerDetails.title')} />
+    <Dialog open={openOfferDetailsDialog}>
+      <DialogHeader
+        closeWithIcon
+        onCloseWithIcon={() => dispatch(setOpenOfferDetailsDialog(false))}
+        title={t('dialog.offerDetails.title')}
+      />
       {isMultiple ? (
         <DialogContent dividers sx={{ pt: 3 }}>
           <Grid container>
@@ -69,42 +78,11 @@ const OfferDetailsDialog = ({ open, offerObj, handleConfirm, handleClose, isMult
       ) : (
         <DialogContent dividers>
           <Grid container mt={3}>
-            <Grid item xs={6} sx={{ mb: 1 }}>
-              <Typography variant="body2">{t('dialog.offerDetails.titleText')}</Typography>
-              <Typography variant="body2">
-                <strong>{title || '-'}</strong>
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ mb: 1 }}>
-              <Typography variant="body2">{t('dialog.offerDetails.created')}</Typography>
-              <Typography variant="body2">
-                <strong>{created || '-'}</strong>
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ mb: 1 }}>
-              <Typography variant="body2">{t('dialog.offerDetails.dataFormat')}</Typography>
-              <Typography variant="body2">
-                <strong>{fileContentType || '-'}</strong>
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ mb: 1 }}>
-              <Typography variant="body2">{t('dialog.offerDetails.description')}</Typography>
-              <Typography variant="body2">
-                <strong>{description || '-'}</strong>
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ mb: 1 }}>
-              <Typography variant="body2">{t('dialog.offerDetails.publisher')}</Typography>
-              <Typography variant="body2">
-                <strong>{splitWithFirstOcc(publisher)[0] || '-'}</strong>
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sx={{ mb: 1 }}>
-              <Typography variant="body2">{t('dialog.offerDetails.publisherUrl')}</Typography>
-              <Typography variant="body2">
-                <strong>{splitWithFirstOcc(publisher)[1] || '-'}</strong>
-              </Typography>
-            </Grid>
+            {renderDetailItem(t('dialog.offerDetails.titleText'), title)}
+            {renderDetailItem(t('dialog.offerDetails.sematicVersion'), sematicVersion)}
+            {renderDetailItem(t('dialog.offerDetails.description'), description)}
+            {renderDetailItem(t('dialog.offerDetails.publisher'), publisher)}
+            {renderDetailItem(t('dialog.offerDetails.publisherUrl'), connectorOfferUrl)}
           </Grid>
           <Divider sx={{ m: 1 }} />
           <Grid container>
@@ -118,11 +96,11 @@ const OfferDetailsDialog = ({ open, offerObj, handleConfirm, handleClose, isMult
         </DialogContent>
       )}
       <DialogActions>
-        <Button variant="outlined" onClick={() => handleClose(false)}>
+        <Button variant="outlined" onClick={() => dispatch(setOpenOfferDetailsDialog(false))}>
           {t('button.close')}
         </Button>
         <Permissions values={['consumer_establish_contract_agreement']}>
-          <Button variant="contained" onClick={() => handleConfirm(true)}>
+          <Button variant="contained" onClick={() => dispatch(setOpenOfferConfirmDialog(true))}>
             {t('button.subscribe')}
           </Button>
         </Permissions>

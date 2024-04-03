@@ -127,6 +127,8 @@
         "title": "Titel",
         "assetId": "Asset ID",
         "created": "erstellt am",
+        "sematicVersion": "Sematic Version",
+        "publisher": "Publisher",
         "description": "Beschreibung"
       }
     },
@@ -182,6 +184,7 @@
       "value": "Wert",
       "titleText": "Titel",
       "created": "Erstellt am",
+      "sematicVersion": "Sematic Version",
       "dataFormat": "Datenformat",
       "description": "Beschreibung",
       "publisher": "Anbieter",
@@ -194,6 +197,9 @@
       "point1": "Sie sind befugt, Ihre Organisation in diesem Fall zu vertreten.",
       "point2": "Sie haben die Zugangs- und Nutzungspolicies gelesen und verstanden.",
       "point3": "Ihre Organisation ist verpflichtet, die Bedingungen der Zugangs- und Nutzungspolicy einzuhalten."
+    },
+    "prompt": {
+      "confirm": "Bitte bestätigen"
     }
   },
   "button": {

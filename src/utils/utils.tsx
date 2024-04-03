@@ -60,3 +60,8 @@ export const toReadableCapitalizedCase = (input: string): string => {
   const parts = input.replace(/\./g, ' ').split(' ');
   return parts.map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
 };
+
+export function splitWithFirstOcc(str: string) {
+  const regX = /:(.*)/s;
+  return str.split(regX) ? `${str.split(regX)[0]}.` : '-.';
+}
