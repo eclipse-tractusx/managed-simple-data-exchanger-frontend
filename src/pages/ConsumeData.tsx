@@ -214,7 +214,6 @@ export default function ConsumeData() {
       }
       dispatch(setOffersLoading(true));
       const response = await ConsumerService.getInstance().fetchConsumerDataOffers({
-        bpnNumber: 'BPNL000MEHRAN010',
         providerUrl: providerUrl,
         offset: 0,
         maxLimit: MAX_CONTRACTS_AGREEMENTS,
