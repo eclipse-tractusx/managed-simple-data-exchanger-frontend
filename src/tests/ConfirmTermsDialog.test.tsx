@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -38,6 +38,7 @@ const offerObj = {
       modified: '22/07/2022',
       offerInfo: 'offer extra info',
       typeOfAccess: 'restricted',
+      sematicVersion: 'urn:bamm:io.catenax.serial_part:1.0.0#SerialPart',
       usagePolicies: [
         {
           type: 'Duration',
@@ -52,8 +53,7 @@ const offerObj = {
 };
 
 describe('ConfirmTermsDialog Component', () => {
-  const isOpen = true;
-  const { getByRole, getByText } = render(<ConfirmTermsDialog title="Confirm" open={isOpen} offerObj={offerObj} />);
+  const { getByRole, getByText } = render(<ConfirmTermsDialog offerObj={offerObj} />);
   const confirmButton = getByRole('button', { name: 'Confirm' });
   const checkbox = getByRole('checkbox');
   const heading = getByText('Confirm', { selector: 'h2' });

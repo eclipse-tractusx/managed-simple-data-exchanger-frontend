@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -24,7 +24,6 @@ import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
 import { IConsumerDataOffers } from '../features/consumer/types';
 
 test('Snapshot OfferDetailsDialog - load and diaplay offer details component', () => {
-  const isOpen = true;
   const offerItem: IConsumerDataOffers = {
     bpnNumbers: ['BPN1', 'BPN2'],
     connectorOfferid: 'connector1',
@@ -38,15 +37,15 @@ test('Snapshot OfferDetailsDialog - load and diaplay offer details component', (
     modified: '22/07/2022',
     offerInfo: 'offer extra info',
     typeOfAccess: 'restricted',
+    sematicVersion: 'urn:bamm:io.catenax.serial_part:1.0.0#SerialPart',
     usagePolicies: [
       {
-        type: 'Duration',
         typeOfAccess: 'Unrestricted',
         value: '1',
       },
     ],
   };
-  render(<OfferDetailsDialog open={isOpen} offerObj={offerItem} />);
+  render(<OfferDetailsDialog />);
   const text = screen.getByText('Offer Details');
   const titleText = screen.getByText(offerItem.title);
   expect(text).toBeInTheDocument();

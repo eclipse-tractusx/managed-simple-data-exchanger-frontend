@@ -20,7 +20,6 @@
  ********************************************************************************/
 
 export interface IUsageControl {
-  type: string;
   typeOfAccess: string;
   value?: string;
   durationUnit?: string | Record<string, never>;
@@ -51,6 +50,7 @@ export interface IConsumerDataOffers {
   usagePolicies: IUsageControl[];
   fileName?: string;
   fileContentType?: string;
+  sematicVersion: string;
 }
 export interface ILegalEntityName {
   value?: string;
@@ -128,4 +128,6 @@ export interface IConsumerSlice {
   filterSelectedConnector: Partial<IntConnectorItem>;
   contractAgreements: IContractAgreements[];
   isContractAgreementsLoading: boolean;
+  openOfferDetailsDialog: boolean;
+  openOfferConfirmDialog: boolean;
 }
