@@ -130,6 +130,8 @@
         "title": "Title",
         "assetId": "Asset ID",
         "created": "Created On",
+        "sematicVersion": "Sematic Version",
+        "publisher": "Publisher",
         "description": "Description"
       }
     },
@@ -185,6 +187,7 @@
       "value": "Value",
       "titleText": "Title",
       "created": "Created on",
+      "sematicVersion": "Sematic Version",
       "dataFormat": "Data format",
       "description": "Description",
       "publisher": "Publisher",
@@ -197,6 +200,9 @@
       "point1": "You are entitled to represent your organization.",
       "point2": "You have read and understood the access/usage policy.",
       "point3": "Your organization will be responsible to adhere by the rules stated in the access/usage policy."
+    },
+    "prompt": {
+      "confirm": "Please Confirm"
     }
   },
   "button": {

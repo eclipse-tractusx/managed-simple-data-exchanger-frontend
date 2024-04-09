@@ -25,14 +25,7 @@ This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LIC
     - [Create Data](#create-data)
       - [Upload File](#upload-file)
       - [Manual Entry](#manual-entry)
-        - [Serial Part](#serial-part-typization)
-        - [Batch](#batch)
-        - [Single Level BoM As Built](#single-level-bom-asbuilt)
-        - [Part As Planned](#part-as-planned)
-        - [Single Level Bom As Planned](#single-level-bom-as-planned)
-        - [Part Site Information As Planned](#part-site-information-as-planned)
-        - [Single Level Usage As Built](#single-level-usage-as-built)
-        - [Product Carbon Footprint](#product-carbon-footprint)
+    - [Policies](#policies)
     - [Upload history](#upload-history)
     - [Contracts](#provider-contracts)
     - [Help](#help)
@@ -44,7 +37,7 @@ This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LIC
 
 ## **Accessing the app**
 
-[SDE](https://dft.int.demo.catena-x.net/) can be accessed via the internet. The recommended browser is Google Chrome. You need to request an account to access it.
+SDE can be accessed via the internet. The recommended browser is Google Chrome. You need to request an account to access it.
 
 ### **Login**
 
@@ -52,7 +45,7 @@ This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LIC
 <img src="images/catenax-login-org-search.svg" height="60%" width="60%"> 
 <img src="images/catenax-keycloak-signin.svg" height="60%" width="60%">
 
-1. Open **S**imple **D**ata **E**xchanger application via the [URL](https://dft.int.demo.catena-x.net/) (recommended browser Google Chrome).
+1. Open **S**imple **D**ata **E**xchanger application via the URL (recommended browser Google Chrome).
 2. Select the organization from the list or search the organization by typing name in input textbox and select the organization from the search results to login to the Simple Data Exchanger application. After selecting the organization from the list, it will redirect to the CatenaX keycloak login page.
 3. On Keycloak login page of the selected organization, enter login details i.e. Username or email and Password. Click on Sign In button to login to the Simple Data Exchanger application.
 
@@ -89,6 +82,7 @@ On the left side menu, it is possible to navigate the Simple Data Exchanger appl
 **Provider**
 
 - Create Data
+- Policies
 - Upload History
 - Contracts
 - Help
@@ -154,51 +148,31 @@ You can click on the button "Choose a file" and select the proper CSV file prese
 
 After successful file upload of the supported file format i.e. CSV, the button "Next Step - Configure Policies" will be enabled and after clicking on the same, Policy selection dialog will be shown where we need to configure Access and Usage policy.
 
-User can configure access policy accordingly and select company name or bpn number to add.
+User can create new or choose existing policy.
 
-User can add usage policy accordingly and select framework.
+User can configure access and usage policy accordingly to use case selection. 
 
 Once configuring both the policies, we need to click on "SUBMIT" button and wait for upload to finish.
 This is the process of creating new data offer through SDE application by uploading CSV file.
 
 - ### Manual entry
 
-#### Serial Part
-
-<img src="images/sde-serial-part-tabular.svg" height="60%" width="60%" />
-
-#### Batch
-
-<img src="images/sde-batch-tabular.svg" height="60%" width="60%" />
-
-#### Single Level BoM AsBuilt
-
-<img src="images/sde-assembly-tabular.svg" height="60%" width="60%" />
-
-#### Part AsPlanned
-
-<img src="images/sde-part-planned-tabular.svg" height="60%" width="60%" />
-
-#### Single Level Bom AsPlanned
-
-<img src="images/sde-single-bom-tabular.svg" height="60%" width="60%" />
-
-#### Part Site Information AsPlanned
-
-<img src="images/sde-part-site-info-tabular.svg" height="60%" width="60%" />
-
-#### Single Level Usage AsBuilt
-
-<img src="images/sde-single-level-usage-table.svg" height="60%" width="60%" />
-
-#### Product Carbon Footprint
-
-<img src="images/sde-product-carbon-footprint.svg" height="60%" width="60%" />
+<img src="images/manual-entry.svg" height="60%" width="60%" />
 
 You can add and submit multiple data offers via Manual entry option for particular submodel by clicking on "Add Row" button to bulk upload the multiple data offers in one go. Once you enter details in all of the required fields for a particular row, you need to select which offers we need to upload by ticking the checkboxes for the respective rows and then we need to click on "Next Step - Configure Policies" button to configure Access and Usage policies and then you need to click on Submit button from policy dialog to upload the data. You can upload the data for multiple submodels by selecting the respective submodel from the top level Select submodel dropdown.
 We also can delete multiple rows by selecting which rows we want to delete and then click on Delete Row(s) button.
 
 Then you need to configure Access and Usage policies by clicking on "Next Step - Configure Policies" button and after successful configuration, click on Submit button from policy dialog to upload bulk data offers at once.
+
+You can add other sub-model similarly.
+
+## Policies
+
+<img src="images/policy.svg" height="60%" width="60%" />
+
+User can add and edit the policies in this page by clicking add policy button. So that policies for manual upload process is possible.
+
+<img src="images/add-policy.svg" height="60%" width="60%" />
 
 ## Upload history
 
@@ -238,14 +212,13 @@ The table includes below columns:
 - Asset ID (ID of the Asset);
 - Consumer Counter Party Address (Counter party address of the contract agreement);
 - Signing Date (Signing date of the contract agreement);
-- End Date (End date of the contract agreement, if duration restriction under usage policies is unrestricted while creating data then there is no end date and its unlimited);
 - Status (FINALIZED or TERMINATED or ERROR or DECLINED);
 
 ## Help
 
 <img src="images/sde-help-page.svg" height="60%" width="60%" />
 
-This dynamic help page provides the submodel informations of selected use case in the home page. If no use case selected, it will show all available submodels. User can see the the order of the fields and details of each field by hovering the info icon in each row. User can download the sample csv and csv template for any submodels as well from this page.
+This dynamic help page provides the submodel informations of selected use case in the home page. If no use case selected, it will show all available submodels. User can see the the order of the fields and details of each field by hovering the info icon in each row. User can download the sample csv and csv template for any submodels as well from this page. User can use quick link to navigate on any sub model.
 
 # **Consumer**
 

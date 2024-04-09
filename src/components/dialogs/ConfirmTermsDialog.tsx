@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -23,7 +23,10 @@ import { Button, Dialog, DialogActions, DialogContent, DialogHeader, LoadingButt
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
+import { setOpenOfferConfirmDialog } from '../../features/consumer/slice';
 import { IConsumerDataOffers } from '../../features/consumer/types';
+import { useAppDispatch, useAppSelector } from '../../features/store';
+import { splitWithFirstOcc } from '../../utils/utils';
 
 interface IntConfirmOffer {
   offers?: IConsumerDataOffers[] | [];
@@ -31,61 +34,49 @@ interface IntConfirmOffer {
   provider: string;
 }
 interface IntDialogProps {
-  title?: string;
-  open: boolean;
   handleConfirm?: () => void;
-  handleClose?: (state: boolean) => void;
   isProgress?: boolean;
   offerObj?: IntConfirmOffer;
 }
 
-const ConfirmTermsDialog: React.FC<IntDialogProps> = ({
-  title = 'Confirm',
-  open = false,
-  handleConfirm,
-  handleClose,
-  isProgress = false,
-  children,
-  offerObj,
-}) => {
+const ConfirmTermsDialog: React.FC<IntDialogProps> = ({ handleConfirm, isProgress = false, offerObj }) => {
+  const { openOfferConfirmDialog } = useAppSelector(state => state.consumerSlice);
   const [isAgreed, setIsAgreed] = useState(false);
   const { t } = useTranslation();
-
-  function splitWithFirstOcc(str: string) {
-    const regX = /:(.*)/s;
-    return str.split(regX) ? `${str.split(regX)[0]}.` : '-.';
-  }
+  const dispatch = useAppDispatch();
 
   return (
-    <Dialog open={open}>
-      <DialogHeader closeWithIcon onCloseWithIcon={() => handleClose(false)} title={title} />
+    <Dialog open={openOfferConfirmDialog}>
+      <DialogHeader
+        closeWithIcon
+        onCloseWithIcon={() => dispatch(setOpenOfferConfirmDialog(false))}
+        title={t('dialog.prompt.confirm')}
+      />
       <DialogContent dividers sx={{ py: 3 }}>
-        {children || (
-          <>
-            <Box sx={{ mb: 1 }}>
-              {offerObj?.offerCount !== 0 && (
-                <Box>
-                  <Trans i18nKey={'dialog.offerDetails.confirmTermsTitle'} count={offerObj.offerCount} />
-                </Box>
-              )}
+        <>
+          <Box sx={{ mb: 1 }}>
+            {offerObj?.offerCount > 1 && (
               <Box>
-                {t('dialog.offerDetails.cofirmTermsSubtitle')}
-                {offerObj ? <b style={{ margin: '0 5px' }}>{splitWithFirstOcc(offerObj.provider)}</b> : '-.'}
+                <Trans i18nKey={'dialog.offerDetails.confirmTermsTitle'} count={offerObj.offerCount} />
               </Box>
-              <Box>{t('dialog.offerDetails.confirmHeading')}</Box>
+            )}
+            <Box>
+              {t('dialog.offerDetails.cofirmTermsSubtitle')}
+              {offerObj ? <b style={{ margin: '0 5px' }}>{splitWithFirstOcc(offerObj.provider)}</b> : '-.'}
             </Box>
-            <Box>(1) {t('dialog.offerDetails.point1')}</Box>
-            <Box>(2) {t('dialog.offerDetails.point2')}</Box>
-            <Box>(3) {t('dialog.offerDetails.point3')}</Box>
-            <FormControlLabel
-              control={<Checkbox checked={isAgreed} onChange={() => setIsAgreed(!isAgreed)} name="gilad" />}
-              label={t('content.common.agree')}
-            />
-          </>
-        )}
+            <Box>{t('dialog.offerDetails.confirmHeading')}</Box>
+          </Box>
+          <Box>(1) {t('dialog.offerDetails.point1')}</Box>
+          <Box>(2) {t('dialog.offerDetails.point2')}</Box>
+          <Box>(3) {t('dialog.offerDetails.point3')}</Box>
+          <FormControlLabel
+            control={<Checkbox checked={isAgreed} onChange={() => setIsAgreed(!isAgreed)} name="gilad" />}
+            label={t('content.common.agree')}
+          />
+        </>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" disabled={isProgress} onClick={() => handleClose(false)}>
+        <Button variant="contained" disabled={isProgress} onClick={() => dispatch(setOpenOfferConfirmDialog(false))}>
           {t('button.cancel')}
         </Button>
         <LoadingButton

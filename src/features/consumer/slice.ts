@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -41,6 +41,8 @@ const initialState: IConsumerSlice = {
   filterSelectedConnector: {},
   contractAgreements: [],
   isContractAgreementsLoading: false,
+  openOfferDetailsDialog: false,
+  openOfferConfirmDialog: false,
 };
 
 export const consumerSlice = createSlice({
@@ -109,6 +111,12 @@ export const consumerSlice = createSlice({
     setIsContractAgreementsLoading: (state, action: PayloadAction<boolean>) => {
       state.isContractAgreementsLoading = action.payload;
     },
+    setOpenOfferDetailsDialog: (state, action: PayloadAction<boolean>) => {
+      state.openOfferDetailsDialog = action.payload;
+    },
+    setOpenOfferConfirmDialog: (state, action: PayloadAction<boolean>) => {
+      state.openOfferConfirmDialog = action.payload;
+    },
   },
 });
 
@@ -128,5 +136,7 @@ export const {
   setFilterSelectedBPN,
   setContractAgreements,
   setIsContractAgreementsLoading,
+  setOpenOfferDetailsDialog,
+  setOpenOfferConfirmDialog,
 } = consumerSlice.actions;
 export default consumerSlice.reducer;
