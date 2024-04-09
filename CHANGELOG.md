@@ -14,6 +14,7 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 
 ### Changed
 - Upload data api implemetation moved to RTK query for better performance.
+- Consumer: Fetching policy information from EDC for offer details overlay
 
 ## [2.3.6] - 2024-03-08
 ### Added
