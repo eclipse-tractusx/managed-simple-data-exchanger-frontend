@@ -18,11 +18,11 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Button, IconButton, Table, Tooltips, Typography } from '@catena-x/portal-shared-components';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import InfoIcon from '@mui/icons-material/Info';
 import { Box, Card, CardContent, Grid } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
-import { Button, IconButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import { GridValidRowModel } from '@mui/x-data-grid';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -32,7 +32,8 @@ import { useGetHelpPageDataQuery } from '../features/provider/submodels/apiSlice
 import { HelpPageData } from '../features/provider/submodels/types';
 import { useAppSelector } from '../features/store';
 
-const columns: GridColDef[] = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const columns: any = [
   { field: 'name', headerName: 'Name', flex: 1, sortable: false, align: 'left', disableColumnMenu: true },
   {
     field: 'mandatory',
@@ -60,7 +61,7 @@ const columns: GridColDef[] = [
     headerAlign: 'center',
     align: 'center',
     disableColumnMenu: true,
-    renderCell: ({ row }) => (
+    renderCell: ({ row }: GridValidRowModel) => (
       <Tooltips tooltipPlacement="top" tooltipText={row.description}>
         <span>
           <InfoIcon color="primary" />

@@ -19,8 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Input, SelectList, Tab, TabPanel, Tabs } from '@catena-x/portal-shared-components';
 import { Box, Button, FormControl, Grid } from '@mui/material';
-import { Input, SelectList, Tab, TabPanel, Tabs } from 'cx-portal-shared-components';
 import { isArray, keys, pickBy } from 'lodash';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -146,9 +146,7 @@ const PolicyHub = ({ onSubmit }: any) => {
         {/* Policy tabs */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={activeTab} onChange={handleTabChange} aria-label="polcy type tabs" sx={{ pt: 0 }}>
-            {policyTypes?.map((type: string) => (
-              <Tab key={type} label={type} />
-            ))}
+            {policyTypes?.map((type: string) => <Tab key={type} label={type} />)}
           </Tabs>
         </Box>
         <Box>

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,12 +19,26 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-// eslint-disable-next-line import/no-extraneous-dependencies
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/vitest';
+
+import * as matchers from '@testing-library/jest-dom/matchers';
+import { cleanup } from '@testing-library/react';
+import { afterEach, beforeEach, expect, vi } from 'vitest';
+
+// Extend Vitest's expect method with methods from react-testing-library
+expect.extend(matchers);
+
+beforeEach(() => {
+  vi.mock('react-i18next', () => ({
+    useTranslation: () => ({ t: (key: any) => key }),
+    Trans: ({ children }: any) => children,
+  }));
+});
+
+// Run cleanup after each test case (e.g., clearing jsdom)
+afterEach(() => {
+  cleanup();
+});
 
 // https://github.com/akiran/react-slick/issues/742#issuecomment-298992238
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

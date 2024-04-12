@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 T-Systems International GmbH
+ * Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,25 +17,25 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { LoadingButton } from '@catena-x/portal-shared-components';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { Stack } from '@mui/material';
-import { LoadingButton } from 'cx-portal-shared-components';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { csvFileDownload } from '../helpers/FileDownloadHelper';
 import AppService from '../services/appService';
 
-export default function DownloadSamples({ submodel }: { submodel: string }) {
-  const [downloadingSample, setdownloadingSample] = useState(false);
-  const [downloadingTemplate, setdownloadingTemplate] = useState(false);
+export default function DownloadSamples({ submodel }: Readonly<{ submodel: string }>) {
+  const [downloadingSample, setDownloadingSample] = useState(false);
+  const [downloadingTemplate, setDownloadingTemplate] = useState(false);
   const { t } = useTranslation();
 
   async function download(type: string) {
     if (type === 'sample') {
-      setdownloadingSample(true);
+      setDownloadingSample(true);
     } else if (type === 'template') {
-      setdownloadingTemplate(true);
+      setDownloadingTemplate(true);
     }
     try {
       const { data } = await AppService.getInstance().downloadCSV(submodel, type);
@@ -44,8 +44,8 @@ export default function DownloadSamples({ submodel }: { submodel: string }) {
         csvFileDownload(data, fileName);
       }
     } finally {
-      setdownloadingSample(false);
-      setdownloadingTemplate(false);
+      setDownloadingSample(false);
+      setDownloadingTemplate(false);
     }
   }
 

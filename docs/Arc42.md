@@ -332,11 +332,13 @@ Backend API Swagger-ui Ex: [https://domain_url/api/swagger-ui/index.html](https:
 | /login                | Keycloak Authentication                                             | Main 	|
  | /logout               | Keycloak logout                                                     |       |
 | /                  	  | Home page for use case selection and app overview                   | Main 	|
-| /create-data      	   | Create data using a CSV file, table or submit JSON data directly 	  | Sub  	|
-| /upload-history       | Upload history table                                             	  | Sub  	|
-| /help          	      | Help guide, CSV rules and samples                                   | Sub  	|
-| /consume-data     	   | Get list of data offer by selected providers                     	  | Sub  	|
-| /contracts-history 	  | Contracts history table                                             | Sub  	|
+| /provider/manual-upload      	   | Create data using a CSV file, table or submit JSON data directly 	  | Sub  	|
+| /provider/policies       | Manage Policies                                             	  | Sub  	|
+| /provider/upload-history       | Upload history table                                             	  | Sub  	|
+| /provider/help          	      | Help guide, CSV rules and samples                                   | Sub  	|
+| /provider/contracts 	  | Contracts history of provider                                           | Sub  	|                                           	  | Sub  	|
+| /consumer/consume-data     	   | Get list of data offer by selected providers                     	  | Sub  	|
+| /consumer/contracts 	  | Contracts history of consumer                                           | Sub  	|
 
 <br />
 
@@ -361,7 +363,7 @@ Backend API Swagger-ui Ex: [https://domain_url/api/swagger-ui/index.html](https:
 | Library                    	  | Description                                           	                               | Link                                                     	 |
 |-------------------------------|---------------------------------------------------------------------------------------|------------------------------------------------------------|
 | axios                      	  | Promise based HTTP Client for the browser and node.js 	                               | https://www.npmjs.com/package/axios                      	 |
-| cx-portal-shared-components 	 | Contains the shared UI components that are used to build the Catena-X Portal Frontend | https://www.npmjs.com/package/cx-portal-shared-components	 |
+| @catena-x/portal-shared-components 	 | Contains the shared UI components that are used to build the Catena-X Portal Frontend | https://www.npmjs.com/package/@catena-x/portal-shared-components	 |
 | redux                      	  | State management for react application                  	                             | https://www.npmjs.com/package/redux         	             |
 | @reduxjs/toolkit              | React toolkit for state manangement                     	                             | https://www.npmjs.com/package/@reduxjs/toolkit          	     |
 | ajv                       	   | Schema validator                                       	                              | https://www.npmjs.com/package/ajv                        |

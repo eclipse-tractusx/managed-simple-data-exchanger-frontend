@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,14 +17,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { Typography } from '@catena-x/portal-shared-components';
 import InfoIcon from '@mui/icons-material/Info';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import { Box, SxProps } from '@mui/material';
-import { Typography } from 'cx-portal-shared-components';
 import { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function InfoSteps({ steps, icon, sx }: { steps: string[]; icon: string; sx?: SxProps }) {
+export default function InfoSteps({ steps, icon, sx }: Readonly<{ steps: string[]; icon: string; sx?: SxProps }>) {
   const { t } = useTranslation();
   const ICON_MAPPING: { [key: string]: ReactElement } = {
     tips: <TipsAndUpdatesIcon color="disabled" />,

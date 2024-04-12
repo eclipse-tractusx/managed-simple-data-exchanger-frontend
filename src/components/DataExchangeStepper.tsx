@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,8 +18,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Button, Typography } from '@catena-x/portal-shared-components';
 import { Box, Divider, Grid } from '@mui/material';
-import { Button, Typography } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,49 +33,47 @@ export const DataExchangeStepper: React.FC<IDataExchangeStepper> = ({ data }) =>
   const { t } = useTranslation();
   const navigate = useNavigate();
   return (
-    <>
-      <Box sx={{ flex: 1 }}>
-        <Grid container spacing={2} alignItems="center">
-          {data.map(step => {
-            const StepIcon = step?.stepLink?.icon;
-            return (
-              <Grid item xs="auto" key={step.stepNum}>
-                <Box
-                  p={2}
-                  sx={{
-                    width: 200,
-                    height: 160,
-                  }}
-                >
-                  <Typography variant="h5">{step.stepNum}</Typography>
-                  <Divider sx={{ background: '#0F71CB' }} />
-                  <Typography variant="subtitle1" mt={2}>
-                    {t(step.stepTitle)}
-                  </Typography>
-                  {step?.stepLink && (
-                    <Button
-                      variant="text"
-                      size="medium"
-                      onClick={() => navigate(step.stepLink.routeUrl)}
-                      startIcon={<StepIcon />}
-                      sx={{
-                        p: 0,
-                        mt: 2,
-                        '&:hover': {
-                          backgroundColor: 'transparent',
-                          textDecoration: 'underline',
-                        },
-                      }}
-                    >
-                      {t(step.stepLink.text)}
-                    </Button>
-                  )}
-                </Box>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
-    </>
+    <Box sx={{ flex: 1 }}>
+      <Grid container spacing={2} alignItems="center">
+        {data.map(step => {
+          const StepIcon = step?.stepLink?.icon;
+          return (
+            <Grid item xs="auto" key={step.stepNum}>
+              <Box
+                p={2}
+                sx={{
+                  width: 200,
+                  height: 160,
+                }}
+              >
+                <Typography variant="h5">{step.stepNum}</Typography>
+                <Divider sx={{ background: '#0F71CB' }} />
+                <Typography variant="subtitle1" mt={2}>
+                  {t(step.stepTitle)}
+                </Typography>
+                {step?.stepLink && (
+                  <Button
+                    variant="text"
+                    size="medium"
+                    onClick={() => navigate(step.stepLink.routeUrl)}
+                    startIcon={<StepIcon />}
+                    sx={{
+                      p: 0,
+                      mt: 2,
+                      '&:hover': {
+                        backgroundColor: 'transparent',
+                        textDecoration: 'underline',
+                      },
+                    }}
+                  >
+                    {t(step.stepLink.text)}
+                  </Button>
+                )}
+              </Box>
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Box>
   );
 };

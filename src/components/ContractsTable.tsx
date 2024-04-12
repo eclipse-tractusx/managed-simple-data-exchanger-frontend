@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 T-Systems International GmbH
+ * Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,11 +17,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { IconButton, LoadingButton, Tooltips, Typography } from '@catena-x/portal-shared-components';
 import { Refresh } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, Grid, LinearProgress } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar, GridValidRowModel } from '@mui/x-data-grid';
-import { IconButton, LoadingButton, Tooltips, Typography } from 'cx-portal-shared-components';
 import { capitalize } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -39,7 +39,7 @@ interface IContractsTable {
   title: string;
   subtitle: string;
 }
-function ContractsTable({ type, title, subtitle }: IContractsTable) {
+function ContractsTable({ type, title, subtitle }: Readonly<IContractsTable>) {
   const [pageSize, setPageSize] = useState<number>(10);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -153,70 +153,62 @@ function ContractsTable({ type, title, subtitle }: IContractsTable) {
 
   if (isSuccess) {
     return (
-      <>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={9}>
-            <Typography variant="h3">{title}</Typography>
-            <Typography variant="body1" mt={1}>
-              {subtitle}
-            </Typography>
-          </Grid>
-          <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
-            <LoadingButton
-              size="small"
-              variant="contained"
-              label={t('button.refresh')}
-              onButtonClick={refetch}
-              startIcon={<Refresh />}
-              loadIndicator={t('content.common.loading')}
-              loading={isFetching}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
-              <Typography variant="body1" maxWidth={900} mb={2}>
-                {t('content.common.ownConnector')} {data.connector}
-              </Typography>
-              <DataGrid
-                autoHeight={true}
-                getRowId={row => row.id}
-                rows={data.contracts}
-                columns={type === 'provider' ? [...columns, ...actionCol] : columns}
-                loading={isFetching}
-                pagination
-                pageSize={pageSize}
-                onPageSizeChange={setPageSize}
-                rowsPerPageOptions={[10, 25, 50, 100]}
-                components={{
-                  Toolbar: GridToolbar,
-                  LoadingOverlay: LinearProgress,
-                  NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
-                  NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
-                }}
-                componentsProps={{
-                  toolbar: {
-                    showQuickFilter: true,
-                    quickFilterProps: { debounceMs: 500 },
-                    printOptions: { disableToolbarButton: true },
-                  },
-                }}
-                disableColumnMenu
-                disableColumnSelector
-                disableDensitySelector
-                disableSelectionOnClick
-                sx={{
-                  '& .MuiDataGrid-columnHeaderTitle': {
-                    textOverflow: 'clip',
-                    whiteSpace: 'break-spaces !important',
-                    maxHeight: 'none !important',
-                    lineHeight: 1.4,
-                  },
-                }}
-              />
-            </Box>
-          </Grid>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={9}>
+          <Typography variant="h3">{title}</Typography>
+          <Typography variant="body1" mt={1}>
+            {subtitle}
+          </Typography>
         </Grid>
-      </>
+        <Grid item xs={3} display={'flex'} justifyContent={'flex-end'}>
+          <LoadingButton
+            size="small"
+            variant="contained"
+            label={t('button.refresh')}
+            onButtonClick={refetch}
+            startIcon={<Refresh />}
+            loadIndicator={t('content.common.loading')}
+            loading={isFetching}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Box sx={{ height: 'auto', overflow: 'auto', width: '100%' }}>
+            <Typography variant="body1" maxWidth={900} mb={2}>
+              {t('content.common.ownConnector')} {data.connector}
+            </Typography>
+            <DataGrid
+              autoHeight
+              getRowId={row => row.id}
+              rows={data.contracts}
+              columns={type === 'provider' ? [...columns, ...actionCol] : columns}
+              loading={isFetching}
+              pagination
+              pageSize={pageSize}
+              onPageSizeChange={setPageSize}
+              rowsPerPageOptions={[10, 25, 50, 100]}
+              components={{
+                Toolbar: GridToolbar,
+                LoadingOverlay: LinearProgress,
+                NoRowsOverlay: () => NoDataPlaceholder('content.common.noData'),
+                NoResultsOverlay: () => NoDataPlaceholder('content.common.noResults'),
+              }}
+              disableColumnMenu
+              disableColumnSelector
+              disableDensitySelector
+              disableSelectionOnClick
+              disableColumnFilter
+              sx={{
+                '& .MuiDataGrid-columnHeaderTitle': {
+                  textOverflow: 'clip',
+                  whiteSpace: 'break-spaces !important',
+                  maxHeight: 'none !important',
+                  lineHeight: 1.4,
+                },
+              }}
+            />
+          </Box>
+        </Grid>
+      </Grid>
     );
   } else return null;
 }
