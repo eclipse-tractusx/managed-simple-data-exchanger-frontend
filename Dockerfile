@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 ################################################################################
 # => Build container
-FROM node:18.19.0-alpine3.18 as builder
+FROM node:21.7.3-alpine3.18 as builder
 
 WORKDIR /app
 
