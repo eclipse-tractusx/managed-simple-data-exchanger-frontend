@@ -3,6 +3,7 @@
   "version": "2.3.6",
   "description": "Managed Simple Data Exchanger Frontend",
   "license": "Apache-2.0",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend"
