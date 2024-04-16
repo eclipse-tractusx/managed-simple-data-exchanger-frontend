@@ -183,7 +183,7 @@ npm/npmjs/-/https-proxy-agent/7.0.4, MIT, approved, clearlydefined
 npm/npmjs/-/human-signals/5.0.0, Apache-2.0, approved, clearlydefined
 npm/npmjs/-/i18next-browser-languagedetector/7.2.1, MIT, approved, clearlydefined
 npm/npmjs/-/i18next/20.3.1, MIT, approved, clearlydefined
-npm/npmjs/-/i18next/23.11.1, , restricted, clearlydefined
+npm/npmjs/-/i18next/23.11.1, MIT, approved, #14383
 npm/npmjs/-/iconv-lite/0.6.3, MIT, approved, clearlydefined
 npm/npmjs/-/ieee754/1.2.1, BSD-3-Clause, approved, clearlydefined
 npm/npmjs/-/ignore/5.3.1, MIT, approved, #11665
@@ -234,7 +234,7 @@ npm/npmjs/-/js-sha256/0.9.0, MIT, approved, clearlydefined
 npm/npmjs/-/js-tokens/4.0.0, MIT, approved, #2401
 npm/npmjs/-/js-tokens/9.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/js-yaml/4.1.0, MIT, approved, clearlydefined
-npm/npmjs/-/jsdom/24.0.0, MIT, restricted, clearlydefined
+npm/npmjs/-/jsdom/24.0.0, MIT AND LGPL-2.0-or-later AND W3C-19980720 AND LicenseRef-scancode-iso-8879 AND (Apache-2.0 AND BSD-3-Clause), restricted, #14404
 npm/npmjs/-/jsesc/2.5.2, MIT, approved, clearlydefined
 npm/npmjs/-/json-buffer/3.0.1, MIT, approved, clearlydefined
 npm/npmjs/-/json-parse-even-better-errors/2.3.1, MIT, approved, clearlydefined
@@ -338,7 +338,7 @@ npm/npmjs/-/react-i18next/14.1.0, MIT AND Apache-2.0, approved, #13870
 npm/npmjs/-/react-is/16.13.1, MIT, approved, clearlydefined
 npm/npmjs/-/react-is/17.0.2, MIT, approved, clearlydefined
 npm/npmjs/-/react-is/18.2.0, MIT, approved, clearlydefined
-npm/npmjs/-/react-player/2.16.0, , restricted, clearlydefined
+npm/npmjs/-/react-player/2.16.0, MIT, approved, #14388
 npm/npmjs/-/react-redux/9.1.0, MIT AND (BSD-2-Clause AND ISC AND MIT) AND BSD-3-Clause, approved, #13913
 npm/npmjs/-/react-refresh/0.14.0, MIT, approved, clearlydefined
 npm/npmjs/-/react-router-dom/6.22.3, MIT, approved, #13333
@@ -442,12 +442,12 @@ npm/npmjs/-/uri-js/4.4.1, BSD-2-Clause, approved, #1086
 npm/npmjs/-/url-parse/1.5.10, MIT, approved, clearlydefined
 npm/npmjs/-/use-sync-external-store/1.2.0, MIT, approved, clearlydefined
 npm/npmjs/-/uuid/8.3.2, MIT AND (BSD-3-Clause AND MIT), approved, #2438
-npm/npmjs/-/vite-node/1.5.0, , restricted, clearlydefined
-npm/npmjs/-/vite-plugin-checker/0.6.4, MIT, restricted, clearlydefined
+npm/npmjs/-/vite-node/1.5.0, MIT, approved, clearlydefined
+npm/npmjs/-/vite-plugin-checker/0.6.4, MIT, approved, #14401
 npm/npmjs/-/vite-plugin-svgr/4.2.0, MIT, approved, clearlydefined
 npm/npmjs/-/vite-tsconfig-paths/4.3.2, MIT, approved, clearlydefined
 npm/npmjs/-/vite/5.2.8, MIT AND (ISC AND MIT) AND (Apache-2.0 AND BSD-2-Clause AND CC0-1.0 AND ISC AND MIT) AND (BSD-3-Clause AND MIT) AND ISC AND (BSD-2-Clause AND BSD-3-Clause), approved, #13953
-npm/npmjs/-/vitest/1.5.0, , restricted, clearlydefined
+npm/npmjs/-/vitest/1.5.0, MIT, approved, clearlydefined
 npm/npmjs/-/void-elements/3.1.0, MIT, approved, clearlydefined
 npm/npmjs/-/vscode-jsonrpc/6.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/vscode-languageclient/7.0.0, MIT AND (ISC AND MIT), approved, #4126
@@ -584,21 +584,21 @@ npm/npmjs/@popperjs/core/2.11.8, MIT, approved, clearlydefined
 npm/npmjs/@reduxjs/toolkit/2.2.3, MIT AND (BSD-2-Clause AND ISC AND MIT) AND Apache-2.0, approved, #14170
 npm/npmjs/@remix-run/router/1.15.3, MIT, approved, clearlydefined
 npm/npmjs/@rollup/pluginutils/5.1.0, MIT, approved, clearlydefined
-npm/npmjs/@rollup/rollup-android-arm-eabi/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-android-arm64/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-darwin-arm64/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-darwin-x64/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-arm-gnueabihf/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-arm64-gnu/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-arm64-musl/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-powerpc64le-gnu/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-riscv64-gnu/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-s390x-gnu/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-x64-gnu/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-linux-x64-musl/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-win32-arm64-msvc/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-win32-ia32-msvc/4.14.1, , restricted, clearlydefined
-npm/npmjs/@rollup/rollup-win32-x64-msvc/4.14.1, , restricted, clearlydefined
+npm/npmjs/@rollup/rollup-android-arm-eabi/4.14.1, MIT AND (ISC AND MIT), approved, #14395
+npm/npmjs/@rollup/rollup-android-arm64/4.14.1, MIT AND (ISC AND MIT), approved, #14399
+npm/npmjs/@rollup/rollup-darwin-arm64/4.14.1, MIT AND (ISC AND MIT), approved, #14406
+npm/npmjs/@rollup/rollup-darwin-x64/4.14.1, MIT AND (ISC AND MIT), approved, #14394
+npm/npmjs/@rollup/rollup-linux-arm-gnueabihf/4.14.1, MIT AND (ISC AND MIT), approved, #14398
+npm/npmjs/@rollup/rollup-linux-arm64-gnu/4.14.1, MIT AND (ISC AND MIT), approved, #14407
+npm/npmjs/@rollup/rollup-linux-arm64-musl/4.14.1, MIT AND (ISC AND MIT), approved, #14396
+npm/npmjs/@rollup/rollup-linux-powerpc64le-gnu/4.14.1, MIT AND (ISC AND MIT), approved, #14403
+npm/npmjs/@rollup/rollup-linux-riscv64-gnu/4.14.1, MIT AND (ISC AND MIT), approved, #14397
+npm/npmjs/@rollup/rollup-linux-s390x-gnu/4.14.1, MIT AND (ISC AND MIT), approved, #14402
+npm/npmjs/@rollup/rollup-linux-x64-gnu/4.14.1, MIT AND (ISC AND MIT), approved, #14400
+npm/npmjs/@rollup/rollup-linux-x64-musl/4.14.1, MIT AND (ISC AND MIT), approved, #14391
+npm/npmjs/@rollup/rollup-win32-arm64-msvc/4.14.1, MIT AND (ISC AND MIT), approved, #14405
+npm/npmjs/@rollup/rollup-win32-ia32-msvc/4.14.1, MIT AND (ISC AND MIT), approved, #14393
+npm/npmjs/@rollup/rollup-win32-x64-msvc/4.14.1, MIT AND (ISC AND MIT), approved, #14392
 npm/npmjs/@sinclair/typebox/0.27.8, MIT, approved, clearlydefined
 npm/npmjs/@svgr/babel-plugin-add-jsx-attribute/8.0.0, MIT, approved, clearlydefined
 npm/npmjs/@svgr/babel-plugin-remove-jsx-attribute/8.0.0, MIT, approved, clearlydefined
@@ -614,7 +614,7 @@ npm/npmjs/@svgr/hast-util-to-babel-ast/8.0.0, MIT, approved, clearlydefined
 npm/npmjs/@svgr/plugin-jsx/8.1.0, MIT, approved, clearlydefined
 npm/npmjs/@testing-library/dom/9.3.4, MIT AND (MIT AND WTFPL), approved, #9038
 npm/npmjs/@testing-library/jest-dom/6.4.2, MIT, approved, clearlydefined
-npm/npmjs/@testing-library/react/14.3.1, , restricted, clearlydefined
+npm/npmjs/@testing-library/react/14.3.1, MIT, approved, #14385
 npm/npmjs/@testing-library/user-event/14.5.2, MIT, approved, clearlydefined
 npm/npmjs/@types/aria-query/5.0.4, MIT, approved, #10958
 npm/npmjs/@types/babel__core/7.20.5, MIT, approved, clearlydefined
@@ -650,8 +650,8 @@ npm/npmjs/@typescript-eslint/utils/7.6.0, BSD-2-Clause AND MIT AND (BSD-2-Clause
 npm/npmjs/@typescript-eslint/visitor-keys/7.6.0, MIT, approved, clearlydefined
 npm/npmjs/@ungap/structured-clone/1.2.0, ISC, approved, clearlydefined
 npm/npmjs/@vitejs/plugin-react/4.2.1, MIT, approved, clearlydefined
-npm/npmjs/@vitest/expect/1.5.0, , restricted, clearlydefined
-npm/npmjs/@vitest/runner/1.5.0, , restricted, clearlydefined
-npm/npmjs/@vitest/snapshot/1.5.0, , restricted, clearlydefined
+npm/npmjs/@vitest/expect/1.5.0, MIT, approved, clearlydefined
+npm/npmjs/@vitest/runner/1.5.0, MIT, approved, clearlydefined
+npm/npmjs/@vitest/snapshot/1.5.0, MIT, approved, clearlydefined
 npm/npmjs/@vitest/spy/1.5.0, MIT, approved, clearlydefined
-npm/npmjs/@vitest/utils/1.5.0, , restricted, clearlydefined
+npm/npmjs/@vitest/utils/1.5.0, MIT AND Apache-2.0 AND (Apache-2.0 AND BSD-3-Clause AND ISC AND MIT), approved, #14408
