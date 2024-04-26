@@ -163,7 +163,7 @@ npm/npmjs/-/globrex/0.1.2, MIT, approved, clearlydefined
 npm/npmjs/-/gopd/1.0.1, MIT, approved, #4863
 npm/npmjs/-/graceful-fs/4.2.11, ISC, approved, #7413
 npm/npmjs/-/graphemer/1.4.0, MIT, approved, clearlydefined
-npm/npmjs/-/happy-dom/14.7.1, , restricted, clearlydefined
+npm/npmjs/-/happy-dom/14.7.1, MIT, approved, #14578
 npm/npmjs/-/has-bigints/1.0.2, MIT, approved, clearlydefined
 npm/npmjs/-/has-flag/3.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/has-flag/4.0.0, MIT, approved, clearlydefined
