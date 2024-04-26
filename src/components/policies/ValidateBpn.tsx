@@ -19,7 +19,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Autocomplete, Box, FormControl, Grid, Stack } from '@mui/material';
 import {
   Button,
   Chip,
@@ -31,7 +30,8 @@ import {
   LoadingButton,
   SelectList,
   Typography,
-} from 'cx-portal-shared-components';
+} from '@catena-x/portal-shared-components';
+import { Autocomplete, Box, FormControl, Grid, Stack } from '@mui/material';
 import { debounce, inRange, isEmpty, uniq } from 'lodash';
 import { useEffect, useState } from 'react';
 import { Controller, useFieldArray } from 'react-hook-form';
@@ -48,7 +48,7 @@ import { Config } from '../../utils/config';
 import { ALPHA_NUM_REGEX, BPN_TYPE_FIELDS } from '../../utils/constants';
 
 function ValidateBpn({ control, resetField, getValues, setValue, inputBpn }: any) {
-  const [searchPopup, setsearchPopup] = useState(false);
+  const [searchPopup, setSearchPopup] = useState(false);
   const [selectType, setSelectType] = useState(BPN_TYPE_FIELDS[0]);
   const [conKey, setConKey] = useState(uuid());
 
@@ -100,7 +100,7 @@ function ValidateBpn({ control, resetField, getValues, setValue, inputBpn }: any
   const onChangeSearchInputValue = async (params: string) => {
     const searchStr = params.toLowerCase();
     if (searchStr.length > 2) {
-      setsearchPopup(true);
+      setSearchPopup(true);
       dispatch(setFilterCompanyOptions([]));
       dispatch(setFfilterCompanyOptionsLoading(true));
       const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
@@ -116,7 +116,7 @@ function ValidateBpn({ control, resetField, getValues, setValue, inputBpn }: any
         dispatch(setFilterCompanyOptions(filterContent));
       }
     } else {
-      setsearchPopup(false);
+      setSearchPopup(false);
       dispatch(setFilterCompanyOptions([]));
     }
   };
@@ -189,8 +189,8 @@ function ValidateBpn({ control, resetField, getValues, setValue, inputBpn }: any
                     onInputChange={debounce(async (event, newInputValue) => {
                       await onChangeSearchInputValue(newInputValue);
                     }, 1000)}
-                    onClose={() => setsearchPopup(false)}
-                    onBlur={() => setsearchPopup(false)}
+                    onClose={() => setSearchPopup(false)}
+                    onBlur={() => setSearchPopup(false)}
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     getOptionLabel={option => {
                       return typeof option === 'string' ? option : `${option.value}`;

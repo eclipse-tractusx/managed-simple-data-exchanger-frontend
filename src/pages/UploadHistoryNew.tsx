@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 T-Systems International GmbH
+ * Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,12 +17,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { IconButton, LoadingButton, Tooltips, Typography } from '@catena-x/portal-shared-components';
 import { Refresh } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Grid, LinearProgress } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
-import { IconButton, LoadingButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { capitalize } from 'lodash';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -232,10 +232,10 @@ function UploadHistoryNew() {
           </Grid>
         </Grid>
         <Box sx={{ mt: 4 }}>
-          <Table
+          <DataGrid
+            autoHeight
             loading={isFetching}
             rowCount={data.totalItems}
-            title={''}
             getRowId={row => row.processId}
             disableColumnMenu
             disableColumnSelector

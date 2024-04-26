@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 T-Systems International GmbH
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -20,6 +20,7 @@
 
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, expect, test } from 'vitest';
 
 import ConfirmTermsDialog from '../components/dialogs/ConfirmTermsDialog';
 

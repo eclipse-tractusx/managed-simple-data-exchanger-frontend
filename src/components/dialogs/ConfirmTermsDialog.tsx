@@ -18,8 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
+  LoadingButton,
+} from '@catena-x/portal-shared-components';
 import { Box, Checkbox, FormControlLabel } from '@mui/material';
-import { Button, Dialog, DialogActions, DialogContent, DialogHeader, LoadingButton } from 'cx-portal-shared-components';
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 

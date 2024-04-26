@@ -20,10 +20,10 @@
 
 import '../styles/home.scss';
 
+import { Button, Checkbox, Tab, TabPanel, Tabs, Typography } from '@catena-x/portal-shared-components';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Avatar, Box, FormControlLabel, Grid } from '@mui/material';
-import { Button, Checkbox, Tab, TabPanel, Tabs, Typography } from 'cx-portal-shared-components';
 import { SyntheticEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

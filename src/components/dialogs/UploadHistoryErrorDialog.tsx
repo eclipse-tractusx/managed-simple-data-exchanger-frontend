@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 T-Systems International GmbH
- * Copyright (c) 2022 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 T-Systems International GmbH
+ * Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,18 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Box, Grid } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogHeader,
-  Table,
   Tooltips,
   Typography,
-} from 'cx-portal-shared-components';
+} from '@catena-x/portal-shared-components';
+import { Box, Grid } from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -90,9 +89,9 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({ ope
             </Grid>
           </Grid>
           <Box sx={{ mt: 2 }}>
-            <Table
+            <DataGrid
+              autoHeight
               loading={isLoading}
-              title={''}
               getRowId={row => row.uuid}
               disableColumnMenu
               disableColumnSelector
@@ -120,7 +119,7 @@ const UploadHistoryErrorDialog: React.FC<UploadHistoryErrorDialogProps> = ({ ope
         </>
       </DialogContent>
       <DialogActions>
-        <Button variant="outlined" onClick={() => handleClose()}>
+        <Button variant="contained" onClick={() => handleClose()}>
           {t('button.close')}
         </Button>
       </DialogActions>

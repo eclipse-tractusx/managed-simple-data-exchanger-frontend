@@ -41,7 +41,7 @@ export function epochToDate(epoch: number) {
 }
 // Removing console logs except local dev env
 export function clearConsoles() {
-  if (process.env.NODE_ENV === 'production') {
+  if (import.meta.env.PROD) {
     console.log = () => {};
     console.error = () => {};
     console.debug = () => {};

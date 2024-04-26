@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,17 +18,17 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { theme } from '@catena-x/portal-shared-components';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { theme } from 'cx-portal-shared-components';
 import { useTranslation } from 'react-i18next';
 
+import { version } from '../../../package.json';
 import { setSidebarExpanded } from '../../features/app/slice';
 import { useAppDispatch, useAppSelector } from '../../features/store';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { version } = require('../../../package.json');
 
 export default function CollapseMenuItem() {
   const { sidebarExpanded } = useAppSelector(state => state.appSlice);

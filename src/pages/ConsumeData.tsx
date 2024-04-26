@@ -18,15 +18,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { Autocomplete, Box, Grid, LinearProgress } from '@mui/material';
-import {
-  DataGrid,
-  GridColDef,
-  GridSelectionModel,
-  GridToolbar,
-  GridValidRowModel,
-  GridValueGetterParams,
-} from '@mui/x-data-grid';
 import {
   Button,
   Dialog,
@@ -37,7 +28,16 @@ import {
   LoadingButton,
   SelectList,
   Typography,
-} from 'cx-portal-shared-components';
+} from '@catena-x/portal-shared-components';
+import { Autocomplete, Box, Grid, LinearProgress } from '@mui/material';
+import {
+  DataGrid,
+  GridColDef,
+  GridSelectionModel,
+  GridToolbar,
+  GridValidRowModel,
+  GridValueGetterParams,
+} from '@mui/x-data-grid';
 import { debounce, isEmpty, isEqual, map, pick } from 'lodash';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -232,9 +232,9 @@ export default function ConsumeData() {
       await fetchConsumerDataOffers();
     }
   };
-  const [dialogOpen, setdialogOpen] = useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const showAddDialog = () => {
-    setdialogOpen(prev => !prev);
+    setDialogOpen(prev => !prev);
   };
 
   const checkoutSelectedOffers = async (offers: IConsumerDataOffers[]) => {

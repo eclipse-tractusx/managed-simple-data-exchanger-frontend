@@ -22,7 +22,7 @@ This work is licensed under the [Apache-2.0](https://www.apache.org/licenses/LIC
   - [Home](#home)
   - [About](#about)
   - [Provider](#provider)
-    - [Create Data](#create-data)
+    - [Manual Upload](#manual-upload)
       - [Upload File](#upload-file)
       - [Manual Entry](#manual-entry)
     - [Policies](#policies)
@@ -112,7 +112,7 @@ In this page you can find the source links of License, Notice, Base Repository a
 
 # **Provider**
 
-## Create Data
+## Manual Upload
 
 In this page, list of available submodels will be fetched dynamically on basis of use-case selections, and we can select any submodel to generate the table of that selected submodel based on the schema provided by backend API.
 

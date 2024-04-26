@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -26,7 +26,7 @@ import { useAppSelector } from '../../features/store';
 import { icons, IntMenuItem } from '../../helpers/SidebarHelper';
 import Permissions from '../Permissions';
 
-export default function MenuItem({ item }: { item: IntMenuItem }) {
+export default function MenuItem({ item }: Readonly<{ item: IntMenuItem }>) {
   const theme = useTheme();
   const { sidebarExpanded } = useAppSelector(state => state.appSlice);
   const navigate = useNavigate();
@@ -52,6 +52,7 @@ export default function MenuItem({ item }: { item: IntMenuItem }) {
           <ListItemText
             primaryTypographyProps={{
               sx: {
+                fontFamily: 'LibreFranklin-Light',
                 fontSize: '14px',
                 color: `${location.pathname === to ? theme.palette.primary.main : theme.palette.common.black}`,
               },

@@ -19,8 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Typography } from '@catena-x/portal-shared-components';
 import { Grid } from '@mui/material';
-import { Typography } from 'cx-portal-shared-components';
 import { isEmpty } from 'lodash';
 import { Key } from 'react';
 

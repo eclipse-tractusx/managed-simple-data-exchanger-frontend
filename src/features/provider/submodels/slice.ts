@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -111,6 +111,7 @@ export const submodelSlice = createSlice({
         headerAlign: 'left',
         type: handleColumnTypes(value),
         valueOptions: value.enum,
+        minWidth: 200,
       }));
       Object.entries(payload.items.properties).forEach(([key, value]: any) => {
         if (value.enum?.length) {

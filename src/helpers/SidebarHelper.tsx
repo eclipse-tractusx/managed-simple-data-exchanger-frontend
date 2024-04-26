@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,7 +18,6 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import BusinessIcon from '@mui/icons-material/Business';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
@@ -26,9 +25,10 @@ import HistoryIcon from '@mui/icons-material/History';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import UploadIcon from '@mui/icons-material/Upload';
 
 export const icons = {
-  AddCircleOutlineIcon,
+  UploadIcon,
   HistoryIcon,
   HelpOutlineIcon,
   ManageSearchIcon,
@@ -72,9 +72,9 @@ export const MenuItems: IntMenu[] = [
     isHeading: true,
     childrens: [
       {
-        text: 'pages.createData',
-        menuIcon: 'AddCircleOutlineIcon',
-        to: '/provider/create-data',
+        text: 'pages.manualUpload',
+        menuIcon: 'UploadIcon',
+        to: '/provider/manual-upload',
         dataId: 'uploadFileMenu',
         permissions: ['provider_create_contract_offer'],
       },

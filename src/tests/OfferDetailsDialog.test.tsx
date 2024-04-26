@@ -19,6 +19,7 @@
  ********************************************************************************/
 
 import { render, screen } from '@testing-library/react';
+import { expect, test } from 'vitest';
 
 import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
 import { IConsumerDataOffers } from '../features/consumer/types';

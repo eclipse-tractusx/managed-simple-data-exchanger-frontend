@@ -18,11 +18,11 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Button, IconButton, Tooltips, Typography } from '@catena-x/portal-shared-components';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Grid, LinearProgress } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
-import { Button, IconButton, Table, Tooltips, Typography } from 'cx-portal-shared-components';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { filter, map } from 'lodash';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -161,8 +161,8 @@ function Policies() {
           </Grid>
         </Grid>
         <Box>
-          <Table
-            title=""
+          <DataGrid
+            autoHeight
             loading={isFetching}
             rowCount={data.totalItems}
             getRowId={row => row.uuid}

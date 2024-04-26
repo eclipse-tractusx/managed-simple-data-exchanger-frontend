@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,7 +17,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { ErrorPage } from 'cx-portal-shared-components';
+import { ErrorPage } from '@catena-x/portal-shared-components';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ import AppLayout from './components/layouts/AppLayout';
 import { IUser } from './features/app/types';
 import UserService from './services/UserService';
 
-export default function Main({ loggedUser }: { loggedUser: IUser }) {
+export default function Main({ loggedUser }: Readonly<{ loggedUser: IUser }>) {
   document.title = useTranslation().t('title');
 
   return (

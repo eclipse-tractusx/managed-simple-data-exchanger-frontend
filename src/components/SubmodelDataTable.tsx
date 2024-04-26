@@ -17,9 +17,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+import { Button } from '@catena-x/portal-shared-components';
 import { Box } from '@mui/material';
-import { GridCellEditCommitParams, GridRowId } from '@mui/x-data-grid';
-import { Button, Table } from 'cx-portal-shared-components';
+import { DataGrid, GridCellEditCommitParams, GridRowId } from '@mui/x-data-grid';
 import { useTranslation } from 'react-i18next';
 
 import { addRows, deleteRows, setRows, setSelectionModel } from '../features/provider/submodels/slice';
@@ -29,7 +29,7 @@ import InfoSteps from './InfoSteps';
 import UploadInfo from './provider/UploadInfo';
 
 export default function DataTable() {
-  const { submodelDetails, columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
+  const { columns, rows, selectionModel, selectedRows } = useAppSelector(state => state.submodelSlice);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -57,8 +57,7 @@ export default function DataTable() {
           </Button>
         </Box>
       </Box>
-      <Table
-        title={submodelDetails.title}
+      <DataGrid
         getRowId={row => row.rowId}
         autoHeight
         rows={rows}

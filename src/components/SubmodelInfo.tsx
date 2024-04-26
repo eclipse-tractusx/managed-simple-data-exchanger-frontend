@@ -1,6 +1,6 @@
 /*********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2023,2024 T-Systems International GmbH
+ * Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,9 +19,9 @@
  ********************************************************************************/
 import '../styles/submodelDetails.scss';
 
+import { Tooltips } from '@catena-x/portal-shared-components';
 import InfoIcon from '@mui/icons-material/Info';
 import { Box } from '@mui/material';
-import { Tooltips } from 'cx-portal-shared-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppSelector } from '../features/store';
@@ -32,37 +32,35 @@ export default function SubmodelInfo() {
   );
 
   return (
-    <>
-      <Box overflow={'scroll'} mb={3} sx={{ background: 'white' }}>
-        <table className="submodel-detail-table">
-          <tbody>
-            <tr>
-              {previewTableHeadings.map((title: string) => (
-                <th key={uuidv4()}>{title}</th>
-              ))}
-            </tr>
-            {previewTableData.map((data: string[]) => (
-              <tr key={uuidv4()}>
-                {data.map((e: string) => (
-                  <td key={uuidv4()}>{e}</td>
-                ))}
-              </tr>
+    <Box overflow={'scroll'} mb={3} sx={{ background: 'white' }}>
+      <table className="submodel-detail-table">
+        <tbody>
+          <tr>
+            {previewTableHeadings.map((title: string) => (
+              <th key={uuidv4()}>{title}</th>
             ))}
-            <tr>
-              <td>Description</td>
-              {previewTableDescriptions.map((desc: string) => (
-                <td key={uuidv4()}>
-                  <Tooltips tooltipPlacement="top" tooltipText={desc}>
-                    <span>
-                      <InfoIcon color="primary" />
-                    </span>
-                  </Tooltips>
-                </td>
+          </tr>
+          {previewTableData.map((data: string[]) => (
+            <tr key={uuidv4()}>
+              {data.map((e: string) => (
+                <td key={uuidv4()}>{e}</td>
               ))}
             </tr>
-          </tbody>
-        </table>
-      </Box>
-    </>
+          ))}
+          <tr>
+            <td>Description</td>
+            {previewTableDescriptions.map((desc: string) => (
+              <td key={uuidv4()}>
+                <Tooltips tooltipPlacement="top" tooltipText={desc}>
+                  <span>
+                    <InfoIcon color="primary" />
+                  </span>
+                </Tooltips>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    </Box>
   );
 }

@@ -1,6 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 T-Systems International GmbH
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -19,14 +18,15 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-import { Help } from '@mui/icons-material';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { describe, expect, test } from 'vitest';
 
 import UploadFile from '../components/UploadFile';
 import { setPolicyDialog } from '../features/provider/policies/slice';
 import { store } from '../features/store';
 import CreateData from '../pages/CreateData';
+import Help from '../pages/Help';
 import UploadHistoryNew from '../pages/UploadHistoryNew';
 import { ReduxWrapper } from '../utils/testUtils';
 
@@ -44,7 +44,7 @@ describe('Dashboard', () => {
 
   test('help page', () => {
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/help' }]}>
+      <MemoryRouter initialEntries={[{ pathname: '/provide/help' }]}>
         <Help />
       </MemoryRouter>,
       { wrapper: ReduxWrapper },
@@ -54,12 +54,12 @@ describe('Dashboard', () => {
 
   test('Render Policies Dialog Componenet', async () => {
     render(
-      <MemoryRouter initialEntries={[{ pathname: '/create-data' }]}>
+      <MemoryRouter initialEntries={[{ pathname: '/provider/manual-upload' }]}>
         <CreateData />
       </MemoryRouter>,
       { wrapper: ReduxWrapper },
     );
     store?.dispatch(setPolicyDialog(true));
-    expect(screen.queryByText('Policies')).toBeInTheDocument();
+    expect(screen.queryByText('Add Policy')).toBeInTheDocument();
   });
 });

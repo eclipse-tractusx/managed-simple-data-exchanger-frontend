@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,8 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { Button, LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from '@catena-x/portal-shared-components';
 import { Box, Divider, Paper, useTheme } from '@mui/material';
-import { Button, LanguageSwitch, Typography, UserAvatar, UserMenu, UserNav } from 'cx-portal-shared-components';
 import i18next, { changeLanguage } from 'i18next';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ const Nav = () => {
   const avatar = useRef<HTMLDivElement>(null);
   const { loggedInUser } = useAppSelector(state => state.appSlice);
   const NAV_ITEMS = [{ title: 'Logout', to: 'logout' }];
-  const [lang, setlang] = useState(i18next.language);
+  const [lang, setLang] = useState(i18next.language);
 
   const openCloseMenu = () => setMenuOpen(prevVal => !prevVal);
   const onClickAway = (e: MouseEvent | TouchEvent) => {
@@ -94,7 +94,11 @@ const Nav = () => {
           <UserMenu
             open={menuOpen}
             userName={loggedInUser.name}
-            top={50}
+            sx={{
+              top: '50px',
+              width: '256px',
+              position: 'absolute',
+            }}
             userRole={loggedInUser.company}
             onClickAway={onClickAway}
           >
@@ -107,7 +111,7 @@ const Nav = () => {
               }))}
               onChange={e => {
                 changeLanguage(e);
-                setlang(e);
+                setLang(e);
               }}
             />
           </UserMenu>

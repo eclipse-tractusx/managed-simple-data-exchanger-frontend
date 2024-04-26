@@ -19,8 +19,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
+import { SelectList } from '@catena-x/portal-shared-components';
 import { Box, FormControl } from '@mui/material';
-import { SelectList } from 'cx-portal-shared-components';
 import { useEffect, useState } from 'react';
 
 import { NEW_POLICY_ITEM } from '../../constants/policies';
@@ -31,7 +31,7 @@ import { PolicyHubResponse } from '../../features/provider/policies/types';
 import { useAppDispatch, useAppSelector } from '../../features/store';
 import { ISelectList } from '../../models/Common';
 
-function PolicySelection({ data }: { data: PolicyHubResponse[] }) {
+function PolicySelection({ data }: Readonly<{ data: PolicyHubResponse[] }>) {
   const { policyDialogType, selectedPolicy } = useAppSelector(state => state.policySlice);
   const showPolicySelection = policyDialogType === 'FileWithPolicy' || policyDialogType === 'TableWithPolicy';
   const [policyList, setPolicyList] = useState([]);

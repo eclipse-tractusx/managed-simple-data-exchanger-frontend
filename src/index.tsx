@@ -1,7 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -21,30 +21,34 @@
 
 import './styles/index.scss';
 
-import { SharedCssBaseline, SharedThemeProvider } from 'cx-portal-shared-components';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { SharedCssBaseline, SharedThemeProvider } from '@catena-x/portal-shared-components';
+import { ThemeProvider } from '@emotion/react';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 
 import App from './App';
 import { store } from './features/store';
 import I18nService from './services/i18nService';
 import UserService from './services/UserService';
+import { sdeTheme } from './theme';
 import { clearConsoles } from './utils/utils';
 
 clearConsoles();
 I18nService.init();
 
 UserService.initKeycloak(user => {
-  ReactDOM.render(
-    <React.StrictMode>
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
       <SharedCssBaseline />
       <Provider store={store}>
         <SharedThemeProvider>
-          <App loggedUser={user} />
+          {/* To get the Table design for DataGrid, ThemeProvider again imported*/}
+          <ThemeProvider theme={sdeTheme}>
+            <App loggedUser={user} />
+          </ThemeProvider>
         </SharedThemeProvider>
       </Provider>
-    </React.StrictMode>,
-    document.getElementById('root'),
+    </StrictMode>,
   );
 });
