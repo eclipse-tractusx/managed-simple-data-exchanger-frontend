@@ -35,7 +35,7 @@ export const helpApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: any[]) => {
         const pageData = response.map(submodel => {
           return {
-            name: submodel.title,
+            name: `${submodel.title} - ${submodel.version}`,
             description: submodel.description,
             id: submodel.id,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

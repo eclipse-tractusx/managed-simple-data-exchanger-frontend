@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
@@ -41,7 +42,6 @@ const initialState: ISubmodelsSlice = {
   previewTableDescriptions: [],
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleColumnTypes = (value: any) => {
   if (value.type.includes('number')) {
     return value.enum?.length ? 'singleSelect' : 'number';
@@ -90,8 +90,8 @@ export const submodelSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchSubmodelList.fulfilled, (state, { payload }) => {
-      const list = payload.map((e: { id: string; name: string }, index: number) => {
-        const item = { id: index, title: e.name, value: e.id };
+      const list = payload.map((e: { id: string; name: string; version: string }, index: number) => {
+        const item = { id: index, title: `${e.name} - ${e.version}`, value: e.id };
         return item;
       });
       state.submodelList = list;
@@ -123,19 +123,13 @@ export const submodelSlice = createSlice({
       // for submodel description table
       state.previewTableHeadings = ['Field name', ...Object.keys(payload.items.properties)];
       state.previewTableDescriptions = Object.entries(payload.items.properties).map(
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        ([key, value]: any) => value.description,
+        ([_key, value]: any) => value.description,
       );
       state.previewTableData = [
-        [
-          'Example entries',
-          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-          ...Object.entries(payload.items.properties).map(([key, value]: any) => value.examples[0]),
-        ],
+        ['Example entries', ...Object.entries(payload.items.properties).map(([_key, value]: any) => value.examples[0])],
         [
           'Mandatory',
-          // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-          ...Object.entries(payload.items.properties).map(([key, value]: any) =>
+          ...Object.entries(payload.items.properties).map(([key, _value]: any) =>
             indexOf(payload.items.required, key) > -1 ? 'true' : 'false',
           ),
         ],
