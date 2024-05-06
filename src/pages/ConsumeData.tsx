@@ -239,7 +239,7 @@ export default function ConsumeData() {
 
   const checkoutSelectedOffers = async (offers: IConsumerDataOffers[]) => {
     try {
-      const extractedData = map(offers, item => pick(item, ['assetId', 'connectorOfferUrl']));
+      const extractedData = map(offers, item => pick(item, ['assetId', 'connectorOfferUrl', 'publisher']));
       const offerDetails = await getPolicyDetails(extractedData).unwrap();
       const mergeSelectedOffers: IConsumerDataOffers[] = offerDetails.map((policyOffer: IConsumerDataOffers) => ({
         ...policyOffer,
