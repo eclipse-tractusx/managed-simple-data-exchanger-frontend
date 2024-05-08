@@ -1,6 +1,6 @@
 /********************************************************************************
- * Copyright (c) 2021,2022,2023 T-Systems International GmbH
- * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -35,7 +35,7 @@ export const helpApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: any[]) => {
         const pageData = response.map(submodel => {
           return {
-            name: submodel.title,
+            name: `${submodel.title} - ${submodel.version}`,
             description: submodel.description,
             id: submodel.id,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
