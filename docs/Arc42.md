@@ -272,7 +272,7 @@ Backend API Swagger-ui Ex: [https://domain_url/api/swagger-ui/index.html](https:
 | StorePartAsPlanned          	| Store the PartAsPlanned in the SDE database.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	                        | 5               	|
 <br />
 
-#### **BoM As-Planned - PartTypeInformation **
+#### **BoM As-Planned - PartTypeInformation**
 
 <br /><br /><img src="images/part_type_information.svg" height="60%" width="60%" /><br /><br />
 
