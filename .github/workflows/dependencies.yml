@@ -1,5 +1,6 @@
 # #############################################################################
 # Copyright (c) 2023 Contributors to the Eclipse Foundation
+# Copyright (c) 2024 T-Systems International GmbH
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -34,7 +35,7 @@ jobs:
     steps:
   
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'

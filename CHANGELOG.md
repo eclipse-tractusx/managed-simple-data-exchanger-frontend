@@ -13,8 +13,11 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Policy related documentations updated.
 
 ### Changed
-- Upload data api implemetation moved to RTK query for better performance.
+- Upload data api implementation moved to RTK query for better performance.
 - Consumer: Fetching policy information from EDC for offer details overlay
+
+## [2.3.7] - 2024-05-09 
+- Bumped version for release 24.03 to match with backend version (hotfix issue in fixed backend).
 
 ## [2.3.6] - 2024-03-08
 ### Added
@@ -27,7 +30,7 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
  - legal information added to docker image.
  - trivy workflow steps updated.
  - PCF Documentation update
- - Download file functions code optimisations. 
+ - Download file functions code optimizations. 
  - Page layout css fixes.
  
 ### Known defects
@@ -264,7 +267,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.6...main
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.7...main
+[2.3.7]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.6...v2.3.7
 [2.3.6]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.5...v2.3.6
 [2.3.5]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.3...v2.3.5
 [2.3.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.2...v2.3.3
