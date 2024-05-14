@@ -2,7 +2,7 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
-## [2.3.7] - 2024-05-14
+## [2.3.8] - 2024-05-14
 - Dedicated page to manage policies.
 - Policies will be dynamically fetched from policy hub based on the selected/available use-cases.
 - Frontend components will be dynamically rendered based on the policy type.
