@@ -11,10 +11,12 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Re-usable page loading handlers for api calls.
 - Notes and info texts added in create data page.
 - Policy related documentations updated.
+- Submodel version added in the select submodel dropdown
 
 ### Changed
 - Upload data api implementation moved to RTK query for better performance.
 - Consumer: Fetching policy information from EDC for offer details overlay
+- Changes needed for EDC v0.7
 
 ## [2.3.7] - 2024-05-09 
 - Bumped version for release 24.03 to match with backend version (hotfix issue in fixed backend).
