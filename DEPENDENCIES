@@ -239,7 +239,7 @@ npm/npmjs/-/jsonc-parser/3.2.1, MIT, approved, #12891
 npm/npmjs/-/jsonfile/6.1.0, MIT, approved, clearlydefined
 npm/npmjs/-/jsx-ast-utils/3.3.5, MIT, approved, #9209
 npm/npmjs/-/jwt-decode/4.0.0, MIT, approved, clearlydefined
-npm/npmjs/-/keycloak-js/24.0.4, , restricted, clearlydefined
+npm/npmjs/-/keycloak-js/24.0.4, Apache-2.0 AND MIT AND EPL-1.0 AND W3C-19980720 AND W3C-20150513 AND (AFL-2.1 OR LGPL-2.0-only) AND LicenseRef-scancode-oasis-ws-security-spec AND LicenseRef-scancode-ws-policy-specification AND  LicenseRef-Public-domain AND (Apache-2.0 AND MIT) AND (Apache-2.0 AND MIT), approved, #14715
 npm/npmjs/-/keyv/4.5.4, MIT, approved, #4674
 npm/npmjs/-/levn/0.4.1, MIT, approved, clearlydefined
 npm/npmjs/-/lines-and-columns/1.2.4, MIT, approved, clearlydefined
@@ -303,7 +303,7 @@ npm/npmjs/-/path-parse/1.0.7, MIT, approved, clearlydefined
 npm/npmjs/-/path-type/4.0.0, MIT, approved, clearlydefined
 npm/npmjs/-/pathe/1.1.2, MIT, approved, #8126
 npm/npmjs/-/pathval/1.1.1, MIT, approved, clearlydefined
-npm/npmjs/-/picocolors/1.0.0, ISC, approved, clearlydefined
+npm/npmjs/-/picocolors/1.0.0, ISC, approved, #14718
 npm/npmjs/-/picomatch/2.3.1, MIT, approved, clearlydefined
 npm/npmjs/-/pkg-types/1.0.3, MIT, approved, clearlydefined
 npm/npmjs/-/possible-typed-array-names/1.0.0, MIT, approved, clearlydefined
