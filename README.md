@@ -33,3 +33,9 @@ Here are the two ways to run the application locally on http://localhost:3000/
 
 Distributed under the Apache 2.0 License.
 See [LICENSE](./LICENSE) for more information.
+
+## Notice for Docker image
+
+Bellow you can find the information regarding Docker Notice for this application.
+
+  - [Managed-simple-data-exchanger](DOCKER_NOTICE.md)
