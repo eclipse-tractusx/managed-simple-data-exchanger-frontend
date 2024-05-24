@@ -1,7 +1,9 @@
 # Changelog
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
-
+## [2.4.1] - 2024-05-24
+-  Bumped version for release 24.05 to match with backend version .
+  
 ## [2.4.0] - 2024-05-14
 - Dedicated page to manage policies.
 - Policies will be dynamically fetched from policy hub based on the selected/available use-cases.
@@ -268,7 +270,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.0...main
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.1...main
+[2.4.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.7...v2.3.8
 [2.3.7]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.6...v2.3.7
 [2.3.6]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.5...v2.3.6
