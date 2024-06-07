@@ -23,9 +23,13 @@ more.
 
 * https://projects.eclipse.org/projects/automotive.tractusx/developer
 
+Getting started:
+
+https://eclipse-tractusx.github.io/docs/developer
+
 The project maintains the source code repositories in the following GitHub organization:
 
-* https://github.com/eclipse-tractusx/
+* https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend
 
 ## Eclipse Development Process
 
