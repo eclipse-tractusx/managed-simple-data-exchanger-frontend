@@ -143,7 +143,7 @@ export default function UploadFile() {
                 translations={{
                   placeholder: '',
                   uploadError: '',
-                  uploadProgess: t('content.provider.uploadedFile'),
+                  uploadProgress: t('content.provider.uploadedFile'),
                   uploadSuccess: '',
                 }}
                 uploadFiles={[
