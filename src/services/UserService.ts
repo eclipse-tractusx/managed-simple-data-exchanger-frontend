@@ -17,10 +17,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-
 import Keycloak from 'keycloak-js';
 
+import { setLoggedInUser } from '../features/app/slice';
 import { IUser } from '../features/app/types';
+import { store } from '../features/store';
 import { getCentralIdp, getClientId, getClientRealm } from './EnvironmentService';
 
 const keycloakConfig: Keycloak.KeycloakConfig = {
@@ -66,34 +67,33 @@ const getLoggedUser = () => ({
   company: getCompany(),
   bpn: getBpn(),
   tenant: getTenant(),
-  token: getToken(),
-  parsedToken: getParsedToken(),
 });
 
 const update = () => {
-  KC.updateToken(50)
+  KC.updateToken(600)
     .then((refreshed: boolean) => {
-      if (refreshed) console.log(`${getUsername()} token refreshed ${refreshed}`);
+      console.log(`${getUsername()} token refreshed ${refreshed}`);
     })
     .catch(() => {
       console.log(`${getUsername()} token refresh failed`);
     });
 };
 
-const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => unknown) => {
+const initKeycloak = (onAuthenticatedCallback: (loggedUser: IUser) => void) => {
   KC.init({
     onLoad: 'login-required',
     pkceMethod: 'S256',
+    enableLogging: true,
   })
     .then(authenticated => {
       if (authenticated) {
         onAuthenticatedCallback(getLoggedUser());
-        setInterval(update, 50000);
+        store.dispatch(setLoggedInUser(getLoggedUser()));
       } else {
-        doLogin();
+        console.log(`${getUsername()} authentication failed`);
       }
     })
-    .catch(console.error);
+    .catch(err => console.log(err));
 };
 
 KC.onTokenExpired = () => {

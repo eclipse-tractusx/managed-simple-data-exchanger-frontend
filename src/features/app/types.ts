@@ -17,8 +17,6 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-import { KeycloakTokenParsed } from 'keycloak-js';
-
 import { IAlertColors } from '../notifiication/types';
 export interface IUser {
   userName: string;
@@ -27,8 +25,6 @@ export interface IUser {
   company: string;
   bpn: string;
   tenant: string;
-  token: string;
-  parsedToken: KeycloakTokenParsed;
 }
 export interface IAppSlice {
   pageLoading: boolean;

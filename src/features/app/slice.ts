@@ -32,8 +32,6 @@ const initialState: IAppSlice = {
     company: '',
     bpn: '',
     tenant: '',
-    token: '',
-    parsedToken: {},
   },
   permissions: [],
   useCases: [],
