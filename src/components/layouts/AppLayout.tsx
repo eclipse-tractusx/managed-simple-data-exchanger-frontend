@@ -20,8 +20,6 @@
 import { Box } from '@mui/material';
 
 import { useGetPermissionsQuery, useGetUseCasesQuery } from '../../features/app/apiSlice';
-import { setLoggedInUser } from '../../features/app/slice';
-import { useAppDispatch } from '../../features/store';
 import Nav from '../Nav';
 import Sidebar from '../sidebar';
 
@@ -29,9 +27,6 @@ import Sidebar from '../sidebar';
 export default function AppLayout(props: any) {
   useGetUseCasesQuery({});
   useGetPermissionsQuery({});
-
-  const dispatch = useAppDispatch();
-  dispatch(setLoggedInUser(props.loggedUser));
 
   return (
     <Box sx={{ my: 0, mx: 'auto', overflowY: 'auto', overflowX: 'hidden', height: '100vh' }}>
