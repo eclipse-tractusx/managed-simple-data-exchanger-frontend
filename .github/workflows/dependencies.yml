@@ -41,7 +41,7 @@ jobs:
           java-version: '17'
 
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Generate Dependencies file
         run: java -jar ./scripts/download/org.eclipse.dash.licenses-1.0.2.jar ./package-lock.json -project automotive.tractusx -summary DEPENDENCIES || true
