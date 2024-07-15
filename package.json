@@ -29,7 +29,7 @@
     "@catena-x/portal-shared-components": "^3.0.25",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.15",
+    "@mui/icons-material": "^5.16.1",
     "@mui/material": "^5.15.15",
     "@mui/x-data-grid": "^5.11.0",
     "@mui/x-date-pickers": "^5.0.20",
