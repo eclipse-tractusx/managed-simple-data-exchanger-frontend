@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: npm install
@@ -57,7 +57,7 @@ jobs:
       # Create SemVer or ref tags dependent of trigger event
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: |
             ${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}
@@ -79,7 +79,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
@@ -92,7 +92,7 @@ jobs:
         # Important step to push image description to DockerHub
       - name: Update Docker Hub description
         if: github.event_name != 'pull_request'
-        uses: peter-evans/dockerhub-description@v3
+        uses: peter-evans/dockerhub-description@v4
         with:
           # readme-filepath defaults to toplevel README.md, Only necessary if you have a dedicated file with your 'Notice for docker images'
           # readme-filepath: path/to/dedicated/notice-for-docker-image.md
