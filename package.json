@@ -1,6 +1,6 @@
 {
   "name": "managed-simple-data-exchanger-frontend",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Managed Simple Data Exchanger Frontend",
   "license": "Apache-2.0",
   "type": "module",
