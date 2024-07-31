@@ -2,6 +2,10 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+
+## [2.4.3] - 2024-07-31
+- docker image updated to fix vulnerability.
+
 ## [2.4.2] - 2024-07-30
 - dependabot issues fix for release 24.08.
 - docker build image updated to latest.
@@ -275,7 +279,8 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
-[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.2...main
+[unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.3...main
+[2.4.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.3...v2.4.3
 [2.4.2]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.3.7...v2.3.8
