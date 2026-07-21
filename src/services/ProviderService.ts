@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -76,7 +77,7 @@ class ProviderService extends HttpService {
     return res;
   }
 
-  public async submitSubmodalData(url: string, data: unknown) {
+  public async submitSubmodelData(url: string, data: unknown) {
     const res = await this.instance({
       method: 'POST',
       url: `${url}/manualentry`,
@@ -85,7 +86,7 @@ class ProviderService extends HttpService {
     return res;
   }
 
-  public async deleteSubmodal(processId: string, csvType: string) {
+  public async deleteSubmodel(processId: string, csvType: string) {
     const res = await this.instance({
       method: 'DELETE',
       url: `${csvType}/delete/${processId}`,
@@ -101,7 +102,7 @@ class ProviderService extends HttpService {
     return res?.data;
   }
 
-  public async getUplodHistoryErrors(processId: string) {
+  public async getUploadHistoryErrors(processId: string) {
     const res = await this.instance({
       method: 'GET',
       url: `/processing-report/failure-details/${processId}`,

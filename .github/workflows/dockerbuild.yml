@@ -1,6 +1,7 @@
 #################################################################################
 # Copyright (c) 2023,2024 T-Systems International GmbH
-# Copyright (c) 2023.2024 Contributors to the Eclipse Foundation
+# Copyright (c) 2025 ARENA2036 e.V.
+# Copyright (c) 2023,2024 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -29,6 +30,12 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'tag'
+        required: true
+        default: 'latest'
 
 env:
   IMAGE_NAMESPACE: 'tractusx'
@@ -46,7 +53,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Install Dependencies
         run: npm install
@@ -57,7 +64,7 @@ jobs:
       # Create SemVer or ref tags dependent of trigger event
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
         with:
           images: |
             ${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}
@@ -66,33 +73,36 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
+            type=raw,value=main
             type=semver,pattern={{major}}
             type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ github.sha }}
+            type=raw,value=${{ github.event.inputs.image_tag }}
 
-      - name: DockerHub login
+      - name: DockerHub Login
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           # Use existing DockerHub credentials present as secrets
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
+          platformms: linux/amd64,linux/arm64
           file: ./Dockerfile
           # Build image for verification purposes on every trigger event. Only push if event is not a PR
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}, ${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
 
-        # https://github.com/peter-evans/dockerhub-description
-        # Important step to push image description to DockerHub
+      #   # https://github.com/peter-evans/dockerhub-description
+      #   # Important step to push image description to DockerHub
       - name: Update Docker Hub description
         if: github.event_name != 'pull_request'
-        uses: peter-evans/dockerhub-description@v4
+        uses: peter-evans/dockerhub-description@432a30c9e07499fd01da9f8a49f0faf9e0ca5b77 # v4.0.2
         with:
           # readme-filepath defaults to toplevel README.md, Only necessary if you have a dedicated file with your 'Notice for docker images'
           # readme-filepath: path/to/dedicated/notice-for-docker-image.md

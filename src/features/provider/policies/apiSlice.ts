@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -43,7 +44,7 @@ export const policiesApiSlice = apiSlice.injectEndpoints({
           body,
         };
       },
-      extraOptions: { showNotification: true, message: 'Policy created successfully!' },
+      extraOptions: { showNotification: true, message: 'alerts.policyCreated' },
       invalidatesTags: ['Policies'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
@@ -56,14 +57,14 @@ export const policiesApiSlice = apiSlice.injectEndpoints({
       },
     }),
     updatePolicy: builder.mutation({
-      query: body => {
+      query: ({ uuid, ...body }) => {
         return {
-          url: `/policy/${body.uuid}`,
+          url: `/policy/${uuid}`,
           method: 'PUT',
           body,
         };
       },
-      extraOptions: { showNotification: true, message: 'Policy updated successfully!' },
+      extraOptions: { showNotification: true, message: 'alerts.policyUpdated' },
       invalidatesTags: ['Policies'],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
@@ -82,7 +83,7 @@ export const policiesApiSlice = apiSlice.injectEndpoints({
           method: 'DELETE',
         };
       },
-      extraOptions: { showNotification: true, message: 'Policy deleted successfully!' },
+      extraOptions: { showNotification: true, message: 'alerts.policyDeleted' },
       invalidatesTags: ['Policies'],
       onQueryStarted: setLoadingHandler,
     }),

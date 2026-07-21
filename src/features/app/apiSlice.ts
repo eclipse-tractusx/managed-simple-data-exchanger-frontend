@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
+ * 
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -20,7 +22,7 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 import { apiBaseQuery } from '../../services/RequestService';
-import { setSnackbarMessage } from '../notifiication/slice';
+import { setSnackbarMessage } from '../notification/slice';
 import { setPageLoading, setPermissions, setUseCases } from './slice';
 import { IExtraOptions, UseCaseSelectionModel } from './types';
 

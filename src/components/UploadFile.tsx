@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -26,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 
 import { FileSize, FileType } from '../enums';
 import { setPageLoading } from '../features/app/slice';
-import { setSnackbarMessage } from '../features/notifiication/slice';
+import { setSnackbarMessage } from '../features/notification/slice';
 import { setPolicyData, setPolicyDialog, setPolicyDialogType } from '../features/provider/policies/slice';
 import { removeSelectedFiles, setSelectedFiles, setUploadStatus } from '../features/provider/upload/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';

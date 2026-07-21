@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -24,7 +25,7 @@ import { expect, test } from 'vitest';
 import OfferDetailsDialog from '../components/dialogs/OfferDetailsDialog';
 import { IConsumerDataOffers } from '../features/consumer/types';
 
-test('Snapshot OfferDetailsDialog - load and diaplay offer details component', () => {
+test('Snapshot OfferDetailsDialog - load and display offer details component', () => {
   const offerItem: IConsumerDataOffers = {
     bpnNumbers: ['BPN1', 'BPN2'],
     connectorOfferid: 'connector1',

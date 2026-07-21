@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -25,7 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { apiSlice } from './app/apiSlice';
 import appSlice from './app/slice';
 import consumerSlice from './consumer/slice';
-import notificationSlice from './notifiication/slice';
+import notificationSlice from './notification/slice';
 import uploadHistorySlice from './provider/history/slice';
 import accessUsagePolicySlice from './provider/policies/slice';
 import policySlice from './provider/policies/slice';

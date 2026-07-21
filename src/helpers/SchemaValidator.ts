@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -22,7 +23,7 @@ import Ajv2019 from 'ajv/dist/2019';
 import { DefinedError } from 'ajv/dist/core';
 import addFormats from 'ajv-formats';
 
-import { setSnackbarMessage } from '../features/notifiication/slice';
+import { setSnackbarMessage } from '../features/notification/slice';
 import { setPolicyData, setPolicyDialog, setPolicyDialogType } from '../features/provider/policies/slice';
 import { store } from '../features/store';
 import { DEFAULT_POLICY_DATA } from '../utils/constants';

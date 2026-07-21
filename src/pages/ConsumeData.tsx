@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2021,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -50,7 +51,7 @@ import Permissions from '../components/Permissions';
 import { useGetOfferPolicyDetailsMutation } from '../features/consumer/apiSlice';
 import {
   setContractOffers,
-  setFfilterCompanyOptionsLoading,
+  setFilterCompanyOptionsLoading,
   setFilterCompanyOptions,
   setFilterConnectors,
   setFilterProviderUrl,
@@ -72,7 +73,7 @@ import {
   IntConnectorItem,
   IntOption,
 } from '../features/consumer/types';
-import { setSnackbarMessage } from '../features/notifiication/slice';
+import { setSnackbarMessage } from '../features/notification/slice';
 import { useAppDispatch, useAppSelector } from '../features/store';
 import { handleBlankCellValues, MAX_CONTRACTS_AGREEMENTS } from '../helpers/ConsumerOfferHelper';
 import ConsumerService from '../services/ConsumerService';
@@ -168,10 +169,13 @@ export default function ConsumeData() {
       offerId: offer.offerId || '',
       assetId: offer.assetId || '',
       policyId: offer.policyId || '',
+      hasPolicy: offer.hasPolicy || '',
     }));
     return {
       offers: offersList,
       usage_policies: selectedList[0].policy.Usage,
+      downloadDataAs: 'zip',
+      
     };
   };
 
@@ -188,11 +192,23 @@ export default function ConsumeData() {
         setSelectionModel([]);
       };
 
-      const response = await ConsumerService.getInstance().subscribeToOffers(preparePayload());
+      const response = await ConsumerService.getInstance().subscribeToOffersAndDownload(preparePayload());
 
-      if (response.status === 200) {
+      if (response && response.status === 200) {
+
+        const downloadUrl = window.URL.createObjectURL(response.data);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = downloadUrl;
+        downloadLink.download = 'data-offers.zip';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        window.URL.revokeObjectURL(downloadUrl);
+
         dispatch(setSnackbarMessage({ message: 'alerts.subscriptionSuccess', type: 'success' }));
         handleSuccess();
+      } else {
+        dispatch(setSnackbarMessage({ message: 'alerts.downloadOffersFailed', type: 'error' }));
       }
     } catch (e) {
       console.log(e);
@@ -205,28 +221,43 @@ export default function ConsumeData() {
     try {
       let providerUrl = '';
       if (searchFilterByType.value === 'company' || searchFilterByType.value === 'bpn') {
-        providerUrl = filterSelectedConnector.value;
+        providerUrl = filterSelectedConnector?.value || '';
       } else {
         providerUrl = filterProviderUrl;
       }
-      if (providerUrl == '' || providerUrl == null) {
-        return true;
+
+      if (!providerUrl) {
+        dispatch(setSnackbarMessage({ message: 'alerts.selectConnector', type: 'error' }));
+        return;
       }
+
       dispatch(setOffersLoading(true));
-      const response = await ConsumerService.getInstance().fetchConsumerDataOffers({
+
+
+      const params: Record<string, any> = {
         providerUrl: providerUrl,
         offset: 0,
-        maxLimit: MAX_CONTRACTS_AGREEMENTS,
-      });
+        maxLimit: MAX_CONTRACTS_AGREEMENTS
+      };
+     
+      if (filterSelectedBPN) {
+        params.bpnNumber = filterSelectedBPN;
+      }
+      else {
+        dispatch(setSnackbarMessage({ message: 'alerts.provideBpnOrCompany', type: 'error' }));
+        return;
+      }
+
+      const response = await ConsumerService.getInstance().fetchConsumerDataOffers(params);
       dispatch(setContractOffers(response.data));
-      dispatch(setOffersLoading(false));
     } catch (error) {
       dispatch(setContractOffers([]));
+      dispatch(setSnackbarMessage({ message: 'alerts.fetchOffersFailed', type: 'error' }));
+    } finally {
       dispatch(setOffersLoading(false));
     }
   };
 
-  // enter key fetch data
   const handleKeypress = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (['Enter', 'NumpadEnter'].includes(e.key)) {
       await fetchConsumerDataOffers();
@@ -282,9 +313,9 @@ export default function ConsumeData() {
       if (open) setSearchOpen(true);
       dispatch(setFilterCompanyOptions([]));
       dispatch(setFilterSelectedConnector(null));
-      dispatch(setFfilterCompanyOptionsLoading(true));
+      dispatch(setFilterCompanyOptionsLoading(true));
       const res: [] = await ConsumerService.getInstance().searchLegalEntities(searchStr);
-      dispatch(setFfilterCompanyOptionsLoading(false));
+      dispatch(setFilterCompanyOptionsLoading(false));
       if (res.length > 0) {
         const filterContent = res.map((item: ILegalEntityContent, index) => {
           return {
@@ -302,8 +333,9 @@ export default function ConsumeData() {
   };
 
   // on change search type filter option
-  const handleSearchTypeChange = (value: IntConnectorItem) => {
-    dispatch(setSearchFilterByType(value));
+  const handleSearchTypeChange = (value: any) => {
+    const selectedValue = value as IntConnectorItem;
+    dispatch(setSearchFilterByType(selectedValue));
     dispatch(setSelectedFilterCompanyOption(null));
     dispatch(setFilterProviderUrl(''));
     dispatch(setFilterSelectedBPN(''));
@@ -318,7 +350,7 @@ export default function ConsumeData() {
     dispatch(setFilterSelectedConnector(null));
     dispatch(setFilterConnectors([]));
     try {
-      const res = await ConsumerService.getInstance().searchConnectoByBPN(payload);
+      const res = await ConsumerService.getInstance().searchConnectorByBPN(payload);
       if (res.length) {
         const resC: IConnectorResponse[] = res;
         const connector = resC[0];
@@ -515,7 +547,7 @@ export default function ConsumeData() {
                   placeholder={t('content.consumeData.selectConnectors')}
                   noOptionsText={t('content.consumeData.noConnectors')}
                   defaultValue={filterSelectedConnector}
-                  onChangeItem={e => dispatch(setFilterSelectedConnector(e))}
+                  onChangeItem={e => dispatch(setFilterSelectedConnector(e as IntConnectorItem | null))}
                   items={filterConnectors}
                 />
               </Grid>

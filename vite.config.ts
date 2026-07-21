@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -36,7 +37,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    setupFiles: './src/setUpTests.ts',
+    setupFiles: './src/setupTests.ts',
   },
   optimizeDeps: { exclude: ['fsevents'] },
   build: {

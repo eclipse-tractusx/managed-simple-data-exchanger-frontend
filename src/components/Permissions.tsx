@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -27,7 +28,8 @@ export default function Permissions(props: Readonly<{ values: string[]; children
   const { permissions } = useAppSelector(state => state.appSlice);
   const valid = props.values ? props.values.some((item: string) => permissions?.includes(item)) : true;
   if (valid) return props.children;
-  else if (permissions.length && props.fullPage) {
+  //else if (permissions.length && props.fullPage) 
+  else if (permissions?.length && props.fullPage){
     return (
       <ErrorPage title="You have no permission to view this content" description="Please contact your administrator" />
     );

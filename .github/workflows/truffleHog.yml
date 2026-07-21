@@ -1,5 +1,6 @@
 #################################################################################
 # Copyright (c) 2024 T-Systems International GmbH
+# Copyright (c) 2025 ARENA2036 e.V.
 # Copyright (c) 2024 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
@@ -42,13 +43,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0  # Ensure full clone for pull request workflows
 
       - name: TruffleHog OSS
         id: trufflehog
-        uses: trufflesecurity/trufflehog@main
+        uses: trufflesecurity/trufflehog@6641d4ba5b684fffe195b9820345de1bf19f3181 #v3.89.2
         continue-on-error: true
         with:
           path: ./  # Scan the entire repository
@@ -57,4 +58,4 @@ jobs:
       
       - name: Scan Results Status
         if: steps.trufflehog.outcome == 'failure'
-        run: exit 1  # Set workflow run to failure if TruffleHog finds secrets 
+        run: exit 1  # Set workflow run to failure if TruffleHog finds secrets

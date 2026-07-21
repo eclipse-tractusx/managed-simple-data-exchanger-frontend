@@ -1,6 +1,7 @@
 ################################################################################
-# Copyright (c) 2021,2024 Contributors to the Eclipse Foundation
 # Copyright (c) 2024 T-Systems International GmbH
+# Copyright (c) 2025 ARENA2036 e.V.
+# Copyright (c) 2021,2024 Contributors to the Eclipse Foundation
 
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -43,7 +44,7 @@ jobs:
 
     steps:
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@dc5a429b52fcf669ce959baa2c2dd26090d2a6c4 # v0.32.0
         with:
           image-ref: "tractusx/managed-simple-data-exchanger-frontend:latest" # Pull image from Docker Hub and run Trivy vulnerability scanner
           format: "sarif"
@@ -54,9 +55,7 @@ jobs:
           limit-severities-for-sarif: true
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
         if: always()
         with:
           sarif_file: "trivy-results.sarif"
-
- 

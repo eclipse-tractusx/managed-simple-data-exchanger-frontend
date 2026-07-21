@@ -1,6 +1,7 @@
 /********************************************************************************
  * Copyright (c) 2021,2022 FEV Consulting GmbH
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -25,7 +26,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PageLoading from './components/PageLoading';
 import Permissions from './components/Permissions';
 import { IUser } from './features/app/types';
-import Notification from './features/notifiication';
+import Notification from './features/notification';
 import { IRoutes, ROUTES } from './helpers/RouteHelper';
 import Main from './Main';
 

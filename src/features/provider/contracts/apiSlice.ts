@@ -1,6 +1,8 @@
 /********************************************************************************
  * Copyright (c) 2021,2022,2023 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2023 Contributors to the Eclipse Foundation
+ * 
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -31,7 +33,7 @@ export const contractsSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['DeleteContract'],
       transformResponse: async ({ connector, contracts }) => {
-        const modifieldData = contracts
+        const modifiedData = contracts
           .sort(
             (contract1: IContractAgreements, contract2: IContractAgreements) =>
               contract2.dateCreated - contract1.dateCreated,
@@ -39,7 +41,7 @@ export const contractsSlice = apiSlice.injectEndpoints({
           .map((item: IContractAgreements, index: number) => {
             return { ...{ id: index, ...item } };
           });
-        return { connector, contracts: modifieldData };
+        return { connector, contracts: modifiedData };
       },
     }),
     deleteContract: builder.mutation({

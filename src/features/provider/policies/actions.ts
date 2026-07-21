@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -22,7 +23,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { omit } from 'lodash';
 
 import { PolicyHubModel } from '../../../models/Polices.models';
-import { setSnackbarMessage } from '../../notifiication/slice';
+import { setSnackbarMessage } from '../../notification/slice';
 import { RootState } from '../../store';
 import { clearRows } from '../submodels/slice';
 import { uploadApiSlice } from '../upload/apiSlice';

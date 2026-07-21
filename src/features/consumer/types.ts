@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /********************************************************************************
  * Copyright (c) 2022,2024 T-Systems International GmbH
+ * Copyright (c) 2025 ARENA2036 e.V.
  * Copyright (c) 2022,2024 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -24,6 +25,37 @@ export interface IUsageControl {
   value?: string;
   durationUnit?: string | Record<string, never>;
 }
+
+export interface IId {
+  '@id': string;
+}
+
+export interface IConstraint {
+  'odrl:leftOperand': IId;
+  'odrl:operator': IId;
+  'odrl:rightOperand': string;
+}
+
+export interface IConstraintOrContainer {
+  'odrl:or'?: IConstraint | IConstraint[];
+}
+export interface IConstraintAndContainer {
+  'odrl:and'?: IConstraint | IConstraint[];
+}
+
+export interface IPermission {
+  'odrl:action': IId;
+  'odrl:constraint'?: IConstraintOrContainer | IConstraintAndContainer;
+}
+
+export interface IHasPolicy {
+  '@id': string;
+  '@type': string;
+  'odrl:permission': IPermission | IPermission[];
+  'odrl:prohibition': any;
+  'odrl:obligation': any;
+}
+
 export interface IConsumerDataOffers {
   id?: number;
   // connectorOfferid same assetId
@@ -47,30 +79,35 @@ export interface IConsumerDataOffers {
   offerId?: string;
   // end offerId
   policy?: any;
+  hasPolicy?: IHasPolicy;
   usagePolicies: IUsageControl[];
   fileName?: string;
   fileContentType?: string;
   sematicVersion: string;
 }
+
 export interface ILegalEntityName {
   value?: string;
   shortname?: string | null;
   type?: unknown;
   language?: unknown;
 }
-export interface ILegalentity {
+
+export interface ILegalEntityDetails {
   bpn?: string;
   identifiers?: unknown[];
   names?: ILegalEntityName[];
   legalForm?: unknown;
   status?: unknown;
 }
+
 export interface ILegalEntityContent {
   score?: number;
-  legalEntity?: ILegalentity;
+  legalEntity?: ILegalEntityDetails;
   name?: string;
   bpn?: string;
 }
+
 export interface ILegalEntity {
   totalElements?: number;
   totalPages?: number;
@@ -78,15 +115,18 @@ export interface ILegalEntity {
   contentSize?: number;
   content?: ILegalEntityContent[];
 }
+
 export interface IntOption {
   _id: number | string;
   bpn: string;
   value: string;
 }
+
 export interface IConnectorResponse {
   bpn: string;
   connectorEndpoint: string[];
 }
+
 export interface IContractAgreementInfo {
   contractSigningDate: number;
   contractStartDate: number;
@@ -94,6 +134,7 @@ export interface IContractAgreementInfo {
   assetId: string;
   policies: IUsageControl[];
 }
+
 export interface IContractAgreements {
   negotiationId: string;
   counterPartyAddress: string;
@@ -106,7 +147,11 @@ export interface IContractAgreements {
   dateUpdated: number;
 }
 
-export interface IntConnectorItem {
+interface Option {
+  [key: string]: any;
+}
+
+export interface IntConnectorItem extends Option{
   id: number;
   value: string;
   title: string;

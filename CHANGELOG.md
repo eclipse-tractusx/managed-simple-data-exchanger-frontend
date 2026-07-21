@@ -3,6 +3,13 @@
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
 
+## [3.0.0] - 2026-07-21
+- Implemented Provider-side functionality in the data exchange pages.
+- Extended consumer data offers interface with policy awareness (hasPolicy) for offer details overlay.
+- Fixed runtime configuration, i18n and policy handling issues.
+- Updated permissions handling and app layout access control.
+- Dependency updates.
+
 ## [2.4.3] - 2024-07-31
 - docker image updated to fix vulnerability.
 
@@ -279,6 +286,7 @@ New features, fixed bugs, known defects and other noteworthy changes to each rel
 - Compliance with Catena-X Guidelines
 - Integration with Digital Twin registry service.
 
+[3.0.0]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/main...v3.0.0
 [unreleased]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.3...main
 [2.4.3]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.3...v2.4.3
 [2.4.2]: https://github.com/eclipse-tractusx/managed-simple-data-exchanger-frontend/compare/v2.4.1...v2.4.2
