@@ -2,6 +2,9 @@
 
 New features, fixed bugs, known defects and other noteworthy changes to each release of the Simple Data Exchanger Frontend.
 
+### Security
+- Updated nginx to version 1.30.7 to address security vulnerabilities.
+- Updated the Docker base image to nginx/nginx-unprivileged:1.30.7-alpine.
 
 ## [3.0.0] - 2026-07-21
 - Implemented Provider-side functionality in the data exchange pages.

@@ -12,10 +12,10 @@ Eclipse Tractus-X product(s) installed within the image:
 - Project license: [Apache License, Version 2.0] https://github.com/eclipse-tractusx/managed-simple-data-exchanger-backend/blob/main/LICENSE
 
 **Used base image**
-- [nginxinc/nginx-unprivileged:1.26.1-alpine3.19]
-- Dockerfile: [nginxinc/nginx-unprivileged:alpine](https://github.com/nginxinc/docker-nginx-unprivileged/blob/main/Dockerfile-alpine.template)
-- GitHub project: [https://github.com/nginxinc/docker-nginx-unprivileged](https://github.com/nginxinc/docker-nginx-unprivileged)
-- DockerHub: [https://hub.docker.com/r/nginxinc/nginx-unprivileged](https://hub.docker.com/r/nginxinc/nginx-unprivileged)
+- [nginx/nginx-unprivileged:1.30.7-alpine]
+- Dockerfile: [nginx/nginx-unprivileged:1.30.7-alpine](https://github.com/nginx/docker-nginx-unprivileged/blob/main/Dockerfile-alpine.template)
+- GitHub project: [https://github.com/nginx/docker-nginx-unprivileged](https://github.com/nginx/docker-nginx-unprivileged)
+- DockerHub: [https://hub.docker.com/r/nginx/nginx-unprivileged](https://hub.docker.com/r/nginx/nginx-unprivileged)
 
 As with all Docker images, these likely also contain other software which may be under other licenses (such as Bash, etc from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
 
