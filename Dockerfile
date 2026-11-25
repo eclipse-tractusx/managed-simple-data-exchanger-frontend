@@ -34,7 +34,7 @@ RUN npm install && npm run build
 
 #### Stage 2: Serve the application from Nginx
 
-FROM nginxinc/nginx-unprivileged:1.26.1-alpine3.19
+FROM nginxinc/nginx-unprivileged:1.27.0-alpine3.19
 # Nginx config
 RUN rm -rf /etc/nginx/conf.d
 USER root 
